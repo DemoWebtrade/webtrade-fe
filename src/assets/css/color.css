@@ -1,0 +1,191 @@
+@theme inline {
+  /* Content */
+  --color-content-primary: var(--content-primary);
+  --color-content-secondary: var(--content-secondary);
+  --color-content-tertiary: var(--content-tertiary);
+  --color-content-disable: var(--content-disable);
+  --color-content-informative: var(--content-informative);
+  --color-content-positive: var(--content-positive);
+  --color-content-error: var(--content-error);
+
+  /* Border */
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
+  --color-border-tertiary: var(--border-tertiary);
+  --color-border-informative: var(--border-informative);
+  --color-border-positive: var(--border-positive);
+  --color-border-error: var(--border-error);
+
+  /* Background */
+  --color-bg-primary: var(--bg-primary); /* nền chính */
+  --color-bg-secondary: var(--bg-secondary); /* card */
+  --color-bg-tertiary: var(--bg-tertiary); /* divider */
+  --color-bg-blue: var(--bg-blue);
+  --color-bg-green: var(--bg-green);
+  --color-bg-red: var(--bg-red);
+  --color-bg-orange: var(--bg-orange);
+  --color-bg-purple: var(--bg-purple);
+  --color-bg-yellow: var(--bg-yellow);
+
+  /* Action & Interaction */
+  --color-primary-base: var(--primary-base);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-selected: var(--primary-selected);
+  --color-primary-disabled: var(--primary-disabled);
+
+  --color-secondary-base: var(--secondary-base);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-active: var(--secondary-active);
+  --color-secondary-selected: var(--secondary-selected);
+  --color-secondary-disabled: var(--secondary-disabled);
+
+  --color-outline-base: var(--outline-base);
+  --color-outline-hover: var(--outline-hover);
+  --color-outline-active: var(--outline-active);
+  --color-outline-selected: var(--outline-selected);
+  --color-outline-disabled: var(--outline-disabled);
+
+  --color-red-base: var(--red-base);
+  --color-red-hover: var(--red-hover);
+  --color-red-active: var(--red-active);
+  --color-red-selected: var(--red-selected);
+  --color-red-disabled: var(--red-disabled);
+
+  --color-green-base: var(--green-base);
+  --color-green-hover: var(--green-hover);
+  --color-green-active: var(--green-active);
+  --color-green-selected: var(--green-selected);
+  --color-green-disabled: var(--green-disabled);
+
+  --color-blue-base: var(--blue-base);
+  --color-blue-hover: var(--blue-hover);
+  --color-blue-active: var(--blue-active);
+  --color-blue-selected: var(--blue-selected);
+  --color-blue-disabled: var(--blue-disabled);
+
+  --color-yellow-base: var(--yellow-base);
+  --color-yellow-hover: var(--yellow-hover);
+  --color-yellow-active: var(--yellow-active);
+  --color-yellow-selected: var(--yellow-selected);
+  --color-yellow-disabled: var(--yellow-disabled);
+
+  --color-purple-base: var(--purple-base);
+  --color-purple-hover: var(--purple-hover);
+  --color-purple-active: var(--purple-active);
+  --color-purple-selected: var(--purple-selected);
+  --color-purple-disabled: var(--purple-disabled);
+
+  --color-orange-base: var(--orange-base);
+  --color-orange-hover: var(--orange-hover);
+  --color-orange-active: var(--orange-active);
+  --color-orange-selected: var(--orange-selected);
+  --color-orange-disabled: var(--orange-disabled);
+}
+
+:root {
+  /* Content */
+  --content-primary: #ffffff;
+  --content-secondary: #f9f9f9;
+  --content-tertiary: #f2f2f2;
+  --content-disable: #d8d8d8;
+  --content-informative: #4976f4;
+  --content-positive: #589e67;
+  --content-error: #af4b4b;
+
+  /* Border */
+  --border-primary: #e4e4e4;
+  --border-secondary: #afafaf;
+  --border-tertiary: #000000;
+  --border-informative: #b6c8fb;
+  --border-positive: #589e67;
+  --border-error: #af4b4b;
+
+  /* Background */
+  --bg-primary: #0f1115; /* nền chính */
+  --bg-secondary: #161a22; /* card */
+  --bg-tertiary: #1f2430; /* divider */
+  --bg-blue: #1a2238;
+  --bg-green: #1b2a23;
+  --bg-red: #2a1d1f;
+  --bg-orange: #2b2219;
+  --bg-purple: #241d2b;
+  --bg-yellow: #2a2a1c;
+
+  /* Action & Interaction */
+  --primary-base: #000000;
+  --primary-hover: #727272;
+  --primary-active: #4b4b4b;
+  --primary-selected: #4b4b4b;
+  --primary-disabled: #f9f9f9;
+
+  --secondary-base: #ffffff;
+  --secondary-hover: #e8e8e8;
+  --secondary-active: #e4e4e4;
+  --secondary-selected: #f2f2f2;
+  --secondary-disabled: #f9f9f9;
+
+  --outline-base: #e4e4e4;
+  --outline-hover: #000000;
+  --outline-active: #727272;
+  --outline-selected: #afafaf;
+  --outline-disabled: #f2f2f2;
+
+  --red-base: #bf6f6f;
+  --red-hover: #af4b4b;
+  --red-active: #8c3c3c;
+  --red-selected: #af4b4b;
+  --red-disabled: #efdbdb;
+
+  --green-base: #589e67;
+  --green-hover: #467e52;
+  --green-active: #355f3e;
+  --green-selected: #467e52;
+  --green-disabled: #deece1;
+
+  --blue-base: #4976f4;
+  --blue-hover: #3759b7;
+  --blue-active: #253b7a;
+  --blue-selected: #3759b7;
+  --blue-disabled: #dbe4fd;
+
+  --yellow-base: #b1ab1d;
+  --yellow-hover: #8e8917;
+  --yellow-active: #6a6711;
+  --yellow-selected: #8e8917;
+  --yellow-disabled: #efeed2;
+
+  --purple-base: #954baf;
+  --purple-hover: #773c8c;
+  --purple-active: #592d69;
+  --purple-selected: #773c8c;
+  --purple-disabled: #eadbef;
+
+  --orange-base: #d28e3d;
+  --orange-hover: #a87231;
+  --orange-active: #7e5525;
+  --orange-selected: #a87231;
+  --orange-disabled: #f6e8d8;
+}
+
+.light {
+  --content-primary: #000000;
+  --content-secondary: #7c3aed;
+  --content-tertiary: #afafaf;
+  --content-disable: #d8d8d8;
+  --content-informative: #4976f4;
+  --content-positive: #589e67;
+  --content-error: #af4b4b;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9f9f9;
+  --bg-tertiary: #f2f2f2;
+  --bg-blue: #edf2fe;
+  --bg-green: #eef5f0;
+  --bg-red: #f7eded;
+  --bg-orange: #fbf4ec;
+  --bg-purple: #f4edf7;
+  --bg-yellow: #f7f7e8;
+}
+
+@custom-variant light (&: is(.light *));

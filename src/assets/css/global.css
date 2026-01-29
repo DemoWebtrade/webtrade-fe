@@ -1,0 +1,12 @@
+:root {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Hanken Grotesk";
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.bg-switch {
+  transition: left 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

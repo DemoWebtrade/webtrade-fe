@@ -1,0 +1,69 @@
+/* HTML: <div class="progess-loader"></div> */
+.progess-loader {
+  height: 4px;
+  width: 220px;
+  --c: no-repeat linear-gradient(#bf6f6f 0 0);
+  background: var(--c), var(--c), #efdbdb;
+  background-size: 60% 100%;
+  animation: l16 3s infinite;
+}
+@keyframes l16 {
+  0% {
+    background-position:
+      -150% 0,
+      -150% 0;
+  }
+  66% {
+    background-position:
+      250% 0,
+      -150% 0;
+  }
+  100% {
+    background-position:
+      250% 0,
+      250% 0;
+  }
+}
+
+/* HTML: <div class="text-loader"></div> */
+.text-loader {
+  position: relative;
+  font-family: system-ui, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* chữ trắng nền */
+.text-loader span {
+  color: #fff;
+}
+
+/* shimmer layer */
+.text-loader .shimmer {
+  position: absolute;
+  inset: 0;
+
+  color: transparent;
+  background: linear-gradient(
+      -60deg,
+      transparent 40%,
+      #bf6f6f 50%,
+      transparent 60%
+    )
+    0 / 300% 100% no-repeat;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  animation: shimmer 1.8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100%;
+  }
+  to {
+    background-position: 0%;
+  }
+}

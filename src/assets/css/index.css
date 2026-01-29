@@ -1,0 +1,9 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./global.css";
+@import "./color.css";
+@import "./loading.css";
+@import "./swiper.css";
+@import "./chart.css";
