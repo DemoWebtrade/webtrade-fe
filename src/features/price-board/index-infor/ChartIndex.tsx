@@ -1,4 +1,3 @@
-import { usePrevious } from "@/hooks/usePrevious";
 import { useTheme } from "@/hooks/useTheme";
 import {
   generatePriceVolumeChartWithSession,
@@ -35,8 +34,6 @@ const ChartIndex = (props: Props) => {
   const { openIndex } = props;
 
   const { theme } = useTheme();
-
-  const preTheme = usePrevious(theme);
 
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
