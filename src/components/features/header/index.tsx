@@ -62,6 +62,7 @@ export default function Header() {
               className="hover:bg-primary-hover p-1 rounded-md"
               data-tooltip-id="global-tooltip"
               data-tooltip-content={t("setting-view")}
+              data-tooltip-place="left"
             >
               <Settings className="size-5" />
             </div>
@@ -69,7 +70,7 @@ export default function Header() {
 
           <MenuItems
             transition
-            className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-bg-tertiary rounded-md md:w-80 w-50 border border-border-informative/10 flex flex-col gap-3 origin-top-right  outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-bg-tertiary rounded-md md:w-80 w-50 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
             <div className="flex flex-col gap-1 md:gap-3">
               <MenuItem>
