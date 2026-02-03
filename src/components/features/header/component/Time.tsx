@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Time() {
   return (
-    <div className="flex w-max items-center justify-center text-content-primary md:text-sm text-xs font-semibold">
+    <div className="flex w-max items-center justify-center text-content-primary text-sm font-semibold">
       <ClockItem type="hour" /> :
       <ClockItem type="minute" /> :
       <ClockItem type="second" />

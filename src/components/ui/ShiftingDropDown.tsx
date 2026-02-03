@@ -86,7 +86,7 @@ const Tab: FC<TabProps> = ({
         handleSetSelected(tab);
         if (checkOnclick) handleChangeId(tab);
       }}
-      className={`flex items-center gap-1 rounded-full px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
+      className={`flex items-center justify-center gap-1 rounded-full px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
         selected === tab
           ? "bg-red-hover text-content-primary"
           : "text-content-primary"
