@@ -1,5 +1,6 @@
 import IndexInfor from "./index-infor";
 import MenuBoard from "./menu-board";
+import Table from "./table";
 
 export default function PriceBoard() {
   return (
@@ -10,6 +11,10 @@ export default function PriceBoard() {
 
       <div className="h-10 w-full">
         <MenuBoard />
+      </div>
+
+      <div className="flex-1">
+        <Table />
       </div>
     </div>
   );

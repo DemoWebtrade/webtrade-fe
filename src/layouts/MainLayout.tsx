@@ -10,7 +10,7 @@ export default function MainLayout() {
         <div className="h-12">
           <Header />
         </div>
-        <div className="flex-1 px-1">
+        <div className="flex-1 px-1 pb-1">
           <Outlet />
         </div>
       </main>
