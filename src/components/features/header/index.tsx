@@ -6,8 +6,8 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Earth, Expand, Lightbulb, Settings, Shrink } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../ui/Button";
 import LanguageSetting from "./component/LanguageSetting";
+import Login from "./component/Login";
 import ThemeSetting from "./component/ThemeSetting";
 import Time from "./component/Time";
 
@@ -118,10 +118,8 @@ export default function Header() {
     }
   };
 
-  console.info("isZoom", isZoom);
-
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-bg-tertiary">
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border">
       <img
         src={Logo}
         alt="logo-website"
@@ -203,7 +201,7 @@ export default function Header() {
         <div className="h-4 w-px bg-bg-tertiary md:mx-2 mx-1"></div>
 
         {/* login */}
-        <Button>{t("login")}</Button>
+        <Login />
       </div>
     </header>
   );

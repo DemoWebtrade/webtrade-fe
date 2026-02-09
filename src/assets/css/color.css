@@ -9,6 +9,7 @@
   --color-content-error: var(--content-error);
 
   /* Border */
+  --color-border: var(--border);
   --color-border-primary: var(--border-primary);
   --color-border-secondary: var(--border-secondary);
   --color-border-tertiary: var(--border-tertiary);
@@ -26,6 +27,8 @@
   --color-bg-orange: var(--bg-orange);
   --color-bg-purple: var(--bg-purple);
   --color-bg-yellow: var(--bg-yellow);
+
+  --color-bg-button: var(--bg-button);
 
   /* Action & Interaction */
   --color-primary-base: var(--primary-base);
@@ -94,6 +97,7 @@
   --content-error: #af4b4b;
 
   /* Border */
+  --border: #e4e4e7;
   --border-primary: #e4e4e4;
   --border-secondary: #afafaf;
   --border-tertiary: #000000;
@@ -111,6 +115,7 @@
   --bg-orange: #fbf4ec;
   --bg-purple: #f4edf7;
   --bg-yellow: #f7f7e8;
+  --bg-button: #7c3aed;
 
   /* Action & Interaction */
   --primary-base: #000000;
@@ -176,6 +181,8 @@
   --content-informative: #4976f4;
   --content-positive: #589e67;
   --content-error: #af4b4b;
+
+  --border: #27272a;
 
   --bg-primary: #0f1115; /* nền chính */
   --bg-secondary: #161a22; /* card */

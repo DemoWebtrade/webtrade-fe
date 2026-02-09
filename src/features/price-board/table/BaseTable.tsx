@@ -10,13 +10,8 @@ import { useTranslation } from "react-i18next";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-const baseHeaderClass = "text-xs border-r border-primary-active";
-const baseCellClass = "text-xs! border-r border-primary-active";
-
-const bgHeaderClass =
-  "text-xs border-r border-primary-active bg-primary-active/20";
-const bgCellClass =
-  "text-xs border-r border-primary-active bg-primary-active/20";
+const bgHeaderClass = "text-xs border-r border-border ";
+const bgCellClass = "text-xs border-r border-border ";
 
 export default function BaseTable() {
   const { t } = useTranslation();
@@ -33,7 +28,7 @@ export default function BaseTable() {
         suppressSizeToFit: true,
       },
 
-      // Giá tham chiếu (nhỏ, cố định tương đối)
+      // Giá tham chiếu
       {
         field: "ceil",
         headerName: "Trần",
@@ -62,7 +57,7 @@ export default function BaseTable() {
       // Bên mua
       {
         headerName: "Bên mua",
-        headerClass: baseHeaderClass,
+        headerClass: bgHeaderClass,
         marryChildren: true,
         children: [
           {
@@ -70,42 +65,36 @@ export default function BaseTable() {
             headerName: "Giá 3",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "buyVol3",
             headerName: "KL 3",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "buyPrice2",
             headerName: "Giá 2",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "buyVol2",
             headerName: "KL 2",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "buyPrice1",
             headerName: "Giá 1",
             minWidth: 45,
             flex: 1.1,
-            cellClass: baseCellClass,
           },
           {
             field: "buyVol1",
             headerName: "KL 1",
             minWidth: 45,
             flex: 1.1,
-            cellClass: baseCellClass,
           },
         ],
       },
@@ -114,7 +103,6 @@ export default function BaseTable() {
       {
         headerName: "Khớp lệnh",
         headerClass: bgHeaderClass,
-        cellClass: bgCellClass,
         marryChildren: true,
         children: [
           {
@@ -155,7 +143,7 @@ export default function BaseTable() {
       // Bên bán
       {
         headerName: "Bên bán",
-        headerClass: baseHeaderClass,
+        headerClass: bgHeaderClass,
         marryChildren: true,
         children: [
           {
@@ -163,42 +151,36 @@ export default function BaseTable() {
             headerName: "Giá 1",
             minWidth: 45,
             flex: 1.1,
-            cellClass: baseCellClass,
           },
           {
             field: "sellVol1",
             headerName: "KL 1",
             minWidth: 45,
             flex: 1.1,
-            cellClass: baseCellClass,
           },
           {
             field: "sellPrice2",
             headerName: "Giá 2",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "sellVol2",
             headerName: "KL 2",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "sellPrice3",
             headerName: "Giá 3",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
           {
             field: "sellVol3",
             headerName: "KL 3",
             minWidth: 45,
             flex: 1,
-            cellClass: baseCellClass,
           },
         ],
       },
@@ -207,26 +189,26 @@ export default function BaseTable() {
       {
         field: "high",
         headerName: "Cao",
-        headerClass: bgHeaderClass,
-        cellClass: bgCellClass,
         minWidth: 46,
         flex: 0.7,
+        headerClass: bgHeaderClass,
+        cellClass: bgCellClass,
       },
       {
         field: "low",
         headerName: "Thấp",
-        headerClass: bgHeaderClass,
-        cellClass: bgCellClass,
         minWidth: 46,
         flex: 0.7,
+        headerClass: bgHeaderClass,
+        cellClass: bgCellClass,
       },
       {
         field: "totalVolume",
         headerName: "Tổng KL",
-        headerClass: bgHeaderClass,
-        cellClass: bgCellClass,
         minWidth: 57,
         flex: 1.2,
+        headerClass: bgHeaderClass,
+        cellClass: bgCellClass,
       },
 
       // Nhà đầu tư nước ngoài
@@ -240,16 +222,12 @@ export default function BaseTable() {
             headerName: "Mua",
             minWidth: 55,
             flex: 1.1,
-            headerClass: baseHeaderClass,
-            cellClass: baseCellClass,
           },
           {
             field: "nnSell",
             headerName: "Bán",
             minWidth: 55,
             flex: 1.1,
-            headerClass: baseHeaderClass,
-            cellClass: baseCellClass,
           },
           {
             field: "nnRoom",
@@ -264,12 +242,13 @@ export default function BaseTable() {
     ],
     [],
   );
+
   const defaultColDef = useMemo<ColDef>(
     () => ({
       sortable: true,
       resizable: false,
-      cellClass: "text-xs! font-normal! border-r! border-primary-active!",
-      headerClass: "text-xs font-normal border-r border-primary-active",
+      cellClass: "text-xs! font-normal! border-r! border-border!",
+      headerClass: "text-xs! font-normal! border-r! border-border!",
     }),
     [],
   );
