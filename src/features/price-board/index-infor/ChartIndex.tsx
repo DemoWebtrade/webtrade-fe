@@ -140,9 +140,9 @@ const ChartIndex = (props: Props) => {
       height: chartContainerRef.current.offsetHeight,
       layout: {
         background: {
-          color: getCssVar("--color-bg-secondary"),
+          color: getCssVar("--bg-secondary"),
         },
-        textColor: getCssVar("--color-content-primary"),
+        textColor: getCssVar("--content-primary"),
         fontFamily: "Arial",
         fontSize: 10,
         attributionLogo: false,
@@ -158,6 +158,7 @@ const ChartIndex = (props: Props) => {
       timeScale: {
         fixLeftEdge: true,
         fixRightEdge: true,
+        borderVisible: false,
         barSpacing: 4,
         tickMarkFormatter: (time: UTCTimestamp) => {
           const date = new Date(time * 1000);

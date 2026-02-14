@@ -7,7 +7,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-bg-button text-primary text-sm hover:bg-primary-hover disable:bg-primary-disable disable:text-content-disable",
+          "bg-bg-button text-content-primary text-sm hover:bg-primary-hover disable:bg-primary-disable disable:text-content-disable",
         none: "text-bg-button hover:bg-secondary-hover disable:text-content-disable disable:bg-content-disable",
       },
       size: {

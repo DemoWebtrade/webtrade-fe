@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next";
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-const bgHeaderClass = "text-xs border-r border-border ";
-const bgCellClass = "text-xs border-r border-border ";
+const bgHeaderClass = "text-xs! border-r! border-border!";
+const bgCellClass = "text-xs! border-r! border-border!";
 
 export default function BaseTable() {
   const { t } = useTranslation();

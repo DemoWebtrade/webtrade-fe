@@ -24,7 +24,7 @@ export const ShiftingDropDown = ({
   return (
     <div
       onMouseLeave={() => handleSetSelected(null)}
-      className="relative flex h-fit gap-2"
+      className="relative flex gap-2"
     >
       <Tab
         key={t.id}
@@ -35,16 +35,19 @@ export const ShiftingDropDown = ({
         active={active}
         checkOnclick={checkOnclick}
       >
-        <span className="flex flex-row md:gap-1 gap-0.5 items-center justify-center h-full">
-          {t?.children?.some((i) => i?.id === id)
-            ? t?.children?.find((i) => i?.id === id)?.title
-            : t.title}
+        <div className="flex flex-row md:gap-1 gap-0.5 items-center justify-center">
+          <span className="text-center text-sm grid place-items-center">
+            {t?.children?.some((i) => i?.id === id)
+              ? t?.children?.find((i) => i?.id === id)?.title
+              : t.title}
+          </span>
+
           {t?.children && (
             <ChevronDown
               className={`size-4 ${selected === t.id && "rotate-180"}`}
             />
           )}
-        </span>
+        </div>
       </Tab>
       <AnimatePresence>
         {selected && t?.children && (
@@ -86,13 +89,13 @@ const Tab: FC<TabProps> = ({
         handleSetSelected(tab);
         if (checkOnclick) handleChangeId(tab);
       }}
-      className={`flex items-center justify-center gap-1 rounded-full px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
+      className={`flex items-center justify-center gap-1 rounded-md px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
         selected === tab
-          ? "bg-red-hover text-content-primary"
+          ? "bg-bg-button text-content-primary"
           : "text-content-primary"
-      }  ${active ? "bg-red-active text-white" : ""}`}
+      }  ${active ? "bg-bg-button text-white" : ""}`}
     >
-      <span>{children}</span>
+      {children}
     </button>
   );
 };
@@ -128,7 +131,7 @@ const Content: FC<ContentProps> = ({ children, idMenu, handleChangeId }) => {
 
       {children?.map((c) => (
         <div
-          className={`overflow-hidden hover:bg-red-hover rounded-md p-1 ${idMenu === c?.id ? "bg-red-active" : ""}`}
+          className={`overflow-hidden hover:bg-primary-hover rounded-md p-1 ${idMenu === c?.id ? "bg-bg-button" : ""}`}
           key={c?.id}
           onClick={() => handleChangeId(c?.id)}
         >
