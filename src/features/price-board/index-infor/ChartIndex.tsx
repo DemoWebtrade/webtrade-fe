@@ -1,9 +1,5 @@
 import { useTheme } from "@/hooks/useTheme";
-import {
-  generatePriceVolumeChartWithSession,
-  getCssVar,
-  numberFormat,
-} from "@/utils";
+import { getCssVar, numberFormat } from "@/utils";
 import {
   type BaselineData,
   BaselineSeries,
@@ -22,16 +18,19 @@ import { useEffect, useRef } from "react";
 
 interface Props {
   openIndex: number;
+  data: {
+    o: number[];
+    h: number[];
+    l: number[];
+    c: number[];
+    v: number[];
+    t: number[];
+    s: "ok";
+  };
 }
 
-const data = generatePriceVolumeChartWithSession({
-  startPrice: 253.32,
-  date: "2026-01-15",
-  intervalSec: 60, // 5 phút
-});
-
 const ChartIndex = (props: Props) => {
-  const { openIndex } = props;
+  const { openIndex, data } = props;
 
   const { theme } = useTheme();
 
