@@ -119,7 +119,7 @@ export default function BaseTable() {
     () => [
       {
         field: "stock",
-        headerName: "CK",
+        headerName: t("symbol"),
         width: 60, // giữ width cố định vì pinned
         minWidth: 55,
         maxWidth: 65,
@@ -131,7 +131,7 @@ export default function BaseTable() {
       // Giá tham chiếu
       {
         field: "ceil",
-        headerName: "Trần",
+        headerName: t("ceil"),
         minWidth: 46,
         flex: 0.7,
         cellStyle: coloredCellStyle,
@@ -139,7 +139,7 @@ export default function BaseTable() {
       },
       {
         field: "ref",
-        headerName: "TC",
+        headerName: t("ref"),
         minWidth: 46,
         flex: 0.7,
         cellStyle: coloredCellStyle,
@@ -147,7 +147,7 @@ export default function BaseTable() {
       },
       {
         field: "floor",
-        headerName: "Sàn",
+        headerName: t("floor"),
         minWidth: 46,
         flex: 0.7,
         cellStyle: coloredCellStyle,
@@ -156,12 +156,12 @@ export default function BaseTable() {
 
       // Bên mua
       {
-        headerName: "Bên mua",
+        headerName: t("bid"),
         marryChildren: true,
         children: [
           {
             field: "buyPrice3",
-            headerName: "Giá 3",
+            headerName: `${t("p")}3`,
             minWidth: 45,
             flex: 1,
             cellStyle: coloredCellStyle,
@@ -169,7 +169,7 @@ export default function BaseTable() {
           },
           {
             field: "buyVol3",
-            headerName: "KL 3",
+            headerName: `${t("vol")}3`,
             minWidth: 45,
             flex: 1,
             valueFormatter: volFormatter,
@@ -177,7 +177,7 @@ export default function BaseTable() {
           },
           {
             field: "buyPrice2",
-            headerName: "Giá 2",
+            headerName: `${t("p")}2`,
             minWidth: 45,
             flex: 1,
             cellStyle: coloredCellStyle,
@@ -185,7 +185,7 @@ export default function BaseTable() {
           },
           {
             field: "buyVol2",
-            headerName: "KL 2",
+            headerName: `${t("vol")}2`,
             minWidth: 45,
             flex: 1,
             valueFormatter: volFormatter,
@@ -193,7 +193,7 @@ export default function BaseTable() {
           },
           {
             field: "buyPrice1",
-            headerName: "Giá 1",
+            headerName: `${t("p")}1`,
             minWidth: 45,
             flex: 1.1,
             cellStyle: coloredCellStyle,
@@ -201,7 +201,7 @@ export default function BaseTable() {
           },
           {
             field: "buyVol1",
-            headerName: "KL 1",
+            headerName: `${t("vol")}1`,
             minWidth: 45,
             flex: 1.1,
             valueFormatter: volFormatter,
@@ -225,7 +225,7 @@ export default function BaseTable() {
           },
           {
             field: "matchVol",
-            headerName: "KL",
+            headerName: t("vol"),
             minWidth: 50,
             flex: 1.2,
             cellStyle: coloredCellStyle,
@@ -257,7 +257,7 @@ export default function BaseTable() {
         children: [
           {
             field: "sellPrice1",
-            headerName: "Giá 1",
+            headerName: `${t("p")}1`,
             minWidth: 45,
             flex: 1.1,
             cellStyle: coloredCellStyle,
@@ -265,7 +265,7 @@ export default function BaseTable() {
           },
           {
             field: "sellVol1",
-            headerName: "KL 1",
+            headerName: `${t("vol")}1`,
             minWidth: 45,
             flex: 1.1,
             valueFormatter: volFormatter,
@@ -273,7 +273,7 @@ export default function BaseTable() {
           },
           {
             field: "sellPrice2",
-            headerName: "Giá 2",
+            headerName: `${t("p")}2`,
             minWidth: 45,
             flex: 1,
             cellStyle: coloredCellStyle,
@@ -281,7 +281,7 @@ export default function BaseTable() {
           },
           {
             field: "sellVol2",
-            headerName: "KL 2",
+            headerName: `${t("vol")}2`,
             minWidth: 45,
             flex: 1,
             valueFormatter: volFormatter,
@@ -289,7 +289,7 @@ export default function BaseTable() {
           },
           {
             field: "sellPrice3",
-            headerName: "Giá 3",
+            headerName: `${t("p")}3`,
             minWidth: 45,
             flex: 1,
             cellStyle: coloredCellStyle,
@@ -297,7 +297,7 @@ export default function BaseTable() {
           },
           {
             field: "sellVol3",
-            headerName: "KL 3",
+            headerName: `${t("vol")}3`,
             minWidth: 45,
             flex: 1,
             valueFormatter: volFormatter,
@@ -309,7 +309,7 @@ export default function BaseTable() {
       // Thông tin khác
       {
         field: "totalVolume",
-        headerName: "Tổng KL",
+        headerName: `${t("total-vol")}`,
         minWidth: 57,
         flex: 1.2,
         valueFormatter: volFormatter,
@@ -317,7 +317,7 @@ export default function BaseTable() {
       },
       {
         field: "high",
-        headerName: "Cao",
+        headerName: `${t("high")}`,
         minWidth: 46,
         flex: 0.7,
         cellStyle: coloredCellStyle,
@@ -325,7 +325,7 @@ export default function BaseTable() {
       },
       {
         field: "low",
-        headerName: "Thấp",
+        headerName: `${t("low")}`,
         minWidth: 46,
         flex: 0.7,
         cellStyle: coloredCellStyle,
@@ -340,21 +340,21 @@ export default function BaseTable() {
         children: [
           {
             field: "nnBuy",
-            headerName: "Mua",
+            headerName: `${t("fbuy")}`,
             minWidth: 55,
             flex: 1.1,
             valueFormatter: volFormatter,
           },
           {
             field: "nnSell",
-            headerName: "Bán",
+            headerName: `${t("fsell")}`,
             minWidth: 55,
             flex: 1.1,
             valueFormatter: volFormatter,
           },
           {
             field: "nnRoom",
-            headerName: "Room",
+            headerName: `${t("room")}`,
             minWidth: 55,
             flex: 1.3,
             headerClass: "text-xs",
@@ -364,7 +364,7 @@ export default function BaseTable() {
         ],
       },
     ],
-    [],
+    [t],
   );
 
   const defaultColDef = useMemo<ColDef>(

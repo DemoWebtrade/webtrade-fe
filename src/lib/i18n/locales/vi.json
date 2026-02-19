@@ -11,5 +11,22 @@
   "shrink-web": "Thu nhỏ giao diện",
 
   "price-board": "Bảng giá",
-  "no-data": "Không có dữ liệu!"
+  "no-data": "Không có dữ liệu!",
+
+  "symbol": "CK",
+  "ceil": "Trần",
+  "floor": "Sàn",
+  "ref": "TC",
+  "bid": "Bên mua",
+  "matched": "Khớp lệnh",
+  "asked": "Bên bán",
+  "total-vol": "Tổng KL",
+  "high": "Cao",
+  "low": "Thấp",
+  "foreign": "ĐTNN",
+  "p": "Giá ",
+  "vol": "KL ",
+  "fbuy": "NN mua",
+  "fsell": "NN bán",
+  "room": "Room"
 }

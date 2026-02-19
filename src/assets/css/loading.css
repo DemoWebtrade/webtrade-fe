@@ -2,8 +2,8 @@
 .progess-loader {
   height: 4px;
   width: 220px;
-  --c: no-repeat linear-gradient(#bf6f6f 0 0);
-  background: var(--c), var(--c), #efdbdb;
+  --c: no-repeat linear-gradient(#7c3aed 0 0);
+  background: var(--c), var(--c), #e9d4fa;
   background-size: 60% 100%;
   animation: l16 1s infinite;
 }
@@ -47,7 +47,7 @@
   background: linear-gradient(
       -60deg,
       transparent 40%,
-      #bf6f6f 50%,
+      #7c3aed 50%,
       transparent 60%
     )
     0 / 300% 100% no-repeat;

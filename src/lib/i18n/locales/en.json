@@ -11,5 +11,22 @@
   "shrink-web": "Collapse View",
 
   "price-board": "Price Board",
-  "no-data": "No data available!"
+  "no-data": "No data available!",
+
+  "symbol": "Symbol",
+  "ceil": "Ceil",
+  "floor": "Floor",
+  "ref": "Ref",
+  "bid": "Bid",
+  "matched": "Matched",
+  "asked": "Asked",
+  "total-vol": "Total Vol",
+  "high": "High",
+  "low": "Low",
+  "foreign": "Foreign",
+  "p": "P",
+  "vol": "Vol",
+  "fbuy": "Fbuy",
+  "fsell": "Fsell",
+  "room": "Room"
 }
