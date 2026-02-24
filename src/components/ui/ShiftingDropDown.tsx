@@ -1,3 +1,4 @@
+import i18n from "@/lib/i18n";
 import type { MenuItem } from "@/types/priceBoard";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -38,8 +39,8 @@ export const ShiftingDropDown = ({
         <div className="flex flex-row md:gap-1 gap-0.5 items-center justify-center">
           <span className="text-center text-sm grid place-items-center">
             {t?.children?.some((i) => i?.id === id)
-              ? t?.children?.find((i) => i?.id === id)?.title
-              : t.title}
+              ? i18n.t(`${t?.children?.find((i) => i?.id === id)?.title}`)
+              : i18n.t(`${t?.title}`)}
           </span>
 
           {t?.children && (
@@ -131,7 +132,7 @@ const Content: FC<ContentProps> = ({ children, idMenu, handleChangeId }) => {
 
       {children?.map((c) => (
         <div
-          className={`overflow-hidden hover:bg-primary-hover rounded-md p-1 ${idMenu === c?.id ? "bg-bg-button" : ""}`}
+          className={`overflow-hidden hover:bg-primary-hover rounded-md p-1 ${idMenu === c?.id ? "bg-bg-button text-white!" : "text-content-primary"}`}
           key={c?.id}
           onClick={() => handleChangeId(c?.id)}
         >
@@ -141,7 +142,7 @@ const Content: FC<ContentProps> = ({ children, idMenu, handleChangeId }) => {
             }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="text-sm text-content-secondary"
+            className="text-sm"
           >
             {c?.title}
           </motion.div>

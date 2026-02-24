@@ -5,6 +5,7 @@
   --ag-odd-row-background-color: var(--bg-tertiary) !important;
   --ag-border-color: var(--border) !important;
   --ag-font-size: clamp(10px, 0.8vw, 12px);
+  --ag-inherited-font-family: "Hanken Grotesk";
 }
 
 .ag-theme-quartz-custom {

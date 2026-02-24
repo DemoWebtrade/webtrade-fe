@@ -1,7 +1,7 @@
 export const MENU_BOARD = [
   {
-    id: "faverite",
-    title: "Danh mục yêu thích",
+    id: "favourite",
+    title: "watchlist",
   },
   {
     id: "vn30",

@@ -120,11 +120,7 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border">
-      <img
-        src={Logo}
-        alt="logo-website"
-        className="md:h-14 md:w-14 w-12 h-12"
-      />
+      <img src={Logo} alt="logo" className="md:h-14 md:w-14 w-12 h-12" />
       {/* Chức năng */}
       <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
         {/* Time */}
@@ -136,7 +132,7 @@ export default function Header() {
         <Menu as="div" className="relative inline-block">
           <MenuButton className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
             <div
-              className="hover:bg-red-hover p-1 rounded-md"
+              className="hover:bg-bg-button p-1 rounded-md"
               data-tooltip-id="global-tooltip"
               data-tooltip-content={t("setting-view")}
               data-tooltip-place="left"
@@ -178,7 +174,7 @@ export default function Header() {
         {/* Zoom web */}
         {isZoom ? (
           <div
-            className="p-1 hover:bg-red-hover rounded-md"
+            className="p-1 hover:bg-bg-button rounded-md"
             data-tooltip-id="global-tooltip"
             data-tooltip-content={t("shrink-web")}
             data-tooltip-place="left"
@@ -188,7 +184,7 @@ export default function Header() {
           </div>
         ) : (
           <div
-            className="p-1 hover:bg-red-hover rounded-md"
+            className="p-1 hover:bg-bg-button rounded-md"
             data-tooltip-id="global-tooltip"
             data-tooltip-content={t("explan-web")}
             data-tooltip-place="left"

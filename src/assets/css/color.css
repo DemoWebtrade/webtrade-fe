@@ -88,34 +88,37 @@
 
 :root {
   /* Content */
-  --content-primary: #000000;
-  --content-secondary: #7c3aed;
-  --content-tertiary: #afafaf;
-  --content-disable: #d8d8d8;
-  --content-informative: #4976f4;
-  --content-positive: #589e67;
-  --content-error: #af4b4b;
+  --content-primary: #1f2937;
+  --content-secondary: #6d28d9;
+  --content-tertiary: #6b7280;
+  --content-disable: #9ca3af;
+  --content-informative: #3b82f6;
+  --content-positive: #16a34a;
+  --content-error: #dc2626;
 
   /* Border */
-  --border: #e4e4e7;
+  --border: #e5e7eb;
+
+  /* Background */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc; /* sáng hơn chút */
+  --bg-tertiary: #f1f5f9;
+  --bg-blue: #eff6ff;
+  --bg-green: #f0fdf4;
+  --bg-red: #fef2f2;
+  --bg-orange: #fff7ed;
+  --bg-purple: #f5f3ff;
+  --bg-yellow: #fefce8;
+
+  --bg-button: #7c3aed;
+
+  /* Border */
   --border-primary: #e4e4e4;
   --border-secondary: #afafaf;
   --border-tertiary: #000000;
   --border-informative: #b6c8fb;
   --border-positive: #589e67;
   --border-error: #af4b4b;
-
-  /* Background */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9f9f9;
-  --bg-tertiary: #f2f2f2;
-  --bg-blue: #edf2fe;
-  --bg-green: #eef5f0;
-  --bg-red: #f7eded;
-  --bg-orange: #fbf4ec;
-  --bg-purple: #f4edf7;
-  --bg-yellow: #f7f7e8;
-  --bg-button: #7c3aed;
 
   /* Action & Interaction */
   --primary-base: #000000;
@@ -182,7 +185,7 @@
   --content-positive: #589e67;
   --content-error: #af4b4b;
 
-  --border: #27272a;
+  --border: #38383b;
 
   --bg-primary: #0f1115; /* nền chính */
   --bg-secondary: #161a22; /* card */

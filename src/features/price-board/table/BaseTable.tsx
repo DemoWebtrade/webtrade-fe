@@ -93,19 +93,19 @@ const coloredCellStyle = (
   const floor = params.data.floor;
 
   if (comparePrice === ceil) {
-    return { color: "#9333ea" }; // tím
+    return { color: "#ff25ff" };
   }
   if (comparePrice === floor) {
-    return { color: "#2563eb" }; // xanh dương (sàn)
+    return { color: "#00b2ff" };
   }
   if (comparePrice > ref) {
-    return { color: "#16a34a" }; // xanh lá
+    return { color: "#00ff00" };
   }
   if (comparePrice < ref) {
-    return { color: "#dc2626" }; // đỏ
+    return { color: "#ff3737" };
   }
   if (comparePrice === ref) {
-    return { color: "#ca8a04" }; // vàng
+    return { color: "#ffd900" };
   }
 
   return {
@@ -212,12 +212,12 @@ export default function BaseTable() {
 
       // Khớp lệnh
       {
-        headerName: "Khớp lệnh",
+        headerName: `${t("matched")}`,
         marryChildren: true,
         children: [
           {
             field: "matchPrice",
-            headerName: "Khớp",
+            headerName: `${t("p")}`,
             minWidth: 50,
             flex: 1.3,
             cellStyle: coloredCellStyle,
@@ -252,7 +252,7 @@ export default function BaseTable() {
 
       // Bên bán
       {
-        headerName: "Bên bán",
+        headerName: `${t("asked")}`,
         marryChildren: true,
         children: [
           {
@@ -334,7 +334,7 @@ export default function BaseTable() {
 
       // Nhà đầu tư nước ngoài
       {
-        headerName: "ĐTNN",
+        headerName: `${t("foreign")}`,
         headerClass: "text-xs text-center",
         marryChildren: true,
         children: [

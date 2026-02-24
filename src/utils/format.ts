@@ -65,7 +65,7 @@ export function numberFormat(
 
 export function formatVolPrice(vol: number) {
   return vol >= 1e6
-    ? numberFormat(vol / 1e6, 0, "") + " M"
+    ? numberFormat(vol / 1e6, 0, "") + "M"
     : vol === 0
       ? ""
       : numberFormat(vol, 0, "");
