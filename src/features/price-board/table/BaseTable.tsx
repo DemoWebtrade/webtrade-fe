@@ -1,4 +1,4 @@
-import { formatVolPrice, numberFormat } from "@/utils";
+import { numberFormat } from "@/utils";
 import {
   CellStyleModule,
   ClientSideRowModelModule,
@@ -23,9 +23,9 @@ interface RowData {
 }
 
 const priceFormatter = (params: any) =>
-  params.value ? numberFormat(params.value / 1000, 2, "-") : "";
+  params.value ? numberFormat(params.value / 1000, 2, "") : "";
 const volFormatter = (params: any) =>
-  params.value ? formatVolPrice(params.value) : "";
+  params.value ? numberFormat(params.value, 0, "") : "";
 const changePctFormatter = (params: any) => {
   if (params.value == null) return "";
 
@@ -133,7 +133,7 @@ export default function BaseTable() {
         field: "ceil",
         headerName: t("ceil"),
         minWidth: 46,
-        flex: 0.7,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -141,7 +141,7 @@ export default function BaseTable() {
         field: "ref",
         headerName: t("ref"),
         minWidth: 46,
-        flex: 0.7,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -149,7 +149,7 @@ export default function BaseTable() {
         field: "floor",
         headerName: t("floor"),
         minWidth: 46,
-        flex: 0.7,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -162,7 +162,7 @@ export default function BaseTable() {
           {
             field: "buyPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 45,
+            minWidth: 48,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -178,7 +178,7 @@ export default function BaseTable() {
           {
             field: "buyPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 45,
+            minWidth: 48,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -194,8 +194,8 @@ export default function BaseTable() {
           {
             field: "buyPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 45,
-            flex: 1.1,
+            minWidth: 48,
+            flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -203,7 +203,7 @@ export default function BaseTable() {
             field: "buyVol1",
             headerName: `${t("vol")}1`,
             minWidth: 45,
-            flex: 1.1,
+            flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -219,7 +219,7 @@ export default function BaseTable() {
             field: "matchPrice",
             headerName: `${t("p")}`,
             minWidth: 50,
-            flex: 1.3,
+            flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -227,7 +227,7 @@ export default function BaseTable() {
             field: "matchVol",
             headerName: t("vol"),
             minWidth: 50,
-            flex: 1.2,
+            flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
@@ -235,7 +235,7 @@ export default function BaseTable() {
             field: "change",
             headerName: "+/-",
             minWidth: 50,
-            flex: 1,
+            flex: 0.5,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
@@ -243,7 +243,7 @@ export default function BaseTable() {
             field: "changePct",
             headerName: "%",
             minWidth: 50,
-            flex: 1.1,
+            flex: 0.5,
             cellStyle: coloredCellStyle,
             valueFormatter: changePctFormatter,
           },
@@ -259,7 +259,7 @@ export default function BaseTable() {
             field: "sellPrice1",
             headerName: `${t("p")}1`,
             minWidth: 45,
-            flex: 1.1,
+            flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -267,7 +267,7 @@ export default function BaseTable() {
             field: "sellVol1",
             headerName: `${t("vol")}1`,
             minWidth: 45,
-            flex: 1.1,
+            flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -310,8 +310,8 @@ export default function BaseTable() {
       {
         field: "totalVolume",
         headerName: `${t("total-vol")}`,
-        minWidth: 57,
-        flex: 1.2,
+        minWidth: 65,
+        flex: 1.5,
         valueFormatter: volFormatter,
         cellStyle: coloredCellStyle,
       },
@@ -319,7 +319,7 @@ export default function BaseTable() {
         field: "high",
         headerName: `${t("high")}`,
         minWidth: 46,
-        flex: 0.7,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -327,7 +327,7 @@ export default function BaseTable() {
         field: "low",
         headerName: `${t("low")}`,
         minWidth: 46,
-        flex: 0.7,
+        flex: 1.1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -342,21 +342,21 @@ export default function BaseTable() {
             field: "nnBuy",
             headerName: `${t("fbuy")}`,
             minWidth: 55,
-            flex: 1.1,
+            flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnSell",
             headerName: `${t("fsell")}`,
             minWidth: 55,
-            flex: 1.1,
+            flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnRoom",
             headerName: `${t("room")}`,
             minWidth: 55,
-            flex: 1.3,
+            flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
             valueFormatter: volFormatter,
@@ -379,7 +379,7 @@ export default function BaseTable() {
   const loading = false;
 
   return (
-    <div className="w-full h-full ag-theme-quartz-custom">
+    <div className="w-full h-full ag-theme-quartz-custom flex flex-col">
       <AgGridReact
         getRowId={(p) => p.data.stock}
         rowData={rowData}
@@ -401,6 +401,12 @@ export default function BaseTable() {
             ${t("no-data")}
           </div>`}
       />
+      <div className="text-[10px] flex items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
+        Giá x 1,000 VNĐ. Khối lượng x 1. Giá trị x 1,000,000,000 VNĐ.{" "}
+        <span className="text-content-disable hidden md:hidden">
+          Bản quyền thuộc về LHC © 2026.
+        </span>
+      </div>
     </div>
   );
 }

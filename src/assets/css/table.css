@@ -10,6 +10,7 @@
 
 .ag-theme-quartz-custom {
   border-radius: 8px;
+  border-bottom: none !important;
 }
 
 .ag-body-horizontal-scroll-viewport,
@@ -58,9 +59,8 @@
   justify-content: center;
 }
 
-.ag-header-cell,
-.ag-header-group-cell {
-  padding: 0;
+.ag-header-cell:not(:last-child),
+.ag-header-group-cell:not(:last-child) {
   border-right: 1px solid var(--border);
 }
 
@@ -76,4 +76,9 @@
   font-size: clamp(10px, 0.8vw, 12px);
   font-weight: 500 !important;
   text-align: center;
+}
+
+.ag-layout-normal {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
