@@ -3,6 +3,7 @@ import {
   CellStyleModule,
   ClientSideRowModelModule,
   ModuleRegistry,
+  RowDragModule,
   type CellClassParams,
   type CellStyle,
   type ColDef,
@@ -13,7 +14,11 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { rowData } from "./data";
 
-ModuleRegistry.registerModules([ClientSideRowModelModule, CellStyleModule]);
+ModuleRegistry.registerModules([
+  ClientSideRowModelModule,
+  CellStyleModule,
+  RowDragModule,
+]);
 
 interface RowData {
   ceil: number;
@@ -112,6 +117,7 @@ const coloredCellStyle = (
     color: "#ffffff",
   };
 };
+
 export default function BaseTable() {
   const { t } = useTranslation();
 
@@ -122,10 +128,12 @@ export default function BaseTable() {
         headerName: t("symbol"),
         width: 60, // giữ width cố định vì pinned
         minWidth: 55,
-        maxWidth: 65,
+        maxWidth: 55,
         pinned: "left",
-        suppressSizeToFit: true,
+        lockPinned: true,
         cellStyle: coloredCellStyle,
+        suppressMovable: true,
+        lockPosition: "left",
       },
 
       // Giá tham chiếu
@@ -157,12 +165,11 @@ export default function BaseTable() {
       // Bên mua
       {
         headerName: t("bid"),
-        marryChildren: true,
         children: [
           {
             field: "buyPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 48,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -170,7 +177,7 @@ export default function BaseTable() {
           {
             field: "buyVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -178,7 +185,7 @@ export default function BaseTable() {
           {
             field: "buyPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 48,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -186,7 +193,7 @@ export default function BaseTable() {
           {
             field: "buyVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -194,7 +201,7 @@ export default function BaseTable() {
           {
             field: "buyPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 48,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -202,7 +209,7 @@ export default function BaseTable() {
           {
             field: "buyVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -213,37 +220,35 @@ export default function BaseTable() {
       // Khớp lệnh
       {
         headerName: `${t("matched")}`,
-        marryChildren: true,
         children: [
           {
             field: "matchPrice",
             headerName: `${t("p")}`,
-            minWidth: 50,
+            minWidth: 55,
             flex: 1,
             cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
           },
           {
             field: "matchVol",
             headerName: t("vol"),
-            minWidth: 50,
-            flex: 1,
+            minWidth: 65,
+            flex: 1.2,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
           {
             field: "change",
             headerName: "+/-",
-            minWidth: 50,
-            flex: 0.5,
+            minWidth: 40,
+            flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
           {
             field: "changePct",
             headerName: "%",
-            minWidth: 50,
-            flex: 0.5,
+            minWidth: 40,
+            flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: changePctFormatter,
           },
@@ -253,12 +258,11 @@ export default function BaseTable() {
       // Bên bán
       {
         headerName: `${t("asked")}`,
-        marryChildren: true,
         children: [
           {
             field: "sellPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 45,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -266,7 +270,7 @@ export default function BaseTable() {
           {
             field: "sellVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -274,7 +278,7 @@ export default function BaseTable() {
           {
             field: "sellPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 45,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -282,7 +286,7 @@ export default function BaseTable() {
           {
             field: "sellVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -290,7 +294,7 @@ export default function BaseTable() {
           {
             field: "sellPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 45,
+            minWidth: 46,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -298,7 +302,7 @@ export default function BaseTable() {
           {
             field: "sellVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 45,
+            minWidth: 55,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -307,14 +311,7 @@ export default function BaseTable() {
       },
 
       // Thông tin khác
-      {
-        field: "totalVolume",
-        headerName: `${t("total-vol")}`,
-        minWidth: 65,
-        flex: 1.5,
-        valueFormatter: volFormatter,
-        cellStyle: coloredCellStyle,
-      },
+
       {
         field: "high",
         headerName: `${t("high")}`,
@@ -331,31 +328,36 @@ export default function BaseTable() {
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
-
+      {
+        field: "totalVolume",
+        headerName: `${t("total-vol")}`,
+        minWidth: 70,
+        flex: 1.5,
+        valueFormatter: volFormatter,
+      },
       // Nhà đầu tư nước ngoài
       {
         headerName: `${t("foreign")}`,
         headerClass: "text-xs text-center",
-        marryChildren: true,
         children: [
           {
             field: "nnBuy",
             headerName: `${t("fbuy")}`,
-            minWidth: 55,
+            minWidth: 70,
             flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnSell",
             headerName: `${t("fsell")}`,
-            minWidth: 55,
+            minWidth: 70,
             flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnRoom",
             headerName: `${t("room")}`,
-            minWidth: 55,
+            minWidth: 70,
             flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
@@ -400,10 +402,16 @@ export default function BaseTable() {
           <div class="md:text-sm text-xs py-4">
             ${t("no-data")}
           </div>`}
+        suppressMoveWhenColumnDragging={true}
+        suppressDragLeaveHidesColumns={true}
+        rowDragManaged={true}
+        suppressMoveWhenRowDragging={true}
       />
-      <div className="text-[10px] flex items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
-        Giá x 1,000 VNĐ. Khối lượng x 1. Giá trị x 1,000,000,000 VNĐ.{" "}
-        <span className="text-content-disable hidden md:hidden">
+      <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
+        <span>Giá x 1,000 VNĐ.</span>
+        <span>Khối lượng x 1.</span>
+        <span>Giá trị x 1,000,000 VNĐ.</span>
+        <span className="text-content-disable hidden md:block">
           Bản quyền thuộc về LHC © 2026.
         </span>
       </div>
