@@ -30,5 +30,7 @@
   "vol": "Vol",
   "fbuy": "Fbuy",
   "fsell": "Fsell",
-  "room": "Room"
+  "room": "Room",
+
+  "pin-detail": "Double click to pin - Drag & drop to sort row"
 }

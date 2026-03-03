@@ -3,22 +3,24 @@ import {
   CellStyleModule,
   ClientSideRowModelModule,
   ModuleRegistry,
+  PinnedRowModule,
   RowDragModule,
   type CellClassParams,
   type CellStyle,
   type ColDef,
   type ColGroupDef,
-  type RowSelectionOptions,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { rowData } from "./data";
+import PinRow from "./PinRow";
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
   CellStyleModule,
   RowDragModule,
+  PinnedRowModule,
 ]);
 
 interface RowData {
@@ -125,6 +127,15 @@ export default function BaseTable() {
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
       {
+        field: "pinRow",
+        headerName: " ",
+        width: 30,
+        pinned: "left",
+        lockPinned: true,
+        lockPosition: "left",
+        cellRenderer: PinRow,
+      },
+      {
         field: "stock",
         headerName: t("symbol"),
         width: 60, // giữ width cố định vì pinned
@@ -132,9 +143,8 @@ export default function BaseTable() {
         maxWidth: 55,
         pinned: "left",
         lockPinned: true,
-        cellStyle: coloredCellStyle,
-        suppressMovable: true,
         lockPosition: "left",
+        cellStyle: coloredCellStyle,
       },
 
       // Giá tham chiếu
@@ -370,12 +380,6 @@ export default function BaseTable() {
     [t],
   );
 
-  const rowSelection = useMemo<
-    RowSelectionOptions | "single" | "multiple"
-  >(() => {
-    return { mode: "multiRow" };
-  }, []);
-
   const defaultColDef = useMemo<ColDef>(
     () => ({
       sortable: true,
@@ -413,9 +417,7 @@ export default function BaseTable() {
         suppressDragLeaveHidesColumns={true}
         suppressMoveWhenRowDragging={true}
         rowDragManaged={true}
-        rowDragEntireRow={true}
-        rowDragMultiRow={true}
-        rowSelection={rowSelection}
+        enableRowPinning={true}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>Giá x 1,000 VNĐ.</span>
