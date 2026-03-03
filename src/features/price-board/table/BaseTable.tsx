@@ -8,6 +8,7 @@ import {
   type CellStyle,
   type ColDef,
   type ColGroupDef,
+  type RowSelectionOptions,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
@@ -369,6 +370,12 @@ export default function BaseTable() {
     [t],
   );
 
+  const rowSelection = useMemo<
+    RowSelectionOptions | "single" | "multiple"
+  >(() => {
+    return { mode: "multiRow" };
+  }, []);
+
   const defaultColDef = useMemo<ColDef>(
     () => ({
       sortable: true,
@@ -404,8 +411,11 @@ export default function BaseTable() {
           </div>`}
         suppressMoveWhenColumnDragging={true}
         suppressDragLeaveHidesColumns={true}
-        rowDragManaged={true}
         suppressMoveWhenRowDragging={true}
+        rowDragManaged={true}
+        rowDragEntireRow={true}
+        rowDragMultiRow={true}
+        rowSelection={rowSelection}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>Giá x 1,000 VNĐ.</span>
