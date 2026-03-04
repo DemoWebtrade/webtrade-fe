@@ -14,31 +14,36 @@
 }
 
 .ag-body-horizontal-scroll-viewport,
+.ag-body-vertical-scroll,
 .ag-body-viewport {
   scrollbar-width: thin;
   scrollbar-color: #475569 transparent;
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar,
+.ag-body-vertical-scroll::-webkit-scrollbar,
 .ag-body-viewport::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
+  height: 6px !important;
+  width: 6px !important;
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-track,
+.ag-body-vertical-scroll::-webkit-scrollbar-track,
 .ag-body-viewport::-webkit-scrollbar-track {
-  background: transparent;
+  background: transparent !important;
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb,
+.ag-body-vertical-scroll::-webkit-scrollbar-thumb,
 .ag-body-viewport::-webkit-scrollbar-thumb {
-  background-color: #475569;
-  border-radius: 8px;
+  background-color: #475569 !important;
+  border-radius: 8px !important;
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover,
+.ag-body-vertical-scroll::-webkit-scrollbar-thumb:hover,
 .ag-body-viewport::-webkit-scrollbar-thumb:hover {
-  background-color: #64748b;
+  background-color: #64748b !important;
 }
 
 /* scroll ngang pin */

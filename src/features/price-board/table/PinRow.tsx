@@ -1,27 +1,28 @@
-import { useEffect, useRef } from "react";
-
 import type { CustomCellRendererProps } from "ag-grid-react";
 import { Pin } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function PinRow(props: CustomCellRendererProps) {
   const { t } = useTranslation();
+  const pinRef = useRef<HTMLDivElement>(null);
 
-  const pinRef = useRef(null);
-
+  // Đăng ký row dragger (cho drag để sắp xếp pinned rows nếu cần)
   useEffect(() => {
-    props.registerRowDragger(pinRef.current!);
-  });
+    if (pinRef.current) {
+      props.registerRowDragger(pinRef.current);
+    }
+  }, [props]);
 
   return (
     <div
       ref={pinRef}
-      className="flex items-center justify-center w-full h-full"
+      className="flex items-center justify-center w-full h-full cursor-pointer"
       data-tooltip-id="global-tooltip"
       data-tooltip-content={t("pin-detail")}
       data-tooltip-place="right"
     >
-      <Pin className="size-3 md:size-4" />
+      <Pin className={`size-3 transition-colors`} />
     </div>
   );
 }

@@ -2,9 +2,12 @@ import { numberFormat } from "@/utils";
 import {
   CellStyleModule,
   ClientSideRowModelModule,
+  ColumnAutoSizeModule,
   ModuleRegistry,
   PinnedRowModule,
+  RowApiModule,
   RowDragModule,
+  ValidationModule,
   type CellClassParams,
   type CellStyle,
   type ColDef,
@@ -21,6 +24,9 @@ ModuleRegistry.registerModules([
   CellStyleModule,
   RowDragModule,
   PinnedRowModule,
+  ValidationModule,
+  ColumnAutoSizeModule,
+  RowApiModule,
 ]);
 
 interface RowData {
@@ -84,7 +90,7 @@ const coloredCellStyle = (
     case "matchPrice":
     case "changePct":
     case "change":
-    case "stock":
+    case "symbol":
       comparePrice = params.data.matchPrice;
       break;
 
@@ -129,14 +135,14 @@ export default function BaseTable() {
       {
         field: "pinRow",
         headerName: " ",
-        width: 30,
+        width: 28,
         pinned: "left",
         lockPinned: true,
         lockPosition: "left",
         cellRenderer: PinRow,
       },
       {
-        field: "stock",
+        field: "symbol",
         headerName: t("symbol"),
         width: 60, // giữ width cố định vì pinned
         minWidth: 55,
@@ -394,7 +400,7 @@ export default function BaseTable() {
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col">
       <AgGridReact
-        getRowId={(p) => p.data.stock}
+        getRowId={(p) => p.data.symbol}
         rowData={rowData}
         loading={loading}
         columnDefs={columnDefs}
@@ -418,6 +424,7 @@ export default function BaseTable() {
         suppressMoveWhenRowDragging={true}
         rowDragManaged={true}
         enableRowPinning={true}
+        // debounceVerticalScrollbar={true}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>Giá x 1,000 VNĐ.</span>

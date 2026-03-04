@@ -11,8 +11,13 @@ export default function MenuBoard() {
 
   return (
     <div className="w-full h-full flex flex-row md:gap-2 gap-1.5 items-center">
-      {MENU_BOARD.map((t) => (
-        <ShiftingDropDown t={t} id={id} handleChangeId={handleChangeId} />
+      {MENU_BOARD.map((t, index) => (
+        <ShiftingDropDown
+          key={index}
+          t={t}
+          id={id}
+          handleChangeId={handleChangeId}
+        />
       ))}
     </div>
   );
