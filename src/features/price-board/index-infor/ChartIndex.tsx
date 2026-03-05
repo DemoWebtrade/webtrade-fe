@@ -236,19 +236,7 @@ const ChartIndex = (props: Props) => {
       }
     });
 
-    // Xử lý resize
-    const handleResize = () => {
-      if (chartContainerRef.current) {
-        chart.resize(
-          chartContainerRef.current.clientWidth,
-          chartContainerRef.current.clientHeight,
-        );
-      }
-    };
-    window.addEventListener("resize", handleResize);
-
     return () => {
-      window.removeEventListener("resize", handleResize);
       if (tooltipRef.current) {
         tooltipRef.current.remove();
       }

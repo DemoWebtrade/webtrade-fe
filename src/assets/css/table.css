@@ -8,6 +8,10 @@
   --ag-inherited-font-family: "Hanken Grotesk";
 }
 
+.ag-floating-top {
+  overflow: hidden !important;
+}
+
 .ag-theme-quartz-custom {
   border-radius: 8px;
   border-bottom: none !important;

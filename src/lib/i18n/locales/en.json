@@ -32,5 +32,6 @@
   "fsell": "Fsell",
   "room": "Room",
 
-  "pin-detail": "Double click to pin - Drag & drop to sort row"
+  "pin-detail": "Double click to pin - Drag & drop to sort row",
+  "unpin-detail": "Double click to unpin - Drag & drop to sort row"
 }

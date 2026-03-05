@@ -1,20 +1,25 @@
 import { numberFormat } from "@/utils";
 import {
   CellStyleModule,
+  ClientSideRowModelApiModule,
   ClientSideRowModelModule,
   ColumnAutoSizeModule,
   ModuleRegistry,
   PinnedRowModule,
   RowApiModule,
   RowDragModule,
+  ScrollApiModule,
+  themeQuartz,
   ValidationModule,
   type CellClassParams,
+  type CellDoubleClickedEvent,
   type CellStyle,
   type ColDef,
   type ColGroupDef,
+  type Theme,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { rowData } from "./data";
 import PinRow from "./PinRow";
@@ -27,6 +32,8 @@ ModuleRegistry.registerModules([
   ValidationModule,
   ColumnAutoSizeModule,
   RowApiModule,
+  ScrollApiModule,
+  ClientSideRowModelApiModule,
 ]);
 
 interface RowData {
@@ -134,6 +141,7 @@ export default function BaseTable() {
     () => [
       {
         field: "pinRow",
+        colId: "pinRow",
         headerName: " ",
         width: 28,
         pinned: "left",
@@ -385,6 +393,43 @@ export default function BaseTable() {
     ],
     [t],
   );
+  const onCellDoubleClicked = useCallback((params: CellDoubleClickedEvent) => {
+    if (params.column.getColId() !== "pinRow") return;
+
+    const rowNode = params.node;
+    if (!rowNode?.data) return;
+
+    const rowData = rowNode.data;
+    const api = params.api;
+
+    // Lấy pinned hiện tại
+    const pinnedRows = [];
+    const count = api.getPinnedTopRowCount();
+
+    for (let i = 0; i < count; i++) {
+      const node = api.getPinnedTopRow(i);
+      if (node?.data) pinnedRows.push(node.data);
+    }
+
+    const isPinned = pinnedRows.some((r) => r.symbol === rowData.symbol);
+
+    if (isPinned) {
+      // Unpin
+      api.setGridOption(
+        "pinnedTopRowData",
+        pinnedRows.filter((r) => r.symbol !== rowData.symbol),
+      );
+
+      api.applyTransaction({
+        add: [rowData],
+      });
+    } else {
+      // Pin
+      api.applyTransaction({ remove: [rowData] });
+
+      api.setGridOption("pinnedTopRowData", [...pinnedRows, rowData]);
+    }
+  }, []);
 
   const defaultColDef = useMemo<ColDef>(
     () => ({
@@ -394,6 +439,14 @@ export default function BaseTable() {
     }),
     [],
   );
+
+  const theme = useMemo<Theme | "legacy">(() => {
+    return themeQuartz.withParams({
+      pinnedRowBorder: {
+        width: 2,
+      },
+    });
+  }, []);
 
   const loading = false;
 
@@ -423,8 +476,8 @@ export default function BaseTable() {
         suppressDragLeaveHidesColumns={true}
         suppressMoveWhenRowDragging={true}
         rowDragManaged={true}
-        enableRowPinning={true}
-        // debounceVerticalScrollbar={true}
+        onCellDoubleClicked={onCellDoubleClicked}
+        theme={theme}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>Giá x 1,000 VNĐ.</span>

@@ -32,5 +32,6 @@
   "fsell": "NN bán",
   "room": "Room",
 
-  "pin-detail": "Click đúp để ghim - Kéo & thả để sắp xếp dòng"
+  "pin-detail": "Click đúp để ghim - Kéo & thả để sắp xếp dòng",
+  "unpin-detail": "Click đúp để bỏ ghim - Kéo & thả để sắp xếp dòng"
 }
