@@ -9,9 +9,7 @@ export default function Login() {
 
   return (
     <>
-      <Button className="w-24" onClick={() => setIsOpen(true)}>
-        {t("login")}
-      </Button>
+      <Button onClick={() => setIsOpen(true)}>{t("login")}</Button>
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );

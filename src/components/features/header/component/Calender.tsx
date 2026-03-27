@@ -26,11 +26,18 @@ export default function Day() {
 
   return (
     <div
-      className="text-xs w-[120xp] relative"
+      className="relative cursor-pointer leading-3"
       ref={containerRef}
       onClick={() => setOpenCalendar((pre) => !pre)}
     >
-      {day}
+      <span
+        className="text-[10px] leading-3"
+        data-tooltip-id="global-tooltip"
+        data-tooltip-content="Bấm để xem lịch giao dịch"
+        data-tooltip-place="right"
+      >
+        {day}
+      </span>
 
       <AnimatePresence>
         {openCalendar && (
@@ -39,7 +46,7 @@ export default function Day() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute w-100 h-100 bg-bg-tertiary border border-border rounded-lg p-2 top-[calc(100%+6px)] right-0 z-10"
+            className="absolute md:w-100 md:h-100 w-60 h-60 bg-bg-tertiary border border-border rounded-lg p-2 top-[calc(100%+8px)] left-0 z-10"
           ></motion.div>
         )}
       </AnimatePresence>

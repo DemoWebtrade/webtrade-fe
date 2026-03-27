@@ -121,15 +121,19 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border">
-      <img src={Logo} alt="logo" className="md:h-14 md:w-14 w-12 h-12" />
+      <div className="flex flex-row items-center gap-2 md:gap-6">
+        <img src={Logo} alt="logo" className="w-12 h-full" />
+        <div className="flex md:flex-row flex-col items-center justify-center md:gap-2 bg-purple-base/50 px-2 rounded-md h-10">
+          {/* Time */}
+          <Time />
+
+          {/* Calender */}
+          <Day />
+        </div>
+      </div>
+
       {/* Chức năng */}
       <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
-        {/* Time */}
-        <Time />
-
-        {/* Calender */}
-        <Day />
-
         <div className="h-4 w-px bg-bg-tertiary md:mx-2 mx-1"></div>
 
         {/* Cài đặt giao diện */}
