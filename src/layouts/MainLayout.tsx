@@ -6,7 +6,7 @@ import { Tooltip } from "react-tooltip";
 export default function MainLayout() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="mode-ui-theme">
-      <main className="h-screen flex flex-col gap-2">
+      <main className="h-screen flex flex-col gap-2 text-content-primary! bg-bg-primary!">
         <div className="h-12">
           <Header />
         </div>

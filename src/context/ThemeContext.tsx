@@ -3,7 +3,15 @@ import {
   type Theme,
   type ThemeProviderProps,
 } from "@/types";
-import { useEffect, useState } from "react";
+import { CssBaseline } from "@mui/material";
+import {
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+  type PaletteMode,
+} from "@mui/material/styles";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useEffect, useMemo, useState } from "react";
 
 export function ThemeProvider({
   children,
@@ -41,9 +49,22 @@ export function ThemeProvider({
     },
   };
 
+  const muiTheme = useMemo(() => {
+    return createTheme({
+      palette: {
+        mode: theme as PaletteMode,
+      },
+    });
+  }, [theme]);
+
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
-      {children}
+      <MuiThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          {children}
+        </LocalizationProvider>
+      </MuiThemeProvider>
     </ThemeProviderContext.Provider>
   );
 }

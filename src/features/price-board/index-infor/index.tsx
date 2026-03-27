@@ -85,7 +85,7 @@ export default function IndexInfor() {
           0: { slidesPerView: 1 },
           500: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
-          1740: { slidesPerView: 4 },
+          1440: { slidesPerView: 4 },
         }}
         zoom={false}
         allowTouchMove={false}
