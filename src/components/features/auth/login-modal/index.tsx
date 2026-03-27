@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/Button";
+import InputField from "@/components/ui/inputs/InputField";
+import apiClient from "@/services/apiClient";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-// ── Variants ────────────────────────────────────────────────────────────────
+import { useCallback, useEffect } from "react";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
+import { toast } from "sonner";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -35,82 +37,59 @@ const modalVariants = {
   },
 } as const;
 
-// ── Types ───────────────────────────────────────────────────────────────────
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
-
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit?: (data: LoginFormData) => Promise<void> | void;
 }
 
-// ── Component ───────────────────────────────────────────────────────────────
+export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm();
 
-export default function LoginModal({
-  isOpen,
-  onClose,
-  onSubmit,
-}: LoginModalProps) {
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
+  const username = useWatch({
+    control,
+    name: "username",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const emailRef = useRef<HTMLInputElement>(null);
 
-  // Auto focus email khi modal mở
-  useEffect(() => {
-    if (isOpen && emailRef.current) {
-      emailRef.current.focus();
-    }
-  }, [isOpen]);
+  const password = useWatch({
+    control,
+    name: "password",
+  });
 
-  // Đóng modal bằng phím Escape
+  const handleClose = useCallback(() => {
+    reset();
+    onClose();
+  }, [reset, onClose]);
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
+        handleClose();
       }
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
+  }, [handleClose]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async () => {
+  const handleLogin = async () => {
     if (isSubmitting) return;
-
-    setIsSubmitting(true);
-
     try {
-      // Nếu có onSubmit từ parent → gọi hàm đó
-      if (onSubmit) {
-        await onSubmit(formData);
-      } else {
-        // Mock API call (thay bằng logic thật của bạn)
-        await new Promise((resolve) => setTimeout(resolve, 1400));
-        console.log("Login attempt:", formData);
-        // Có thể thêm toast, redirect, set auth state...
-      }
+      const res = await apiClient.post("/auth/login", { username, password });
 
-      // Uncomment nếu muốn tự động đóng sau khi thành công
-      // onClose();
+      if (res.data.code === 1) {
+        await new Promise((resolve) => setTimeout(resolve, 1400));
+        toast.success("This is a toast");
+        onClose();
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       console.error("Login error:", error);
-      // Có thể show error message ở đây
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -125,7 +104,7 @@ export default function LoginModal({
             animate="visible"
             exit="exit"
             className="fixed inset-0 bg-black/65 backdrop-blur-sm z-40"
-            onClick={onClose}
+            onClick={handleClose}
           />
 
           {/* Modal */}
@@ -141,7 +120,7 @@ export default function LoginModal({
               <div className="flex items-center justify-between px-6">
                 <h2 className="text-xl font-medium">Đăng nhập</h2>
 
-                <div className="text-content-primary" onClick={onClose}>
+                <div className="text-content-primary" onClick={handleClose}>
                   <X size={20} />
                 </div>
               </div>
@@ -149,25 +128,24 @@ export default function LoginModal({
               <div className="w-full h-px bg-border"></div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              <form
+                onSubmit={handleSubmit(handleLogin)}
+                className="p-6 space-y-5"
+              >
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="username"
                     className="block text-sm font-normal mb-2"
                   >
-                    Email
+                    Tài khoản
                   </label>
-                  <input
-                    ref={emailRef}
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    autoComplete="email"
-                    required
-                    className="w-full px-3 py-[10px] rounded bg-bg-secondary border border-outline-base text-sm text-content-tertiary outline-none transition"
-                    placeholder="example@gmail.com"
+                  <InputField
+                    name="username"
+                    autoComplete="current-username"
+                    registration={register("username", {
+                      required: "Vui lòng nhập Tài khoản",
+                    })}
+                    error={errors?.username as FieldError}
                   />
                 </div>
 
@@ -178,16 +156,14 @@ export default function LoginModal({
                   >
                     Mật khẩu
                   </label>
-                  <input
-                    id="password"
+                  <InputField
                     name="password"
+                    registration={register("password", {
+                      required: "Vui lòng nhập Mật khẩu",
+                    })}
                     type="password"
-                    value={formData.password}
-                    onChange={handleChange}
                     autoComplete="current-password"
-                    required
-                    className="w-full px-3 py-[10px] rounded bg-bg-secondary border border-outline-base text-sm text-content-tertiary outline-none transition"
-                    placeholder="••••••••"
+                    error={errors?.password as FieldError}
                   />
                 </div>
 

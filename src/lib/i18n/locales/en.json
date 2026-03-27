@@ -32,6 +32,13 @@
   "fsell": "Fsell",
   "room": "Room",
 
+  "price": "Price {{price}} VND.",
+  "volume": "Volume  x {{volume}}.",
+  "value": "Value x {{value}} VND.",
+  "copy-right": "Copyright LHC © 2026. All rights reserved.",
+
   "pin-detail": "Double click to pin - Drag & drop to sort row",
-  "unpin-detail": "Double click to unpin - Drag & drop to sort row"
+  "unpin-detail": "Double click to unpin - Drag & drop to sort row",
+
+  "change-col": "Drag & drop to sort column"
 }

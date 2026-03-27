@@ -6,6 +6,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Earth, Expand, Lightbulb, Settings, Shrink } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Day from "./component/Calender";
 import LanguageSetting from "./component/LanguageSetting";
 import Login from "./component/Login";
 import ThemeSetting from "./component/ThemeSetting";
@@ -125,6 +126,9 @@ export default function Header() {
       <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
         {/* Time */}
         <Time />
+
+        {/* Calender */}
+        <Day />
 
         <div className="h-4 w-px bg-bg-tertiary md:mx-2 mx-1"></div>
 

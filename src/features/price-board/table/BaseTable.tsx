@@ -10,6 +10,7 @@ import {
   RowDragModule,
   ScrollApiModule,
   themeQuartz,
+  TooltipModule,
   ValidationModule,
   type CellClassParams,
   type CellDoubleClickedEvent,
@@ -23,6 +24,7 @@ import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { rowData } from "./data";
 import PinRow from "./PinRow";
+import SymbolRow from "./SymbolRow";
 
 ModuleRegistry.registerModules([
   ClientSideRowModelModule,
@@ -34,6 +36,7 @@ ModuleRegistry.registerModules([
   RowApiModule,
   ScrollApiModule,
   ClientSideRowModelApiModule,
+  TooltipModule,
 ]);
 
 interface RowData {
@@ -158,6 +161,7 @@ export default function BaseTable() {
         pinned: "left",
         lockPinned: true,
         lockPosition: "left",
+        cellRenderer: SymbolRow,
         cellStyle: coloredCellStyle,
       },
 
@@ -436,8 +440,9 @@ export default function BaseTable() {
       sortable: true,
       resizable: false,
       headerClass: "text-xs! font-normal! border-r! border-border!",
+      headerTooltip: `${t("change-col")}`,
     }),
-    [],
+    [t],
   );
 
   const theme = useMemo<Theme | "legacy">(() => {
@@ -478,13 +483,15 @@ export default function BaseTable() {
         rowDragManaged={true}
         onCellDoubleClicked={onCellDoubleClicked}
         theme={theme}
+        tooltipShowDelay={0}
+        tooltipHideDelay={2000}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
-        <span>Giá x 1,000 VNĐ.</span>
-        <span>Khối lượng x 1.</span>
-        <span>Giá trị x 1,000,000 VNĐ.</span>
+        <span>{t("price", { price: "1,000" })}</span>
+        <span>{t("volume", { volume: "1" })}</span>
+        <span>{t("value", { value: "1,000,000" })} </span>
         <span className="text-content-disable hidden md:block">
-          Bản quyền thuộc về LHC © 2026.
+          {t("copy-right")}
         </span>
       </div>
     </div>

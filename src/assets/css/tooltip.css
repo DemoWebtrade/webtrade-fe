@@ -1,11 +1,4 @@
 #global-tooltip {
   z-index: 999999 !important;
-  font-size: 12px !important;
-}
-
-@media screen and (max-width: 48rem) {
-  #global-tooltip {
-    font-size: 10px !important;
-    padding: 7px 4px !important;
-  }
+  font-size: clamp(10px, 0.8vw, 12px) !important;
 }

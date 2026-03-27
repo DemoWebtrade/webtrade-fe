@@ -1,4 +1,5 @@
 import Header from "@/components/features/header";
+import Toaster from "@/components/features/toaster";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
@@ -16,6 +17,8 @@ export default function MainLayout() {
       </main>
 
       <Tooltip id="global-tooltip" />
+
+      <Toaster />
     </ThemeProvider>
   );
 }

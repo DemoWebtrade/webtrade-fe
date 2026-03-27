@@ -32,6 +32,13 @@
   "fsell": "NN bán",
   "room": "Room",
 
+  "price": "Giá {{price}} VNĐ.",
+  "volume": "Khối lượng  x {{volume}}.",
+  "value": "Giá trị x {{value}} VNĐ.",
+  "copy-right": "Bản quyền thuộc về LHC © 2026.",
+
   "pin-detail": "Click đúp để ghim - Kéo & thả để sắp xếp dòng",
-  "unpin-detail": "Click đúp để bỏ ghim - Kéo & thả để sắp xếp dòng"
+  "unpin-detail": "Click đúp để bỏ ghim - Kéo & thả để sắp xếp dòng",
+
+  "change-col": "Kéo & thả để sắp xếp cột"
 }

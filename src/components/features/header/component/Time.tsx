@@ -3,11 +3,13 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Time() {
   return (
-    <div className="flex w-max items-center justify-center text-content-primary text-sm font-semibold">
-      <ClockItem type="hour" /> :
-      <ClockItem type="minute" /> :
-      <ClockItem type="second" />
-    </div>
+    <>
+      <div className="flex w-max items-center justify-center text-content-primary text-sm font-semibold">
+        <ClockItem type="hour" /> :
+        <ClockItem type="minute" /> :
+        <ClockItem type="second" />
+      </div>
+    </>
   );
 }
 
