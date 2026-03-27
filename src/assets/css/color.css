@@ -19,6 +19,7 @@
 
   /* Background */
   --color-bg-primary: var(--bg-primary); /* nền chính */
+  --mantine-color-body: var(--bg-primary); /* nền chính */
   --color-bg-secondary: var(--bg-secondary); /* card */
   --color-bg-tertiary: var(--bg-tertiary); /* divider */
   --color-bg-blue: var(--bg-blue);

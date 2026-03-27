@@ -10,13 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@headlessui/react": "^2.2.9",
+    "@mui/styled-engine": "^7.3.9",
+    "@mui/x-date-pickers": "^8.27.2",
     "@tailwindcss/vite": "^4.1.18",
     "ag-grid-community": "^35.0.1",
     "ag-grid-react": "^35.0.1",
     "axios": "^1.13.6",
     "big.js": "^7.0.1",
     "class-variance-authority": "^0.7.1",
+    "dayjs": "^1.11.20",
     "framer-motion": "^12.29.2",
     "i18next": "^25.8.0",
     "lightweight-charts": "^5.1.0",
