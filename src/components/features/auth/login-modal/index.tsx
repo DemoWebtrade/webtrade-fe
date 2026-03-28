@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useForm, useWatch, type FieldError } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 const backdropVariants = {
@@ -43,6 +44,7 @@ interface LoginModalProps {
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -118,7 +120,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             >
               {/* Header */}
               <div className="flex items-center justify-between px-6">
-                <h2 className="text-xl font-medium">Đăng nhập</h2>
+                <h2 className="text-xl font-medium">{t("login")}</h2>
 
                 <div className="text-content-primary" onClick={handleClose}>
                   <X size={20} />
@@ -137,13 +139,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     htmlFor="username"
                     className="block text-sm font-normal mb-2"
                   >
-                    Tài khoản
+                    {t("username")}
                   </label>
                   <InputField
                     name="username"
                     autoComplete="current-username"
                     registration={register("username", {
-                      required: "Vui lòng nhập Tài khoản",
+                      required: t("validate.username-required"),
                     })}
                     error={errors?.username as FieldError}
                   />
@@ -154,12 +156,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     htmlFor="password"
                     className="block text-sm font-normal mb-2"
                   >
-                    Mật khẩu
+                    {t("password")}
                   </label>
                   <InputField
                     name="password"
                     registration={register("password", {
-                      required: "Vui lòng nhập Mật khẩu",
+                      required: t("validate.password-required"),
                     })}
                     type="password"
                     autoComplete="current-password"
@@ -176,20 +178,20 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   {isSubmitting ? (
                     <div className="flex items-center justify-center gap-2.5">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Đang xử lý...</span>
+                      <span>{t("loading")}</span>
                     </div>
                   ) : (
-                    "Đăng nhập"
+                    t("login")
                   )}
                 </Button>
 
                 <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-                  Chưa có tài khoản?{" "}
+                  {t("no-account")}{" "}
                   <a
                     href="#"
                     className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
                   >
-                    Đăng ký ngay
+                    {t("now-register")}
                   </a>
                 </div>
               </form>

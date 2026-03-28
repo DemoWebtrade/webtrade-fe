@@ -1,4 +1,5 @@
 import { useTheme } from "@/hooks/useTheme";
+import i18n from "@/lib/i18n";
 import { getCssVar, numberFormat } from "@/utils";
 import {
   type BaselineData,
@@ -14,7 +15,8 @@ import {
   type Time,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   openIndex: number;
@@ -32,6 +34,7 @@ interface Props {
 const ChartIndex = (props: Props) => {
   const { openIndex, data } = props;
 
+  const { t } = useTranslation();
   const { theme } = useTheme();
 
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
@@ -51,9 +54,11 @@ const ChartIndex = (props: Props) => {
       volumeSeriesRef.current as ISeriesApi<"Histogram">,
     ) as HistogramData<Time> | undefined;
 
-    // Format thời gian theo múi giờ Việt Nam
+    // Format thời gian theo múi giờ
+    const locale = i18n.language === "vi" ? "vi-VN" : "en-US";
+
     const timeStr = param.time
-      ? new Date((param.time as number) * 1000).toLocaleString("vi-VN", {
+      ? new Date((param.time as number) * 1000).toLocaleString(locale, {
           timeZone: "Asia/Ho_Chi_Minh",
           hour12: false,
           hour: "2-digit",
@@ -64,15 +69,15 @@ const ChartIndex = (props: Props) => {
 
     let content = `
     <div class="flex flex-row gap-2 ">
-      <div>Time: ${timeStr}</div>
+      <div>${i18n.t("time")}: ${timeStr}</div>
     `;
 
     if (priceData?.value !== undefined) {
-      content += `<div>Price: ${numberFormat(priceData.value, 0, "-")}</div>`;
+      content += `<div>${i18n.t("price")}: ${numberFormat(priceData.value, 0, "-")}</div>`;
     }
 
     if (volumeData?.value !== undefined) {
-      content += `<div>Volume: ${numberFormat(volumeData?.value, 0, "-")}</div>`;
+      content += `<div>${i18n.t("volume")}: ${numberFormat(volumeData?.value, 0, "-")}</div>`;
     }
 
     content += `</div>`;
@@ -80,7 +85,7 @@ const ChartIndex = (props: Props) => {
     tooltipRef.current.innerHTML = content;
   }
 
-  const handleGetTooltip = () => {
+  const handleGetTooltip = useCallback(() => {
     if (tooltipRef.current) {
       const lastIndex = data.t.length - 1;
       if (lastIndex >= 0) {
@@ -88,7 +93,9 @@ const ChartIndex = (props: Props) => {
         const lastPrice = data.c[lastIndex];
         const lastVolume = data.v[lastIndex];
 
-        const timeStr = new Date(lastTime * 1000).toLocaleString("vi-VN", {
+        const locale = i18n.language === "vi" ? "vi-VN" : "en-US";
+
+        const timeStr = new Date(lastTime * 1000).toLocaleString(locale, {
           timeZone: "Asia/Ho_Chi_Minh",
           hour12: false,
           hour: "2-digit",
@@ -97,15 +104,15 @@ const ChartIndex = (props: Props) => {
         });
 
         tooltipRef.current.innerHTML = `<div class="flex flex-row gap-2">
-  <div>Time: ${timeStr}</div>
-  <div>Price: ${numberFormat(lastPrice, 0, "-")}</div>
-  <div>Volume: ${numberFormat(lastVolume, 0, "-")}</div>
+  <div>${i18n.t("time")}: ${timeStr}</div>
+  <div>${i18n.t("price")}: ${numberFormat(lastPrice, 0, "-")}</div>
+  <div>${i18n.t("volume")}: ${numberFormat(lastVolume, 0, "-")}</div>
 </div>`;
       } else {
         tooltipRef.current.innerHTML = "";
       }
     }
-  };
+  }, [t, data]);
 
   useEffect(() => {
     if (!chartContainerRef.current) {

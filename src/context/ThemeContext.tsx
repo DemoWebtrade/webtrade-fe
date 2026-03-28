@@ -11,7 +11,14 @@ import {
 } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import updateLocale from "dayjs/plugin/updateLocale";
 import { useEffect, useMemo, useState } from "react";
+
+dayjs.extend(updateLocale);
+dayjs.updateLocale("en", {
+  weekStart: 1,
+});
 
 export function ThemeProvider({
   children,

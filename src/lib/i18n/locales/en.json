@@ -13,6 +13,10 @@
   "price-board": "Price Board",
   "no-data": "No data available!",
 
+  "time": "Time",
+  "price": "Price",
+  "volume": "Volume",
+
   "watchlist": "Watchlist",
 
   "symbol": "Symbol",
@@ -32,13 +36,44 @@
   "fsell": "Fsell",
   "room": "Room",
 
-  "price": "Price {{price}} VND.",
-  "volume": "Volume  x {{volume}}.",
-  "value": "Value x {{value}} VND.",
+  "price-table": "Price {{price}} VND.",
+  "volume-table": "Volume  x {{volume}}.",
+  "value-table": "Value x {{value}} VND.",
   "copy-right": "Copyright LHC © 2026. All rights reserved.",
 
   "pin-detail": "Double click to pin - Drag & drop to sort row",
   "unpin-detail": "Double click to unpin - Drag & drop to sort row",
 
-  "change-col": "Drag & drop to sort column"
+  "change-col": "Drag & drop to sort column",
+
+  "trading-calender": "View trading calendar",
+  "pre-month": "Previous month",
+  "next-month": "Next month",
+
+  "trading-tooltip": {
+    "default": "Official non-trading day",
+    "2026-01-01": "New Year's Day - Market closed",
+    "2026-02-17": "Lunar New Year Holiday - Market closed",
+    "2026-02-18": "Lunar New Year Holiday - Market closed",
+    "2026-02-19": "Lunar New Year Holiday - Market closed",
+    "2026-02-20": "Lunar New Year Holiday - Market closed",
+    "2026-02-21": "Lunar New Year Holiday - Market closed",
+    "2026-02-22": "Lunar New Year Holiday - Market closed",
+    "2026-02-23": "Lunar New Year Holiday - Market closed",
+    "2026-04-26": "Hung Kings Commemoration Day - Market closed",
+    "2026-04-30": "Reunification Day - Market closed",
+    "2026-05-01": "International Workers' Day - Market closed",
+    "2026-09-02": "National Day - Market closed"
+  },
+
+  "username": "Username",
+  "password": "Password",
+  "no-account": "Don't have an account?",
+  "now-register": "Sign up now",
+  "loading": "Loading...",
+
+  "validate": {
+    "username-required": "Username is required",
+    "password-required": "Password is required"
+  }
 }

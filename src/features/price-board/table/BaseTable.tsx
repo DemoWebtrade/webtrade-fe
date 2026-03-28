@@ -488,9 +488,9 @@ export default function BaseTable() {
         tooltipHideDelay={2000}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
-        <span>{t("price", { price: "1,000" })}</span>
-        <span>{t("volume", { volume: "1" })}</span>
-        <span>{t("value", { value: "1,000,000" })} </span>
+        <span>{t("price-table", { price: "1,000" })}</span>
+        <span>{t("volume-table", { volume: "1" })}</span>
+        <span>{t("value-table", { value: "1,000,000" })} </span>
         <span className="text-content-disable hidden md:block">
           {t("copy-right")}
         </span>

@@ -13,6 +13,10 @@
   "price-board": "Bảng giá",
   "no-data": "Không có dữ liệu!",
 
+  "time": "Giờ",
+  "price": "Giá",
+  "volume": "Khối lượng",
+
   "watchlist": "Danh mục của tôi",
 
   "symbol": "CK",
@@ -32,13 +36,44 @@
   "fsell": "NN bán",
   "room": "Room",
 
-  "price": "Giá {{price}} VNĐ.",
-  "volume": "Khối lượng  x {{volume}}.",
-  "value": "Giá trị x {{value}} VNĐ.",
+  "price-table": "Giá {{price}} VNĐ.",
+  "volume-table": "Khối lượng  x {{volume}}.",
+  "value-table": "Giá trị x {{value}} VNĐ.",
   "copy-right": "Bản quyền thuộc về LHC © 2026.",
 
   "pin-detail": "Click đúp để ghim - Kéo & thả để sắp xếp dòng",
   "unpin-detail": "Click đúp để bỏ ghim - Kéo & thả để sắp xếp dòng",
 
-  "change-col": "Kéo & thả để sắp xếp cột"
+  "change-col": "Kéo & thả để sắp xếp cột",
+
+  "trading-calender": "Xem lịch giao dịch",
+  "pre-month": "Tháng trước",
+  "next-month": "Tháng sau",
+
+  "trading-tooltip": {
+    "default": "Ngày nghỉ giao dịch chính thức",
+    "2026-01-01": "Tết Dương lịch - Thị trường đóng cửa",
+    "2026-02-17": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-18": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-19": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-20": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-21": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-22": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-02-23": "Tết Nguyên Đán - Thị trường đóng cửa",
+    "2026-04-26": "Giỗ Tổ Hùng Vương - Thị trường đóng cửa",
+    "2026-04-30": "Ngày Giải phóng miền Nam - Thị trường đóng cửa",
+    "2026-05-01": "Quốc tế Lao động - Thị trường đóng cửa",
+    "2026-09-02": "Quốc khánh - Thị trường đóng cửa"
+  },
+
+  "username": "Tài khoản",
+  "password": "Mật khẩu",
+  "no-account": "Chưa có tài khoản?",
+  "now-register": "Đăng ký ngay",
+  "loading": "Đang xử lý...",
+
+  "validate": {
+    "username-required": "Tài khoản không được để trống",
+    "password-required": "Mật khẩu không được để trống"
+  }
 }
