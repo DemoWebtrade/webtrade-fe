@@ -65,7 +65,7 @@ export default function Day() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute md:w-76 md:h-75 w-60 h-65 bg-bg-tertiary border border-border rounded-lg px-2 top-[calc(100%+8px)] md:top-[calc(100%+20px)] -left-1 md:-left-20 z-10"
+            className="absolute md:w-76 md:h-75 w-60 h-68 bg-bg-tertiary border border-border rounded-lg px-2 top-[calc(100%+8px)] md:top-[calc(100%+20px)] -left-1 md:-left-20 z-10"
           >
             <DateCalendar defaultValue={dayjs()} readOnly />
           </motion.div>

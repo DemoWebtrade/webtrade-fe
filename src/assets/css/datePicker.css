@@ -1,50 +1,40 @@
-.css-5wchs2-MuiDateCalendar-root {
+.MuiDateCalendar-root {
   width: 100% !important;
   height: 100% !important;
 }
 
-.css-1nxbkmn-MuiPickersCalendarHeader-root {
+.MuiPickersCalendarHeader-root {
   padding-left: 12px !important;
 }
 
-.css-su1ucx-MuiYearCalendar-root {
+.MuiYearCalendar-root {
   width: auto !important;
-}
-
-/* label */
-.css-cyfsxc-MuiPickersCalendarHeader-labelContainer {
-  font-size: clamp(14px, 1.2vw, 16px) !important;
-}
-
-.css-17v5fvl-MuiButtonBase-root-MuiPickersDay-root {
-  font-size: clamp(10px, 0.8vw, 12px) !important;
-}
-
-.css-1deag3q-MuiDayCalendar-slideTransition {
-  min-height: 230px !important;
-}
-
-.css-f0b708-MuiTypography-root-MuiDayCalendar-weekDayLabel {
-  font-size: clamp(12px, 1vw, 14px) !important;
-}
-
-.css-lnfsi9-MuiYearCalendar-button {
-  font-size: clamp(12px, 1vw, 14px) !important;
-}
-.css-su1ucx-MuiYearCalendar-root {
-  -webkit-column-gap: 4px !important;
   column-gap: 4px !important;
 }
 
-.css-lnfsi9-MuiYearCalendar-button {
+.MuiPickersCalendarHeader-labelContainer {
+  font-size: clamp(14px, 1.2vw, 16px) !important;
+}
+
+.MuiPickersDay-root {
+  font-size: clamp(10px, 0.8vw, 12px) !important;
+}
+
+.MuiDayCalendar-slideTransition {
+  min-height: 230px !important;
+}
+
+.MuiDayCalendar-weekDayLabel {
+  font-size: clamp(12px, 1vw, 14px) !important;
+}
+
+.MuiYearCalendar-button {
+  font-size: clamp(12px, 1vw, 14px) !important;
   width: 52px !important;
 }
 
 @media screen and (max-width: 767px) {
-  .css-17v5fvl-MuiButtonBase-root-MuiPickersDay-root {
-    height: 27px !important;
-  }
-  .css-39nw31-MuiButtonBase-root-MuiPickersDay-root {
+  .MuiPickersDay-root {
     height: 27px !important;
   }
 }
