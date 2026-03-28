@@ -5,7 +5,7 @@
   --text-lg: clamp(16px, 1.5vw, 18px);
   --text-xl: clamp(18px, 2vw, 22px);
   --text-2xl: clamp(20px, 2vw, 28px);
-  --text-[10px]: clamp(6px, 1vw, 10px);
+  --text-min: clamp(8px, 1vw, 10px);
 
   --gap-0: 0;
   --gap-1: clamp(4px, 0.5vw, 4px);
@@ -22,5 +22,5 @@
   --spacing-4: clamp(16px, 2vw, 16px);
   --spacing-6: clamp(24px, 2.5vw, 24px);
   --spacing-8: clamp(32px, 3vw, 32px);
-  --spacing-[10px]: clamp(10px, 1vw, 10px);
+  --spacing-min: clamp(10px, 1vw, 10px);
 }

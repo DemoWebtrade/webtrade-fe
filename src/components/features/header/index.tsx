@@ -121,9 +121,9 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border">
-      <div className="flex flex-row items-center gap-2 md:gap-6">
+      <div className="flex flex-row items-center md:gap-6">
         <img src={Logo} alt="logo" className="w-12 h-full" />
-        <div className="flex md:flex-row flex-col items-center justify-center md:gap-2 bg-purple-base/50 px-2 rounded-md h-10">
+        <div className="flex md:flex-row flex-col items-center justify-center md:gap-2 md:px-2 px-1 bg-purple-base/50 rounded-md h-10 md:h-8">
           {/* Time */}
           <Time />
 
@@ -134,7 +134,7 @@ export default function Header() {
 
       {/* Chức năng */}
       <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
-        <div className="h-4 w-px bg-bg-tertiary md:mx-2 mx-1"></div>
+        <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
 
         {/* Cài đặt giao diện */}
         <Menu as="div" className="relative inline-block">
@@ -202,7 +202,7 @@ export default function Header() {
           </div>
         )}
 
-        <div className="h-4 w-px bg-bg-tertiary md:mx-2 mx-1"></div>
+        <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
 
         {/* login */}
         <Login />
