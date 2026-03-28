@@ -194,6 +194,7 @@ export default function BaseTable() {
       // Bên mua
       {
         headerName: t("bid"),
+
         children: [
           {
             field: "buyPrice3",
