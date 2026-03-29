@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import Day from "./component/Calender";
 import LanguageSetting from "./component/LanguageSetting";
 import Login from "./component/Login";
+import Slogan from "./component/Slogan";
 import ThemeSetting from "./component/ThemeSetting";
 import Time from "./component/Time";
 
@@ -120,7 +121,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border">
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border md:gap-8 gap-6 max-[425px]:gap-0">
       <div className="flex flex-row items-center md:gap-6">
         <img src={Logo} alt="logo" className="w-12 h-full" />
         <div className="flex md:flex-row flex-col items-center justify-center md:gap-2 md:px-2 px-1 bg-purple-base/50 rounded-md h-10 md:h-8">
@@ -130,6 +131,11 @@ export default function Header() {
           {/* Calender */}
           <Day />
         </div>
+      </div>
+
+      {/* slogan */}
+      <div className="flex-1 max-[425px]:hidden">
+        <Slogan />
       </div>
 
       {/* Chức năng */}
