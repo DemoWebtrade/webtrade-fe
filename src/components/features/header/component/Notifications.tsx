@@ -12,7 +12,10 @@ export default function Notifications() {
   useClickOutside(containerRef, () => setOpen(false));
 
   return (
-    <div ref={containerRef} className="relative">
+    <div
+      ref={containerRef}
+      className="relative flex items-center justify-center"
+    >
       <button
         className="p-1 hover:bg-bg-button rounded-md"
         data-tooltip-id="global-tooltip"
