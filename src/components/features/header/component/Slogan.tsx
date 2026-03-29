@@ -4,7 +4,7 @@ const email = import.meta.env.VITE_EMAIL_URL || "lhc021120@gmail.com";
 
 export default function Slogan() {
   return (
-    <div className="bg-purple-base/10 w-full h-6 flex items-center justify-center rounded overflow-hidden">
+    <div className="bg-purple-base/10 h-6 flex items-center justify-center rounded overflow-hidden">
       <Marquee
         speed={50}
         pauseOnHover={true}

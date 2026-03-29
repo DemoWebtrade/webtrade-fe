@@ -6,10 +6,13 @@
   user-select: none;
   background: var(--bg-primary) !important;
   color: var(--content-primary) !important;
+  height: 100dvh;
+  min-height: 500px;
 }
 
 body {
   font-family: "Hanken Grotesk" !important;
+  height: 100dvh;
 }
 
 .bg-switch {

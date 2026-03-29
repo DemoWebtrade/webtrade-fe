@@ -133,85 +133,87 @@ export default function Header() {
         </div>
       </div>
 
-      {/* slogan */}
-      <div className="flex-1 max-[425px]:hidden">
-        <Slogan />
-      </div>
+      <div className="flex flex-row items-center justify-center gap-4">
+        {/* slogan */}
+        <div className="max-[600px]:hidden min-[600px]:w-60 lg:w-100">
+          <Slogan />
+        </div>
 
-      {/* Chức năng */}
-      <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
-        <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
+        {/* Chức năng */}
+        <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
+          <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
 
-        {/* Cài đặt giao diện */}
-        <Menu as="div" className="relative inline-block">
-          <MenuButton className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
-            <div
-              className="hover:bg-bg-button p-1 rounded-md"
-              data-tooltip-id="global-tooltip"
-              data-tooltip-content={t("setting-view")}
-              data-tooltip-place="left"
+          {/* Cài đặt giao diện */}
+          <Menu as="div" className="relative inline-block">
+            <MenuButton className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
+              <div
+                className="hover:bg-bg-button p-1 rounded-md"
+                data-tooltip-id="global-tooltip"
+                data-tooltip-content={t("setting-view")}
+                data-tooltip-place="left"
+              >
+                <Settings className="size-5" />
+              </div>
+            </MenuButton>
+
+            <MenuItems
+              transition
+              className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-bg-tertiary rounded-md md:w-60 w-44 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
-              <Settings className="size-5" />
-            </div>
-          </MenuButton>
-
-          <MenuItems
-            transition
-            className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-bg-tertiary rounded-md md:w-60 w-44 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-          >
-            <div className="flex flex-col gap-1 md:gap-3">
-              <MenuItem>
-                <div className="flex flex-row items-center justify-between">
-                  <div className="text-sm flex flex-row items-center justify-center gap-2">
-                    <Lightbulb className="size-5 text-red-base" />
-                    <span>{t("topic")}</span>
+              <div className="flex flex-col gap-1 md:gap-3">
+                <MenuItem>
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="text-sm flex flex-row items-center justify-center gap-2">
+                      <Lightbulb className="size-5 text-red-base" />
+                      <span>{t("topic")}</span>
+                    </div>
+                    <ThemeSetting />
                   </div>
-                  <ThemeSetting />
-                </div>
-              </MenuItem>
-              <MenuItem>
-                <div className="flex flex-row items-center justify-between">
-                  <div className="text-sm flex flex-row items-center justify-center gap-2">
-                    <Earth className="size-5 text-red-base" />
-                    <span>{t("language")}</span>
+                </MenuItem>
+                <MenuItem>
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="text-sm flex flex-row items-center justify-center gap-2">
+                      <Earth className="size-5 text-red-base" />
+                      <span>{t("language")}</span>
+                    </div>
+                    <LanguageSetting
+                      language={currentLang || "vi"}
+                      handleChangeLanguage={handleChangeLanguage}
+                    />
                   </div>
-                  <LanguageSetting
-                    language={currentLang || "vi"}
-                    handleChangeLanguage={handleChangeLanguage}
-                  />
-                </div>
-              </MenuItem>
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </Menu>
+
+          {/* Zoom web */}
+          {isZoom ? (
+            <div
+              className="p-1 hover:bg-bg-button rounded-md"
+              data-tooltip-id="global-tooltip"
+              data-tooltip-content={t("shrink-web")}
+              data-tooltip-place="left"
+              onClick={() => handleToggleFullscreen()}
+            >
+              <Shrink className="size-4" />
             </div>
-          </MenuItems>
-        </Menu>
+          ) : (
+            <div
+              className="p-1 hover:bg-bg-button rounded-md"
+              data-tooltip-id="global-tooltip"
+              data-tooltip-content={t("explan-web")}
+              data-tooltip-place="left"
+              onClick={() => handleToggleFullscreen()}
+            >
+              <Expand className="size-4" />
+            </div>
+          )}
 
-        {/* Zoom web */}
-        {isZoom ? (
-          <div
-            className="p-1 hover:bg-bg-button rounded-md"
-            data-tooltip-id="global-tooltip"
-            data-tooltip-content={t("shrink-web")}
-            data-tooltip-place="left"
-            onClick={() => handleToggleFullscreen()}
-          >
-            <Shrink className="size-4" />
-          </div>
-        ) : (
-          <div
-            className="p-1 hover:bg-bg-button rounded-md"
-            data-tooltip-id="global-tooltip"
-            data-tooltip-content={t("explan-web")}
-            data-tooltip-place="left"
-            onClick={() => handleToggleFullscreen()}
-          >
-            <Expand className="size-4" />
-          </div>
-        )}
+          <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
 
-        <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
-
-        {/* login */}
-        <Login />
+          {/* login */}
+          <Login />
+        </div>
       </div>
     </header>
   );

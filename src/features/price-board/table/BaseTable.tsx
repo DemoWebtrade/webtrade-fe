@@ -457,7 +457,7 @@ export default function BaseTable() {
   const loading = false;
 
   return (
-    <div className="w-full h-full ag-theme-quartz-custom flex flex-col">
+    <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
       <AgGridReact
         getRowId={(p) => p.data.symbol}
         rowData={rowData}
