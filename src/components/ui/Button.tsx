@@ -11,7 +11,7 @@ const buttonVariants = cva(
         none: "text-bg-button hover:bg-secondary-hover disable:text-content-disable disable:bg-content-disable",
       },
       size: {
-        default: "md:px-[18px] px-3 py-2 has-[>svg]:px-3",
+        default: "md:px-[18px] md:px-3 px-2 py-2 has-[>svg]:px-3",
       },
     },
     defaultVariants: {

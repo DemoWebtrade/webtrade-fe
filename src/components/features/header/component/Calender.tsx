@@ -1,3 +1,4 @@
+import { useClickOutside } from "@/hooks/useClickOutside";
 import i18n from "@/lib/i18n";
 import type { LanguageKey } from "@/types";
 import { getTooltipContent, isNonTradingDay } from "@/utils";
@@ -5,7 +6,7 @@ import { DateCalendar, PickersDay } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Day() {
@@ -32,22 +33,7 @@ export default function Day() {
     [locale],
   );
 
-  useEffect(() => {
-    const handleCickOutsize = (event: MouseEvent) => {
-      if (
-        containerRef?.current &&
-        !containerRef?.current.contains(event?.target as Node)
-      ) {
-        setOpenCalendar(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleCickOutsize);
-
-    return () => {
-      document.removeEventListener("mousedown", handleCickOutsize);
-    };
-  }, []);
+  useClickOutside(containerRef, () => setOpenCalendar(false));
 
   const currentLang = (i18n.resolvedLanguage ||
     i18n.language ||

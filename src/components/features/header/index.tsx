@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import Day from "./component/Calender";
 import LanguageSetting from "./component/LanguageSetting";
 import Login from "./component/Login";
+import Notifications from "./component/Notifications";
 import Slogan from "./component/Slogan";
 import ThemeSetting from "./component/ThemeSetting";
 import Time from "./component/Time";
@@ -121,7 +122,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary pr-2 border-b border-border md:gap-8 gap-6 max-[425px]:gap-0">
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:pr-2 pr-0.5 border-b border-border md:gap-8 gap-6 max-[425px]:gap-0">
       <div className="flex flex-row items-center md:gap-6">
         <img src={Logo} alt="logo" className="w-12 h-full" />
         <div className="flex md:flex-row flex-col items-center justify-center md:gap-2 md:px-2 px-1 bg-purple-base/50 rounded-md h-10 md:h-8">
@@ -135,13 +136,16 @@ export default function Header() {
 
       <div className="flex flex-row items-center justify-center gap-4">
         {/* slogan */}
-        <div className="max-[600px]:hidden min-[600px]:w-60 lg:w-100">
+        <div className="max-[620px]:hidden min-[620px]:w-50 lg:w-100">
           <Slogan />
         </div>
 
         {/* Chức năng */}
-        <div className="flex flex-row items-center justify-center md:gap-2 gap-1">
-          <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
+        <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1">
+          <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
+
+          {/* Thông báo */}
+          <Notifications />
 
           {/* Cài đặt giao diện */}
           <Menu as="div" className="relative inline-block">
@@ -192,7 +196,6 @@ export default function Header() {
               className="p-1 hover:bg-bg-button rounded-md"
               data-tooltip-id="global-tooltip"
               data-tooltip-content={t("shrink-web")}
-              data-tooltip-place="left"
               onClick={() => handleToggleFullscreen()}
             >
               <Shrink className="size-4" />
@@ -202,14 +205,13 @@ export default function Header() {
               className="p-1 hover:bg-bg-button rounded-md"
               data-tooltip-id="global-tooltip"
               data-tooltip-content={t("explan-web")}
-              data-tooltip-place="left"
               onClick={() => handleToggleFullscreen()}
             >
               <Expand className="size-4" />
             </div>
           )}
 
-          <div className="h-4 w-px bg-bg-tertiary md:mx-2"></div>
+          <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
 
           {/* login */}
           <Login />

@@ -5,10 +5,11 @@
 
   "topic": "Chủ đề",
   "language": "Ngôn ngữ",
-
+  "announce": "Thông báo",
   "setting-view": "Cài đặt giao diện!",
   "explan-web": "Phóng to giao diện",
   "shrink-web": "Thu nhỏ giao diện",
+  "setting-noti": "Cài đặt thông báo",
 
   "price-board": "Bảng giá",
   "no-data": "Không có dữ liệu!",
@@ -75,5 +76,15 @@
   "validate": {
     "username-required": "Tài khoản không được để trống",
     "password-required": "Mật khẩu không được để trống"
+  },
+
+  "slogan": {
+    "detail-1": " Dự án WebTrade cá nhân của LHC - hiện đang phát triển và sẽ sớm được nâng cấp với phiên bản hoàn thiện hơn.",
+    "detail-2": " Nếu muốn góp ý hoặc liên hệ thì liên hệ qua Gmail này:"
+  },
+
+  "noti": {
+    "title": "Thông báo của bạn hiển thị tại đây.",
+    "detail": "Hãy bật thông báo và đăng nhập để nhận những cập nhật mới nhất về thông tin và tài khoản của bạn."
   }
 }

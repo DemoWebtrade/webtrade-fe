@@ -5,10 +5,11 @@
 
   "topic": "Theme",
   "language": "Language",
-
+  "announce": "Notifications",
   "setting-view": "Display Settings",
   "explan-web": "Expand View",
   "shrink-web": "Collapse View",
+  "setting-noti": "Notifications Settings",
 
   "price-board": "Price Board",
   "no-data": "No data available!",
@@ -75,5 +76,14 @@
   "validate": {
     "username-required": "Username is required",
     "password-required": "Password is required"
+  },
+
+  "slogan": {
+    "detail-1": "WebTrade is a personal project by LHC - currently in development, with a more polished version coming soon.",
+    "detail-2": "For feedback or inquiries, feel free to reach out via this email:"
+  },
+  "noti": {
+    "title": "Your notifications will appear here.",
+    "detail": "Enable notifications and sign in to receive the latest updates about your information and account."
   }
 }
