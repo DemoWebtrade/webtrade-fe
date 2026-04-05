@@ -51,6 +51,8 @@
   "pre-month": "Tháng trước",
   "next-month": "Tháng sau",
 
+  "guide": "Hướng dẫn sử dụng",
+
   "trading-tooltip": {
     "default": "Ngày nghỉ giao dịch chính thức",
     "2026-01-01": "Tết Dương lịch - Thị trường đóng cửa",
@@ -86,5 +88,12 @@
   "noti": {
     "title": "Thông báo của bạn hiển thị tại đây.",
     "detail": "Hãy bật thông báo và đăng nhập để nhận những cập nhật mới nhất về thông tin và tài khoản của bạn."
+  },
+
+  "tooltip": {
+    "support": "Nhấn để xem lại hướng dẫn sử dụng website",
+    "board-setting": "Cài đặt bảng giá",
+    "scroll-auto": "Tự động cuộn",
+    "scroll-stop": "Tạm dừng cuộn"
   }
 }

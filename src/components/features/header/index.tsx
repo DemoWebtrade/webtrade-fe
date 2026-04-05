@@ -3,7 +3,7 @@ import { LANGUAGE_KEY } from "@/configs/global";
 import type { LanguageKey } from "@/types";
 import { getBrowserPreferredLang } from "@/utils/global";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Earth, Expand, Lightbulb, Settings, Shrink } from "lucide-react";
+import { Earth, Expand, Info, Lightbulb, Settings, Shrink } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DayTrading from "./component/DayTrading";
@@ -121,17 +121,21 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:pr-2 pr-0.5 border-b border-border md:gap-8 gap-6 max-[425px]:gap-0">
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:pr-2 pr-0.5 border-b border-border md:gap-8 gap-4 max-[425px]:gap-0">
       {/* Day trading */}
       <div className="flex flex-row items-center md:gap-6">
-        <img src={Logo} alt="logo" className="w-12 h-full" /> <DayTrading />
+        <img src={Logo} alt="logo" className="w-12 h-full" />
       </div>
 
-      <div className="flex flex-row items-center justify-center gap-4">
+      <div className="flex flex-row items-center justify-center md:gap-4 gap-1">
         {/* slogan */}
         <div className="max-[620px]:hidden min-[620px]:w-50 lg:w-100">
           <Slogan />
         </div>
+
+        <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
+        {/* time */}
+        <DayTrading />
 
         {/* Chức năng */}
         <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1">
@@ -161,7 +165,7 @@ export default function Header() {
                 <MenuItem>
                   <div className="flex flex-row items-center justify-between">
                     <div className="text-sm flex flex-row items-center justify-center gap-2">
-                      <Lightbulb className="size-5 text-red-base" />
+                      <Lightbulb className="size-5 text-purple-base" />
                       <span>{t("topic")}</span>
                     </div>
                     <ThemeSetting />
@@ -170,13 +174,27 @@ export default function Header() {
                 <MenuItem>
                   <div className="flex flex-row items-center justify-between">
                     <div className="text-sm flex flex-row items-center justify-center gap-2">
-                      <Earth className="size-5 text-red-base" />
+                      <Earth className="size-5 text-purple-base" />
                       <span>{t("language")}</span>
                     </div>
                     <LanguageSetting
                       language={currentLang || "vi"}
                       handleChangeLanguage={handleChangeLanguage}
                     />
+                  </div>
+                </MenuItem>
+                <MenuItem>
+                  <div className="flex flex-row gap-1 items-center border-t border-border h-8 px-2">
+                    <span className="text-xs mt-2 hover:underline hover:text-purple-500">
+                      {t("guide")}
+                    </span>
+                    <div
+                      className="flex items-center justify-center mt-2"
+                      data-tooltip-id="global-tooltip"
+                      data-tooltip-content={t("tooltip.support")}
+                    >
+                      <Info size={12} className="text-content-disable" />
+                    </div>
                   </div>
                 </MenuItem>
               </div>

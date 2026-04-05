@@ -14,12 +14,12 @@ export default function ThemeSetting() {
 
   return (
     <div
-      className="md:h-9 h-8 p-1 rounded-2xl bg-bg-red w-14 md:w-16 cursor-pointer group"
+      className="md:h-9 h-8 p-1 rounded-2xl bg-bg-purple w-14 md:w-16 cursor-pointer group"
       onClick={handleChangeTheme}
     >
       <div className="w-full h-full flex flex-row items-center justify-between relative">
         <div
-          className={`absolute top-0 h-full w-1/2 rounded-2xl bg-red-active group-hover:bg-red-hover bg-switch pointer-events-none ${
+          className={`absolute top-0 h-full w-1/2 rounded-2xl bg-purple-active group-hover:bg-purple-hover bg-switch pointer-events-none ${
             theme === "dark" ? "left-1/2" : "left-0"
           }`}
         />

@@ -1,3 +1,6 @@
+import { useAgGridAutoScroll } from "@/hooks/useAgGridAutoScroll";
+import { useAppSelector } from "@/store/hook";
+import { selectScroll } from "@/store/modules/client/selector";
 import { numberFormat } from "@/utils";
 import {
   CellStyleModule,
@@ -20,7 +23,7 @@ import {
   type Theme,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { rowData } from "./data";
 import PinRow from "./PinRow";
@@ -139,6 +142,8 @@ const coloredCellStyle = (
 
 export default function BaseTable() {
   const { t } = useTranslation();
+
+  const scroll = useAppSelector(selectScroll);
 
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
@@ -398,6 +403,23 @@ export default function BaseTable() {
     ],
     [t],
   );
+
+  const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
+    durationPerCycle: 12000, // 12 giây mỗi lần cuộn
+    pauseBetweenCycles: 1000, // nghỉ 1 giây trước khi cuộn tiếp
+    enabled: true,
+  });
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+
+    if (scroll && rowData?.length) {
+      resumeAutoScroll();
+    } else {
+      stopAutoScroll();
+    }
+  }, [scroll, resumeAutoScroll, stopAutoScroll, gridRef]);
+
   const onCellDoubleClicked = useCallback((params: CellDoubleClickedEvent) => {
     if (params.column.getColId() !== "pinRow") return;
 
@@ -459,6 +481,7 @@ export default function BaseTable() {
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
       <AgGridReact
+        ref={gridRef}
         getRowId={(p) => p.data.symbol}
         rowData={rowData}
         loading={loading}
@@ -486,6 +509,8 @@ export default function BaseTable() {
         theme={theme}
         tooltipShowDelay={0}
         tooltipHideDelay={2000}
+        suppressScrollOnNewData={true}
+        debounceVerticalScrollbar={true}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>{t("price-table", { price: "1,000" })}</span>

@@ -51,6 +51,8 @@
   "pre-month": "Previous month",
   "next-month": "Next month",
 
+  "guide": "User guide",
+
   "trading-tooltip": {
     "default": "Official non-trading day",
     "2026-01-01": "New Year's Day - Market closed",
@@ -85,5 +87,12 @@
   "noti": {
     "title": "Your notifications will appear here.",
     "detail": "Enable notifications and sign in to receive the latest updates about your information and account."
+  },
+
+  "tooltip": {
+    "support": "Click to view the guide",
+    "board-setting": "Price board settings",
+    "scroll-auto": "Auto scroll",
+    "scroll-stop": "Pause scroll"
   }
 }

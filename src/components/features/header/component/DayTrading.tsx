@@ -14,7 +14,7 @@ export default function DayTrading() {
 
   return (
     <div
-      className="flex md:flex-row flex-col items-center justify-center md:gap-2 md:px-2 px-1 bg-purple-base/50 rounded-md h-10 md:h-8 cursor-pointer"
+      className="flex md:flex-row flex-col items-center justify-center md:gap-2 md:px-2 px-1 bg-purple-base/30 rounded-md h-10 md:h-8 cursor-pointer"
       data-tooltip-id="global-tooltip"
       data-tooltip-content={t("trading-calender")}
       data-tooltip-place="right"
