@@ -510,7 +510,6 @@ export default function BaseTable() {
         tooltipShowDelay={0}
         tooltipHideDelay={2000}
         suppressScrollOnNewData={true}
-        debounceVerticalScrollbar={true}
       />
       <div className="text-[10px] flex flex-row gap-1 items-center justify-center text-content-primary h-4 rounded-b-lg border-x border-b border-border">
         <span>{t("price-table", { price: "1,000" })}</span>
