@@ -10,7 +10,9 @@ import {
   CellStyleModule,
   ClientSideRowModelApiModule,
   ClientSideRowModelModule,
+  ColumnApiModule,
   ColumnAutoSizeModule,
+  CsvExportModule,
   ModuleRegistry,
   PinnedRowModule,
   RowApiModule,
@@ -26,7 +28,6 @@ import {
   type ColGroupDef,
   type Theme,
 } from "ag-grid-community";
-import { ExcelExportModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -45,7 +46,8 @@ ModuleRegistry.registerModules([
   ScrollApiModule,
   ClientSideRowModelApiModule,
   TooltipModule,
-  ExcelExportModule,
+  CsvExportModule,
+  ColumnApiModule,
 ]);
 
 interface RowData {
@@ -416,15 +418,36 @@ export default function BaseTable() {
   }, [scroll, resumeAutoScroll, stopAutoScroll, gridRef]);
 
   useEffect(() => {
-    if (!gridRef.current || !exportFile) return;
-    if (exportFile && rowData?.length) {
-      gridRef.current!.api.exportDataAsExcel({
-        fileName: "GROUP_VN30.xlsx",
-        sheetName: "VN30_Data",
-      });
+    if (!gridRef.current || !exportFile || !rowData?.length) return;
 
-      dispatch(setExport(false));
-    }
+    gridRef.current!.api.exportDataAsCsv({
+      fileName: "GROUP_VN30.csv",
+      skipColumnGroupHeaders: true,
+
+      columnKeys: gridRef
+        .current!.api.getAllGridColumns()
+        .filter((col) => {
+          const colDef = col.getColDef();
+          return colDef.field !== "pinRow" && colDef.colId !== "pinRow";
+        })
+        .map((col) => col.getColId()),
+
+      processCellCallback: (params) => {
+        const value = params.value;
+
+        if (value == null || value === "") return "";
+
+        const strValue = String(value).trim();
+
+        if (/^-?\d+(\.\d+)?$/.test(strValue)) {
+          return "\u200C" + strValue;
+        }
+
+        return strValue;
+      },
+    });
+
+    dispatch(setExport(false));
   }, [exportFile, gridRef, dispatch]);
 
   const onCellDoubleClicked = useCallback((params: CellDoubleClickedEvent) => {
