@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { selectScroll } from "@/store/modules/client/selector";
-import { setStartScroll } from "@/store/modules/client/slice";
-import { EllipsisVertical, Pause, Play } from "lucide-react";
+import { selectScroll } from "@/store/modules/priceboard/selector";
+import { setExport, setStartScroll } from "@/store/modules/priceboard/slice";
+import { BookX, Pause, Play } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function SettingBoard() {
@@ -12,6 +12,10 @@ export default function SettingBoard() {
 
   const hanldeClickScroll = () => {
     dispatch(setStartScroll(!scroll));
+  };
+
+  const handleClickExport = () => {
+    dispatch(setExport(true));
   };
 
   return (
@@ -35,10 +39,11 @@ export default function SettingBoard() {
       <div
         className="hover:bg-bg-button p-1 rounded-md"
         data-tooltip-id="global-tooltip"
-        data-tooltip-content={t("tooltip.board-setting")}
+        data-tooltip-content={t("tooltip.board-csv")}
         data-tooltip-place="left"
+        onClick={() => handleClickExport()}
       >
-        <EllipsisVertical className="size-5" />
+        <BookX className="size-5" />
       </div>
     </div>
   );

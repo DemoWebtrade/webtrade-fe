@@ -53,6 +53,8 @@
 
   "guide": "User guide",
 
+  "order": "Order",
+
   "trading-tooltip": {
     "default": "Official non-trading day",
     "2026-01-01": "New Year's Day - Market closed",
@@ -92,6 +94,7 @@
   "tooltip": {
     "support": "Click to view the guide",
     "board-setting": "Price board settings",
+    "board-csv": "Export Excel file",
     "scroll-auto": "Auto scroll",
     "scroll-stop": "Pause scroll"
   }

@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import clientReducer from "./modules/client/slice";
+import priceboardReducer from "./modules/priceboard/slice";
 
 const rootReducer = combineReducers({
-  client: clientReducer,
+  priceboard: priceboardReducer,
 });
 
 export default rootReducer;

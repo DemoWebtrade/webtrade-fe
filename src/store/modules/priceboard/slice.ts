@@ -1,8 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { ClientState } from "./types";
+import type { PriceboardState } from "./types";
 
-const initialState: ClientState = {
+const initialState: PriceboardState = {
   scroll: false,
+  export: false,
 };
 
 const clientSlice = createSlice({
@@ -12,9 +13,12 @@ const clientSlice = createSlice({
     setStartScroll: (state, action: PayloadAction<boolean>) => {
       state.scroll = action.payload;
     },
+    setExport: (state, action: PayloadAction<boolean>) => {
+      state.export = action.payload;
+    },
   },
 });
 
-export const { setStartScroll } = clientSlice.actions;
+export const { setStartScroll, setExport } = clientSlice.actions;
 
 export default clientSlice.reducer;

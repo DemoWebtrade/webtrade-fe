@@ -1,7 +1,11 @@
 import { useAgGridAutoScroll } from "@/hooks/useAgGridAutoScroll";
-import { useAppSelector } from "@/store/hook";
-import { selectScroll } from "@/store/modules/client/selector";
-import { numberFormat } from "@/utils";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import {
+  selectExport,
+  selectScroll,
+} from "@/store/modules/priceboard/selector";
+import { setExport } from "@/store/modules/priceboard/slice";
+import { changePctFormatter, priceFormatter, volFormatter } from "@/utils";
 import {
   CellStyleModule,
   ClientSideRowModelApiModule,
@@ -22,6 +26,7 @@ import {
   type ColGroupDef,
   type Theme,
 } from "ag-grid-community";
+import { ExcelExportModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -40,6 +45,7 @@ ModuleRegistry.registerModules([
   ScrollApiModule,
   ClientSideRowModelApiModule,
   TooltipModule,
+  ExcelExportModule,
 ]);
 
 interface RowData {
@@ -48,18 +54,6 @@ interface RowData {
   floor: number;
   [key: string]: number;
 }
-
-const priceFormatter = (params: any) =>
-  params.value ? numberFormat(params.value / 1000, 2, "") : "";
-const volFormatter = (params: any) =>
-  params.value ? numberFormat(params.value, 0, "") : "";
-const changePctFormatter = (params: any) => {
-  if (params.value == null) return "";
-
-  const value = Number(params.value);
-  const formatted = Math.abs(value).toFixed(2);
-  return `${formatted}%`;
-};
 
 const coloredCellStyle = (
   params: CellClassParams<RowData, number>,
@@ -142,8 +136,10 @@ const coloredCellStyle = (
 
 export default function BaseTable() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const scroll = useAppSelector(selectScroll);
+  const exportFile = useAppSelector(selectExport);
 
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
@@ -258,7 +254,7 @@ export default function BaseTable() {
         children: [
           {
             field: "matchPrice",
-            headerName: `${t("p")}`,
+            headerName: `${t("price")}`,
             minWidth: 55,
             flex: 1,
             cellStyle: coloredCellStyle,
@@ -405,8 +401,7 @@ export default function BaseTable() {
   );
 
   const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
-    durationPerCycle: 12000, // 12 giây mỗi lần cuộn
-    pauseBetweenCycles: 1000, // nghỉ 1 giây trước khi cuộn tiếp
+    durationPerCycle: rowData?.length * 1000,
     enabled: true,
   });
 
@@ -419,6 +414,18 @@ export default function BaseTable() {
       stopAutoScroll();
     }
   }, [scroll, resumeAutoScroll, stopAutoScroll, gridRef]);
+
+  useEffect(() => {
+    if (!gridRef.current || !exportFile) return;
+    if (exportFile && rowData?.length) {
+      gridRef.current!.api.exportDataAsExcel({
+        fileName: "GROUP_VN30.xlsx",
+        sheetName: "VN30_Data",
+      });
+
+      dispatch(setExport(false));
+    }
+  }, [exportFile, gridRef, dispatch]);
 
   const onCellDoubleClicked = useCallback((params: CellDoubleClickedEvent) => {
     if (params.column.getColId() !== "pinRow") return;

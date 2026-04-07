@@ -1,7 +1,7 @@
 // client/saga.ts
 
 import { delay, put, takeLatest } from "redux-saga/effects";
-import { setStartScroll } from "./slice";
+import { setExport, setStartScroll } from "./slice";
 
 function* handleSetScroll(action: ReturnType<typeof setStartScroll>) {
   yield delay(100);
@@ -9,6 +9,13 @@ function* handleSetScroll(action: ReturnType<typeof setStartScroll>) {
   yield put(setStartScroll(action.payload));
 }
 
-export function* clientSaga() {
+function* handleSetExport(action: ReturnType<typeof setStartScroll>) {
+  yield delay(100);
+
+  yield put(setExport(action.payload));
+}
+
+export function* priceboardSaga() {
   yield takeLatest(setStartScroll.type, handleSetScroll);
+  yield takeLatest(setExport.type, handleSetExport);
 }

@@ -7,12 +7,16 @@ interface UseAgGridAutoScrollProps {
   enabled?: boolean;
 }
 
+type data = {
+  [key: string]: string | number;
+};
+
 export const useAgGridAutoScroll = ({
   durationPerCycle = 12000,
   pauseBetweenCycles = 1000,
   enabled = true,
 }: UseAgGridAutoScrollProps = {}) => {
-  const gridRef = useRef<AgGridReact<any>>(null);
+  const gridRef = useRef<AgGridReact<data>>(null);
   const isAnimatingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   const loopEnabledRef = useRef(enabled);
@@ -28,7 +32,6 @@ export const useAgGridAutoScroll = ({
     isAnimatingRef.current = true;
 
     const api = gridRef.current?.api;
-
     if (!api) {
       isAnimatingRef.current = false;
       return;
@@ -37,7 +40,6 @@ export const useAgGridAutoScroll = ({
     const gridBody = document.querySelector(
       ".ag-body-viewport",
     ) as HTMLElement | null;
-
     if (!gridBody) {
       isAnimatingRef.current = false;
       return;
@@ -49,30 +51,32 @@ export const useAgGridAutoScroll = ({
       return;
     }
 
-    const currentScroll = gridBody.scrollTop;
     const maxScroll = gridBody.scrollHeight - gridBody.clientHeight;
+    if (maxScroll <= 50) {
+      isAnimatingRef.current = false;
+      return;
+    }
 
-    // Nếu gần cuối thì nhảy về đầu (tạo hiệu ứng loop)
-    const targetScrollTop = currentScroll >= maxScroll - 50 ? 0 : maxScroll;
-
-    const startScrollTop = currentScroll;
-    const distance = targetScrollTop - startScrollTop;
+    const startScrollTop = gridBody.scrollTop;
+    const targetScrollTop = Math.max(0, maxScroll);
     const startTime = performance.now();
 
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / durationPerCycle, 1);
-      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const ease = 1 - Math.pow(1 - progress, 3);
 
-      gridBody.scrollTop = startScrollTop + distance * ease;
+      gridBody.scrollTop =
+        startScrollTop + (targetScrollTop - startScrollTop) * ease;
 
-      if (progress < 1) {
+      if (0 < progress && progress < 1) {
         rafRef.current = requestAnimationFrame(animate);
       } else {
-        isAnimatingRef.current = false;
-        rafRef.current = null;
+        // === Kết thúc cycle ===
+        gridBody.scrollTop = 0;
 
-        // Tiếp tục cycle sau khi pause
+        isAnimatingRef.current = false;
+
         if (loopEnabledRef.current) {
           setTimeout(() => {
             performScrollCycle();
@@ -81,6 +85,7 @@ export const useAgGridAutoScroll = ({
       }
     };
 
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(animate);
   }, [durationPerCycle, pauseBetweenCycles]);
 

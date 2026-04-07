@@ -70,3 +70,15 @@ export function formatVolPrice(vol: number) {
       ? ""
       : numberFormat(vol, 0, "");
 }
+
+export const priceFormatter = (params: any) =>
+  params.value ? numberFormat(params.value / 1000, 2, "") : "";
+export const volFormatter = (params: any) =>
+  params.value ? numberFormat(params.value, 0, "") : "";
+export const changePctFormatter = (params: any) => {
+  if (params.value == null) return "";
+
+  const value = Number(params.value);
+  const formatted = Math.abs(value).toFixed(2);
+  return `${formatted}%`;
+};
