@@ -21,7 +21,10 @@ export default function SettingBoard() {
   return (
     <div className="flex flex-row md:gap-2 items-center">
       {/* Tự động scroll */}
-      <div className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
+      <div
+        className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active"
+        data-tour="prop-7"
+      >
         <div
           className="hover:bg-bg-button p-1 rounded-md"
           data-tooltip-id="global-tooltip"
@@ -42,6 +45,7 @@ export default function SettingBoard() {
         data-tooltip-content={t("tooltip.board-csv")}
         data-tooltip-place="left"
         onClick={() => handleClickExport()}
+        data-tour="prop-8"
       >
         <BookX className="size-5" />
       </div>

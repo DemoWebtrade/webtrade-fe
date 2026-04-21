@@ -21,9 +21,12 @@ export default function PriceBoard() {
           <SettingBoard />
 
           {/* Đặt lệnh */}
-          <Button className="w-auto whitespace-nowrap" variant="success">
-            {t("order")}
-          </Button>
+          <div data-tour="prop-9">
+            {" "}
+            <Button className="w-auto whitespace-nowrap" variant="success">
+              {t("order")}
+            </Button>
+          </div>
         </div>
       </div>
 

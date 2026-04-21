@@ -28,7 +28,7 @@
 /* HTML: <div class="text-loader"></div> */
 .text-loader {
   position: relative;
-  font-family: system-ui, sans-serif;
+  font-family: "Hanken Grotesk";
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -65,5 +65,24 @@
   }
   to {
     background-position: 0%;
+  }
+}
+
+/* HTML: <div class="loader-circle"></div> */
+.loader-circle {
+  width: 50px;
+  height: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, #954baf 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, #592d69);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
   }
 }

@@ -135,17 +135,21 @@ export default function Header() {
 
         <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
         {/* time */}
-        <DayTrading />
+        <div data-tour="prop-1">
+          <DayTrading />
+        </div>
 
         {/* Chức năng */}
         <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1">
           <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
 
-          {/* Thông báo */}
-          <Notifications />
+          <div data-tour="prop-2">
+            {/* Thông báo */}
+            <Notifications />
+          </div>
 
           {/* Cài đặt giao diện */}
-          <Menu as="div" className="relative inline-block">
+          <Menu as="div" className="relative inline-block" data-tour="prop-3">
             <MenuButton className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
               <div
                 className="hover:bg-bg-button p-1 rounded-md"
@@ -202,25 +206,27 @@ export default function Header() {
           </Menu>
 
           {/* Zoom web */}
-          {isZoom ? (
-            <div
-              className="p-1 hover:bg-bg-button rounded-md"
-              data-tooltip-id="global-tooltip"
-              data-tooltip-content={t("shrink-web")}
-              onClick={() => handleToggleFullscreen()}
-            >
-              <Shrink className="size-4" />
-            </div>
-          ) : (
-            <div
-              className="p-1 hover:bg-bg-button rounded-md"
-              data-tooltip-id="global-tooltip"
-              data-tooltip-content={t("explan-web")}
-              onClick={() => handleToggleFullscreen()}
-            >
-              <Expand className="size-4" />
-            </div>
-          )}
+          <div data-tour="prop-4">
+            {isZoom ? (
+              <div
+                className="p-1 hover:bg-bg-button rounded-md"
+                data-tooltip-id="global-tooltip"
+                data-tooltip-content={t("shrink-web")}
+                onClick={() => handleToggleFullscreen()}
+              >
+                <Shrink className="size-4" />
+              </div>
+            ) : (
+              <div
+                className="p-1 hover:bg-bg-button rounded-md"
+                data-tooltip-id="global-tooltip"
+                data-tooltip-content={t("explan-web")}
+                onClick={() => handleToggleFullscreen()}
+              >
+                <Expand className="size-4" />
+              </div>
+            )}
+          </div>
 
           <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
 

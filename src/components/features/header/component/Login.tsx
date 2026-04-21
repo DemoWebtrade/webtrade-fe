@@ -9,7 +9,9 @@ export default function Login() {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>{t("login")}</Button>
+      <div data-tour="prop-10">
+        <Button onClick={() => setIsOpen(true)}>{t("login")}</Button>
+      </div>
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );

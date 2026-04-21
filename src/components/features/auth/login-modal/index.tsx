@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
+import { backdropVariants, modalVariants } from "@/configs/modal";
 import apiClient from "@/services/apiClient";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -7,36 +8,6 @@ import { useCallback, useEffect } from "react";
 import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-
-const backdropVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-} as const;
-
-const modalVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.82,
-    y: 60,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      damping: 22,
-      stiffness: 280,
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.9,
-    y: 40,
-    transition: { duration: 0.18 },
-  },
-} as const;
 
 interface LoginModalProps {
   isOpen: boolean;
