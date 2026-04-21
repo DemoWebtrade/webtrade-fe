@@ -10,7 +10,7 @@ const buttonVariants = cva(
           "bg-bg-button text-white text-sm hover:bg-primary-hover disable:bg-primary-disable disable:text-content-disable",
         success:
           "bg-green-base text-white text-sm hover:bg-green-hover disable:bg-green-disable disable:text-content-disable",
-        none: "text-bg-button hover:bg-secondary-hover disable:text-content-disable disable:bg-content-disable",
+        none: "text-sm text-bg-button hover:bg-secondary-hover disable:text-content-disable disable:bg-content-disable",
       },
       size: {
         default: "md:px-[18px] md:px-3 px-2 py-2 has-[>svg]:px-3",

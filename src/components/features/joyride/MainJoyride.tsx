@@ -191,10 +191,9 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                         `
                           <span class="font-semibold text-base">
                             LHC Web Trade
-                          </span> - Nền tảng giao dịch mô phỏng được thiết kế với tiêu chí 
-                          <span class="font-medium">hiệu năng cao, dữ liệu realtime và trải nghiệm trực quan.</span>
+                          </span> - Nền tảng giao dịch mô phỏng được thiết kế với tiêu chí hiệu năng cao, dữ liệu realtime và trải nghiệm trực quan.
                         `,
-                      ).pauseFor(600);
+                      );
                       tw.typeString(
                         `
                           <br/><br/>
@@ -207,32 +206,29 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                             <li>Hỗ trợ xuất dữ liệu phục vụ phân tích và đánh giá.</li>
                           </ul>
                         `,
-                      ).pauseFor(600);
+                      );
                       tw.typeString(
                         `
                           <br/>
 
                           <span class="font-medium">Kiến trúc hệ thống:</span><br/>
                           <span class="pl-6">
-                            Frontend được xây dựng với React và TypeScript, áp dụng kiến trúc module hóa, 
-                            kết hợp Redux Toolkit và Saga để quản lý state bất đồng bộ.
+                            Frontend được xây dựng với React và TypeScript, áp dụng kiến trúc module hóa, kết hợp Redux Toolkit và Saga để quản lý state bất đồng bộ.
                           </span><br/>
                           <span class="pl-6">
-                            Hệ thống sử dụng WebSocket để xử lý dữ liệu realtime, mô phỏng luồng giao dịch 
-                            với độ trễ thấp và khả năng cập nhật liên tục.
+                            Hệ thống sử dụng WebSocket để xử lý dữ liệu realtime, mô phỏng luồng giao dịch với độ trễ thấp và khả năng cập nhật liên tục.
                           </span>
                         `,
-                      ).pauseFor(600);
+                      );
                       tw.typeString(
                         `
                           <br/><br/>
 
                           <span class="text-red-500 font-semibold pl-6">
-                            Lưu ý: Đây là hệ thống mô phỏng. Toàn bộ dữ liệu chỉ mang tính chất tham khảo 
-                            và không phản ánh thị trường thực tế.
+                            Lưu ý: Đây là hệ thống mô phỏng. Toàn bộ dữ liệu chỉ mang tính chất tham khảo và không phản ánh thị trường thực tế.
                           </span>
                         `,
-                      ).pauseFor(600);
+                      );
                       tw.typeString(
                         `
                           <br/><br/>
@@ -242,7 +238,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                           </span>
                         `,
                       )
-                        .pauseFor(600)
+                        .pauseFor(200)
 
                         .callFunction(() => {
                           setShowButton(true);
