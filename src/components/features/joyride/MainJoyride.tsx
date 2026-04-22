@@ -247,7 +247,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                         .start();
                     }}
                     options={{
-                      delay: 18,
+                      delay: 15,
                       deleteSpeed: 8,
                       cursor: "",
                     }}
