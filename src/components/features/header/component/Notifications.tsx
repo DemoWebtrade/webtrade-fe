@@ -1,6 +1,7 @@
 import { Toggle } from "@/components/ui/Toggle";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import {
+  isSupported,
   requestPermission,
   unsubscribe,
 } from "@/services/fcm/firebase-messaging";
@@ -46,6 +47,8 @@ export default function Notifications() {
       setDenied(true);
     }
   };
+
+  const supported = isSupported();
 
   return (
     <div
@@ -93,24 +96,32 @@ export default function Notifications() {
                     className="absolute md:w-72 w-60 bg-bg-tertiary border border-border rounded-lg top-[calc(100%+4px)] -right-20 md:right-0 z-10 flex flex-col overflow-hidden"
                   >
                     {/* Toggle chính */}
-                    <button
-                      onClick={handleToggleNotif}
-                      className="flex items-center justify-between px-4 py-3 hover:bg-bg-secondary transition-colors text-left w-full"
-                    >
-                      <div>
-                        <p className="text-sm">
-                          {t("noti.receive-notifications")}
-                        </p>
-                        <p className="text-xs text-text-secondary mt-0.5">
-                          {denied
-                            ? t("noti.browser-block")
-                            : notifOn
-                              ? t("noti.turn-on")
-                              : t("noti.turn-off")}
+                    {supported ? (
+                      <button
+                        onClick={handleToggleNotif}
+                        className="flex items-center justify-between px-4 py-3 hover:bg-bg-secondary transition-colors text-left w-full"
+                      >
+                        <div>
+                          <p className="text-sm">
+                            {t("noti.receive-notifications")}
+                          </p>
+                          <p className="text-xs text-text-secondary mt-0.5">
+                            {denied
+                              ? t("noti.browser-block")
+                              : notifOn
+                                ? t("noti.turn-on")
+                                : t("noti.turn-off")}
+                          </p>
+                        </div>
+                        <Toggle on={notifOn} />
+                      </button>
+                    ) : (
+                      <div className="px-4 py-3 border-t border-border">
+                        <p className="text-xs text-text-secondary">
+                          Thông báo chưa được hỗ trợ trên trình duyệt này
                         </p>
                       </div>
-                      <Toggle on={notifOn} />
-                    </button>
+                    )}
 
                     {/* Sub options — chỉ hiện khi bật */}
                     {/* {notifOn && (
