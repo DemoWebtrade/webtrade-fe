@@ -29,23 +29,25 @@ function getMessagingInstance(): Messaging | null {
 }
 
 export const isSupported = (): boolean => {
-  return (
-    typeof window !== "undefined" &&
-    "Notification" in window &&
-    "serviceWorker" in navigator &&
-    "PushManager" in window
-  );
+  try {
+    return (
+      typeof window !== "undefined" &&
+      "Notification" in window &&
+      "serviceWorker" in navigator &&
+      "PushManager" in window
+    );
+  } catch {
+    return false;
+  }
 };
 
 export const requestPermission = async (): Promise<string | null> => {
-  // Check support trước — không crash iOS
-  if (!isSupported()) {
-    console.warn("Thiết bị không hỗ trợ Web Push");
-    return null;
-  }
+  if (!isSupported()) return null;
 
   try {
-    const permission = await Notification.requestPermission();
+    if (!("Notification" in window)) return null;
+
+    const permission = await (window as any).Notification.requestPermission();
     if (permission !== "granted") return null;
 
     const instance = getMessagingInstance();
@@ -61,7 +63,7 @@ export const requestPermission = async (): Promise<string | null> => {
     }
     return null;
   } catch (error) {
-    console.error("Error getting token:", error);
+    console.warn("FCM skip:", error);
     return null;
   }
 };

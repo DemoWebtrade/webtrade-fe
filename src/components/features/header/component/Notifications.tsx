@@ -16,8 +16,16 @@ export default function Notifications() {
   const notiRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [openSetting, setOpenSetting] = useState<boolean>(false);
-  const [notifOn, setNotifOn] = useState(Notification.permission === "granted");
-  const [denied, setDenied] = useState(Notification.permission === "denied");
+  const [notifOn, setNotifOn] = useState(
+    typeof window !== "undefined" && "Notification" in window
+      ? Notification.permission === "granted"
+      : false,
+  );
+  const [denied, setDenied] = useState(
+    typeof window !== "undefined" && "Notification" in window
+      ? Notification.permission === "denied"
+      : false,
+  );
 
   useClickOutside(containerRef, () => {
     setOpen(false);

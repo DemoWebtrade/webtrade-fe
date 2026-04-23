@@ -15,11 +15,14 @@ export default function MainLayout() {
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
-    if (hasSeenTour && Notification.permission === "granted") {
-      requestPermission();
+    if (!hasSeenTour) return;
+
+    if (!("Notification" in window)) return;
+
+    if (Notification.permission === "granted") {
+      setTimeout(() => requestPermission(), 1000);
     }
   }, []);
-
   return (
     <ThemeProvider defaultTheme="dark" storageKey="mode-ui-theme">
       <main className="h-screen flex flex-col gap-2 text-content-primary! bg-bg-primary!">
