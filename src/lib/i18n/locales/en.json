@@ -88,7 +88,11 @@
   },
   "noti": {
     "title": "Your notifications will appear here.",
-    "detail": "Enable notifications and sign in to receive the latest updates about your information and account."
+    "detail": "Enable notifications and sign in to receive the latest updates about your information and account.",
+    "browser-block": "Browser blocked",
+    "turn-on": "On",
+    "turn-off": "Off",
+    "receive-notifications": "Receive notifications"
   },
 
   "tooltip": {

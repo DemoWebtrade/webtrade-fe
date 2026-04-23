@@ -7,23 +7,25 @@ const messaging = getMessaging(app);
 // Lấy token (dùng VAPID key)
 export const requestPermission = async () => {
   try {
+    const permission = await Notification.requestPermission();
+
+    if (permission !== "granted") {
+      console.log("User từ chối thông báo");
+      return null;
+    }
+
     const token = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_VAPID_KEY,
     });
 
     if (token) {
-      console.log("FCM Token:", token);
-
-      handleSubscribe(token);
+      await handleSubscribe(token);
       return token;
-    } else {
-      console.log("No registration token available");
     }
   } catch (error) {
     console.error("Error getting token:", error);
   }
 };
-
 // Nhận notification khi đang mở tab
 export const onMessageListener = () =>
   new Promise((resolve) => {
@@ -34,11 +36,19 @@ export const onMessageListener = () =>
 
 const handleSubscribe = async (token: string) => {
   try {
-    const respon = await apiClient.post("api/fcm/subscribe", {
+    await apiClient.post("api/fcm/subscribe", {
       fcm_token: token,
     });
-    console.log("FCM Token:", respon);
   } catch (error) {
     console.error("Error getting token:", error);
+  }
+};
+
+export const unsubscribe = async () => {
+  const token = await getToken(messaging, {
+    vapidKey: import.meta.env.VITE_VAPID_KEY,
+  });
+  if (token) {
+    await apiClient.post("api/fcm/unsubscribe", { fcm_token: token });
   }
 };

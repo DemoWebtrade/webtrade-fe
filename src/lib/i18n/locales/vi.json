@@ -89,7 +89,11 @@
 
   "noti": {
     "title": "Thông báo của bạn hiển thị tại đây.",
-    "detail": "Hãy bật thông báo và đăng nhập để nhận những cập nhật mới nhất về thông tin và tài khoản của bạn."
+    "detail": "Hãy bật thông báo và đăng nhập để nhận những cập nhật mới nhất về thông tin và tài khoản của bạn.",
+    "browser-block": "Trình duyệt đã chặn",
+    "turn-on": "Đang bật",
+    "turn-off": "Chưa bật",
+    "receive-notifications": "Nhận thông báo"
   },
 
   "tooltip": {
