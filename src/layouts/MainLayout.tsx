@@ -2,7 +2,11 @@ import Header from "@/components/features/header";
 import MainJoyride from "@/components/features/joyride/MainJoyride";
 import Toaster from "@/components/features/toaster";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { useState } from "react";
+import {
+  onMessageListener,
+  requestPermission,
+} from "@/services/fcm/firebase-messaging";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
@@ -11,6 +15,17 @@ export default function MainLayout() {
     const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
     return !hasSeenTour;
   });
+
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
+    if (hasSeenTour) {
+      requestPermission();
+
+      onMessageListener().then((payload: unknown) => {
+        console.log("Message received:", payload);
+      });
+    }
+  }, []);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="mode-ui-theme">

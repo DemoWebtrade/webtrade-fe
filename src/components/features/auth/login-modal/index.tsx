@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs/modal";
-import apiClient from "@/services/apiClient";
+import apiClient from "@/services/api/apiClient";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";

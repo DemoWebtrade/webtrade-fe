@@ -92,7 +92,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
     run,
 
     options: {
-      buttons: ["back", "close", "primary", "skip"],
+      buttons: ["back", "close", "primary"],
       scrollOffset: 64,
       showProgress: true,
       skipScroll: true,
@@ -265,9 +265,9 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                   >
                     Khám phá
                   </Button>
-                  <Button variant="none" onClick={() => onClose()}>
+                  {/* <Button variant="none" onClick={() => onClose()}>
                     Thoát
-                  </Button>
+                  </Button> */}
                 </div>
               )}
             </motion.div>
