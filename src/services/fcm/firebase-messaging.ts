@@ -1,22 +1,20 @@
 import {
   getMessaging,
   getToken,
+  type MessagePayload,
   type Messaging,
   onMessage,
 } from "firebase/messaging";
 import apiClient from "../api/apiClient";
 import app from "./firebase";
 
-// Không khởi tạo ngay khi import — iOS sẽ crash
 let messaging: Messaging | null = null;
 
 function getMessagingInstance(): Messaging | null {
-  // Check trình duyệt có support không
   if (typeof window === "undefined") return null;
   if (!("Notification" in window)) return null;
   if (!("serviceWorker" in navigator)) return null;
 
-  // Lazy init — chỉ tạo khi cần
   if (!messaging) {
     try {
       messaging = getMessaging(app);
@@ -41,20 +39,43 @@ export const isSupported = (): boolean => {
   }
 };
 
+interface IOSNavigator extends Navigator {
+  standalone: boolean;
+}
+
+export const isIOS = (): boolean =>
+  /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+export const isIOSPWA = (): boolean =>
+  isIOS() && (navigator as IOSNavigator).standalone === true;
+
 export const requestPermission = async (): Promise<string | null> => {
-  if (!isSupported()) return null;
+  if (!isSupported()) {
+    if (isIOS() && !isIOSPWA()) {
+      console.warn(
+        "iOS cần Add to Home Screen để nhận thông báo. " +
+          "Mở Safari > Chia sẻ > Thêm vào màn hình chính",
+      );
+    }
+    return null;
+  }
 
   try {
-    if (!("Notification" in window)) return null;
-
-    const permission = await (window as any).Notification.requestPermission();
+    const permission = await window.Notification.requestPermission();
     if (permission !== "granted") return null;
 
     const instance = getMessagingInstance();
     if (!instance) return null;
 
+    const registration = await navigator.serviceWorker.register(
+      "/firebase-messaging-sw.js",
+      { scope: "/" },
+    );
+    await navigator.serviceWorker.ready;
+
     const token = await getToken(instance, {
       vapidKey: import.meta.env.VITE_VAPID_KEY,
+      serviceWorkerRegistration: registration,
     });
 
     if (token) {
@@ -68,16 +89,16 @@ export const requestPermission = async (): Promise<string | null> => {
   }
 };
 
-export const onMessageListener = () => {
+export const onMessageListener = (
+  callback: (payload: MessagePayload) => void,
+): (() => void) => {
   const instance = getMessagingInstance();
-  if (!instance) return Promise.resolve(null);
+  if (!instance) return () => {};
 
-  return new Promise((resolve) => {
-    onMessage(instance, (payload) => resolve(payload));
-  });
+  return onMessage(instance, callback);
 };
 
-const handleSubscribe = async (token: string) => {
+const handleSubscribe = async (token: string): Promise<void> => {
   try {
     await apiClient.post("api/fcm/subscribe", { fcm_token: token });
   } catch (error) {
@@ -85,7 +106,7 @@ const handleSubscribe = async (token: string) => {
   }
 };
 
-export const unsubscribe = async () => {
+export const unsubscribe = async (): Promise<void> => {
   const instance = getMessagingInstance();
   if (!instance) return;
 
