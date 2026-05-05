@@ -260,6 +260,7 @@ export default function BaseTable() {
             minWidth: 55,
             flex: 1,
             cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
           },
           {
             field: "matchVol",

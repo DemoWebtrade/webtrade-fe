@@ -21,6 +21,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
   const day = useMemo(
     () =>
       new Date().toLocaleDateString(locale, {
+        timeZone: "Asia/Ho_Chi_Minh",
         weekday: "long",
         year: "numeric",
         month: "long",
@@ -28,7 +29,6 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
       }),
     [locale],
   );
-
   const currentLang = (i18n.resolvedLanguage ||
     i18n.language ||
     "vi") as LanguageKey;
