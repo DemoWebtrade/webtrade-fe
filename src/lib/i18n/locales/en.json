@@ -101,5 +101,11 @@
     "board-csv": "Export Excel file",
     "scroll-auto": "Auto scroll",
     "scroll-stop": "Pause scroll"
+  },
+
+  "status": {
+    "status": "Status",
+    "connected": "Connected",
+    "disconnected": "Disconnected"
   }
 }

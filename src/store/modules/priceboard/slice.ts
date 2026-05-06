@@ -6,7 +6,7 @@ const initialState: PriceboardState = {
   export: false,
 };
 
-const clientSlice = createSlice({
+const priceboardSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
@@ -19,6 +19,6 @@ const clientSlice = createSlice({
   },
 });
 
-export const { setStartScroll, setExport } = clientSlice.actions;
+export const { setStartScroll, setExport } = priceboardSlice.actions;
 
-export default clientSlice.reducer;
+export default priceboardSlice.reducer;

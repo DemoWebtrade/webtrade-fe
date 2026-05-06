@@ -102,5 +102,11 @@
     "board-csv": "Xuất file Excel",
     "scroll-auto": "Tự động cuộn",
     "scroll-stop": "Tạm dừng cuộn"
+  },
+
+  "status": {
+    "status": "Trạng thái kết nối",
+    "connected": "Kết nối",
+    "disconnected": "Không kết nối"
   }
 }

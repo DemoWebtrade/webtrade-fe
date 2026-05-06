@@ -7,18 +7,18 @@ export default function Table() {
     MarketSocket.connect();
     MarketSocket.subscribe("VN30");
 
-    MarketSocket.on("marketSnapshot", (data) => {
-      console.log("data", data);
-    });
+    // MarketSocket.on("marketSnapshot", (data) => {
+    //   console.log("data", data);
+    // });
 
-    MarketSocket.on("marketUpdate", (updated) => {
-      console.log("update", updated);
-    });
+    // MarketSocket.on("marketUpdate", (updated) => {
+    //   console.log("update", updated);
+    // });
 
     return () => {
       MarketSocket.unsubscribe("VN30");
-      MarketSocket.off("marketSnapshot");
-      MarketSocket.off("marketUpdate");
+      // MarketSocket.off("marketSnapshot");
+      // MarketSocket.off("marketUpdate");
       MarketSocket.close();
     };
   }, []);

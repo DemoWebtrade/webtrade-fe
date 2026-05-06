@@ -9,7 +9,7 @@ function* handleSetScroll(action: ReturnType<typeof setStartScroll>) {
   yield put(setStartScroll(action.payload));
 }
 
-function* handleSetExport(action: ReturnType<typeof setStartScroll>) {
+function* handleSetExport(action: ReturnType<typeof setExport>) {
   yield delay(100);
 
   yield put(setExport(action.payload));

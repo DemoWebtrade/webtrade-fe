@@ -133,7 +133,7 @@ export default function Header() {
           <Slogan />
         </div>
 
-        <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
+        <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
         {/* time */}
         <div data-tour="prop-1">
           <DayTrading />
@@ -141,7 +141,7 @@ export default function Header() {
 
         {/* Chức năng */}
         <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1">
-          <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
+          <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
           <div data-tour="prop-2">
             {/* Thông báo */}
@@ -163,7 +163,7 @@ export default function Header() {
 
             <MenuItems
               transition
-              className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-bg-tertiary rounded-md md:w-60 w-44 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-border rounded-md md:w-60 w-44 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
               <div className="flex flex-col gap-1 md:gap-3">
                 <MenuItem>
@@ -228,7 +228,7 @@ export default function Header() {
             )}
           </div>
 
-          <div className="h-4 w-px bg-bg-tertiary md:mx-2 max-[550px]:hidden"></div>
+          <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
           {/* login */}
           <Login />

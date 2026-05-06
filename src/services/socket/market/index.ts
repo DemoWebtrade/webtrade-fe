@@ -1,3 +1,5 @@
+import { store } from "@/store";
+import { setMarketStatus } from "@/store/modules/socket/slice";
 import { io, Socket } from "socket.io-client";
 
 const MARKET_SOCKET_URL = import.meta.env.VITE_MARKET_SOCKET_URL;
@@ -15,8 +17,6 @@ const flushPending = () => {
 
   // Flush listeners
   pendingListeners.forEach((callback, event) => {
-    console.log("on", event);
-
     socket!.on(event, callback);
   });
 };
@@ -39,21 +39,24 @@ const connect = () => {
   });
 
   socket.on("connect", () => {
-    console.log("connect");
+    store.dispatch(setMarketStatus("connected"));
     flushPending();
   });
 
   socket.on("disconnect", () => {
+    store.dispatch(setMarketStatus("disconnected"));
     console.log("disconnect");
   });
 
   socket.on("reconnect", () => {
-    console.log("reconnect");
+    store.dispatch(setMarketStatus("reconnect"));
+
     flushPending(); // re-register listeners sau reconnect
   });
 
   socket.on("connect_error", () => {
     console.log("connect_error");
+    store.dispatch(setMarketStatus("connect_error"));
   });
 
   socket.connect();
@@ -72,6 +75,8 @@ const close = () => {
 
 const subscribe = (topic: string) => {
   if (socket?.connected) {
+    console.log("sub");
+
     socket.emit("subscribe", topic);
     return;
   }
