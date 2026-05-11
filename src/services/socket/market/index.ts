@@ -7,8 +7,7 @@ import { setMarketStatus } from "@/store/modules/socket/slice";
 import type { StockData } from "@/types";
 import { io, Socket } from "socket.io-client";
 
-// const MARKET_SOCKET_URL = import.meta.env.VITE_MARKET_SOCKET_URL;
-const MARKET_SOCKET_URL = "http://localhost:5000/market";
+const MARKET_SOCKET_URL = import.meta.env.VITE_MARKET_SOCKET_URL;
 
 const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url));
 

@@ -560,8 +560,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
   const loading = false;
 
-  console.log(initialData);
-
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
       <AgGridReact
