@@ -5,6 +5,7 @@ import {
   selectScroll,
 } from "@/store/modules/priceboard/selector";
 import { setExport } from "@/store/modules/priceboard/slice";
+import type { StockData } from "@/types";
 import { changePctFormatter, priceFormatter, volFormatter } from "@/utils";
 import {
   CellStyleModule,
@@ -29,9 +30,8 @@ import {
   type Theme,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { rowData } from "./data";
 import PinRow from "./PinRow";
 import SymbolRow from "./SymbolRow";
 
@@ -136,12 +136,38 @@ const coloredCellStyle = (
   };
 };
 
-export default function BaseTable() {
+export default function BaseTable({ data }: { data: StockData[] }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const scroll = useAppSelector(selectScroll);
   const exportFile = useAppSelector(selectExport);
+
+  const gridRef = useRef<AgGridReact>(null);
+  const prevDataRef = useRef<Map<string, StockData>>(new Map());
+
+  const [initialData] = useState(() => data);
+
+  useEffect(() => {
+    if (!gridRef.current?.api) return;
+
+    const updates: StockData[] = [];
+
+    for (const row of data) {
+      const prev = prevDataRef.current.get(row.symbol);
+      if (!prev) {
+        // Mã mới chưa có → add
+        gridRef.current.api.applyTransactionAsync({ add: [row] });
+      } else {
+        updates.push(row);
+      }
+      prevDataRef.current.set(row.symbol, row);
+    }
+
+    if (updates.length > 0) {
+      gridRef.current.api.applyTransactionAsync({ update: updates });
+    }
+  }, [data]);
 
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
@@ -164,6 +190,7 @@ export default function BaseTable() {
         pinned: "left",
         lockPinned: true,
         lockPosition: "left",
+        enableCellChangeFlash: true,
         cellRenderer: SymbolRow,
         cellStyle: coloredCellStyle,
       },
@@ -204,6 +231,7 @@ export default function BaseTable() {
             headerName: `${t("p")}3`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -212,6 +240,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}3`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -220,6 +249,7 @@ export default function BaseTable() {
             headerName: `${t("p")}2`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -228,6 +258,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}2`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -236,6 +267,7 @@ export default function BaseTable() {
             headerName: `${t("p")}1`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -244,6 +276,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}1`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -259,7 +292,9 @@ export default function BaseTable() {
             headerName: `${t("price")}`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
+
             valueFormatter: priceFormatter,
           },
           {
@@ -267,6 +302,7 @@ export default function BaseTable() {
             headerName: t("vol"),
             minWidth: 65,
             flex: 1.2,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
@@ -276,7 +312,7 @@ export default function BaseTable() {
             minWidth: 40,
             flex: 0.8,
             cellStyle: coloredCellStyle,
-            valueFormatter: volFormatter,
+            valueFormatter: priceFormatter,
           },
           {
             field: "changePct",
@@ -298,6 +334,7 @@ export default function BaseTable() {
             headerName: `${t("p")}1`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -306,6 +343,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}1`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -314,6 +352,7 @@ export default function BaseTable() {
             headerName: `${t("p")}2`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -322,6 +361,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}2`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -330,6 +370,7 @@ export default function BaseTable() {
             headerName: `${t("p")}3`,
             minWidth: 46,
             flex: 1,
+            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -338,6 +379,7 @@ export default function BaseTable() {
             headerName: `${t("vol")}3`,
             minWidth: 55,
             flex: 1,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -351,6 +393,7 @@ export default function BaseTable() {
         headerName: `${t("high")}`,
         minWidth: 46,
         flex: 1,
+        enableCellChangeFlash: true,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -359,6 +402,7 @@ export default function BaseTable() {
         headerName: `${t("low")}`,
         minWidth: 46,
         flex: 1.1,
+        enableCellChangeFlash: true,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -367,6 +411,7 @@ export default function BaseTable() {
         headerName: `${t("total-vol")}`,
         minWidth: 70,
         flex: 1.5,
+        enableCellChangeFlash: true,
         valueFormatter: volFormatter,
       },
       // Nhà đầu tư nước ngoài
@@ -379,6 +424,7 @@ export default function BaseTable() {
             headerName: `${t("fbuy")}`,
             minWidth: 70,
             flex: 1.5,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
           {
@@ -386,6 +432,7 @@ export default function BaseTable() {
             headerName: `${t("fsell")}`,
             minWidth: 70,
             flex: 1.5,
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
           {
@@ -395,6 +442,7 @@ export default function BaseTable() {
             flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
+            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
         ],
@@ -403,15 +451,15 @@ export default function BaseTable() {
     [t],
   );
 
-  const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
-    durationPerCycle: rowData?.length * 1000,
+  const { resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
+    durationPerCycle: data?.length * 1000,
     enabled: true,
   });
 
   useEffect(() => {
     if (!gridRef.current) return;
 
-    if (scroll && rowData?.length) {
+    if (scroll && data?.length) {
       resumeAutoScroll();
     } else {
       stopAutoScroll();
@@ -419,7 +467,7 @@ export default function BaseTable() {
   }, [scroll, resumeAutoScroll, stopAutoScroll, gridRef]);
 
   useEffect(() => {
-    if (!gridRef.current || !exportFile || !rowData?.length) return;
+    if (!gridRef.current || !exportFile || !data?.length) return;
 
     gridRef.current!.api.exportDataAsCsv({
       fileName: "GROUP_VN30.csv",
@@ -457,7 +505,7 @@ export default function BaseTable() {
     const rowNode = params.node;
     if (!rowNode?.data) return;
 
-    const rowData = rowNode.data;
+    const data = rowNode.data;
     const api = params.api;
 
     // Lấy pinned hiện tại
@@ -469,23 +517,23 @@ export default function BaseTable() {
       if (node?.data) pinnedRows.push(node.data);
     }
 
-    const isPinned = pinnedRows.some((r) => r.symbol === rowData.symbol);
+    const isPinned = pinnedRows.some((r) => r.symbol === data.symbol);
 
     if (isPinned) {
       // Unpin
       api.setGridOption(
         "pinnedTopRowData",
-        pinnedRows.filter((r) => r.symbol !== rowData.symbol),
+        pinnedRows.filter((r) => r.symbol !== data.symbol),
       );
 
       api.applyTransaction({
-        add: [rowData],
+        add: [data],
       });
     } else {
       // Pin
-      api.applyTransaction({ remove: [rowData] });
+      api.applyTransaction({ remove: [data] });
 
-      api.setGridOption("pinnedTopRowData", [...pinnedRows, rowData]);
+      api.setGridOption("pinnedTopRowData", [...pinnedRows, data]);
     }
   }, []);
 
@@ -493,6 +541,9 @@ export default function BaseTable() {
     () => ({
       sortable: true,
       resizable: false,
+      enableCellChangeFlash: true,
+      cellFlashDuration: 500,
+      cellFadeDuration: 300,
       headerClass: "text-xs! font-normal! border-r! border-border!",
       headerTooltip: `${t("change-col")}`,
     }),
@@ -509,12 +560,14 @@ export default function BaseTable() {
 
   const loading = false;
 
+  console.log(initialData);
+
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
       <AgGridReact
         ref={gridRef}
         getRowId={(p) => p.data.symbol}
-        rowData={rowData}
+        rowData={initialData}
         loading={loading}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

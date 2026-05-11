@@ -1,11 +1,17 @@
 import { MarketSocket } from "@/services/socket/market";
 import { useEffect } from "react";
 import BaseTable from "./BaseTable";
+import { useAppSelector } from "@/store/hook";
+import { selectAllStocks } from "@/store/modules/priceboard/selector";
 
 export default function Table() {
+  const stocks = useAppSelector(selectAllStocks);
+
   useEffect(() => {
     MarketSocket.connect();
-    MarketSocket.subscribe("VN30");
+    setTimeout(() => {
+      MarketSocket.subscribe("VN30");
+    }, 5000);
 
     // MarketSocket.on("marketSnapshot", (data) => {
     //   console.log("data", data);
@@ -25,7 +31,7 @@ export default function Table() {
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <BaseTable />
+      <BaseTable data={stocks} />
     </div>
   );
 }

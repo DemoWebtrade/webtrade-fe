@@ -1,12 +1,37 @@
 import { store } from "@/store";
+import {
+  batchUpdateStocks,
+  snapshotStocks,
+} from "@/store/modules/priceboard/slice";
 import { setMarketStatus } from "@/store/modules/socket/slice";
+import type { StockData } from "@/types";
 import { io, Socket } from "socket.io-client";
 
-const MARKET_SOCKET_URL = import.meta.env.VITE_MARKET_SOCKET_URL;
+// const MARKET_SOCKET_URL = import.meta.env.VITE_MARKET_SOCKET_URL;
+const MARKET_SOCKET_URL = "http://localhost:5000/market";
+
+const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url));
+
+//Nhận data cuối cùng
+marketWorker.onmessage = (e) => {
+  if (e.data.type !== "BATCH_READY") return;
+  store.dispatch(batchUpdateStocks(e.data.payload));
+};
 
 let socket: Socket | null = null;
 const pendingSubscriptions: string[] = [];
 const pendingListeners: Map<string, (data: unknown) => void> = new Map();
+
+let pendingBatch: StockData[] = [];
+let batchTimer: ReturnType<typeof setTimeout> | null = null;
+
+const flushWorker = () => {
+  if (batchTimer) clearTimeout(batchTimer);
+  if (pendingBatch.length === 0) return;
+
+  marketWorker.postMessage({ type: "TICK_BATCH", payload: pendingBatch });
+  pendingBatch = [];
+};
 
 const flushPending = () => {
   // Flush emit events
@@ -59,6 +84,20 @@ const connect = () => {
     store.dispatch(setMarketStatus("connect_error"));
   });
 
+  socket.on("marketUpdate", (data: StockData) => {
+    pendingBatch.push(data);
+
+    if (pendingBatch.length > 10) {
+      flushWorker();
+    } else if (!batchTimer) {
+      batchTimer = setTimeout(flushWorker, 50);
+    }
+  });
+
+  socket.on("marketSnapshot", (data: StockData[]) => {
+    store.dispatch(snapshotStocks(data));
+  });
+
   socket.connect();
   return socket;
 };
@@ -75,8 +114,6 @@ const close = () => {
 
 const subscribe = (topic: string) => {
   if (socket?.connected) {
-    console.log("sub");
-
     socket.emit("subscribe", topic);
     return;
   }
