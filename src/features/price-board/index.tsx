@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/Button";
-import { useTranslation } from "react-i18next";
-import IndexInfor from "./index-infor";
-import MenuBoard from "./menu-board";
-import SettingBoard from "./setting";
-import Table from "./table";
 import { useAppSelector } from "@/store/hook";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
+import { lazy, Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import MenuBoard from "./menu-board";
+import SettingBoard from "./setting";
+
+const Table = lazy(() => import("./table"));
+const IndexInfor = lazy(() => import("./index-infor"));
 
 export default function PriceBoard() {
   const { t } = useTranslation();
@@ -14,7 +16,9 @@ export default function PriceBoard() {
   return (
     <div className="w-full h-full flex flex-col gap-3 relative">
       <div className="h-40 w-full">
-        <IndexInfor />
+        <Suspense fallback={<div>Loading...</div>}>
+          <IndexInfor />
+        </Suspense>
       </div>
 
       <div className="h-10 w-full flex flex-row items-center justify-between md:gap-4 gap-2">
@@ -43,7 +47,9 @@ export default function PriceBoard() {
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
-          <SettingBoard />
+          <Suspense fallback={<div>Loading...</div>}>
+            <SettingBoard />
+          </Suspense>
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
@@ -58,7 +64,9 @@ export default function PriceBoard() {
       </div>
 
       <div className="flex-1">
-        <Table />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Table />
+        </Suspense>
       </div>
     </div>
   );

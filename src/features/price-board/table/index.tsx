@@ -9,7 +9,9 @@ export default function Table() {
 
   useEffect(() => {
     MarketSocket.connect();
-    MarketSocket.subscribe("VN30");
+    setTimeout(() => {
+      MarketSocket.subscribe("VN30");
+    }, 5000);
 
     return () => {
       MarketSocket.unsubscribe("VN30");

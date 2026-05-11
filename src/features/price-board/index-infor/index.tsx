@@ -1,9 +1,10 @@
 import { generatePriceVolumeChartWithSession } from "@/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ChartIndex from "./ChartIndex";
+
+const ChartIndex = lazy(() => import("./ChartIndex"));
 
 export default function IndexInfor() {
   const [openIndex] = React.useState(() =>
@@ -119,7 +120,9 @@ export default function IndexInfor() {
               </div>
             </div>
             <div className="flex-1">
-              <ChartIndex openIndex={openIndex} data={data} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <ChartIndex openIndex={openIndex} data={data} />
+              </Suspense>
             </div>
           </div>
         </SwiperSlide>
