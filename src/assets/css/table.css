@@ -98,10 +98,3 @@
 .ag-header-group-cell {
   padding: 0 !important;
 }
-
-.ag-cell-data-changed.cell-up {
-  background-color: rgba(0, 255, 0, 0.3) !important;
-}
-.ag-cell-data-changed.cell-down {
-  background-color: rgba(255, 55, 55, 0.3) !important;
-}

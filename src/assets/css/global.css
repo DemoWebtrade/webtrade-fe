@@ -18,3 +18,74 @@ body {
 .bg-switch {
   transition: left 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+@keyframes flashUp {
+  0% {
+    background-color: #00ff00;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes flashDown {
+  0% {
+    background-color: #ff3737;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes flashCeil {
+  0% {
+    background-color: #ff25ff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes flashFloor {
+  0% {
+    background-color: #00b2ff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes flashRef {
+  0% {
+    background-color: #ffd900;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.ag-cell.cell-flash-up,
+.ag-cell.cell-flash-up .ag-cell-value {
+  animation: flashUp 0.6s ease-out;
+  color: #014737;
+}
+
+.ag-cell.cell-flash-down,
+.ag-cell.cell-flash-down .ag-cell-value {
+  animation: flashDown 0.6s ease-out;
+  color: #014737;
+}
+
+.ag-cell.cell-flash-ceil,
+.ag-cell.cell-flash-ceil .ag-cell-value {
+  animation: flashCeil 0.6s ease-out;
+  color: #014737;
+}
+
+.ag-cell.cell-flash-floor,
+.ag-cell.cell-flash-floor .ag-cell-value {
+  animation: flashFloor 0.6s ease-out;
+  color: #014737;
+}
+
+.ag-cell.cell-flash-ref,
+.ag-cell.cell-flash-ref .ag-cell-value {
+  animation: flashRef 0.6s ease-out;
+  color: #014737;
+}

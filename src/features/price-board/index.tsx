@@ -3,6 +3,7 @@ import { useAppSelector } from "@/store/hook";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
 import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
 import SettingBoard from "./setting";
 
@@ -16,7 +17,7 @@ export default function PriceBoard() {
   return (
     <div className="w-full h-full flex flex-col gap-3 relative">
       <div className="h-40 w-full">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SekeletonChartIndex />}>
           <IndexInfor />
         </Suspense>
       </div>
@@ -47,9 +48,7 @@ export default function PriceBoard() {
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
-          <Suspense fallback={<div>Loading...</div>}>
-            <SettingBoard />
-          </Suspense>
+          <SettingBoard />
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
@@ -64,8 +63,14 @@ export default function PriceBoard() {
       </div>
 
       <div className="flex-1">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Table />
+        <Suspense
+          fallback={
+            <div className="w-full h-full flex flex-col items-center justify-center">
+              <div className="progess-loader"></div>
+            </div>
+          }
+        >
+          <Table marketStatus={marketStatus} />
         </Suspense>
       </div>
     </div>

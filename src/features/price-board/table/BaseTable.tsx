@@ -6,7 +6,12 @@ import {
 } from "@/store/modules/priceboard/selector";
 import { setExport } from "@/store/modules/priceboard/slice";
 import type { StockData } from "@/types";
-import { changePctFormatter, priceFormatter, volFormatter } from "@/utils";
+import {
+  changePctFormatter,
+  getFlashClass,
+  priceFormatter,
+  volFormatter,
+} from "@/utils";
 import {
   CellStyleModule,
   ClientSideRowModelApiModule,
@@ -56,17 +61,19 @@ interface RowData {
   floor: number;
   [key: string]: number;
 }
-
 const coloredCellStyle = (
   params: CellClassParams<RowData, number>,
 ): CellStyle => {
   if (params.value == null || params.data == null) return {};
 
-  // Xác định giá cần so sánh (tùy theo field)
   let comparePrice: number | undefined;
 
+  const NO_COLOR_COLS = ["totalVolume", "nnBuy", "nnSell", "nnRoom"];
+  if (params.colDef?.field && NO_COLOR_COLS.includes(params.colDef.field)) {
+    return {};
+  }
+
   switch (params.colDef?.field) {
-    // Bên mua - khối lượng theo giá tương ứng
     case "buyVol3":
     case "buyPrice3":
       comparePrice = params.data.buyPrice3;
@@ -79,8 +86,6 @@ const coloredCellStyle = (
     case "buyPrice1":
       comparePrice = params.data.buyPrice1;
       break;
-
-    // Bên bán - khối lượng theo giá tương ứng
     case "sellVol1":
     case "sellPrice1":
       comparePrice = params.data.sellPrice1;
@@ -93,8 +98,6 @@ const coloredCellStyle = (
     case "sellPrice3":
       comparePrice = params.data.sellPrice3;
       break;
-
-    // Khớp lệnh - volume theo matchPrice
     case "matchVol":
     case "matchPrice":
     case "changePct":
@@ -102,8 +105,6 @@ const coloredCellStyle = (
     case "symbol":
       comparePrice = params.data.matchPrice;
       break;
-
-    // Các cột giá và high/low - dùng chính value
     default:
       comparePrice = params.value;
       break;
@@ -111,29 +112,15 @@ const coloredCellStyle = (
 
   if (comparePrice == null) return {};
 
-  const ref = params.data.ref;
-  const ceil = params.data.ceil;
-  const floor = params.data.floor;
+  const { ref, ceil, floor } = params.data;
 
-  if (comparePrice === ceil) {
-    return { color: "#ff25ff" };
-  }
-  if (comparePrice === floor) {
-    return { color: "#00b2ff" };
-  }
-  if (comparePrice > ref) {
-    return { color: "#00ff00" };
-  }
-  if (comparePrice < ref) {
-    return { color: "#ff3737" };
-  }
-  if (comparePrice === ref) {
-    return { color: "#ffd900" };
-  }
+  if (comparePrice === ceil) return { color: "#ff25ff" };
+  if (comparePrice === floor) return { color: "#00b2ff" };
+  if (comparePrice > ref) return { color: "#00ff00" };
+  if (comparePrice < ref) return { color: "#ff3737" };
+  if (comparePrice === ref) return { color: "#ffd900" };
 
-  return {
-    color: "#ffffff",
-  };
+  return {};
 };
 
 export default function BaseTable({ data }: { data: StockData[] }) {
@@ -145,8 +132,146 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
   const gridRef = useRef<AgGridReact>(null);
   const prevDataRef = useRef<Map<string, StockData>>(new Map());
+  const flashTimeouts = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+    new Map(),
+  );
 
   const [initialData] = useState(() => data);
+  const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
+
+  const flashingCells = useRef<Map<string, string>>(new Map());
+  const triggerCellFlash = useCallback(
+    (rowId: string, colId: string, flashClass: string) => {
+      const key = `${rowId}-${colId}`;
+
+      // Clear timeout cũ
+      const existing = flashTimeouts.current.get(key);
+      if (existing) clearTimeout(existing);
+
+      flashingCells.current.set(key, flashClass);
+
+      // Refresh cell để apply class
+      const rowNode = gridRef.current?.api.getRowNode(rowId);
+      if (rowNode) {
+        gridRef.current?.api.refreshCells({
+          rowNodes: [rowNode],
+          columns: [colId],
+          force: true,
+        });
+      }
+
+      const timeout = setTimeout(() => {
+        flashingCells.current.delete(key);
+        flashTimeouts.current.delete(key);
+
+        // Refresh lại để xóa class, cellStyle tự tính đúng màu
+        const node = gridRef.current?.api.getRowNode(rowId);
+        if (node) {
+          gridRef.current?.api.refreshCells({
+            rowNodes: [node],
+            columns: [colId],
+            force: true,
+          });
+        }
+      }, 600);
+
+      flashTimeouts.current.set(key, timeout);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!gridRef.current?.api) return;
+
+    const PRICE_COLS = [
+      "buyPrice3",
+      "buyPrice2",
+      "buyPrice1",
+      "sellPrice1",
+      "sellPrice2",
+      "sellPrice3",
+      "matchPrice",
+      "change",
+      "changePct",
+      "symbol",
+      "high",
+      "low",
+    ];
+
+    const VOL_COLS = [
+      "buyVol3",
+      "buyVol2",
+      "buyVol1",
+      "sellVol1",
+      "sellVol2",
+      "sellVol3",
+      "matchVol",
+    ];
+
+    // Map vol col -> price col tương ứng
+    const VOL_TO_PRICE: Record<string, string> = {
+      buyVol3: "buyPrice3",
+      buyVol2: "buyPrice2",
+      buyVol1: "buyPrice1",
+      sellVol1: "sellPrice1",
+      sellVol2: "sellPrice2",
+      sellVol3: "sellPrice3",
+      matchVol: "matchPrice",
+    };
+
+    const updates: StockData[] = [];
+
+    for (const row of data) {
+      const prev = prevDataRef.current.get(row.symbol);
+
+      if (!prev) {
+        gridRef.current.api.applyTransaction({ add: [row] });
+      } else {
+        updates.push({ ...row });
+
+        // Flash các cell thay đổi
+        const rowId = row.symbol;
+        const { ref, ceil, floor } = row;
+
+        for (const colId of PRICE_COLS) {
+          const val = row[colId as keyof StockData];
+          const prevVal = prev[colId as keyof StockData];
+          if (val !== prevVal) {
+            const flashClass = getFlashClass(val as number, ref, ceil, floor);
+            triggerCellFlash(rowId, colId, flashClass);
+          }
+        }
+
+        for (const colId of VOL_COLS) {
+          const val = row[colId as keyof StockData];
+          const prevVal = prev[colId as keyof StockData];
+          if (val !== prevVal) {
+            // Vol dùng giá tương ứng để xác định màu
+            const priceColId = VOL_TO_PRICE[colId] ?? "matchPrice";
+            const comparePrice = row[priceColId as keyof StockData] as number;
+            const flashClass = getFlashClass(comparePrice, ref, ceil, floor);
+            triggerCellFlash(rowId, colId, flashClass);
+          }
+        }
+      }
+
+      prevDataRef.current.set(row.symbol, row);
+    }
+
+    if (updates.length > 0) {
+      gridRef.current.api.applyTransaction({ update: updates });
+    }
+  }, [data, triggerCellFlash]);
+
+  useEffect(() => {
+    const timmer = setTimeout(() => {
+      setLoadingTimeout(false);
+    }, 10_000);
+
+    return () => {
+      clearTimeout(timmer);
+    };
+  }, [initialData]);
 
   useEffect(() => {
     if (!gridRef.current?.api) return;
@@ -156,16 +281,15 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     for (const row of data) {
       const prev = prevDataRef.current.get(row.symbol);
       if (!prev) {
-        // Mã mới chưa có → add
-        gridRef.current.api.applyTransactionAsync({ add: [row] });
+        gridRef.current.api.applyTransaction({ add: [row] }); // sync
       } else {
-        updates.push(row);
+        updates.push({ ...row }); // object mới
       }
       prevDataRef.current.set(row.symbol, row);
     }
 
     if (updates.length > 0) {
-      gridRef.current.api.applyTransactionAsync({ update: updates });
+      gridRef.current.api.applyTransaction({ update: updates }); // sync
     }
   }, [data]);
 
@@ -190,7 +314,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
         pinned: "left",
         lockPinned: true,
         lockPosition: "left",
-        enableCellChangeFlash: true,
         cellRenderer: SymbolRow,
         cellStyle: coloredCellStyle,
       },
@@ -231,7 +354,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}3`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -240,7 +362,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}3`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -249,7 +370,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}2`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -258,7 +378,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}2`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -267,7 +386,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}1`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -276,7 +394,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}1`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -292,7 +409,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("price")}`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
 
             valueFormatter: priceFormatter,
@@ -302,7 +418,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: t("vol"),
             minWidth: 65,
             flex: 1.2,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
           },
@@ -334,7 +449,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}1`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -343,7 +457,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}1`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -352,7 +465,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}2`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -361,7 +473,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}2`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -370,7 +481,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("p")}3`,
             minWidth: 46,
             flex: 1,
-            enableCellChangeFlash: true,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
           },
@@ -379,7 +489,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("vol")}3`,
             minWidth: 55,
             flex: 1,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
           },
@@ -393,7 +502,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
         headerName: `${t("high")}`,
         minWidth: 46,
         flex: 1,
-        enableCellChangeFlash: true,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -402,7 +510,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
         headerName: `${t("low")}`,
         minWidth: 46,
         flex: 1.1,
-        enableCellChangeFlash: true,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
@@ -411,7 +518,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
         headerName: `${t("total-vol")}`,
         minWidth: 70,
         flex: 1.5,
-        enableCellChangeFlash: true,
         valueFormatter: volFormatter,
       },
       // Nhà đầu tư nước ngoài
@@ -424,7 +530,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("fbuy")}`,
             minWidth: 70,
             flex: 1.5,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
           {
@@ -432,7 +537,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             headerName: `${t("fsell")}`,
             minWidth: 70,
             flex: 1.5,
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
           {
@@ -442,7 +546,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
             flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
-            enableCellChangeFlash: true,
             valueFormatter: volFormatter,
           },
         ],
@@ -541,11 +644,15 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     () => ({
       sortable: true,
       resizable: false,
-      enableCellChangeFlash: true,
       cellFlashDuration: 500,
       cellFadeDuration: 300,
       headerClass: "text-xs! font-normal! border-r! border-border!",
       headerTooltip: `${t("change-col")}`,
+      enableCellChangeFlash: false,
+      cellClass: (params: CellClassParams) => {
+        const key = `${params.node.id}-${params.column.getColId()}`;
+        return flashingCells.current.get(key) ?? "";
+      },
     }),
     [t],
   );
@@ -558,7 +665,12 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     });
   }, []);
 
-  const loading = false;
+  const loading = useMemo(() => {
+    if (data && data.length > 0) {
+      return false;
+    }
+    return loadingTimeout;
+  }, [loadingTimeout, data]);
 
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
