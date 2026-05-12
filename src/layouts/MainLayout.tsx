@@ -1,4 +1,5 @@
 import Header from "@/components/features/header";
+import MainJoyride from "@/components/features/joyride/MainJoyride";
 import Toaster from "@/components/features/toaster";
 import { ThemeProvider } from "@/context/ThemeContext";
 import {
@@ -6,16 +7,16 @@ import {
   requestPermission,
 } from "@/services/fcm/firebase-messaging";
 import type { MessagePayload } from "firebase/messaging";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { toast } from "sonner";
 
 export default function MainLayout() {
-  // const [openMainJoyride, setOpenMainJoyride] = useState(() => {
-  //   const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
-  //   return !hasSeenTour;
-  // });
+  const [openMainJoyride, setOpenMainJoyride] = useState(() => {
+    const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
+    return !hasSeenTour;
+  });
 
   // Xin quyền thông báo khi app load
   useEffect(() => {
@@ -44,10 +45,10 @@ export default function MainLayout() {
       </main>
 
       {/* Hướng dẫn các chức năng trong web */}
-      {/* <MainJoyride
+      <MainJoyride
         isOpen={openMainJoyride}
         onClose={() => setOpenMainJoyride(false)}
-      /> */}
+      />
 
       <Tooltip id="global-tooltip" />
 
