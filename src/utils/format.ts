@@ -82,3 +82,14 @@ export const changePctFormatter = (params: any) => {
   const formatted = Math.abs(value).toFixed(2);
   return `${formatted}%`;
 };
+
+export function StringToInt(pString: string | number): number {
+  pString = "" + pString;
+  pString = pString.replace(/,/g, "");
+  const vInt = parseInt(pString, 10);
+  if (isNaN(vInt)) {
+    return 0;
+  } else {
+    return vInt;
+  }
+}

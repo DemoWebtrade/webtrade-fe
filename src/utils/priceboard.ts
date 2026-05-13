@@ -3,23 +3,31 @@ import type { IRowNode } from "ag-grid-community";
 export function flashCellWithColor(
   rowNode: IRowNode,
   colId: string,
-  color: string, // màu hex
+  color: string,
 ) {
+  const containerSelector = rowNode.rowPinned ? ".ag-floating-top" : ".ag-body";
+
   const cellEl = document.querySelector(
-    `[row-id="${rowNode.id}"] [col-id="${colId}"]`,
+    `${containerSelector} [row-id="${rowNode.id}"] [col-id="${colId}"]`,
   ) as HTMLElement | null;
 
   if (!cellEl) return;
 
-  const originalBg = cellEl.style.backgroundColor;
+  if (!cellEl.dataset.originalColor) {
+    cellEl.dataset.originalColor = cellEl.style.color;
+  }
+  const originalColor = cellEl.dataset.originalColor;
 
-  // Flash: đổi background
   cellEl.style.transition = "background-color 0s";
   cellEl.style.backgroundColor = color + "55";
+  cellEl.style.color = "#fffff9";
 
   setTimeout(() => {
-    cellEl.style.transition = "background-color 0.4s ease-out";
-    cellEl.style.backgroundColor = originalBg;
+    cellEl.style.transition =
+      "background-color 0.4s ease-out, color 0.1s ease-out";
+    cellEl.style.backgroundColor = "transparent";
+    cellEl.style.color = originalColor;
+    delete cellEl.dataset.originalColor;
   }, 300);
 }
 
@@ -36,4 +44,14 @@ export function getFlashClass(
   if (comparePrice < ref) return "cell-flash-down";
   if (comparePrice === ref) return "cell-flash-ref";
   return "";
+}
+
+export function getFlashVolumePriceClass(val: number, preVal: number): string {
+  if (val > preVal) return "cell-flash-up";
+  if (val < preVal) return "cell-flash-down";
+  return "";
+}
+
+export function getFlashVolumeClass(check: boolean): string {
+  return check ? "cell-flash-volume" : "";
 }

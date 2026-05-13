@@ -60,32 +60,41 @@ body {
   }
 }
 
+@keyframes flashVolume {
+  0% {
+    background-color: #4b4b4b;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 .ag-cell.cell-flash-up,
 .ag-cell.cell-flash-up .ag-cell-value {
   animation: flashUp 0.6s ease-out;
-  color: #014737;
 }
 
 .ag-cell.cell-flash-down,
 .ag-cell.cell-flash-down .ag-cell-value {
   animation: flashDown 0.6s ease-out;
-  color: #014737;
 }
 
 .ag-cell.cell-flash-ceil,
 .ag-cell.cell-flash-ceil .ag-cell-value {
   animation: flashCeil 0.6s ease-out;
-  color: #014737;
 }
 
 .ag-cell.cell-flash-floor,
 .ag-cell.cell-flash-floor .ag-cell-value {
   animation: flashFloor 0.6s ease-out;
-  color: #014737;
 }
 
 .ag-cell.cell-flash-ref,
 .ag-cell.cell-flash-ref .ag-cell-value {
   animation: flashRef 0.6s ease-out;
-  color: #014737;
+}
+
+.ag-cell.cell-flash-volume,
+.ag-cell.cell-flash-volume .ag-cell-value {
+  animation: flashVolume 0.6s ease-out;
 }
