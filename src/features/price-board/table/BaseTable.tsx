@@ -171,12 +171,22 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
     const VOL_COLS = ["totalVolume", "nnBuy", "nnSell", "nnRoom"];
 
+    const VOL_TO_PRICE: Record<string, string> = {
+      buyVol3: "buyPrice3",
+      buyVol2: "buyPrice2",
+      buyVol1: "buyPrice1",
+      sellVol1: "sellPrice1",
+      sellVol2: "sellPrice2",
+      sellVol3: "sellPrice3",
+      matchVol: "matchPrice",
+    };
+
     const FLASH_COLORS: Record<string, string> = {
-      "cell-flash-up": "#00ff00",
-      "cell-flash-down": "#ff3737",
+      "cell-flash-up": "#00bf52",
+      "cell-flash-down": "#f23645",
       "cell-flash-ceil": "#ff25ff",
       "cell-flash-floor": "#00b2ff",
-      "cell-flash-ref": "#ffd900",
+      "cell-flash-ref": "#ffa300",
       "cell-flash-volume": "#eadbef",
     };
 
@@ -185,6 +195,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       rowId: string;
       colId: string;
       flashClass: string;
+      colorClass: string;
     }> = [];
 
     for (const row of data) {
@@ -204,7 +215,14 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           const prevVal = prev[colId as keyof StockData];
           if (val !== prevVal) {
             const flashClass = getFlashClass(val as number, ref, ceil, floor);
-            if (flashClass) flashQueue.push({ rowId, colId, flashClass });
+            if (flashClass) {
+              flashQueue.push({
+                rowId,
+                colId,
+                flashClass,
+                colorClass: flashClass,
+              });
+            }
           }
         }
 
@@ -217,7 +235,23 @@ export default function BaseTable({ data }: { data: StockData[] }) {
               StringToInt(val),
               StringToInt(prevVal),
             );
-            if (flashClass) flashQueue.push({ rowId, colId, flashClass });
+
+            const colConvertId = VOL_TO_PRICE[colId as keyof StockData];
+            const valPrice = row[colConvertId as keyof StockData];
+            const colorClass = getFlashClass(
+              valPrice as number,
+              ref,
+              ceil,
+              floor,
+            );
+
+            if (flashClass)
+              flashQueue.push({
+                rowId,
+                colId,
+                flashClass: colId !== "matchVol" ? flashClass : colorClass,
+                colorClass,
+              });
           }
         }
 
@@ -227,7 +261,13 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           const prevVal = prev[colId as keyof StockData];
           if (val !== prevVal) {
             const flashClass = getFlashVolumeClass(val !== prevVal);
-            if (flashClass) flashQueue.push({ rowId, colId, flashClass });
+            if (flashClass)
+              flashQueue.push({
+                rowId,
+                colId,
+                flashClass,
+                colorClass: "var(--content-primary)",
+              });
           }
         }
       }
@@ -256,7 +296,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     }
 
     requestAnimationFrame(() => {
-      for (const { rowId, colId, flashClass } of flashQueue) {
+      for (const { rowId, colId, flashClass, colorClass } of flashQueue) {
         const rowNode =
           gridRef.current?.api.getRowNode(rowId) ??
           // Tìm thêm trong pinned rows nếu không thấy trong regular
@@ -270,8 +310,10 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           })();
 
         if (!rowNode) continue;
-        const color = FLASH_COLORS[flashClass] ?? "";
-        flashCellWithColor(rowNode, colId, color);
+        const flash = FLASH_COLORS[flashClass] ?? "";
+        const color = FLASH_COLORS[colorClass] ?? "";
+
+        flashCellWithColor(rowNode, colId, flash, color);
       }
     });
   }, [data]);

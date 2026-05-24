@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs/modal";
 import apiClient from "@/services/api/apiClient";
+import { getMessageFromError } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
@@ -62,7 +63,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      const message = getMessageFromError(error);
+      toast.error(message);
     }
   };
 

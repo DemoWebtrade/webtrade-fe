@@ -3,6 +3,7 @@ import type { IRowNode } from "ag-grid-community";
 export function flashCellWithColor(
   rowNode: IRowNode,
   colId: string,
+  flash: string,
   color: string,
 ) {
   const containerSelector = rowNode.rowPinned ? ".ag-floating-top" : ".ag-body";
@@ -13,21 +14,15 @@ export function flashCellWithColor(
 
   if (!cellEl) return;
 
-  if (!cellEl.dataset.originalColor) {
-    cellEl.dataset.originalColor = cellEl.style.color;
-  }
-  const originalColor = cellEl.dataset.originalColor;
-
   cellEl.style.transition = "background-color 0s";
-  cellEl.style.backgroundColor = color + "55";
+  cellEl.style.backgroundColor = flash;
   cellEl.style.color = "#fffff9";
 
   setTimeout(() => {
     cellEl.style.transition =
       "background-color 0.4s ease-out, color 0.1s ease-out";
     cellEl.style.backgroundColor = "transparent";
-    cellEl.style.color = originalColor;
-    delete cellEl.dataset.originalColor;
+    cellEl.style.color = color;
   }, 300);
 }
 
