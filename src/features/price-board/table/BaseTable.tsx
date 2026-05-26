@@ -321,7 +321,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
   useEffect(() => {
     const timmer = setTimeout(() => {
       setLoadingTimeout(false);
-    }, 10_000);
+    }, 30_000);
 
     return () => {
       clearTimeout(timmer);

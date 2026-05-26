@@ -10,7 +10,7 @@ import { io, Socket } from "socket.io-client";
 const MARKET_SOCKET_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "http://localhost:5000/market";
+    : "https://webtrade-fs.onrender.com";
 
 const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url));
 

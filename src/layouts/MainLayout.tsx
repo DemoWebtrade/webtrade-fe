@@ -1,5 +1,4 @@
 import Header from "@/components/features/header";
-import MainJoyride from "@/components/features/joyride/MainJoyride";
 import Toaster from "@/components/features/toaster";
 import { ThemeProvider } from "@/context/ThemeContext";
 import {
@@ -7,10 +6,14 @@ import {
   requestPermission,
 } from "@/services/fcm/firebase-messaging";
 import type { MessagePayload } from "firebase/messaging";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { toast } from "sonner";
+
+const MainJoyride = lazy(
+  () => import("@/components/features/joyride/MainJoyride"),
+);
 
 export default function MainLayout() {
   const [openMainJoyride, setOpenMainJoyride] = useState(() => {
@@ -45,10 +48,12 @@ export default function MainLayout() {
       </main>
 
       {/* Hướng dẫn các chức năng trong web */}
-      <MainJoyride
-        isOpen={openMainJoyride}
-        onClose={() => setOpenMainJoyride(false)}
-      />
+      <Suspense fallback={<div>Loading ...</div>}>
+        <MainJoyride
+          isOpen={openMainJoyride}
+          onClose={() => setOpenMainJoyride(false)}
+        />
+      </Suspense>
 
       <Tooltip id="global-tooltip" />
 
