@@ -10,7 +10,7 @@ import { io, Socket } from "socket.io-client";
 const MARKET_SOCKET_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "https://webtrade-fs.onrender.com";
+    : "https://webtrade-fs.onrender.com/market";
 
 const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url));
 
@@ -33,13 +33,14 @@ const flushWorker = () => {
 
   marketWorker.postMessage({ type: "TICK_BATCH", payload: pendingBatch });
   pendingBatch = [];
+  batchTimer = null;
 };
 
 const flushPending = () => {
   // Flush emit events
   while (pendingSubscriptions.length > 0) {
     const event = pendingSubscriptions.shift()!;
-    socket!.emit(event);
+    socket!.emit("subscribe", event);
   }
 
   // Flush listeners
@@ -75,7 +76,7 @@ const connect = () => {
     console.log("disconnect");
   });
 
-  socket.on("reconnect", () => {
+  socket.io.on("reconnect", () => {
     store.dispatch(setMarketStatus("reconnect"));
 
     flushPending(); // re-register listeners sau reconnect

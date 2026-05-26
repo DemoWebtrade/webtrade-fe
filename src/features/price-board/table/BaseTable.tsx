@@ -1,3 +1,10 @@
+import {
+  FLASH_COLORS,
+  PRICE_COLS,
+  VOL_COLS,
+  VOL_PRICE_COLS,
+  VOL_TO_PRICE,
+} from "@/configs";
 import { useAgGridAutoScroll } from "@/hooks/useAgGridAutoScroll";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
@@ -143,52 +150,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
   useEffect(() => {
     if (!gridRef.current?.api) return;
-
-    const PRICE_COLS = [
-      "buyPrice3",
-      "buyPrice2",
-      "buyPrice1",
-      "sellPrice1",
-      "sellPrice2",
-      "sellPrice3",
-      "matchPrice",
-      "change",
-      "changePct",
-      "symbol",
-      "high",
-      "low",
-    ];
-
-    const VOL_PRICE_COLS = [
-      "buyVol3",
-      "buyVol2",
-      "buyVol1",
-      "sellVol1",
-      "sellVol2",
-      "sellVol3",
-      "matchVol",
-    ];
-
-    const VOL_COLS = ["totalVolume", "nnBuy", "nnSell", "nnRoom"];
-
-    const VOL_TO_PRICE: Record<string, string> = {
-      buyVol3: "buyPrice3",
-      buyVol2: "buyPrice2",
-      buyVol1: "buyPrice1",
-      sellVol1: "sellPrice1",
-      sellVol2: "sellPrice2",
-      sellVol3: "sellPrice3",
-      matchVol: "matchPrice",
-    };
-
-    const FLASH_COLORS: Record<string, string> = {
-      "cell-flash-up": "#00bf52",
-      "cell-flash-down": "#f23645",
-      "cell-flash-ceil": "#ff25ff",
-      "cell-flash-floor": "#00b2ff",
-      "cell-flash-ref": "#ffa300",
-      "cell-flash-volume": "#eadbef",
-    };
 
     const updates: StockData[] = [];
     const flashQueue: Array<{
@@ -357,7 +318,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       {
         field: "ceil",
         headerName: t("ceil"),
-        minWidth: 46,
+        minWidth: 42,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -365,7 +326,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       {
         field: "ref",
         headerName: t("ref"),
-        minWidth: 46,
+        minWidth: 42,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -373,7 +334,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       {
         field: "floor",
         headerName: t("floor"),
-        minWidth: 46,
+        minWidth: 42,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -387,7 +348,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -395,7 +356,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -403,7 +364,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -411,7 +372,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -419,7 +380,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -427,7 +388,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "buyVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -442,7 +403,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "matchPrice",
             headerName: `${t("price")}`,
-            minWidth: 55,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
 
@@ -451,7 +412,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "matchVol",
             headerName: t("vol"),
-            minWidth: 65,
+            minWidth: 68,
             flex: 1.2,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
@@ -459,7 +420,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "change",
             headerName: "+/-",
-            minWidth: 40,
+            minWidth: 35,
             flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -467,7 +428,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "changePct",
             headerName: "%",
-            minWidth: 40,
+            minWidth: 35,
             flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: changePctFormatter,
@@ -482,7 +443,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -490,7 +451,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -498,7 +459,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -506,7 +467,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -514,7 +475,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 46,
+            minWidth: 42,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -522,7 +483,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "sellVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 55,
+            minWidth: 68,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -534,7 +495,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       {
         field: "high",
         headerName: `${t("high")}`,
-        minWidth: 46,
+        minWidth: 44,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -542,15 +503,15 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       {
         field: "low",
         headerName: `${t("low")}`,
-        minWidth: 46,
-        flex: 1.1,
+        minWidth: 44,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
       },
       {
         field: "totalVolume",
         headerName: `${t("total-vol")}`,
-        minWidth: 70,
+        minWidth: 72,
         flex: 1.5,
         valueFormatter: volFormatter,
       },
@@ -563,21 +524,21 @@ export default function BaseTable({ data }: { data: StockData[] }) {
           {
             field: "nnBuy",
             headerName: `${t("fbuy")}`,
-            minWidth: 70,
+            minWidth: 72,
             flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnSell",
             headerName: `${t("fsell")}`,
-            minWidth: 70,
+            minWidth: 72,
             flex: 1.5,
             valueFormatter: volFormatter,
           },
           {
             field: "nnRoom",
             headerName: `${t("room")}`,
-            minWidth: 70,
+            minWidth: 72,
             flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",

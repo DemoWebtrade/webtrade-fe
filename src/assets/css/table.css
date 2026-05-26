@@ -98,3 +98,9 @@
 .ag-header-group-cell {
   padding: 0 !important;
 }
+
+.ag-theme-quartz-custom {
+  .ag-header-cell-resize {
+    opacity: 0;
+  }
+}
