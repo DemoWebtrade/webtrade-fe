@@ -16,7 +16,7 @@ export function flashCellWithColor(
 
   cellEl.style.transition = "background-color 0s";
   cellEl.style.backgroundColor = flash;
-  cellEl.style.color = "#fffff9";
+  cellEl.style.color = "#005a4a";
 
   setTimeout(() => {
     cellEl.style.transition =

@@ -1,4 +1,5 @@
 import {
+  coloredCellStyle,
   FLASH_COLORS,
   PRICE_COLS,
   VOL_COLS,
@@ -38,9 +39,7 @@ import {
   themeQuartz,
   TooltipModule,
   ValidationModule,
-  type CellClassParams,
   type CellDoubleClickedEvent,
-  type CellStyle,
   type ColDef,
   type ColGroupDef,
   type Theme,
@@ -66,74 +65,6 @@ ModuleRegistry.registerModules([
   ColumnApiModule,
 ]);
 
-interface RowData {
-  ceil: number;
-  ref: number;
-  floor: number;
-  [key: string]: number;
-}
-const coloredCellStyle = (
-  params: CellClassParams<RowData, number>,
-): CellStyle => {
-  if (params.value == null || params.data == null) return {};
-
-  let comparePrice: number | undefined;
-
-  const NO_COLOR_COLS = ["totalVolume", "nnBuy", "nnSell", "nnRoom"];
-  if (params.colDef?.field && NO_COLOR_COLS.includes(params.colDef.field)) {
-    return {};
-  }
-
-  switch (params.colDef?.field) {
-    case "buyVol3":
-    case "buyPrice3":
-      comparePrice = params.data.buyPrice3;
-      break;
-    case "buyVol2":
-    case "buyPrice2":
-      comparePrice = params.data.buyPrice2;
-      break;
-    case "buyVol1":
-    case "buyPrice1":
-      comparePrice = params.data.buyPrice1;
-      break;
-    case "sellVol1":
-    case "sellPrice1":
-      comparePrice = params.data.sellPrice1;
-      break;
-    case "sellVol2":
-    case "sellPrice2":
-      comparePrice = params.data.sellPrice2;
-      break;
-    case "sellVol3":
-    case "sellPrice3":
-      comparePrice = params.data.sellPrice3;
-      break;
-    case "matchVol":
-    case "matchPrice":
-    case "changePct":
-    case "change":
-    case "symbol":
-      comparePrice = params.data.matchPrice;
-      break;
-    default:
-      comparePrice = params.value;
-      break;
-  }
-
-  if (comparePrice == null) return {};
-
-  const { ref, ceil, floor } = params.data;
-
-  if (comparePrice === ceil) return { color: "#ff25ff" };
-  if (comparePrice === floor) return { color: "#00b2ff" };
-  if (comparePrice > ref) return { color: "#00ff00" };
-  if (comparePrice < ref) return { color: "#ff3737" };
-  if (comparePrice === ref) return { color: "#ffd900" };
-
-  return {};
-};
-
 export default function BaseTable({ data }: { data: StockData[] }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -143,8 +74,6 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
   const gridRef = useRef<AgGridReact>(null);
   const prevDataRef = useRef<Map<string, StockData>>(new Map());
-
-  const [initialData] = useState(() => data);
 
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
 
@@ -287,7 +216,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     return () => {
       clearTimeout(timmer);
     };
-  }, [initialData]);
+  }, [data]);
 
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
@@ -669,7 +598,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       <AgGridReact
         ref={gridRef}
         getRowId={(p) => p.data.symbol}
-        rowData={initialData}
+        rowData={data}
         loading={loading}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}

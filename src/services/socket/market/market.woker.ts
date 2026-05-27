@@ -1,19 +1,20 @@
 import type { StockData } from "@/types";
 
-self.onmessage = (e) => {
+self.onmessage = (e: MessageEvent) => {
   if (e.data.type !== "TICK_BATCH") return;
 
-  const batch: StockData[] = e.data.payload;
+  const batch: Partial<StockData>[] = e.data.payload;
 
-  //Lấy phần tử cuosi cùng của stock
-  const lastest = new Map<string, StockData>();
-
+  // Với mỗi symbol, giữ lại item cuối cùng trong batch
+  const latest = new Map<string, Partial<StockData>>();
   for (const tick of batch) {
-    lastest.set(tick.symbol, tick);
+    if (tick.symbol) {
+      latest.set(tick.symbol, tick);
+    }
   }
 
   self.postMessage({
     type: "BATCH_READY",
-    payload: Array.from(lastest.values()),
+    payload: Array.from(latest.values()),
   });
 };

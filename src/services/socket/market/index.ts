@@ -5,26 +5,30 @@ import {
 } from "@/store/modules/priceboard/slice";
 import { setMarketStatus } from "@/store/modules/socket/slice";
 import type { StockData } from "@/types";
-import { io, Socket } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 
 const MARKET_SOCKET_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "https://webtrade-fs.onrender.com/market";
+    : "http://localhost:5000/market";
 
-const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url));
+const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url), {
+  type: "module",
+});
 
-//Nhận data cuối cùng
-marketWorker.onmessage = (e) => {
+// Worker trả về Partial<StockData>[] đã dedupe
+marketWorker.onmessage = (e: MessageEvent) => {
   if (e.data.type !== "BATCH_READY") return;
+
   store.dispatch(batchUpdateStocks(e.data.payload));
 };
 
 let socket: Socket | null = null;
 const pendingSubscriptions: string[] = [];
-const pendingListeners: Map<string, (data: unknown) => void> = new Map();
+const pendingListeners = new Map<string, (data: unknown) => void>();
 
-let pendingBatch: StockData[] = [];
+// Batch buffer — Partial<StockData> vì server chỉ gửi field thay đổi
+let pendingBatch: Partial<StockData>[] = [];
 let batchTimer: ReturnType<typeof setTimeout> | null = null;
 
 const flushWorker = () => {
@@ -37,16 +41,10 @@ const flushWorker = () => {
 };
 
 const flushPending = () => {
-  // Flush emit events
   while (pendingSubscriptions.length > 0) {
-    const event = pendingSubscriptions.shift()!;
-    socket!.emit("subscribe", event);
+    socket!.emit("subscribe", pendingSubscriptions.shift()!);
   }
-
-  // Flush listeners
-  pendingListeners.forEach((callback, event) => {
-    socket!.on(event, callback);
-  });
+  pendingListeners.forEach((cb, event) => socket!.on(event, cb));
 };
 
 const connect = () => {
@@ -73,30 +71,29 @@ const connect = () => {
 
   socket.on("disconnect", () => {
     store.dispatch(setMarketStatus("disconnected"));
-    console.log("disconnect");
   });
 
   socket.io.on("reconnect", () => {
     store.dispatch(setMarketStatus("reconnect"));
-
-    flushPending(); // re-register listeners sau reconnect
+    flushPending();
   });
 
   socket.on("connect_error", () => {
-    console.log("connect_error");
     store.dispatch(setMarketStatus("connect_error"));
   });
 
-  socket.on("marketUpdate", (data: StockData) => {
+  // ── marketUpdate: nhận Partial<StockData> ──────────────────────────────
+  socket.on("marketUpdate", (data: Partial<StockData>) => {
     pendingBatch.push(data);
 
-    if (pendingBatch.length > 10) {
+    if (pendingBatch.length >= 10) {
       flushWorker();
     } else if (!batchTimer) {
       batchTimer = setTimeout(flushWorker, 50);
     }
   });
 
+  // ── marketSnapshot: nhận StockData[] đầy đủ ───────────────────────────
   socket.on("marketSnapshot", (data: StockData[]) => {
     store.dispatch(snapshotStocks(data));
   });
@@ -123,25 +120,22 @@ const subscribe = (topic: string) => {
   pendingSubscriptions.push(topic);
 };
 
-const unsubscribe = (topic: string) => {
-  socket?.emit("unsubscribe", topic);
-};
+const unsubscribe = (topic: string) => socket?.emit("unsubscribe", topic);
 
-const on = <T>(event: string, callback: (data: T) => void): void => {
+const on = <T>(event: string, callback: (data: T) => void) => {
   if (socket?.connected) {
     socket.on(event, callback);
     return;
   }
-
   pendingListeners.set(event, callback as (data: unknown) => void);
 };
 
-const off = (event: string): void => {
+const off = (event: string) => {
   pendingListeners.delete(event);
   socket?.off(event);
 };
 
-const getMarketSocket = (): Socket | null => socket;
+const getMarketSocket = () => socket;
 
 export const MarketSocket = {
   connect,

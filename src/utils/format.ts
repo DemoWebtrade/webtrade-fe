@@ -90,7 +90,7 @@ export const changePctFormatter = (
   params: Params & { value: string | number },
 ): string => {
   if (!params.value) return "";
-  return numberFormat(params.value, 0, "");
+  return params.value + "%";
 };
 
 export function StringToInt(pString: string | number): number {

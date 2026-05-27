@@ -1,11 +1,12 @@
+import type { StockData } from "@/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { PriceboardState } from "./types";
-import type { StockData } from "@/types";
 
 const initialState: PriceboardState = {
   scroll: false,
   export: false,
   stocks: {},
+  symbols: [],
 };
 
 const priceboardSlice = createSlice({
@@ -19,20 +20,29 @@ const priceboardSlice = createSlice({
       state.export = action.payload;
     },
 
-    snapshotStocks: (state, action: PayloadAction<StockData[]>) => {
-      for (const { symbol, ...fields } of action.payload) {
-        if (!state.stocks[symbol]) {
-          state.stocks[symbol] = { symbol, ...fields } as StockData;
-        } else {
-          Object.assign(state.stocks[symbol], fields);
-        }
+    snapshotStocks(state, action: PayloadAction<StockData[]>) {
+      const stocks: Record<string, StockData> = {};
+      const symbols: string[] = [];
+
+      for (const row of action.payload) {
+        stocks[row.symbol] = row;
+        symbols.push(row.symbol);
       }
+
+      state.stocks = stocks;
+      state.symbols = symbols;
     },
 
-    batchUpdateStocks: (state, action: PayloadAction<StockData[]>) => {
-      for (const tick of action.payload) {
-        if (!state.stocks[tick.symbol]) return;
-        Object.assign(state.stocks[tick.symbol], tick);
+    batchUpdateStocks(state, action: PayloadAction<Partial<StockData>[]>) {
+      for (const partial of action.payload) {
+        const { symbol } = partial;
+        if (!symbol) continue;
+
+        const existing = state.stocks[symbol];
+        if (!existing) continue; // chưa có snapshot thì bỏ qua
+
+        // Merge: chỉ overwrite field nào thực sự có trong partial
+        state.stocks[symbol] = { ...existing, ...partial };
       }
     },
   },

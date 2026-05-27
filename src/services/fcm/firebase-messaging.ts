@@ -100,7 +100,7 @@ export const onMessageListener = (
 
 const handleSubscribe = async (token: string): Promise<void> => {
   try {
-    await apiClient.post("api/fcm/subscribe", { fcm_token: token });
+    await apiClient.post("fcm/subscribe", { fcm_token: token });
   } catch (error) {
     console.error("Error subscribing:", error);
   }
@@ -115,7 +115,7 @@ export const unsubscribe = async (): Promise<void> => {
       vapidKey: import.meta.env.VITE_VAPID_KEY,
     });
     if (token) {
-      await apiClient.post("api/fcm/unsubscribe", { fcm_token: token });
+      await apiClient.post("fcm/unsubscribe", { fcm_token: token });
     }
   } catch (error) {
     console.error("Error unsubscribing:", error);
