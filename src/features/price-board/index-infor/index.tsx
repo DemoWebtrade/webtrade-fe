@@ -99,22 +99,22 @@ export default function IndexInfor() {
               <div className="flex flex-col items-start">
                 <h1 className="text-xs md:text-sm font-medium">VN-INDEX</h1>
                 <div className="flex flex-row gap-2 md:gap-4">
-                  <span className="md:text-xs text-[10px] font-normal text-green-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-green-base flex flex-row items-center gap-1">
                     <TrendingUp className="md:size-4 size-3" /> 143
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-yellow-500">
+                  <span className="md:text-xs text-[10px] font-normal text-yellow-base">
                     - 65
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-red-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-red-base flex flex-row items-center gap-1">
                     <TrendingDown className="md:size-4 size-3" /> 174
                   </span>
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <h1 className="text-xs md:text-sm font-medium text-green-500">
+                <h1 className="text-xs md:text-sm font-medium text-green-base">
                   1,879.13
                 </h1>
-                <span className="md:text-xs text-[10px] font-normal text-green-500">
+                <span className="md:text-xs text-[10px] font-normal text-green-base">
                   14.33 ( 0.77% )
                 </span>
               </div>
@@ -134,22 +134,22 @@ export default function IndexInfor() {
               <div className="flex flex-col items-start">
                 <h1 className="text-xs md:text-sm font-medium">VN30-INDEX</h1>
                 <div className="flex flex-row gap-2 md:gap-4">
-                  <span className="md:text-xs text-[10px] font-normal text-green-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-green-base flex flex-row items-center gap-1">
                     <TrendingUp className="md:size-4 size-3" /> 143
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-yellow-500">
+                  <span className="md:text-xs text-[10px] font-normal text-yellow-base">
                     - 65
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-red-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-red-base flex flex-row items-center gap-1">
                     <TrendingDown className="md:size-4 size-3" /> 174
                   </span>
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <h1 className="text-xs md:text-sm font-medium text-green-500">
+                <h1 className="text-xs md:text-sm font-medium text-green-base">
                   1,879.13
                 </h1>
-                <span className="md:text-xs text-[10px] font-normal text-green-500">
+                <span className="md:text-xs text-[10px] font-normal text-green-base">
                   14.33 ( 0.77% )
                 </span>
               </div>
@@ -167,22 +167,22 @@ export default function IndexInfor() {
               <div className="flex flex-col items-start">
                 <h1 className="text-xs md:text-sm font-medium">HNX-INDEX</h1>
                 <div className="flex flex-row gap-2 md:gap-4">
-                  <span className="md:text-xs text-[10px] font-normal text-green-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-green-base flex flex-row items-center gap-1">
                     <TrendingUp className="md:size-4 size-3" /> 143
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-yellow-500">
+                  <span className="md:text-xs text-[10px] font-normal text-yellow-base">
                     - 65
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-red-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-red-base flex flex-row items-center gap-1">
                     <TrendingDown className="md:size-4 size-3" /> 174
                   </span>
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <h1 className="text-xs md:text-sm font-medium text-green-500">
+                <h1 className="text-xs md:text-sm font-medium text-green-base">
                   1,879.13
                 </h1>
-                <span className="md:text-xs text-[10px] font-normal text-green-500">
+                <span className="md:text-xs text-[10px] font-normal text-green-base">
                   14.33 ( 0.77% )
                 </span>
               </div>
@@ -200,22 +200,22 @@ export default function IndexInfor() {
               <div className="flex flex-col items-start">
                 <h1 className="text-xs md:text-sm font-medium">UPCOM-INDEX</h1>
                 <div className="flex flex-row gap-2 md:gap-4">
-                  <span className="md:text-xs text-[10px] font-normal text-green-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-green-base flex flex-row items-center gap-1">
                     <TrendingUp className="md:size-4 size-3" /> 143
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-yellow-500">
+                  <span className="md:text-xs text-[10px] font-normal text-yellow-base">
                     - 65
                   </span>
-                  <span className="md:text-xs text-[10px] font-normal text-red-500 flex flex-row items-center gap-1">
+                  <span className="md:text-xs text-[10px] font-normal text-red-base flex flex-row items-center gap-1">
                     <TrendingDown className="md:size-4 size-3" /> 174
                   </span>
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <h1 className="text-xs md:text-sm font-medium text-green-500">
+                <h1 className="text-xs md:text-sm font-medium text-green-base">
                   1,879.13
                 </h1>
-                <span className="md:text-xs text-[10px] font-normal text-green-500">
+                <span className="md:text-xs text-[10px] font-normal text-green-base">
                   14.33 ( 0.77% )
                 </span>
               </div>

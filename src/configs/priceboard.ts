@@ -59,11 +59,11 @@ export const coloredCellStyle = (
 
   const { ref, ceil, floor } = params.data;
 
-  if (comparePrice === ceil) return { color: "#ff25ff" };
-  if (comparePrice === floor) return { color: "#00b2ff" };
-  if (comparePrice > ref) return { color: "#00ff00" };
-  if (comparePrice < ref) return { color: "#ff3737" };
-  if (comparePrice === ref) return { color: "#ffd900" };
+  if (comparePrice === ceil) return { color: "var(--purple-base)" };
+  if (comparePrice === floor) return { color: "var(--blue-base)" };
+  if (comparePrice > ref) return { color: "var(--green-base)" };
+  if (comparePrice < ref) return { color: "var(--red-base)" };
+  if (comparePrice === ref) return { color: "var(--yellow-base)" };
 
   return {};
 };
@@ -106,10 +106,18 @@ export const VOL_TO_PRICE: Record<string, string> = {
 };
 
 export const FLASH_COLORS: Record<string, string> = {
-  "cell-flash-up": "#00ff00",
-  "cell-flash-down": "#ff3737",
-  "cell-flash-ceil": "#ff25ff",
-  "cell-flash-floor": "#00b2ff",
-  "cell-flash-ref": "#ffd900",
-  "cell-flash-volume": "#565759",
+  "cell-flash-up": "var(--green-active)",
+  "cell-flash-down": "var(--red-active)",
+  "cell-flash-ceil": "var(--purple-active)",
+  "cell-flash-floor": "var(--blue-active)",
+  "cell-flash-ref": "var(--yellow-active)",
+  "cell-flash-volume": "var(--outline-active)",
+};
+
+export const TEXT_COLORS: Record<string, string> = {
+  "cell-flash-up": "var(--green-base)",
+  "cell-flash-down": "var(--red-base)",
+  "cell-flash-ceil": "var(--purple-base)",
+  "cell-flash-floor": "var(--blue-base)",
+  "cell-flash-ref": "var(--yellow-base)",
 };

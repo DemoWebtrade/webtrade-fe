@@ -1,8 +1,8 @@
 .ag-theme-quartz-custom {
   --ag-background-color: var(--bg-primary) !important;
   --ag-foreground-color: var(--content-primary) !important;
-  --ag-header-background-color: var(--bg-purple) !important;
-  --ag-odd-row-background-color: var(--bg-purple) !important;
+  --ag-header-background-color: var(--bg-secondary) !important;
+  --ag-odd-row-background-color: var(--bg-secondary) !important;
   --ag-border-color: var(--border) !important;
   --ag-font-size: clamp(10px, 0.8vw, 12px);
   --ag-inherited-font-family: "Hanken Grotesk";

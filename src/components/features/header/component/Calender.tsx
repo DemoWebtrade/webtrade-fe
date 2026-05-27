@@ -61,7 +61,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                       <span>{monthText}</span>{" "}
                       <div className="flex flex-row items-center gap-2 md:gap-6">
                         <button
-                          className="cursor-pointer hover:text-purple-500"
+                          className="cursor-pointer hover:text-purple-base"
                           onClick={() =>
                             onMonthChange(currentMonth.subtract(1, "month"))
                           }
@@ -71,7 +71,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                           <ChevronLeft />
                         </button>
                         <button
-                          className="cursor-pointer hover:text-purple-500"
+                          className="cursor-pointer hover:text-purple-base"
                           onClick={() =>
                             onMonthChange(currentMonth.add(1, "month"))
                           }
@@ -98,7 +98,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                       day={day}
                       sx={{
                         ...(isNonTrading && {
-                          color: "red !important",
+                          color: "var(--red-base) !important",
                           fontWeight: "bold",
                         }),
                       }}

@@ -199,12 +199,12 @@ const ChartIndex = (props: Props) => {
     // Tạo series
     const baselineSeries = chart.addSeries(BaselineSeries, {
       baseValue: { type: "price", price: openIndex },
-      topLineColor: "#34c85a",
-      topFillColor1: "#34c85a1a",
-      topFillColor2: "#34c85a1a",
-      bottomLineColor: "#fd3b31",
-      bottomFillColor1: "#ff00171a",
-      bottomFillColor2: "#ff00171a",
+      topLineColor: "#38a169",
+      topFillColor1: "#38a1691a",
+      topFillColor2: "#38a1691a",
+      bottomLineColor: "#e53e3e",
+      bottomFillColor1: "#e53e3e1a",
+      bottomFillColor2: "#e53e3e1a",
       lineWidth: 1,
       lastPriceAnimation: LastPriceAnimationMode.Continuous,
       lastValueVisible: false,
@@ -212,7 +212,7 @@ const ChartIndex = (props: Props) => {
     });
 
     const volumeSeries = chart.addSeries(HistogramSeries, {
-      color: "#0bdf39",
+      color: "#589e67",
       priceFormat: {
         type: "volume",
       },
@@ -288,7 +288,7 @@ const ChartIndex = (props: Props) => {
       barData.push({
         time: timestamp as UTCTimestamp,
         value: data.v[i],
-        color: data.c[i] >= data.o[i] ? "#34c85a40" : "#ff001740",
+        color: data.c[i] >= data.o[i] ? "#38a169" : "#e53e3e",
       });
     }
 
@@ -315,8 +315,8 @@ const ChartIndex = (props: Props) => {
   useEffect(() => {
     if (!chartRef.current) return;
 
-    const currentBg = theme === "dark" ? "#161a22" : "#f9f9f9";
-    const currentText = theme === "dark" ? "#ffffff" : "#000000";
+    const currentBg = theme === "dark" ? "#161a22" : " #ffffff";
+    const currentText = theme === "dark" ? "#e5e7eb" : "#4b5563";
 
     chartRef.current.applyOptions({
       layout: {

@@ -72,6 +72,11 @@
 
   <body>
     <div id="root"></div>
+
+    <!-- Fallback cho Zalo SDK -->
+    <script>
+      window.zaloJSV2 = window.zaloJSV2 || {};
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

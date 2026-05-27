@@ -2,6 +2,7 @@ import {
   coloredCellStyle,
   FLASH_COLORS,
   PRICE_COLS,
+  TEXT_COLORS,
   VOL_COLS,
   VOL_PRICE_COLS,
   VOL_TO_PRICE,
@@ -72,7 +73,11 @@ export default function BaseTable({ data }: { data: StockData[] }) {
   const scroll = useAppSelector(selectScroll);
   const exportFile = useAppSelector(selectExport);
 
-  const gridRef = useRef<AgGridReact>(null);
+  const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
+    durationPerCycle: data?.length * 1000,
+    enabled: true,
+  });
+
   const prevDataRef = useRef<Map<string, StockData>>(new Map());
 
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
@@ -101,17 +106,71 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
         //Giá
         for (const colId of PRICE_COLS) {
-          const val = row[colId as keyof StockData];
-          const prevVal = prev[colId as keyof StockData];
-          if (val !== prevVal) {
-            const flashClass = getFlashClass(val as number, ref, ceil, floor);
-            if (flashClass) {
-              flashQueue.push({
-                rowId,
-                colId,
-                flashClass,
-                colorClass: flashClass,
-              });
+          if (colId === "matchPrice") {
+            const val = row["matchPrice"];
+            const prevVal = prev["matchPrice"];
+            if (val !== prevVal) {
+              const flashClass = getFlashClass(val as number, ref, ceil, floor);
+              if (flashClass) {
+                flashQueue.push({
+                  rowId,
+                  colId,
+                  flashClass,
+                  colorClass: flashClass,
+                });
+                flashQueue.push({
+                  rowId,
+                  colId: "change",
+                  flashClass,
+                  colorClass: flashClass,
+                });
+                flashQueue.push({
+                  rowId,
+                  colId: "changePct",
+                  flashClass,
+                  colorClass: flashClass,
+                });
+                flashQueue.push({
+                  rowId,
+                  colId: "matchVol",
+                  flashClass,
+                  colorClass: flashClass,
+                });
+                flashQueue.push({
+                  rowId,
+                  colId: "symbol",
+                  flashClass: "",
+                  colorClass: flashClass,
+                });
+              }
+            }
+          } else if (colId === "change" || colId === "changePct") {
+            const val = row["matchPrice"];
+            const prevVal = prev["matchPrice"];
+            if (val !== prevVal) {
+              const flashClass = getFlashClass(val as number, ref, ceil, floor);
+              if (flashClass) {
+                flashQueue.push({
+                  rowId,
+                  colId,
+                  flashClass,
+                  colorClass: flashClass,
+                });
+              }
+            }
+          } else {
+            const val = row[colId as keyof StockData];
+            const prevVal = prev[colId as keyof StockData];
+            if (val !== prevVal) {
+              const flashClass = getFlashClass(val as number, ref, ceil, floor);
+              if (flashClass) {
+                flashQueue.push({
+                  rowId,
+                  colId,
+                  flashClass,
+                  colorClass: flashClass,
+                });
+              }
             }
           }
         }
@@ -201,7 +260,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
         if (!rowNode) continue;
         const flash = FLASH_COLORS[flashClass] ?? "";
-        const color = FLASH_COLORS[colorClass] ?? "";
+        const color = TEXT_COLORS[colorClass] ?? "";
 
         flashCellWithColor(rowNode, colId, flash, color);
       }
@@ -479,20 +538,19 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     [t],
   );
 
-  const { resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
-    durationPerCycle: data?.length * 1000,
-    enabled: true,
-  });
-
   useEffect(() => {
     if (!gridRef.current) return;
 
     if (scroll && data?.length) {
+      console.log("scroll");
+
       resumeAutoScroll();
     } else {
+      console.log("stop-scroll");
+
       stopAutoScroll();
     }
-  }, [scroll, resumeAutoScroll, stopAutoScroll, gridRef]);
+  }, [scroll, resumeAutoScroll, stopAutoScroll]);
 
   useEffect(() => {
     if (!gridRef.current || !exportFile || !data?.length) return;
@@ -608,6 +666,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
         suppressCellFocus
         onGridReady={(params) => {
           params.api.sizeColumnsToFit();
+          if (scroll) resumeAutoScroll();
         }}
         onGridSizeChanged={(params) => {
           params.api.sizeColumnsToFit();

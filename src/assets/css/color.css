@@ -90,19 +90,25 @@
 :root {
   /* Content */
   --content-primary: #1f2937;
-  --content-secondary: #6d28d9;
+  --content-secondary: #4b5563;
   --content-tertiary: #6b7280;
   --content-disable: #9ca3af;
-  --content-informative: #3b82f6;
+  --content-informative: #2563eb;
   --content-positive: #16a34a;
   --content-error: #dc2626;
 
   /* Border */
   --border: #e5e7eb;
+  --border-primary: #e4e4e4;
+  --border-secondary: #afafaf;
+  --border-tertiary: #000000;
+  --border-informative: #93c5fd;
+  --border-positive: #4ade80;
+  --border-error: #fca5a5;
 
   /* Background */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc; /* sáng hơn chút */
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
   --bg-tertiary: #f1f5f9;
   --bg-blue: #eff6ff;
   --bg-green: #f0fdf4;
@@ -110,93 +116,142 @@
   --bg-orange: #fff7ed;
   --bg-purple: #f5f3ff;
   --bg-yellow: #fefce8;
-
   --bg-button: #7c3aed;
 
-  /* Border */
-  --border-primary: #e4e4e4;
-  --border-secondary: #afafaf;
-  --border-tertiary: #000000;
-  --border-informative: #b6c8fb;
-  --border-positive: #589e67;
-  --border-error: #af4b4b;
-
-  /* Action & Interaction */
-  --primary-base: #000000;
-  --primary-hover: #727272;
-  --primary-active: #4b4b4b;
-  --primary-selected: #4b4b4b;
-  --primary-disabled: #f9f9f9;
+  /* Action — light mode (saturated, readable on white) */
+  --primary-base: #111827;
+  --primary-hover: #374151;
+  --primary-active: #1f2937;
+  --primary-selected: #374151;
+  --primary-disabled: #f3f4f6;
 
   --secondary-base: #ffffff;
-  --secondary-hover: #e8e8e8;
-  --secondary-active: #e4e4e4;
-  --secondary-selected: #f2f2f2;
-  --secondary-disabled: #f9f9f9;
+  --secondary-hover: #f3f4f6;
+  --secondary-active: #e5e7eb;
+  --secondary-selected: #f9fafb;
+  --secondary-disabled: #f9fafb;
 
   --outline-base: #e4e4e4;
-  --outline-hover: #000000;
-  --outline-active: #727272;
-  --outline-selected: #afafaf;
-  --outline-disabled: #f2f2f2;
+  --outline-hover: #111827;
+  --outline-active: #374151;
+  --outline-selected: #6b7280;
+  --outline-disabled: #f3f4f6;
 
-  --red-base: #bf6f6f;
-  --red-hover: #af4b4b;
-  --red-active: #8c3c3c;
-  --red-selected: #af4b4b;
-  --red-disabled: #efdbdb;
+  /* Semantic — light mode */
+  --red-base: #e53e3e;
+  --red-hover: #c53030;
+  --red-active: #9b2c2c;
+  --red-selected: #c53030;
+  --red-disabled: #fed7d7;
 
-  --green-base: #589e67;
-  --green-hover: #467e52;
-  --green-active: #355f3e;
-  --green-selected: #467e52;
-  --green-disabled: #deece1;
+  --green-base: #38a169;
+  --green-hover: #2f855a;
+  --green-active: #276749;
+  --green-selected: #2f855a;
+  --green-disabled: #c6f6d5;
 
-  --blue-base: #4976f4;
-  --blue-hover: #3759b7;
-  --blue-active: #253b7a;
-  --blue-selected: #3759b7;
-  --blue-disabled: #dbe4fd;
+  --blue-base: #3b82f6;
+  --blue-hover: #2563eb;
+  --blue-active: #1d4ed8;
+  --blue-selected: #2563eb;
+  --blue-disabled: #dbeafe;
 
-  --yellow-base: #b1ab1d;
-  --yellow-hover: #8e8917;
-  --yellow-active: #6a6711;
-  --yellow-selected: #8e8917;
-  --yellow-disabled: #efeed2;
+  --yellow-base: #ca8a04;
+  --yellow-hover: #a16207;
+  --yellow-active: #854d0e;
+  --yellow-selected: #a16207;
+  --yellow-disabled: #fef9c3;
 
-  --purple-base: #954baf;
-  --purple-hover: #773c8c;
-  --purple-active: #592d69;
-  --purple-selected: #773c8c;
-  --purple-disabled: #eadbef;
+  --purple-base: #9333ea;
+  --purple-hover: #7e22ce;
+  --purple-active: #6b21a8;
+  --purple-selected: #7e22ce;
+  --purple-disabled: #ede9fe;
 
-  --orange-base: #d28e3d;
-  --orange-hover: #a87231;
-  --orange-active: #7e5525;
-  --orange-selected: #a87231;
-  --orange-disabled: #f6e8d8;
+  --orange-base: #ea580c;
+  --orange-hover: #c2410c;
+  --orange-active: #9a3412;
+  --orange-selected: #c2410c;
+  --orange-disabled: #ffedd5;
 }
 
 .dark {
-  --content-primary: #ffffff;
-  --content-secondary: #f9f9f9;
-  --content-tertiary: #f2f2f2;
-  --content-disable: #d8d8d8;
-  --content-informative: #4976f4;
-  --content-positive: #589e67;
-  --content-error: #af4b4b;
+  /* Content */
+  --content-primary: #f9fafb;
+  --content-secondary: #e5e7eb;
+  --content-tertiary: #9ca3af;
+  --content-disable: #6b7280;
+  --content-informative: #6b97ff;
+  --content-positive: #4ec97a;
+  --content-error: #f07070;
 
-  --border: #38383b;
+  /* Border */
+  --border: #2d3748;
 
-  --bg-primary: #0f1115; /* nền chính */
-  --bg-secondary: #161a22; /* card */
-  --bg-tertiary: #1f2430; /* divider */
+  /* Background */
+  --bg-primary: #0f1115;
+  --bg-secondary: #161a22;
+  --bg-tertiary: #1f2430;
   --bg-blue: #1a2238;
   --bg-green: #1b2a23;
   --bg-red: #2a1d1f;
   --bg-orange: #2b2219;
-  --bg-purple: #241d2b;
+  --bg-purple: #1e1628;
   --bg-yellow: #2a2a1c;
-}
 
-@custom-variant dark (&: is(.dark *));
+  /* Action — dark mode */
+  --primary-base: #f9fafb;
+  --primary-hover: #e5e7eb;
+  --primary-active: #d1d5db;
+  --primary-selected: #e5e7eb;
+  --primary-disabled: #374151;
+
+  --secondary-base: #1f2937;
+  --secondary-hover: #374151;
+  --secondary-active: #4b5563;
+  --secondary-selected: #2d3748;
+  --secondary-disabled: #1f2937;
+
+  --outline-base: #374151;
+  --outline-hover: #f9fafb;
+  --outline-active: #e5e7eb;
+  --outline-selected: #9ca3af;
+  --outline-disabled: #1f2937;
+
+  /* Semantic — dark mode */
+  --red-base: #f07070;
+  --red-hover: #e04444;
+  --red-active: #c42e2e;
+  --red-selected: #e04444;
+  --red-disabled: #3d2020;
+
+  --green-base: #4ec97a;
+  --green-hover: #38a862;
+  --green-active: #27874a;
+  --green-selected: #38a862;
+  --green-disabled: #1a3326;
+
+  --blue-base: #6b97ff;
+  --blue-hover: #4d7bff;
+  --blue-active: #3460e0;
+  --blue-selected: #4d7bff;
+  --blue-disabled: #1a2340;
+
+  --yellow-base: #e8d44d;
+  --yellow-hover: #cfbc2e;
+  --yellow-active: #b09e1e;
+  --yellow-selected: #cfbc2e;
+  --yellow-disabled: #2e2a10;
+
+  --purple-base: #c97de8;
+  --purple-hover: #b35ed4;
+  --purple-active: #9644bc;
+  --purple-selected: #b35ed4;
+  --purple-disabled: #28183a;
+
+  --orange-base: #f5a855;
+  --orange-hover: #e8903a;
+  --orange-active: #cc7422;
+  --orange-selected: #e8903a;
+  --orange-disabled: #2b1f0e;
+}

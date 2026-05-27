@@ -20,7 +20,7 @@ export default function Slogan() {
           {t("slogan.detail-2")}
           <a
             href={`mailto:${email}`}
-            className="underline hover:text-purple-600 transition-colors ml-1"
+            className="underline hover:text-purple-active transition-colors ml-1"
           >
             {email}
           </a>
@@ -32,7 +32,7 @@ export default function Slogan() {
           {t("slogan.detail-2")}
           <a
             href={`mailto:${email}`}
-            className="underline hover:text-purple-600 transition-colors ml-1"
+            className="underline hover:text-purple-active transition-colors ml-1"
           >
             {email}
           </a>

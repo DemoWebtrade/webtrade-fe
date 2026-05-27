@@ -7,16 +7,13 @@ interface UseAgGridAutoScrollProps {
   enabled?: boolean;
 }
 
-type data = {
-  [key: string]: string | number;
-};
-
 export const useAgGridAutoScroll = ({
   durationPerCycle = 12000,
   pauseBetweenCycles = 1000,
   enabled = true,
 }: UseAgGridAutoScrollProps = {}) => {
-  const gridRef = useRef<AgGridReact<data>>(null);
+  const gridRef = useRef<AgGridReact>(null);
+
   const isAnimatingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   const loopEnabledRef = useRef(enabled);
