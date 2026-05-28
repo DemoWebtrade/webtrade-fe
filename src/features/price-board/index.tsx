@@ -23,7 +23,7 @@ export default function PriceBoard() {
       </div>
 
       <div className="h-10 w-full flex flex-row items-center justify-between md:gap-4 gap-2">
-        <MenuBoard />
+        <MenuBoard marketStatus={marketStatus} />
 
         <div className="flex flex-row items-center justify-between md:gap-4 gap-2">
           {/* status socket market */}
@@ -70,7 +70,7 @@ export default function PriceBoard() {
             </div>
           }
         >
-          <Table marketStatus={marketStatus} />
+          <Table />
         </Suspense>
       </div>
     </div>

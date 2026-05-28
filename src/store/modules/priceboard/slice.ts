@@ -20,6 +20,11 @@ const priceboardSlice = createSlice({
       state.export = action.payload;
     },
 
+    clearStocks(state) {
+      state.stocks = {};
+      state.symbols = [];
+    },
+
     snapshotStocks(state, action: PayloadAction<StockData[]>) {
       const stocks: Record<string, StockData> = {};
       const symbols: string[] = [];
@@ -48,7 +53,12 @@ const priceboardSlice = createSlice({
   },
 });
 
-export const { setStartScroll, setExport, batchUpdateStocks, snapshotStocks } =
-  priceboardSlice.actions;
+export const {
+  setStartScroll,
+  setExport,
+  batchUpdateStocks,
+  snapshotStocks,
+  clearStocks,
+} = priceboardSlice.actions;
 
 export default priceboardSlice.reducer;

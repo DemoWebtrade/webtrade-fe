@@ -1,9 +1,20 @@
 import { ShiftingDropDown } from "@/components/ui/ShiftingDropDown";
 import { MENU_BOARD } from "@/configs";
-import { useState } from "react";
+import { MarketSocket } from "@/services/socket/market";
+import { useEffect, useState } from "react";
 
-export default function MenuBoard() {
-  const [id, setId] = useState<string>("vn30");
+export default function MenuBoard({ marketStatus }: { marketStatus: string }) {
+  const [id, setId] = useState<string>("VN30");
+
+  useEffect(() => {
+    if (marketStatus === "connected" && id) {
+      MarketSocket.subscribe(id);
+    }
+
+    return () => {
+      if (id) MarketSocket.unsubscribe(id);
+    };
+  }, [marketStatus, id]);
 
   const handleChangeId = (id: string) => {
     setId(id);

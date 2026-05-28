@@ -4,29 +4,29 @@ export const MENU_BOARD = [
     title: "watchlist",
   },
   {
-    id: "vn30",
+    id: "VN30",
     title: "VN30",
     children: [
       {
-        id: "vn30",
+        id: "VN30",
         title: "VN30",
       },
       {
-        id: "vn100",
+        id: "VN100",
         title: "VN100",
       },
     ],
   },
   {
-    id: "hsx",
+    id: "HSX",
     title: "HSX",
   },
   {
-    id: "hnx",
+    id: "HNX",
     title: "HNX",
   },
   {
-    id: "upcom",
+    id: "UPCOM",
     title: "UPCOM",
   },
 ];

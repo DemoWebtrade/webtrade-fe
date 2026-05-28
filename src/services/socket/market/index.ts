@@ -1,6 +1,7 @@
 import { store } from "@/store";
 import {
   batchUpdateStocks,
+  clearStocks,
   snapshotStocks,
 } from "@/store/modules/priceboard/slice";
 import { setMarketStatus } from "@/store/modules/socket/slice";
@@ -10,7 +11,7 @@ import { io, type Socket } from "socket.io-client";
 const MARKET_SOCKET_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "http://localhost:5001/market";
+    : "http://localhost:5000/market";
 
 const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url), {
   type: "module",
@@ -115,6 +116,7 @@ const close = () => {
 const subscribe = (topic: string) => {
   if (socket?.connected) {
     socket.emit("subscribe", topic);
+    store.dispatch(clearStocks());
     return;
   }
   pendingSubscriptions.push(topic);

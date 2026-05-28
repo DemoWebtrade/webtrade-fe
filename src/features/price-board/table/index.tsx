@@ -1,18 +1,9 @@
-import { MarketSocket } from "@/services/socket/market";
 import { useAppSelector } from "@/store/hook";
 import { selectStockList } from "@/store/modules/priceboard/selector";
-import { useEffect } from "react";
 import BaseTable from "./BaseTable";
 
-export default function Table({ marketStatus }: { marketStatus: string }) {
+export default function Table() {
   const stocks = useAppSelector(selectStockList);
-
-  useEffect(() => {
-    if (marketStatus === "connected") MarketSocket.subscribe("VN30");
-    return () => {
-      MarketSocket.unsubscribe("VN30");
-    };
-  }, [marketStatus]);
 
   return (
     <div className="w-full h-full flex flex-col items-center">

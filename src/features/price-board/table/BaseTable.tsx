@@ -542,12 +542,8 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     if (!gridRef.current) return;
 
     if (scroll && data?.length) {
-      console.log("scroll");
-
       resumeAutoScroll();
     } else {
-      console.log("stop-scroll");
-
       stopAutoScroll();
     }
   }, [scroll, resumeAutoScroll, stopAutoScroll]);
