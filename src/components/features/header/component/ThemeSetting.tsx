@@ -20,7 +20,7 @@ export default function ThemeSetting() {
       <div className="w-full h-full flex flex-row items-center justify-between relative">
         <div
           className={`absolute top-0 h-full w-1/2 rounded-2xl bg-purple-active group-hover:bg-purple-hover bg-switch pointer-events-none ${
-            theme === "dark" ? "left-1/2" : "left-0"
+            theme === "dark" ? "left-1/2 " : "left-0"
           }`}
         />
 

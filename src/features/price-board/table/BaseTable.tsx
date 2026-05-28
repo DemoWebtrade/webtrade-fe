@@ -82,6 +82,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
 
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
 
+  //TODO: flash cell
   useEffect(() => {
     if (!gridRef.current?.api) return;
 
@@ -548,6 +549,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     }
   }, [scroll, resumeAutoScroll, stopAutoScroll]);
 
+  //TODO: export
   useEffect(() => {
     if (!gridRef.current || !exportFile || !data?.length) return;
 
@@ -581,6 +583,7 @@ export default function BaseTable({ data }: { data: StockData[] }) {
     dispatch(setExport(false));
   }, [exportFile, gridRef, dispatch]);
 
+  //TODO: row pin & unpin
   const onCellDoubleClicked = useCallback((params: CellDoubleClickedEvent) => {
     if (params.column.getColId() !== "pinRow") return;
 

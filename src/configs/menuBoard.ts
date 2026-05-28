@@ -1,8 +1,8 @@
 export const MENU_BOARD = [
-  {
-    id: "favourite",
-    title: "watchlist",
-  },
+  // {
+  //   id: "favourite",
+  //   title: "watchlist",
+  // },
   {
     id: "VN30",
     title: "VN30",
@@ -18,8 +18,12 @@ export const MENU_BOARD = [
     ],
   },
   {
+    id: "HNX30",
+    title: "HNX30",
+  },
+  {
     id: "HSX",
-    title: "HSX",
+    title: "HOSE",
   },
   {
     id: "HNX",

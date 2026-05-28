@@ -92,7 +92,7 @@ const Tab: FC<TabProps> = ({
       }}
       className={`flex items-center justify-center gap-1 rounded-md px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
         selected === tab
-          ? "bg-purple-active text-content-primary"
+          ? "bg-purple-active text-white"
           : "text-content-primary"
       }  ${active ? "bg-purple-active text-white" : ""}`}
     >
@@ -132,7 +132,7 @@ const Content: FC<ContentProps> = ({ children, idMenu, handleChangeId }) => {
 
       {children?.map((c) => (
         <div
-          className={`overflow-hidden hover:bg-purple-hover rounded-md p-1 ${idMenu === c?.id ? "bg-purple-active text-white!" : "text-content-primary"}`}
+          className={`overflow-hidden hover:bg-purple-hover hover:text-white rounded-md p-1 ${idMenu === c?.id ? "bg-purple-active text-white!" : "text-content-primary"}`}
           key={c?.id}
           onClick={() => handleChangeId(c?.id)}
         >

@@ -10,8 +10,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom"],
-          charts: ["lightweight-charts"],
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-mui": ["@mui/material"],
+          "vendor-firebase": ["firebase/app"],
+          "vendor-charts": ["lightweight-charts"],
+          "vendor-motion": ["framer-motion"],
         },
       },
     },

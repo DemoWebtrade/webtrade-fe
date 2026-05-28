@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
 import SettingBoard from "./setting";
+import Table from "./table";
 
-const Table = lazy(() => import("./table"));
 const IndexInfor = lazy(() => import("./index-infor"));
 
 export default function PriceBoard() {
@@ -63,15 +63,7 @@ export default function PriceBoard() {
       </div>
 
       <div className="flex-1">
-        <Suspense
-          fallback={
-            <div className="w-full h-full flex flex-col items-center justify-center">
-              <div className="progess-loader"></div>
-            </div>
-          }
-        >
-          <Table />
-        </Suspense>
+        <Table />
       </div>
     </div>
   );
