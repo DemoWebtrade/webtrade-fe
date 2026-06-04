@@ -2,9 +2,9 @@ import Logo from "@/assets/imgs/logo/lhc_logo.png";
 import { Button } from "@/components/ui/Button";
 import { backdropVariants, modalVariants } from "@/configs/modal";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useJoyride } from "react-joyride";
-import Typewriter from "typewriter-effect";
+import Typewriter, { TypewriterClass } from "typewriter-effect";
 const steps = [
   {
     target: '[data-tour="prop-1"]',
@@ -66,6 +66,26 @@ const steps = [
   },
 ];
 
+const FULL_HTML = `
+<span class="font-semibold text-base">LHC Web Trade</span> - Nền tảng giao dịch chứng khoán mô phỏng, giao diện responsive trên mọi thiết bị.
+<br/><br/>
+<ul class="list-disc text-left pl-10 space-y-1">
+  <li>Bảng giá realtime, cập nhật liên tục qua WebSocket.</li>
+  <li>Đặt lệnh mua/bán nhanh chóng, quản lý danh mục trực quan.</li>
+  <li>Lọc theo sàn, tự động cuộn, xuất Excel tiện lợi.</li>
+  <li>Tùy chỉnh giao diện theo sở thích cá nhân.</li>
+</ul>
+<br/>
+<span class="font-medium">Tech stack:</span><br/>
+<span class="pl-6 text-purple-400">React · TypeScript · Redux Toolkit · WebSocket · Tailwind CSS · Node.js</span>
+<br/><br/>
+<span class="text-red-500 font-semibold pl-6">
+  Lưu ý: Đây là hệ thống mô phỏng. Toàn bộ dữ liệu chỉ mang tính chất tham khảo và không phản ánh thị trường thực tế.
+</span>
+<br/><br/>
+<span class="font-medium">Sẵn sàng bắt khám phá?</span>
+`;
+
 interface MainJoyrideProps {
   isOpen: boolean;
   onClose: () => void;
@@ -73,6 +93,9 @@ interface MainJoyrideProps {
 
 export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
   const [run, setRun] = useState(false);
+
+  const typewriterRef = useRef<TypewriterClass | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const [showButton, setShowButton] = useState(false);
   const { controls, on, Tour } = useJoyride({
@@ -92,7 +115,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
     run,
 
     options: {
-      buttons: ["back", "close", "primary"],
+      buttons: ["back", "close", "primary", "skip"],
       scrollOffset: 64,
       showProgress: true,
       skipScroll: true,
@@ -154,6 +177,18 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
     });
   }, [controls, on]);
 
+  useEffect(() => {
+    if (run) {
+      document.body.classList.add("tour-active");
+    } else {
+      document.body.classList.remove("tour-active");
+    }
+
+    return () => {
+      document.body.classList.remove("tour-active");
+    };
+  }, [run]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -183,42 +218,33 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
               <div className="flex flex-col items-center justify-center gap-1 text-center px-6">
                 {/* Description */}
                 <div
+                  ref={contentRef}
                   className={`md:text-sm text-xs text-left overflow-hidden transition-all duration-500 ease-in-out`}
                 >
                   <Typewriter
                     onInit={(tw) => {
+                      typewriterRef.current = tw;
                       tw.typeString(
-                        `
-                          <span class="font-semibold text-base">
-                            LHC Web Trade
-                          </span> - Nền tảng giao dịch mô phỏng được thiết kế với tiêu chí hiệu năng cao, dữ liệu realtime và trải nghiệm trực quan.
-                        `,
+                        `<span class="font-semibold text-base">LHC Web Trade</span> - Nền tảng giao dịch chứng khoán mô phỏng, giao diện responsive trên mọi thiết bị.`,
                       );
                       tw.typeString(
                         `
                           <br/><br/>
 
                           <ul class="list-disc text-left pl-10 space-y-1">
-                            <li>Giám sát thị trường theo thời gian thực với bảng giá động.</li>
-                            <li>Thực hiện đặt lệnh nhanh chóng và quản lý danh mục hiệu quả.</li>
-                            <li>Lọc dữ liệu theo sàn giao dịch và theo dõi liên tục.</li>
-                            <li>Tùy chỉnh giao diện, tối ưu trải nghiệm người dùng.</li>
-                            <li>Hỗ trợ xuất dữ liệu phục vụ phân tích và đánh giá.</li>
-                          </ul>
-                        `,
+                            <li>Bảng giá realtime, cập nhật liên tục qua WebSocket.</li>
+                            <li>Đặt lệnh mua/bán nhanh chóng, quản lý danh mục trực quan.</li>
+                            <li>Lọc theo sàn, tự động cuộn, xuất Excel tiện lợi.</li>
+                            <li>Tùy chỉnh giao diện theo sở thích cá nhân.</li>
+                          </ul>`,
                       );
                       tw.typeString(
-                        `
-                          <br/>
-
-                          <span class="font-medium">Kiến trúc hệ thống:</span><br/>
-                          <span class="pl-6">
-                            Frontend được xây dựng với React và TypeScript, áp dụng kiến trúc module hóa, kết hợp Redux Toolkit và Saga để quản lý state bất đồng bộ.
-                          </span><br/>
-                          <span class="pl-6">
-                            Hệ thống sử dụng WebSocket để xử lý dữ liệu realtime, mô phỏng luồng giao dịch với độ trễ thấp và khả năng cập nhật liên tục.
-                          </span>
-                        `,
+                        `<br/>
+                        <span class="font-medium">Tech stack:</span>
+                        <br/>
+                        <span class="pl-6 text-purple-400">
+                          React · TypeScript · Redux Toolkit · WebSocket · Tailwind CSS · Node.js
+                        </span>`,
                       );
                       tw.typeString(
                         `
@@ -234,7 +260,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                           <br/><br/>
 
                           <span class="font-medium">
-                            Sẵn sàng bắt đầu trải nghiệm?
+                            Sẵn sàng bắt khám phá?
                           </span>
                         `,
                       )
@@ -254,7 +280,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                   />
                 </div>
               </div>{" "}
-              {showButton && (
+              {showButton ? (
                 <div className="flex flex-row-reverse gap-2 items-center px-6 pt-6">
                   <Button
                     variant="default"
@@ -268,6 +294,19 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
                   {/* <Button variant="none" onClick={() => onClose()}>
                     Thoát
                   </Button> */}
+                </div>
+              ) : (
+                <div
+                  className="flex flex-row-reverse gap-2 items-center px-6 pt-6 text-xs underline text-purple-base hover:text-purple-hover cursor-pointer"
+                  onClick={() => {
+                    typewriterRef.current?.stop();
+                    if (contentRef.current) {
+                      contentRef.current.innerHTML = FULL_HTML;
+                    }
+                    setShowButton(true);
+                  }}
+                >
+                  Skip
                 </div>
               )}
             </motion.div>

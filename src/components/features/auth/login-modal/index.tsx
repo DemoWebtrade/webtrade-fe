@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs/modal";
-import apiClient from "@/services/api/apiClient";
-import { getMessageFromError } from "@/utils";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { loginThunk } from "@/store/modules/auth/api";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -17,6 +16,11 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const loading = useAppSelector((state) => state.auth.loading.login);
+  const user = useAppSelector((state) => state.auth.user);
+
   const {
     register,
     handleSubmit,
@@ -50,22 +54,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  const handleLogin = async () => {
-    if (isSubmitting) return;
-    try {
-      const res = await apiClient.post("/auth/login", { username, password });
-
-      if (res.data.code === 1) {
-        await new Promise((resolve) => setTimeout(resolve, 1400));
-        toast.success("This is a toast");
-        onClose();
-      } else {
-        toast.error(res.data.message);
-      }
-    } catch (error) {
-      const message = getMessageFromError(error);
-      toast.error(message);
+  useEffect(() => {
+    if (user) {
+      handleClose();
     }
+  }, [user, handleClose]);
+
+  const handleLogin = async () => {
+    if (isSubmitting || loading) return;
+    dispatch(loginThunk({ username, password }));
   };
 
   return (
@@ -148,7 +145,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   variant={"default"}
                   className="w-full"
                 >
-                  {isSubmitting ? (
+                  {isSubmitting || loading ? (
                     <div className="flex items-center justify-center gap-2.5">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       <span>{t("loading")}</span>

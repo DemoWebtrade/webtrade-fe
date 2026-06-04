@@ -19,3 +19,19 @@ body {
 .bg-switch {
   transition: left 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+body.tour-active::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  pointer-events: none;
+}
+
+body.tour-active {
+  position: relative;
+  z-index: 100;
+  border-radius: 8px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
