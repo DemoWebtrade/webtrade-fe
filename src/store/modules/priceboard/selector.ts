@@ -5,9 +5,15 @@ import { createSelector } from "@reduxjs/toolkit";
 export const selectScroll = (state: RootState) => state.priceboard.scroll;
 export const selectExport = (state: RootState) => state.priceboard.export;
 
-export const selectStocksMap = (state: RootState) => {
-  return state.priceboard.stocks;
-};
+export const selectStocksMap = (state: RootState) => state.priceboard.stocks;
+export const selectSymbols = (state: RootState) => state.priceboard.symbols;
+
+export const selectRowData = createSelector(
+  selectSymbols,
+  selectStocksMap,
+  (symbols, stocks): StockData[] => symbols.map((s) => stocks[s]),
+);
+
 export const selectAllStocks = createSelector(selectStocksMap, (stocks) =>
   Object.values(stocks),
 );
@@ -17,9 +23,10 @@ export const makeSelectStock = (symbol: string) =>
 const selectPriceboard = (state: RootState) => state.priceboard;
 
 export const selectStockList = createSelector(
-  selectPriceboard,
-  ({ stocks, symbols }): StockData[] =>
-    symbols.map((sym) => stocks[sym]).filter(Boolean) as StockData[],
+  (state: RootState) => state.priceboard.stocks,
+  (state: RootState) => state.priceboard.symbols,
+  (stocks: Record<string, StockData>, symbols: string[]): StockData[] =>
+    symbols.map((s) => stocks[s]),
 );
 
 export const selectStock = (symbol: string) =>

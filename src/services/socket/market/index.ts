@@ -28,19 +28,6 @@ let socket: Socket | null = null;
 const pendingSubscriptions: string[] = [];
 const pendingListeners = new Map<string, (data: unknown) => void>();
 
-// Batch buffer — Partial<StockData> vì server chỉ gửi field thay đổi
-let pendingBatch: Partial<StockData>[] = [];
-let batchTimer: ReturnType<typeof setTimeout> | null = null;
-
-const flushWorker = () => {
-  if (batchTimer) clearTimeout(batchTimer);
-  if (pendingBatch.length === 0) return;
-
-  marketWorker.postMessage({ type: "TICK_BATCH", payload: pendingBatch });
-  pendingBatch = [];
-  batchTimer = null;
-};
-
 const flushPending = () => {
   while (pendingSubscriptions.length > 0) {
     socket!.emit("subscribe", pendingSubscriptions.shift()!);
@@ -83,15 +70,8 @@ const connect = () => {
     store.dispatch(setMarketStatus("connect_error"));
   });
 
-  // ── marketUpdate: nhận Partial<StockData> ──────────────────────────────
   socket.on("marketUpdate", (data: Partial<StockData>) => {
-    pendingBatch.push(data);
-
-    if (pendingBatch.length >= 10) {
-      flushWorker();
-    } else if (!batchTimer) {
-      batchTimer = setTimeout(flushWorker, 50);
-    }
+    marketWorker.postMessage({ type: "TICK_BATCH", payload: data });
   });
 
   // ── marketSnapshot: nhận StockData[] đầy đủ ───────────────────────────

@@ -206,7 +206,7 @@ const ChartIndex = (props: Props) => {
       bottomFillColor1: "#e53e3e1a",
       bottomFillColor2: "#e53e3e1a",
       lineWidth: 1,
-      lastPriceAnimation: LastPriceAnimationMode.Continuous,
+      lastPriceAnimation: LastPriceAnimationMode.OnDataUpdate,
       lastValueVisible: false,
       priceLineVisible: false,
     });

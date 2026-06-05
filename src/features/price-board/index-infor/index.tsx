@@ -1,6 +1,6 @@
 import { generatePriceVolumeChartWithSession } from "@/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useMemo } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -20,61 +20,77 @@ export default function IndexInfor() {
     Number((Math.random() * 2 + 256.48).toFixed(2)),
   );
 
-  const data = generatePriceVolumeChartWithSession({
-    startPrice: 1814.09,
-    date: "2026-01-15",
-    intervalSec: 60, // 5 phút
-  }) as {
-    o: number[];
-    h: number[];
-    l: number[];
-    c: number[];
-    v: number[];
-    t: number[];
-    s: "ok";
-  };
+  const data = useMemo(
+    () =>
+      generatePriceVolumeChartWithSession({
+        startPrice: 1814.09,
+        date: "2026-01-15",
+        intervalSec: 60, // 5 phút
+      }) as {
+        o: number[];
+        h: number[];
+        l: number[];
+        c: number[];
+        v: number[];
+        t: number[];
+        s: "ok";
+      },
+    [],
+  );
 
-  const data1 = generatePriceVolumeChartWithSession({
-    startPrice: 2016.47,
-    date: "2026-01-15",
-    intervalSec: 60, // 5 phút
-  }) as {
-    o: number[];
-    h: number[];
-    l: number[];
-    c: number[];
-    v: number[];
-    t: number[];
-    s: "ok";
-  };
+  const data1 = useMemo(
+    () =>
+      generatePriceVolumeChartWithSession({
+        startPrice: 2016.47,
+        date: "2026-01-15",
+        intervalSec: 60, // 5 phút
+      }) as {
+        o: number[];
+        h: number[];
+        l: number[];
+        c: number[];
+        v: number[];
+        t: number[];
+        s: "ok";
+      },
+    [],
+  );
 
-  const data2 = generatePriceVolumeChartWithSession({
-    startPrice: 560.72,
-    date: "2026-01-15",
-    intervalSec: 60, // 5 phút
-  }) as {
-    o: number[];
-    h: number[];
-    l: number[];
-    c: number[];
-    v: number[];
-    t: number[];
-    s: "ok";
-  };
+  const data2 = useMemo(
+    () =>
+      generatePriceVolumeChartWithSession({
+        startPrice: 560.72,
+        date: "2026-01-15",
+        intervalSec: 60, // 5 phút
+      }) as {
+        o: number[];
+        h: number[];
+        l: number[];
+        c: number[];
+        v: number[];
+        t: number[];
+        s: "ok";
+      },
+    [],
+  );
 
-  const data3 = generatePriceVolumeChartWithSession({
-    startPrice: 256.48,
-    date: "2026-01-15",
-    intervalSec: 60, // 5 phút
-  }) as {
-    o: number[];
-    h: number[];
-    l: number[];
-    c: number[];
-    v: number[];
-    t: number[];
-    s: "ok";
-  };
+  const data3 = useMemo(
+    () =>
+      generatePriceVolumeChartWithSession({
+        startPrice: 256.48,
+        date: "2026-01-15",
+        intervalSec: 60, // 5 phút
+      }) as {
+        o: number[];
+        h: number[];
+        l: number[];
+        c: number[];
+        v: number[];
+        t: number[];
+        s: "ok";
+      },
+    [],
+  );
 
   return (
     <div className="w-full h-full">

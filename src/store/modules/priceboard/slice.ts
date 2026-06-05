@@ -41,13 +41,9 @@ const priceboardSlice = createSlice({
     batchUpdateStocks(state, action: PayloadAction<Partial<StockData>[]>) {
       for (const partial of action.payload) {
         const { symbol } = partial;
-        if (!symbol) continue;
+        if (!symbol || !state.stocks[symbol]) continue;
 
-        const existing = state.stocks[symbol];
-        if (!existing) continue; // chưa có snapshot thì bỏ qua
-
-        // Merge: chỉ overwrite field nào thực sự có trong partial
-        state.stocks[symbol] = { ...existing, ...partial };
+        Object.assign(state.stocks[symbol], partial);
       }
     },
   },

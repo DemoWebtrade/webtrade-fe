@@ -11,6 +11,7 @@ import { useAgGridAutoScroll } from "@/hooks/useAgGridAutoScroll";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   selectExport,
+  selectRowData,
   selectScroll,
 } from "@/store/modules/priceboard/selector";
 import { setExport } from "@/store/modules/priceboard/slice";
@@ -43,6 +44,7 @@ import {
   type CellDoubleClickedEvent,
   type ColDef,
   type ColGroupDef,
+  type IRowNode,
   type Theme,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -66,12 +68,13 @@ ModuleRegistry.registerModules([
   ColumnApiModule,
 ]);
 
-export default function BaseTable({ data }: { data: StockData[] }) {
+export default function BaseTable() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const scroll = useAppSelector(selectScroll);
   const exportFile = useAppSelector(selectExport);
+  const data = useAppSelector(selectRowData);
 
   const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
     durationPerCycle: data?.length * 1000,
@@ -81,6 +84,15 @@ export default function BaseTable({ data }: { data: StockData[] }) {
   const prevDataRef = useRef<Map<string, StockData>>(new Map());
 
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
+
+  const findInPinned = (rowId: string): IRowNode<StockData> | null => {
+    const count = gridRef.current?.api.getPinnedTopRowCount() ?? 0;
+    for (let i = 0; i < count; i++) {
+      const node = gridRef.current?.api.getPinnedTopRow(i);
+      if (node?.data?.symbol === rowId) return node;
+    }
+    return null;
+  };
 
   //TODO: flash cell
   useEffect(() => {
@@ -245,25 +257,25 @@ export default function BaseTable({ data }: { data: StockData[] }) {
       gridRef.current.api.setGridOption("pinnedTopRowData", updatedPinned);
     }
 
+    const groupedByRow = new Map<string, typeof flashQueue>();
+    for (const item of flashQueue) {
+      if (!groupedByRow.has(item.rowId)) groupedByRow.set(item.rowId, []);
+      groupedByRow.get(item.rowId)!.push(item);
+    }
+
     requestAnimationFrame(() => {
-      for (const { rowId, colId, flashClass, colorClass } of flashQueue) {
+      for (const [rowId, items] of groupedByRow) {
         const rowNode =
-          gridRef.current?.api.getRowNode(rowId) ??
-          // Tìm thêm trong pinned rows nếu không thấy trong regular
-          (() => {
-            const count = gridRef.current?.api.getPinnedTopRowCount() ?? 0;
-            for (let i = 0; i < count; i++) {
-              const node = gridRef.current?.api.getPinnedTopRow(i);
-              if (node?.data?.symbol === rowId) return node;
-            }
-            return null;
-          })();
-
+          gridRef.current?.api.getRowNode(rowId) ?? findInPinned(rowId);
         if (!rowNode) continue;
-        const flash = FLASH_COLORS[flashClass] ?? "";
-        const color = TEXT_COLORS[colorClass] ?? "";
-
-        flashCellWithColor(rowNode, colId, flash, color);
+        for (const { colId, flashClass, colorClass } of items) {
+          flashCellWithColor(
+            rowNode,
+            colId,
+            FLASH_COLORS[flashClass] ?? "",
+            TEXT_COLORS[colorClass] ?? "",
+          );
+        }
       }
     });
   }, [data]);
