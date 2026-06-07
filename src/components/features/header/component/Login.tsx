@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/Button";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { selectToken } from "@/store/modules/auth/selector";
 import { logout } from "@/store/modules/auth/slice";
 import { AnimatePresence } from "framer-motion";
 import { UserRound } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../store/hook";
 import LoginModal from "../../auth/login-modal";
@@ -17,6 +18,8 @@ export default function Login() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenInfo, setIsOpenInfo] = useState(false);
 
+  const refInfo = useRef<HTMLDivElement>(null);
+
   const handleLogout = () => {
     setIsOpenInfo(false);
     dispatch(logout());
@@ -24,15 +27,21 @@ export default function Login() {
 
   const modalOpen = isOpenLogin && !token;
 
+  useClickOutside(refInfo, () => setIsOpenInfo(false));
+
   return (
     <>
       {token ? (
         <div
+          ref={refInfo}
           className="p-1 rounded-md flex flex-row items-center gap-1 bg-purple-base/30 hover:bg-purple-hover/30 cursor-pointer relative"
           onClick={() => setIsOpenInfo(!isOpenInfo)}
         >
           <UserRound className="size-3.5" />
-          <span className="text-xs">Tài khoản C000365</span>
+          <span className="text-xs flex flex-col md:gap-1 md:flex-row">
+            <span>Tài khoản</span>
+            <span>C000365</span>
+          </span>
 
           <AnimatePresence>
             {isOpenInfo && (
