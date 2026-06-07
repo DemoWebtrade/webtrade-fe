@@ -109,14 +109,14 @@
   /* Background */
   --bg-primary: #f1f5f9;
   --bg-secondary: #ffffff;
-  --bg-tertiary: #e2e8f0; /* FIX: tách khỏi bg-primary để phân biệt lớp bề mặt */
+  --bg-tertiary: #e2e8f0;
   --bg-blue: #eff6ff;
   --bg-green: #f0fdf4;
   --bg-red: #fef2f2;
   --bg-orange: #fff7ed;
   --bg-purple: #f5f3ff;
   --bg-yellow: #fefce8;
-  --bg-button: #7c3aed;
+  --bg-button: #9333ea;
 
   /* Action */
   --primary-base: #111827;
@@ -185,7 +185,6 @@
   --content-positive: #4ec97a;
   --content-error: #f07070;
 
-  /* Border — FIX: bổ sung đầy đủ để component không fallback về light */
   --border: #2d3748;
   --border-primary: #374151;
   --border-secondary: #4b5563;
@@ -204,7 +203,7 @@
   --bg-orange: #2b2219;
   --bg-purple: #1e1628;
   --bg-yellow: #2a2a1c;
-  --bg-button: #8b5cf6; /* FIX: sáng hơn để không chìm trên nền tối */
+  --bg-button: #9333ea;
 
   /* Action */
   --primary-base: #f9fafb;
@@ -232,11 +231,11 @@
   --red-selected: #e04444;
   --red-disabled: #3d2020;
 
-  --green-base: #4ec97a;
-  --green-hover: #38a862;
-  --green-active: #27874a;
-  --green-selected: #38a862;
-  --green-disabled: #1a3326;
+  --green-base: #38a169;
+  --green-hover: #2f855a;
+  --green-active: #276749;
+  --green-selected: #2f855a;
+  --green-disabled: #c6f6d5;
 
   --blue-base: #6b97ff;
   --blue-hover: #4d7bff;
@@ -244,18 +243,17 @@
   --blue-selected: #4d7bff;
   --blue-disabled: #1a2340;
 
-  /* FIX: giảm saturation yellow để bớt chói trên nền tối */
   --yellow-base: #d4c34a;
   --yellow-hover: #bfaf35;
   --yellow-active: #a39a25;
   --yellow-selected: #bfaf35;
   --yellow-disabled: #2e2a10;
 
-  --purple-base: #c97de8;
-  --purple-hover: #b35ed4;
-  --purple-active: #9644bc;
-  --purple-selected: #b35ed4;
-  --purple-disabled: #28183a;
+  --purple-base: #9333ea;
+  --purple-hover: #7e22ce;
+  --purple-active: #6b21a8;
+  --purple-selected: #7e22ce;
+  --purple-disabled: #ede9fe;
 
   --orange-base: #f5a855;
   --orange-hover: #e8903a;

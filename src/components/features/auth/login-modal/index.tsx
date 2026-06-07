@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -157,12 +158,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
                 <div className="text-center text-sm text-gray-500">
                   {t("no-account")}{" "}
-                  <a
-                    href="#"
+                  <Link
                     className="text-blue-600 hover:underline font-medium"
+                    to={"/register"}
                   >
                     {t("now-register")}
-                  </a>
+                  </Link>
                 </div>
               </form>
             </motion.div>

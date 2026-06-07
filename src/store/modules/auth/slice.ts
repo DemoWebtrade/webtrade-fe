@@ -4,7 +4,7 @@ import type { AuthState } from "./types";
 
 const initialState: AuthState = {
   user: null,
-  token: null,
+  token: localStorage.getItem("token") || null,
 
   loading: {
     login: false,

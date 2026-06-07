@@ -3,7 +3,7 @@ import axios from "axios";
 const url =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "http://localhost:5000";
+    : "http://localhost:5001";
 
 export const apiClient = axios.create({
   baseURL: `${url}/`,
