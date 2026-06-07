@@ -6,13 +6,19 @@ import { loginThunk } from "@/store/modules/auth/api";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
-import { useForm, useWatch, type FieldError } from "react-hook-form";
+import { useForm, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface LoginForm {
+  username: string;
+  password: string;
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
@@ -25,20 +31,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm();
-
-  const username = useWatch({
-    control,
-    name: "username",
-  });
-
-  const password = useWatch({
-    control,
-    name: "password",
-  });
+  } = useForm<LoginForm>();
 
   const handleClose = useCallback(() => {
     reset();
@@ -61,9 +56,15 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     }
   }, [user, handleClose]);
 
-  const handleLogin = async () => {
-    if (isSubmitting || loading) return;
-    dispatch(loginThunk({ username, password }));
+  const handleLogin = async (data: { username: string; password: string }) => {
+    if (loading) return;
+    try {
+      await dispatch(
+        loginThunk({ username: data.username, password: data.password }),
+      ).unwrap();
+    } catch (error) {
+      toast.error(error as string);
+    }
   };
 
   return (

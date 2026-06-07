@@ -17,18 +17,19 @@ export default function Login() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenInfo, setIsOpenInfo] = useState(false);
 
-  const modalOpen = isOpenLogin && !token;
-
   const handleLogout = () => {
+    setIsOpenInfo(false);
     dispatch(logout());
   };
+
+  const modalOpen = isOpenLogin && !token;
 
   return (
     <>
       {token ? (
         <div
           className="p-1 rounded-md flex flex-row items-center gap-1 bg-purple-base/30 hover:bg-purple-hover/30 cursor-pointer relative"
-          onClick={() => setIsOpenInfo(true)}
+          onClick={() => setIsOpenInfo(!isOpenInfo)}
         >
           <UserRound className="size-3.5" />
           <span className="text-xs">Tài khoản C000365</span>
