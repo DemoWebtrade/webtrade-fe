@@ -1,6 +1,7 @@
+import { Check } from "lucide-react";
 import { useState } from "react";
-import Step1 from "./Step1";
 import { useTranslation } from "react-i18next";
+import Step1 from "./Step1";
 
 export default function RegisterStep() {
   const { t } = useTranslation();
@@ -20,16 +21,18 @@ export default function RegisterStep() {
           >
             <div
               className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center ${
-                index + 1 === step ? "bg-purple-base" : "bg-primary-disabled"
+                step >= index + 1 ? "bg-purple-base" : "bg-primary-disabled"
               }`}
             >
-              <span className="text-sm font-medium">{index + 1}</span>
+              <span className="text-sm font-medium">
+                {step > index + 1 ? <Check className="size-4" /> : index + 1}
+              </span>
             </div>
 
             {index !== 2 && (
               <div
                 className={`w-10 md:w-20 h-1 rounded-2xl ${
-                  index + 1 === step ? "bg-purple-base" : "bg-bg-tertiary"
+                  step > index + 1 ? "bg-purple-base" : "bg-bg-tertiary"
                 }`}
               ></div>
             )}

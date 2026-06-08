@@ -24,7 +24,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
     <div className="flex flex-col items-center gap-2 md:gap-4 w-full h-full mt-4 md:mt-8">
       <form
         onSubmit={handleSubmit(handleSubmitStep)}
-        className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 w-1/2"
+        className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8"
       >
         <div className="col-span-1">
           <label htmlFor="phoneNumber">{t("phone-number")}</label>
@@ -74,7 +74,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
           <label htmlFor="password">{t("password")}</label>
           <InputField
             name="password"
-            type="text"
+            type="password"
             autoComplete="off"
             registration={register("password", {
               required: t("validate.password-required"),
@@ -88,7 +88,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
           <label htmlFor="confirmPassword">{t("confirm-password")}</label>
           <InputField
             name="confirmPassword"
-            type="text"
+            type="password"
             autoComplete="off"
             registration={register("confirmPassword", {
               required: t("validate.password-required"),
@@ -102,7 +102,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
           />
         </div>
 
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-1 md:col-span-2 flex flex-row items-center">
           <input
             type="checkbox"
             id="policy"

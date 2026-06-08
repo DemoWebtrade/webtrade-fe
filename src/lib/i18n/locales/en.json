@@ -89,7 +89,13 @@
 
   "validate": {
     "username-required": "Username is required",
-    "password-required": "Password is required"
+    "password-required": "Password is required",
+    "phone-required": "Phone number is required",
+    "email-required": "Email is required",
+
+    "phone-incorrect": "Invalid phone number",
+    "email-incorrect": "Invalid email address",
+    "password-not-match": "Passwords do not match"
   },
 
   "slogan": {
