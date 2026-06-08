@@ -21,7 +21,9 @@ export default function RegisterStep() {
           >
             <div
               className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center ${
-                step >= index + 1 ? "bg-purple-base" : "bg-primary-disabled"
+                step >= index + 1
+                  ? "bg-purple-base text-white"
+                  : "bg-bg-secondary"
               }`}
             >
               <span className="text-sm font-medium">
