@@ -76,10 +76,25 @@
   "no-account": "Chưa có tài khoản?",
   "now-register": "Đăng ký ngay",
   "loading": "Đang xử lý...",
+  "phone-number": "Số điện thoại",
+  "confirm-password": "Xác nhận lại mật khẩu",
+
+  "input": {
+    "phone-placeholder": "Nhập số điện thoại 10 số",
+    "email-placeholder": "Email có định dạng abc@xyz.com",
+    "password-placeholder": "Tạo mật khẩu để đăng nhập",
+    "confirm-placeholder": "Xác nhận lại mật khẩu"
+  },
 
   "validate": {
     "username-required": "Tài khoản không được để trống",
-    "password-required": "Mật khẩu không được để trống"
+    "password-required": "Mật khẩu không được để trống",
+    "phone-required": "Số điện thoại không được để trống",
+    "email-required": "Email không được để trống",
+
+    "phone-incorrect": "Số điện thoại không hợp lệ",
+    "email-incorrect": "Email không hợp lệ",
+    "password-not-match": "Mật không trùng nhau"
   },
 
   "slogan": {
@@ -113,5 +128,24 @@
   "api": {
     "error": "Có lỗi",
     "-1000": "Tên đăng nhập hoặc mật khẩu không đúng"
+  },
+
+  "user": {
+    "account": "Tài khoản",
+    "welcome": "Xin chào",
+    "title-infor": "Thông tin khách hàng",
+    "secure-setting": "Cài đặt bảo mật",
+    "change-pass": "Thay đổi mật khẩu",
+    "infor": "Thông tin tài khoản"
+  },
+
+  "register": {
+    "init-account": "Khởi tạo tài khoản",
+    "title": "Mở tài khoản",
+    "agreement_prefix": "Tôi xác nhận đã đọc, hiểu và đồng ý với",
+    "agreement_and": "và",
+    "agreement_suffix": "của LHC. Tôi đồng ý cho phép LHC xử lý dữ liệu cá nhân nhằm cung cấp sản phẩm, dịch vụ và nhận thông tin qua số điện thoại, email đã đăng ký.",
+    "terms": "Điều khoản & Điều kiện",
+    "privacy": "Chính sách bảo mật"
   }
 }

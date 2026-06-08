@@ -39,32 +39,34 @@ export default function Login() {
         >
           <UserRound className="size-3.5" />
           <span className="text-xs flex flex-col md:gap-1 md:flex-row">
-            <span>Tài khoản</span>
+            <span>{t("user.account")}</span>
             <span>C000365</span>
           </span>
 
           <AnimatePresence>
             {isOpenInfo && (
               <div className="absolute top-7 right-0 z-10 bg-bg-tertiary shadow-md px-4 py-3 rounded-md w-60">
-                <h1 className="text-base font-bold">Xin chào, Lê Hồng Chiến</h1>
+                <h1 className="text-base font-bold">
+                  {t("user.welcome")}, Lê Hồng Chiến
+                </h1>
                 <div className="flex flex-col gap-1 text-sm mt-2">
                   <div className="px-2 py-1 rounded-md hover:bg-bg-button">
-                    Thông tin khách hàng
+                    {t("user.title-infor")}
                   </div>
                   <div className="flex flex-col gap-1 ">
-                    <h1 className="px-2 py-1">Cài đặt bảo mật</h1>
+                    <h1 className="px-2 py-1">{t("user.secure-setting")}</h1>
                     <div className="px-2 py-1 rounded-md hover:bg-bg-button">
-                      <div className="ml-4">Thay đổi mật khẩu</div>
+                      <div className="ml-4"> {t("user.change-pass")}</div>
                     </div>
                   </div>
                   <div className="px-2 py-1 rounded-md hover:bg-bg-button">
-                    Thông tin tài khoản
+                    {t("user.infor")}
                   </div>
                   <div
                     className="px-2 py-1 rounded-md hover:bg-bg-button"
                     onClick={handleLogout}
                   >
-                    Đăng xuất
+                    {t("logout")}
                   </div>
                 </div>
               </div>

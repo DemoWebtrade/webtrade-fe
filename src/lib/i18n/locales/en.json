@@ -77,6 +77,16 @@
   "now-register": "Sign up now",
   "loading": "Loading...",
 
+  "phone-number": "Phone Number",
+  "confirm-password": "Confirm Password",
+
+  "input": {
+    "phone-placeholder": "Enter a 10-digit phone number",
+    "email-placeholder": "Enter a valid email (e.g. abc@xyz.com)",
+    "password-placeholder": "Create a password",
+    "confirm-placeholder": "Confirm your password"
+  },
+
   "validate": {
     "username-required": "Username is required",
     "password-required": "Password is required"
@@ -112,5 +122,23 @@
   "api": {
     "error": "Error",
     "-1000": "Incorrect username or password"
+  },
+
+  "user": {
+    "account": "Account",
+    "welcome": "Welcome",
+    "title-infor": "Customer Information",
+    "secure-setting": "Security Settings",
+    "change-pass": "Change Password",
+    "infor": "Account Information"
+  },
+  "register": {
+    "init-account": "Create an account",
+    "title": "Open Account",
+    "agreement_prefix": "I confirm that I have read, understood, and agree to",
+    "agreement_and": "and",
+    "agreement_suffix": "of LHC. I consent to the processing of my personal data for service provision and agree to receive communications via my registered phone number and email.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
   }
 }

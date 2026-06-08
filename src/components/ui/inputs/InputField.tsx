@@ -9,6 +9,8 @@ type InputFieldProps = {
   disabled?: boolean;
   type?: string;
   autoComplete?: string;
+  className?: string;
+  placeholder?: string;
 };
 
 export default function InputField({
@@ -20,6 +22,8 @@ export default function InputField({
   error,
   type,
   autoComplete,
+  className,
+  placeholder,
 }: InputFieldProps) {
   return (
     <div>
@@ -30,11 +34,12 @@ export default function InputField({
       <input
         name={name}
         id={name}
-        className={`w-full px-3 py-[10px] rounded bg-bg-secondary text-sm text-content-tertiary outline-none transition border focus:border-outline-base ${error ? "border-red-500" : "border-border"}`}
+        className={`${className ?? ""} w-full px-3 py-2.5 rounded bg-bg-secondary text-sm text-content-tertiary outline-none transition border focus:border-outline-base ${error ? "border-red-500" : "border-border"}`}
         type={type ?? "text"}
         {...registration}
         disabled={disabled}
         autoComplete={autoComplete}
+        placeholder={placeholder}
       />
       {error && (
         <div className="text-red-500 text-xs mt-1">{error?.message}</div>
