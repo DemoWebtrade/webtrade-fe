@@ -1,18 +1,31 @@
 import { Button } from "@/components/ui/Button";
 import { useAppSelector } from "@/store/hook";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
 import SettingBoard from "./setting";
 import Table from "./table";
+import { MarketSocket } from "@/services/socket/market";
 
 const IndexInfor = lazy(() => import("./index-infor"));
 
 export default function PriceBoard() {
   const { t } = useTranslation();
   const marketStatus = useAppSelector(selectMarketStatus);
+
+  const [id, setId] = useState<string>("VN30");
+
+  useEffect(() => {
+    if (marketStatus === "connected" && id) {
+      MarketSocket.subscribe(id);
+    }
+
+    return () => {
+      if (id) MarketSocket.unsubscribe(id);
+    };
+  }, [marketStatus, id]);
 
   return (
     <div className="w-full h-full flex flex-col gap-3 relative">
@@ -23,7 +36,7 @@ export default function PriceBoard() {
       </div>
 
       <div className="h-10 w-full flex flex-row items-center justify-between md:gap-4 gap-2">
-        <MenuBoard marketStatus={marketStatus} />
+        <MenuBoard id={id} setId={setId} />
 
         <div className="flex flex-row items-center justify-between md:gap-4 gap-2">
           {/* status socket market */}
@@ -63,7 +76,7 @@ export default function PriceBoard() {
       </div>
 
       <div className="flex-1">
-        <Table />
+        <Table id={id} />
       </div>
     </div>
   );

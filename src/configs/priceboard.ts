@@ -111,7 +111,7 @@ export const FLASH_COLORS: Record<string, string> = {
   "cell-flash-ceil": "var(--purple-active)",
   "cell-flash-floor": "var(--blue-active)",
   "cell-flash-ref": "var(--yellow-active)",
-  "cell-flash-volume": "var(--outline-active)",
+  "cell-flash-volume": "var(--border-secondary)",
 };
 
 export const TEXT_COLORS: Record<string, string> = {
@@ -128,5 +128,5 @@ export const FLASH_CLASS_MAP: Record<string, string> = {
   "var(--purple-active)": "cell-flashing-ceil",
   "var(--blue-active)": "cell-flashing-floor",
   "var(--yellow-active)": "cell-flashing-ref",
-  "var(--outline-active)": "cell-flashing-volume",
+  "var(--border-secondary)": "cell-flashing-volume",
 };

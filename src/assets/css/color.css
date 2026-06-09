@@ -137,36 +137,36 @@
   --outline-selected: #6b7280;
   --outline-disabled: #f3f4f6;
 
-  /* Semantic */
-  --red-base: #e53e3e;
-  --red-hover: #c53030;
-  --red-active: #9b2c2c;
-  --red-selected: #c53030;
-  --red-disabled: #fed7d7;
+  /* Semantic*/
+  --red-base: #e11d48;
+  --red-hover: #be123c;
+  --red-active: #9f1239;
+  --red-selected: #be123c;
+  --red-disabled: #fecdd3;
 
-  --green-base: #38a169;
-  --green-hover: #2f855a;
-  --green-active: #276749;
-  --green-selected: #2f855a;
-  --green-disabled: #c6f6d5;
+  --green-base: #16a34a;
+  --green-hover: #15803d;
+  --green-active: #166534;
+  --green-selected: #15803d;
+  --green-disabled: #bbf7d0;
 
-  --blue-base: #3b82f6;
-  --blue-hover: #2563eb;
-  --blue-active: #1d4ed8;
-  --blue-selected: #2563eb;
-  --blue-disabled: #dbeafe;
+  --blue-base: #2563eb;
+  --blue-hover: #1d4ed8;
+  --blue-active: #1e40af;
+  --blue-selected: #1d4ed8;
+  --blue-disabled: #bfdbfe;
 
   --yellow-base: #ca8a04;
   --yellow-hover: #a16207;
   --yellow-active: #854d0e;
   --yellow-selected: #a16207;
-  --yellow-disabled: #fef9c3;
+  --yellow-disabled: #fef08a;
 
   --purple-base: #9333ea;
   --purple-hover: #7e22ce;
   --purple-active: #6b21a8;
   --purple-selected: #7e22ce;
-  --purple-disabled: #ede9fe;
+  --purple-disabled: #e9d5ff;
 
   --orange-base: #ea580c;
   --orange-hover: #c2410c;
@@ -206,11 +206,11 @@
   --bg-button: #9333ea;
 
   /* Action */
-  --primary-base: #f9fafb;
+  --primary-base: #f3f4f6;
   --primary-hover: #e5e7eb;
   --primary-active: #d1d5db;
   --primary-selected: #e5e7eb;
-  --primary-disabled: #374151;
+  --primary-disabled: #9ca3af;
 
   --secondary-base: #1f2937;
   --secondary-hover: #374151;
@@ -224,36 +224,36 @@
   --outline-selected: #9ca3af;
   --outline-disabled: #1f2937;
 
-  /* Semantic */
-  --red-base: #f07070;
-  --red-hover: #e04444;
-  --red-active: #c42e2e;
-  --red-selected: #e04444;
-  --red-disabled: #3d2020;
+  /* Semantic - Vibrant Version */
+  --red-base: #ff5a5f;
+  --red-hover: #ff3b3f;
+  --red-active: #e02428;
+  --red-selected: #ff3b3f;
+  --red-disabled: #4a1f1f;
 
-  --green-base: #38a169;
-  --green-hover: #2f855a;
-  --green-active: #276749;
-  --green-selected: #2f855a;
-  --green-disabled: #c6f6d5;
+  --green-base: #22c55e;
+  --green-hover: #16a34a;
+  --green-active: #15803d;
+  --green-selected: #16a34a;
+  --green-disabled: #d1fae5;
 
-  --blue-base: #6b97ff;
-  --blue-hover: #4d7bff;
-  --blue-active: #3460e0;
-  --blue-selected: #4d7bff;
-  --blue-disabled: #1a2340;
+  --blue-base: #3b82f6;
+  --blue-hover: #2563eb;
+  --blue-active: #1d4ed8;
+  --blue-selected: #2563eb;
+  --blue-disabled: #1e293b;
 
-  --yellow-base: #d4c34a;
-  --yellow-hover: #bfaf35;
-  --yellow-active: #a39a25;
-  --yellow-selected: #bfaf35;
-  --yellow-disabled: #2e2a10;
+  --yellow-base: #facc15;
+  --yellow-hover: #eab308;
+  --yellow-active: #ca8a04;
+  --yellow-selected: #eab308;
+  --yellow-disabled: #3b2f0e;
 
-  --purple-base: #9333ea;
-  --purple-hover: #7e22ce;
-  --purple-active: #6b21a8;
-  --purple-selected: #7e22ce;
-  --purple-disabled: #ede9fe;
+  --purple-base: #a855f7;
+  --purple-hover: #9333ea;
+  --purple-active: #7e22ce;
+  --purple-selected: #9333ea;
+  --purple-disabled: #f3e8ff;
 
   --orange-base: #f5a855;
   --orange-hover: #e8903a;

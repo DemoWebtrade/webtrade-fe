@@ -64,6 +64,6 @@ body.tour-active {
   transition: background-color 0s;
 }
 .cell-flashing-volume {
-  background-color: var(--outline-active) !important;
+  background-color: var(--border-secondary) !important;
   transition: background-color 0s;
 }

@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Step1 from "./Step1";
+import Step2 from "./Step2";
 
 export default function RegisterStep() {
   const { t } = useTranslation();
@@ -11,10 +12,14 @@ export default function RegisterStep() {
   return (
     <div className="w-full h-full flex flex-col items-center">
       <h1 className="text-xl md:text-2xl font-bold py-2 md:py-4">
-        {t("register.init-account")}
+        {step === 1
+          ? t("register.init-account")
+          : step === 2
+            ? t("Xác thực tài khoản")
+            : t("register.init-account")}
       </h1>
       <div className="flex flex-row gap-2 md:gap-4 mt-2 md:mt-4">
-        {[...Array(3)].map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <div
             key={index}
             className="flex flex-row gap-2 md:gap-8 items-center"
@@ -31,7 +36,7 @@ export default function RegisterStep() {
               </span>
             </div>
 
-            {index !== 2 && (
+            {index !== 1 && (
               <div
                 className={`w-10 md:w-20 h-1 rounded-2xl ${
                   step > index + 1 ? "bg-purple-base" : "bg-bg-tertiary"
@@ -43,6 +48,9 @@ export default function RegisterStep() {
       </div>
 
       {step === 1 && <Step1 nextStep={() => setStep(2)} />}
+      {step === 2 && (
+        <Step2 prevStep={() => setStep(1)} nextStep={() => setStep(3)} />
+      )}
     </div>
   );
 }

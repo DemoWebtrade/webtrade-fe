@@ -24,7 +24,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
     <div className="flex flex-col items-center gap-2 md:gap-4 w-full h-full mt-4 md:mt-8">
       <form
         onSubmit={handleSubmit(handleSubmitStep)}
-        className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8"
+        className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8 w-full"
       >
         <div className="col-span-1">
           <label htmlFor="phoneNumber">{t("phone-number")}</label>
@@ -123,7 +123,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
           </label>
         </div>
 
-        <Button disabled={!checkPolicy}>{t("register.title")}</Button>
+        <Button disabled={!checkPolicy}>{t("button.continue")}</Button>
       </form>
     </div>
   );

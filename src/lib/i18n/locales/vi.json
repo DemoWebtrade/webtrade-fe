@@ -82,8 +82,11 @@
   "input": {
     "phone-placeholder": "Nhập số điện thoại 10 số",
     "email-placeholder": "Email có định dạng abc@xyz.com",
-    "password-placeholder": "Tạo mật khẩu để đăng nhập",
-    "confirm-placeholder": "Xác nhận lại mật khẩu"
+    "password-placeholder": "Tạo mật khẩu",
+    "confirm-placeholder": "Xác nhận lại mật khẩu",
+    "fullname-placeholder": "Nhập họ và tên",
+    "address-placeholder": "Nhập địa chỉ liên hệ",
+    "date-placeholder": "dd/mm/yyyy"
   },
 
   "validate": {
@@ -91,10 +94,15 @@
     "password-required": "Mật khẩu không được để trống",
     "phone-required": "Số điện thoại không được để trống",
     "email-required": "Email không được để trống",
+    "fullname-required": "Họ tên không được để trống",
+    "birthday-required": "Ngày sinh không được để trống",
+    "gender-required": "Giới tính không được để trống",
+    "address-required": "Địa chỉ không được để trống",
 
     "phone-incorrect": "Số điện thoại không hợp lệ",
     "email-incorrect": "Email không hợp lệ",
-    "password-not-match": "Mật không trùng nhau"
+    "password-not-match": "Mật không trùng nhau",
+    "fullname-incorrect": "Họ tên không hợp lệ"
   },
 
   "slogan": {
@@ -147,5 +155,10 @@
     "agreement_suffix": "của LHC. Tôi đồng ý cho phép LHC xử lý dữ liệu cá nhân nhằm cung cấp sản phẩm, dịch vụ và nhận thông tin qua số điện thoại, email đã đăng ký.",
     "terms": "Điều khoản & Điều kiện",
     "privacy": "Chính sách bảo mật"
+  },
+
+  "button": {
+    "continue": "Tiếp tục",
+    "previous": "Quay lại"
   }
 }

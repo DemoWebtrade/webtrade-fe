@@ -34,7 +34,7 @@ export function flashCellWithColor(
 
   cellEl.style.transition = "background-color 0s";
   cellEl.style.backgroundColor = flash;
-  cellEl.style.color = colId === "symbol" ? color : "#000000";
+  cellEl.style.color = colId === "symbol" ? color : "#fffff8";
 
   const timeout = setTimeout(() => {
     if (!cellEl) return;

@@ -60,7 +60,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                     <div className="flex justify-between items-center p-4">
                       <span>{monthText}</span>{" "}
                       <div className="flex flex-row items-center gap-2 md:gap-6">
-                        <button
+                        <div
                           className="cursor-pointer hover:text-purple-base"
                           onClick={() =>
                             onMonthChange(currentMonth.subtract(1, "month"))
@@ -69,8 +69,8 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                           data-tooltip-content={t("pre-month")}
                         >
                           <ChevronLeft />
-                        </button>
-                        <button
+                        </div>
+                        <div
                           className="cursor-pointer hover:text-purple-base"
                           onClick={() =>
                             onMonthChange(currentMonth.add(1, "month"))
@@ -79,7 +79,7 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
                           data-tooltip-content={t("next-month")}
                         >
                           <ChevronRight />
-                        </button>
+                        </div>
                       </div>
                     </div>
                   );

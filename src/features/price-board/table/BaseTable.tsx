@@ -8,6 +8,7 @@ import {
   VOL_TO_PRICE,
 } from "@/configs";
 import { useAgGridAutoScroll } from "@/hooks/useAgGridAutoScroll";
+import { usePrevious } from "@/hooks/usePrevious";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   selectExport,
@@ -68,7 +69,7 @@ ModuleRegistry.registerModules([
   ColumnApiModule,
 ]);
 
-export default function BaseTable() {
+export default function BaseTable({ id }: { id: string }) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -80,10 +81,28 @@ export default function BaseTable() {
     durationPerCycle: data?.length * 1000,
     enabled: true,
   });
-
   const prevDataRef = useRef<Map<string, StockData>>(new Map());
 
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
+  const prevId = usePrevious(id);
+
+  useEffect(() => {
+    if (id && id !== prevId) {
+      prevDataRef.current = new Map();
+
+      if (gridRef.current?.api) {
+        gridRef.current.api.setGridOption("pinnedTopRowData", []);
+
+        const allRows: StockData[] = [];
+        gridRef.current.api.forEachNode((node) => {
+          if (node.data) allRows.push(node.data);
+        });
+        if (allRows.length > 0) {
+          gridRef.current.api.applyTransaction({ remove: allRows });
+        }
+      }
+    }
+  }, [id, prevId, gridRef]);
 
   const findInPinned = (rowId: string): IRowNode<StockData> | null => {
     const count = gridRef.current?.api.getPinnedTopRowCount() ?? 0;
@@ -656,18 +675,22 @@ export default function BaseTable() {
   }, []);
 
   const loading = useMemo(() => {
-    if (data && data.length > 0) {
-      return false;
-    }
+    if (id && id !== prevId) return true;
+    if (data && data.length > 0) return false;
     return loadingTimeout;
-  }, [loadingTimeout, data]);
+  }, [loadingTimeout, data, id, prevId]);
 
   return (
     <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
       <AgGridReact
         ref={gridRef}
         getRowId={(p) => p.data.symbol}
-        rowData={data}
+        onGridReady={() => {
+          if (scroll) resumeAutoScroll();
+        }}
+        onGridSizeChanged={(params) => {
+          params.api.sizeColumnsToFit();
+        }}
         loading={loading}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
@@ -675,13 +698,6 @@ export default function BaseTable() {
         headerHeight={28}
         groupHeaderHeight={28}
         suppressCellFocus
-        onGridReady={(params) => {
-          params.api.sizeColumnsToFit();
-          if (scroll) resumeAutoScroll();
-        }}
-        onGridSizeChanged={(params) => {
-          params.api.sizeColumnsToFit();
-        }}
         overlayNoRowsTemplate={`
           <div class="md:text-sm text-xs py-4">
             ${t("no-data")}

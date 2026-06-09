@@ -13,24 +13,3 @@ export const selectRowData = createSelector(
   selectStocksMap,
   (symbols, stocks): StockData[] => symbols.map((s) => stocks[s]),
 );
-
-export const selectAllStocks = createSelector(selectStocksMap, (stocks) =>
-  Object.values(stocks),
-);
-export const makeSelectStock = (symbol: string) =>
-  createSelector(selectStocksMap, (stocks) => stocks[symbol]);
-
-const selectPriceboard = (state: RootState) => state.priceboard;
-
-export const selectStockList = createSelector(
-  (state: RootState) => state.priceboard.stocks,
-  (state: RootState) => state.priceboard.symbols,
-  (stocks: Record<string, StockData>, symbols: string[]): StockData[] =>
-    symbols.map((s) => stocks[s]),
-);
-
-export const selectStock = (symbol: string) =>
-  createSelector(
-    selectPriceboard,
-    ({ stocks }): StockData | undefined => stocks[symbol],
-  );
