@@ -79,12 +79,23 @@
 
   "phone-number": "Phone Number",
   "confirm-password": "Confirm Password",
+  "full-name": "Full Name",
+  "email": "Email",
+  "address": "Contact Address",
+  "birthday": "Date of Birth",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
 
   "input": {
     "phone-placeholder": "Enter a 10-digit phone number",
     "email-placeholder": "Enter a valid email (e.g. abc@xyz.com)",
     "password-placeholder": "Create a password",
-    "confirm-placeholder": "Confirm your password"
+    "confirm-placeholder": "Confirm your password",
+    "fullname-placeholder": "Enter your full name",
+    "address-placeholder": "Enter your contact address",
+    "date-placeholder": "dd/mm/yyyy",
+    "gender-placeholder": "Select gender..."
   },
 
   "validate": {
@@ -92,10 +103,15 @@
     "password-required": "Password is required",
     "phone-required": "Phone number is required",
     "email-required": "Email is required",
+    "fullname-required": "Full name is required",
+    "birthday-required": "Date of birth is required",
+    "gender-required": "Gender is required",
+    "address-required": "Address is required",
 
     "phone-incorrect": "Invalid phone number",
     "email-incorrect": "Invalid email address",
-    "password-not-match": "Passwords do not match"
+    "password-not-match": "Passwords do not match",
+    "fullname-incorrect": "Invalid full name"
   },
 
   "slogan": {
@@ -138,6 +154,7 @@
     "change-pass": "Change Password",
     "infor": "Account Information"
   },
+
   "register": {
     "init-account": "Create an account",
     "title": "Open Account",
@@ -145,6 +162,14 @@
     "agreement_and": "and",
     "agreement_suffix": "of LHC. I consent to the processing of my personal data for service provision and agree to receive communications via my registered phone number and email.",
     "terms": "Terms & Conditions",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "account_activated_title": "Your account has been activated",
+    "account_activated_desc": "Welcome to <strong>LHC Trade</strong>. Your account is ready for trading."
+  },
+
+  "button": {
+    "continue": "Continue",
+    "previous": "Back",
+    "start_trading": "Start trading"
   }
 }

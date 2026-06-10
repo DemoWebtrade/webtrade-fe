@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 const buttonVariants = cva(
   "flex items-center justify-center rounded cursor-pointer",
@@ -27,19 +28,35 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  isLoading = false,
+  children,
+  disabled,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    isLoading?: boolean;
   }) {
+  const { t } = useTranslation();
+
   return (
     <button
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      disabled={disabled || isLoading}
       className={buttonVariants({ variant, size, className })}
       {...props}
-    />
+    >
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2.5">
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          <span>{t("loading")}</span>
+        </div>
+      ) : (
+        children
+      )}
+    </button>
   );
 }
 

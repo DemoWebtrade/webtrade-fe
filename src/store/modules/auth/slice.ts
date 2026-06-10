@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk } from "./api";
+import { loginThunk, registerThunk } from "./api";
 import type { AuthState } from "./types";
 
 const initialState: AuthState = {
+  isLogin: false,
+
   user: null,
   token: localStorage.getItem("token") || null,
+  registerData: null,
 
   loading: {
     login: false,
+    register: false,
   },
 
   error: {
     login: null,
+    register: null,
   },
 };
 
@@ -19,10 +24,18 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setIsLogin(state, action) {
+      state.isLogin = action.payload;
+    },
+
     logout(state) {
       state.user = null;
       state.token = null;
       localStorage.removeItem("token");
+    },
+
+    setRegisterData(state, action) {
+      state.registerData = action.payload;
     },
   },
 
@@ -33,8 +46,6 @@ const authSlice = createSlice({
         state.error.login = null;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
-        console.log("action.payload", action.payload);
-
         state.loading.login = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
@@ -44,9 +55,22 @@ const authSlice = createSlice({
         state.loading.login = false;
         state.error.login = action.payload as string;
       });
+
+    builder
+      .addCase(registerThunk.pending, (state) => {
+        state.loading.register = true;
+        state.error.register = null;
+      })
+      .addCase(registerThunk.fulfilled, (state) => {
+        state.loading.register = false;
+      })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.loading.register = false;
+        state.error.register = action.payload as string;
+      });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setRegisterData, setIsLogin } = authSlice.actions;
 
 export default authSlice.reducer;

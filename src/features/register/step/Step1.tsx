@@ -1,23 +1,49 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { selectRegisterData } from "@/store/modules/auth/selector";
+import { setRegisterData } from "@/store/modules/auth/slice";
+import { useEffect, useState } from "react";
 import { useForm, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+interface Step1Form {
+  phone: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function Step1({ nextStep }: { nextStep: () => void }) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const {
     handleSubmit,
     register,
     getValues,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<Step1Form>();
 
-  const [checkPolicy, setCheckPolicy] = useState(true);
+  const registerData = useAppSelector(selectRegisterData);
 
-  const handleSubmitStep = () => {
+  const [checkPolicy, setCheckPolicy] = useState(false);
+
+  useEffect(() => {
+    if (registerData) {
+      reset({
+        phone: registerData.phone ?? "",
+        email: registerData.email ?? "",
+        password: registerData.password ?? "",
+        confirmPassword: registerData.password ?? "",
+      });
+    }
+  }, [registerData, reset]);
+
+  const handleSubmitStep = (data: Step1Form) => {
     nextStep();
+    dispatch(setRegisterData(data));
   };
 
   return (
@@ -27,12 +53,12 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
         className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8 w-full"
       >
         <div className="col-span-1">
-          <label htmlFor="phoneNumber">{t("phone-number")}</label>
+          <label htmlFor="phone">{t("phone-number")}</label>
           <InputField
-            name="phoneNumber"
+            name="phone"
             type="text"
             autoComplete="off"
-            registration={register("phoneNumber", {
+            registration={register("phone", {
               required: t("validate.phone-required"),
               pattern: {
                 value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
@@ -47,7 +73,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
                 message: t("validate.phone-incorrect"),
               },
             })}
-            error={errors?.phoneNumber as FieldError}
+            error={errors?.phone as FieldError}
             placeholder={t("input.phone-placeholder")}
             className="h-8! md:h-10!"
           />

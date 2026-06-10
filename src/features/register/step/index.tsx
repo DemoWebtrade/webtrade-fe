@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import RegisterSucessModal from "./RegisterSucessModal";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 
@@ -51,6 +52,8 @@ export default function RegisterStep() {
       {step === 2 && (
         <Step2 prevStep={() => setStep(1)} nextStep={() => setStep(3)} />
       )}
+
+      <RegisterSucessModal isOpen={step === 3} />
     </div>
   );
 }

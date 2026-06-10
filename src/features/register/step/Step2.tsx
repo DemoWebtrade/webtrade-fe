@@ -2,8 +2,25 @@ import { Button } from "@/components/ui/Button";
 import InputDate from "@/components/ui/inputs/InputDate";
 import InputField from "@/components/ui/inputs/InputField";
 import SelectField from "@/components/ui/inputs/SelectField";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { registerThunk } from "@/store/modules/auth/api";
+import {
+  selectLoadingRegister,
+  selectRegisterData,
+} from "@/store/modules/auth/selector";
+import { setRegisterData } from "@/store/modules/auth/slice";
+import { formatDate, parseDate } from "@/utils";
+import { useEffect } from "react";
 import { useForm, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+
+interface Step2Form {
+  fullName: string;
+  birthday: Date | null;
+  gender: string;
+  address: string;
+}
 
 export default function Step2({
   prevStep,
@@ -13,15 +30,61 @@ export default function Step2({
   nextStep: () => void;
 }) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const registerData = useAppSelector(selectRegisterData);
+  const loadingRegister = useAppSelector(selectLoadingRegister);
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     control,
-  } = useForm();
+    reset,
+  } = useForm<Step2Form>();
 
-  const handleSubmitStep = () => {
-    nextStep();
+  useEffect(() => {
+    if (registerData) {
+      reset({
+        fullName: registerData?.fullName ?? "",
+        birthday: registerData?.dateOfBirth
+          ? parseDate(registerData?.dateOfBirth)
+          : undefined,
+        gender: registerData?.gender ?? "",
+        address: registerData?.address ?? "",
+      });
+    }
+  }, [registerData, reset]);
+
+  const handleSubmitStep = async (data: Step2Form) => {
+    if (loadingRegister) return;
+    const { fullName, birthday, gender, address } = data;
+    try {
+      await dispatch(
+        registerThunk({
+          username: registerData?.phone ?? "",
+          password: registerData?.password ?? "",
+          email: registerData?.email ?? "",
+          fullName,
+          dateOfBirth: birthday ? formatDate(birthday) : "",
+          gender,
+          address,
+          phone: registerData?.phone ?? "",
+        }),
+      ).unwrap();
+      dispatch(
+        setRegisterData({
+          ...registerData,
+          fullName,
+          dateOfBirth: birthday ? formatDate(birthday) : "",
+          gender,
+          address,
+        }),
+      );
+      nextStep();
+    } catch (error) {
+      toast.error(error as string);
+    }
   };
 
   return (
@@ -31,12 +94,12 @@ export default function Step2({
         className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8 w-full"
       >
         <div className="col-span-1">
-          <label htmlFor="fullname">{t("Họ và tên")}</label>
+          <label htmlFor="fullName">{t("full-name")}</label>
           <InputField
-            name="fullname"
+            name="fullName"
             type="text"
             autoComplete="off"
-            registration={register("fullname", {
+            registration={register("fullName", {
               required: t("validate.fullname-required"),
               minLength: {
                 value: 2,
@@ -47,13 +110,13 @@ export default function Step2({
                 message: t("validate.fullname-incorrect"),
               },
             })}
-            error={errors?.fullname as FieldError}
+            error={errors?.fullName as FieldError}
             placeholder={t("input.fullname-placeholder")}
             className="h-8! md:h-10!"
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="birthDay">{t("Ngày sinh")}</label>
+          <label htmlFor="birthday">{t("birthday")}</label>
           <InputDate
             name="birthday"
             control={control}
@@ -64,14 +127,14 @@ export default function Step2({
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="gender">{t("Giới tính")}</label>
+          <label htmlFor="gender">{t("gender")}</label>
           <SelectField
             name="gender"
             options={[
-              { label: "Nam", value: "male" },
-              { label: "Nữ", value: "female" },
+              { label: t("male"), value: "MALE" },
+              { label: t("female"), value: "FEMALE" },
             ]}
-            placeholder="Chọn giới tính..."
+            placeholder={t("input.gender-placeholder")}
             registration={register("gender", {
               required: t("validate.gender-required"),
             })}
@@ -79,7 +142,7 @@ export default function Step2({
           />
         </div>
         <div className="col-span-1 md:col-span-2">
-          <label htmlFor="address">{t("Địa chỉ liên hệ")}</label>
+          <label htmlFor="address">{t("address")}</label>
           <InputField
             name="address"
             type="text"
@@ -92,10 +155,16 @@ export default function Step2({
             placeholder={t("input.address-placeholder")}
           />
         </div>
-        <div className="flex flex-row-reverse gap-2 col-span-1 md:col-span-2">
-          <Button>{t("register.title")}</Button>
-          <Button variant="none" onClick={prevStep}>
+        <div className="flex flex-row gap-2 col-span-1">
+          <Button variant="none" onClick={prevStep} className="w-1/2">
             {t("button.previous")}
+          </Button>{" "}
+          <Button
+            className="w-1/2"
+            isLoading={loadingRegister}
+            disabled={loadingRegister}
+          >
+            {t("register.title")}
           </Button>
         </div>
       </form>

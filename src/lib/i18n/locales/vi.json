@@ -78,6 +78,13 @@
   "loading": "Đang xử lý...",
   "phone-number": "Số điện thoại",
   "confirm-password": "Xác nhận lại mật khẩu",
+  "full-name": "Họ và tên",
+  "email": "Email",
+  "address": "Địa chỉ liên hệ",
+  "birthday": "Ngày sinh",
+  "gender": "Giới tính",
+  "male": "Nam",
+  "female": "Nữ",
 
   "input": {
     "phone-placeholder": "Nhập số điện thoại 10 số",
@@ -86,7 +93,8 @@
     "confirm-placeholder": "Xác nhận lại mật khẩu",
     "fullname-placeholder": "Nhập họ và tên",
     "address-placeholder": "Nhập địa chỉ liên hệ",
-    "date-placeholder": "dd/mm/yyyy"
+    "date-placeholder": "dd/mm/yyyy",
+    "gender-placeholder": "Chọn giới tính..."
   },
 
   "validate": {
@@ -154,11 +162,14 @@
     "agreement_and": "và",
     "agreement_suffix": "của LHC. Tôi đồng ý cho phép LHC xử lý dữ liệu cá nhân nhằm cung cấp sản phẩm, dịch vụ và nhận thông tin qua số điện thoại, email đã đăng ký.",
     "terms": "Điều khoản & Điều kiện",
-    "privacy": "Chính sách bảo mật"
+    "privacy": "Chính sách bảo mật",
+    "account_activated_title": "Tài khoản đã được kích hoạt",
+    "account_activated_desc": "Chào mừng bạn đến với <strong>LHC Trade</strong>. Tài khoản của bạn đã sẵn sàng để giao dịch."
   },
 
   "button": {
     "continue": "Tiếp tục",
-    "previous": "Quay lại"
+    "previous": "Quay lại",
+    "start_trading": "Bắt đầu giao dịch"
   }
 }

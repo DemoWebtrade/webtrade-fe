@@ -3,6 +3,8 @@ import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs/modal";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { loginThunk } from "@/store/modules/auth/api";
+import { selectRegisterData } from "@/store/modules/auth/selector";
+import { setRegisterData } from "@/store/modules/auth/slice";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
@@ -26,12 +28,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const dispatch = useAppDispatch();
 
   const loading = useAppSelector((state) => state.auth.loading.login);
-  const user = useAppSelector((state) => state.auth.user);
+  const registerData = useAppSelector(selectRegisterData);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
   } = useForm<LoginForm>();
 
@@ -39,6 +41,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     reset();
     onClose();
   }, [reset, onClose]);
+
+  useEffect(() => {
+    if (registerData) {
+      reset({
+        username: registerData.phone ?? "",
+      });
+    }
+  }, [registerData, reset]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -50,18 +60,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  useEffect(() => {
-    if (user) {
-      handleClose();
-    }
-  }, [user, handleClose]);
-
   const handleLogin = async (data: { username: string; password: string }) => {
     if (loading) return;
     try {
       await dispatch(
         loginThunk({ username: data.username, password: data.password }),
       ).unwrap();
+      handleClose();
+      dispatch(setRegisterData(null));
     } catch (error) {
       toast.error(error as string);
     }
@@ -143,18 +149,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={loading}
                   variant={"default"}
                   className="w-full"
+                  isLoading={loading}
                 >
-                  {isSubmitting || loading ? (
-                    <div className="flex items-center justify-center gap-2.5">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>{t("loading")}</span>
-                    </div>
-                  ) : (
-                    t("login")
-                  )}
+                  {t("login")}
                 </Button>
 
                 <div className="text-center text-sm text-gray-500">
