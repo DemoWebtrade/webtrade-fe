@@ -164,7 +164,8 @@
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy",
     "account_activated_title": "Your account has been activated",
-    "account_activated_desc": "Welcome to <strong>LHC Trade</strong>. Your account is ready for trading."
+    "account_activated_desc_prefix": "Welcome to",
+    "account_activated_desc_suffix": "Your account is ready for trading."
   },
 
   "button": {

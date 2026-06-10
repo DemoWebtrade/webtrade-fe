@@ -164,7 +164,8 @@
     "terms": "Điều khoản & Điều kiện",
     "privacy": "Chính sách bảo mật",
     "account_activated_title": "Tài khoản đã được kích hoạt",
-    "account_activated_desc": "Chào mừng bạn đến với <strong>LHC Trade</strong>. Tài khoản của bạn đã sẵn sàng để giao dịch."
+    "account_activated_desc_prefix": "Chào mừng bạn đến với",
+    "account_activated_desc_suffix": "Tài khoản của bạn đã sẵn sàng để giao dịch."
   },
 
   "button": {

@@ -64,7 +64,11 @@ export default function RegisterSucessModal({ isOpen }: { isOpen: boolean }) {
                     {t("register.account_activated_title")}
                   </h1>
                   <span className="text-sm text-muted-foreground">
-                    {t("register.account_activated_desc")}
+                    {t("register.account_activated_desc_prefix")}{" "}
+                    <span className="font-bold text-purple-base">
+                      LHC Trade
+                    </span>{" "}
+                    {t("register.account_activated_desc_suffix")}
                   </span>
                 </div>
                 <Button
