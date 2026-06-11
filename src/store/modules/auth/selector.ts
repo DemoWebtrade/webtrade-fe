@@ -12,3 +12,7 @@ export const selectToken = (state: RootState) => state.auth.token;
 export const selectRegisterData = (state: RootState) => state.auth.registerData;
 export const selectLoadingRegister = (state: RootState) =>
   state.auth.loading.register;
+
+export const selectProfile = (state: RootState) => state.auth.profile;
+export const selectLoadingProfile = (state: RootState) =>
+  state.auth.loading.profile;

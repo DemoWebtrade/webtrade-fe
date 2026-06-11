@@ -4,15 +4,18 @@ export type AuthState = {
   user: User | null;
   token: string | null;
   registerData: Partial<RegisterPayload> | null;
+  profile: Profile | null;
 
   loading: {
     login: boolean;
     register: boolean;
+    profile: boolean;
   };
 
   error: {
     login: string | null;
     register: string | null;
+    profile: string | null;
   };
 };
 
@@ -40,4 +43,38 @@ export type User = {
   balance: number;
   isVerified: boolean;
   createdAt: string;
+};
+
+export type Profile = {
+  id: string;
+  username: string;
+  email: string;
+  fullName: string;
+  gender: string;
+  balance: number;
+  isVerified: false;
+  createdAt: string;
+  tradingAccounts:
+    | [
+        {
+          id: string;
+          accountNumber: string;
+          type: string;
+          status: string;
+          balance: number;
+        },
+      ]
+    | [];
+  beneficiaries:
+    | [
+        {
+          id: string;
+          bankName: string;
+          bankBranch?: string;
+          accountNumber: string;
+          accountHolder: string;
+          isDefault: boolean;
+        },
+      ]
+    | [];
 };

@@ -66,7 +66,7 @@ export default function RegisterSucessModal({ isOpen }: { isOpen: boolean }) {
                   <span className="text-sm text-muted-foreground">
                     {t("register.account_activated_desc_prefix")}{" "}
                     <span className="font-bold text-purple-base">
-                      LHC Trade
+                      LHC Web Trade
                     </span>{" "}
                     {t("register.account_activated_desc_suffix")}
                   </span>
