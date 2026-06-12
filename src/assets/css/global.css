@@ -12,8 +12,9 @@
 
 body {
   font-family: "Hanken Grotesk" !important;
-  height: 100dvh;
+  height: 100svh;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .bg-switch {

@@ -1,18 +1,19 @@
 import { Button } from "@/components/ui/Button";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { getProfileThunk } from "@/store/modules/auth/api";
 import {
   selectIsLogin,
   selectProfile,
   selectToken,
 } from "@/store/modules/auth/selector";
 import { logout, setIsLogin } from "@/store/modules/auth/slice";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { UserRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../store/hook";
 import LoginModal from "../../auth/login-modal";
-import { getProfileThunk } from "@/store/modules/auth/api";
+import Profile from "../../auth/profile";
 
 export default function Login() {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export default function Login() {
   const profile = useAppSelector(selectProfile);
 
   const [isOpenInfo, setIsOpenInfo] = useState(false);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const refInfo = useRef<HTMLDivElement>(null);
 
@@ -39,30 +41,57 @@ export default function Login() {
 
   const modalOpen = !token && isLogin;
 
-  useClickOutside(refInfo, () => setIsOpenInfo(false));
+  const handleClickUser = () => {
+    setIsOpenInfo((prev) => (isOpenProfile ? false : !prev));
+    setIsOpenProfile(false);
+  };
+
+  const handleClickProfile = () => {
+    setIsOpenProfile(true);
+    setIsOpenInfo(false);
+  };
+
+  useClickOutside(refInfo, () => {
+    setIsOpenInfo(false);
+  });
 
   return (
     <>
       {token ? (
         <div
           ref={refInfo}
-          className="p-1 rounded-md flex flex-row items-center gap-1 bg-purple-base/30 hover:bg-purple-hover/30 cursor-pointer relative"
-          onClick={() => setIsOpenInfo(!isOpenInfo)}
+          className="p-1 rounded-md bg-purple-base/30 hover:bg-purple-hover/30 cursor-pointer relative"
         >
-          <UserRound className="size-3.5" />
-          <span className="text-sm flex flex-col items-center md:gap-1 md:flex-row">
-            <span className="whitespace-nowrap">{t("user.account")}</span>
-            <span>{profile?.tradingAccounts?.[0]?.accountNumber}</span>
-          </span>
+          <div
+            className="flex flex-row items-center gap-1"
+            onClick={handleClickUser}
+          >
+            <UserRound className="size-3.5" />
+            <span className="text-sm flex flex-col items-center md:gap-1 md:flex-row">
+              <span className="whitespace-nowrap text-content-secondary">
+                {t("user.account")}
+              </span>
+              <span>{profile?.tradingAccounts?.[0]?.accountNumber}</span>
+            </span>
+          </div>
 
           <AnimatePresence>
             {isOpenInfo && (
-              <div className="absolute top-7 right-0 z-10 bg-bg-tertiary shadow-md px-4 py-3 rounded-md w-60">
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-7 right-0 z-10 bg-bg-tertiary shadow-md px-4 py-3 rounded-md w-60"
+              >
                 <h1 className="text-base font-bold">
                   {t("user.welcome")}, {profile?.fullName}
                 </h1>
                 <div className="flex flex-col gap-1 text-sm mt-2">
-                  <div className="p-2 md:p-3 rounded-md hover:bg-bg-button">
+                  <div
+                    className="p-2 md:p-3 rounded-md hover:bg-bg-button"
+                    onClick={handleClickProfile}
+                  >
                     {t("user.title-infor")}
                   </div>
                   <div className="flex flex-col gap-1">
@@ -81,8 +110,12 @@ export default function Login() {
                     {t("logout")}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {isOpenProfile && <Profile key="profile" />}
           </AnimatePresence>
         </div>
       ) : (
