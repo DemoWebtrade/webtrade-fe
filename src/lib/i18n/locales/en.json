@@ -87,6 +87,10 @@
   "male": "Male",
   "female": "Female",
 
+  "auth": {
+    "sessionExpired": "Your trading session has expired. Please log in again to continue."
+  },
+
   "input": {
     "phone-placeholder": "Enter a 10-digit phone number",
     "email-placeholder": "Enter a valid email (e.g. abc@xyz.com)",

@@ -42,14 +42,7 @@ export const getProfileThunk = createAsyncThunk(
   "auth/getProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        return rejectWithValue(i18n.t("api.error"));
-      }
-
-      const res = await apiClient.get("/auth/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await apiClient.get("/auth/profile");
       if (res?.data?.code !== 1) {
         return rejectWithValue(res?.data?.message || i18n.t("api.error"));
       }

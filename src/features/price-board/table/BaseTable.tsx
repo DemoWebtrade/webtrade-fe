@@ -32,6 +32,7 @@ import {
   ClientSideRowModelApiModule,
   ClientSideRowModelModule,
   ColumnApiModule,
+  ColumnAutoSizeModule,
   CsvExportModule,
   ModuleRegistry,
   PinnedRowModule,
@@ -40,6 +41,7 @@ import {
   ScrollApiModule,
   themeQuartz,
   TooltipModule,
+  ValidationModule,
   type CellDoubleClickedEvent,
   type ColDef,
   type ColGroupDef,
@@ -63,6 +65,8 @@ ModuleRegistry.registerModules([
   TooltipModule,
   CsvExportModule,
   ColumnApiModule,
+  ColumnAutoSizeModule,
+  ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
 export default function BaseTable({ id }: { id: string }) {

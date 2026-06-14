@@ -27,6 +27,7 @@ export default function Login() {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const refInfo = useRef<HTMLDivElement>(null);
+  const refProfile = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -53,6 +54,10 @@ export default function Login() {
 
   useClickOutside(refInfo, () => {
     setIsOpenInfo(false);
+  });
+
+  useClickOutside(refProfile, () => {
+    setIsOpenProfile(false);
   });
 
   return (
@@ -82,7 +87,7 @@ export default function Login() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-7 right-0 z-10 bg-bg-tertiary shadow-md px-4 py-3 rounded-md w-60"
+                className="absolute top-12 md:top-7 right-0 z-10 bg-bg-tertiary shadow-md px-4 py-3 rounded-md w-60"
               >
                 <h1 className="text-base font-bold">
                   {t("user.welcome")}, {profile?.fullName}
@@ -114,9 +119,11 @@ export default function Login() {
             )}
           </AnimatePresence>
 
-          <AnimatePresence>
-            {isOpenProfile && <Profile key="profile" />}
-          </AnimatePresence>
+          <div ref={refProfile}>
+            <AnimatePresence>
+              {isOpenProfile && <Profile key="profile" />}
+            </AnimatePresence>
+          </div>
         </div>
       ) : (
         <>

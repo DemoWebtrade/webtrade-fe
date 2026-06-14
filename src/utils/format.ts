@@ -129,6 +129,7 @@ export function StringToDouble(pString: string | number): number {
 }
 
 export const formatDate = (date: Date): string => {
+  if (!date) return "-";
   const d = String(date.getDate()).padStart(2, "0");
   const m = String(date.getMonth() + 1).padStart(2, "0");
   const y = date.getFullYear();

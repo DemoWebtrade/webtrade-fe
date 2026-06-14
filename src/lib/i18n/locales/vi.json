@@ -86,6 +86,10 @@
   "male": "Nam",
   "female": "Nữ",
 
+  "auth": {
+    "sessionExpired": "Phiên giao dịch của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
+  },
+
   "input": {
     "phone-placeholder": "Nhập số điện thoại 10 số",
     "email-placeholder": "Email có định dạng abc@xyz.com",
@@ -152,7 +156,11 @@
     "title-infor": "Thông tin khách hàng",
     "secure-setting": "Cài đặt bảo mật",
     "change-pass": "Thay đổi mật khẩu",
-    "infor": "Thông tin tài khoản"
+    "infor": "Thông tin tài khoản",
+
+    "gen-infor": "Thông tin chung",
+    "account-ben": "Tài khoản thụ hưởng",
+    "security": "Bảo mật"
   },
 
   "register": {

@@ -54,6 +54,10 @@ export type Profile = {
   balance: number;
   isVerified: false;
   createdAt: string;
+  phone?: string;
+  nationalId?: string;
+  dateOfBirth?: Date;
+  address?: string;
   tradingAccounts:
     | [
         {

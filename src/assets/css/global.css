@@ -13,7 +13,6 @@
 body {
   font-family: "Hanken Grotesk" !important;
   height: 100svh;
-  overflow: hidden;
   box-sizing: border-box;
 }
 
