@@ -19,7 +19,7 @@ interface LoginModalProps {
 }
 
 interface LoginForm {
-  username: string;
+  identifier: string;
   password: string;
 }
 
@@ -45,7 +45,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   useEffect(() => {
     if (registerData) {
       reset({
-        username: registerData.phone ?? "",
+        identifier: registerData.phone ?? "",
       });
     }
   }, [registerData, reset]);
@@ -60,11 +60,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  const handleLogin = async (data: { username: string; password: string }) => {
+  const handleLogin = async (data: {
+    identifier: string;
+    password: string;
+  }) => {
     if (loading) return;
     try {
       await dispatch(
-        loginThunk({ username: data.username, password: data.password }),
+        loginThunk({ identifier: data.identifier, password: data.password }),
       ).unwrap();
       handleClose();
       dispatch(setRegisterData(null));
@@ -114,18 +117,18 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               >
                 <div>
                   <label
-                    htmlFor="username"
+                    htmlFor="identifier"
                     className="block text-sm font-normal mb-2"
                   >
-                    {t("username")}
+                    {t("identifier")}
                   </label>
                   <InputField
-                    name="username"
-                    autoComplete="current-username"
-                    registration={register("username", {
-                      required: t("validate.username-required"),
+                    name="identifier"
+                    autoComplete="current-identifier"
+                    registration={register("identifier", {
+                      required: t("validate.identifier-required"),
                     })}
-                    error={errors?.username as FieldError}
+                    error={errors?.identifier as FieldError}
                   />
                 </div>
 

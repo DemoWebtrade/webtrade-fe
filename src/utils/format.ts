@@ -130,14 +130,23 @@ export function StringToDouble(pString: string | number): number {
 
 export const formatDate = (date: Date | string | null | undefined): string => {
   if (!date) return "-";
-  const d = date instanceof Date ? date : new Date(date);
+
+  const d = new Date(date);
   if (isNaN(d.getTime())) return "-";
   const day = String(d.getDate()).padStart(2, "0");
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const y = d.getFullYear();
-  return `${day}/${m}/${y}`;
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
+
+  return `${day}/${month}/${year}`;
 };
-export const parseDate = (input: string): Date => {
-  const [d, m, y] = input.split("/").map(Number);
-  return new Date(y, m - 1, d);
+
+export const parseDate = (
+  dateStr: string | null | undefined,
+): Date | undefined => {
+  if (!dateStr) return undefined;
+
+  const [day, month, year] = dateStr.split("/").map(Number);
+  if (!day || !month || !year) return undefined;
+
+  return new Date(year, month - 1, day);
 };

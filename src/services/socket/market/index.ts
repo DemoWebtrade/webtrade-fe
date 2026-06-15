@@ -11,7 +11,7 @@ import { io, type Socket } from "socket.io-client";
 const MARKET_SOCKET_URL =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_MARKET_SOCKET_URL
-    : "http://localhost:5000/market";
+    : "http://localhost:5001/market";
 
 const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url), {
   type: "module",

@@ -43,7 +43,7 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
 
   const handleSubmitStep = (data: Step1Form) => {
     nextStep();
-    dispatch(setRegisterData(data));
+    dispatch(setRegisterData({ ...registerData, ...data }));
   };
 
   return (

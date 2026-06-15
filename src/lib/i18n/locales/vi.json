@@ -164,7 +164,10 @@
     "account-name": "Tên pháp lý",
     "account-lh": "THÔNG TIN LIÊN HỆ",
     "account-lk": "TÀI KHOẢN ĐÃ LIÊN KẾT",
-    "account-add": "+ Thêm tài khoản"
+    "account-add": "+ Thêm tài khoản",
+    "phone-edit": "Thay đổi số điện thoại",
+    "email-edit": "Thay đổi email",
+    "address-edit": "Thay đổi địa chỉ liên hệ"
   },
 
   "register": {

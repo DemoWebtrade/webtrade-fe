@@ -24,12 +24,11 @@ export type AuthState = {
 };
 
 export type LoginPayload = {
-  username: string;
+  identifier: string;
   password: string;
 };
 
 export type RegisterPayload = {
-  username: string;
   password: string;
   email: string;
   fullName: string;
@@ -60,7 +59,7 @@ export type Profile = {
   createdAt: string;
   phone?: string;
   nationalId?: string;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
   address?: string;
   tradingAccounts:
     | [

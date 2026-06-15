@@ -34,7 +34,7 @@ export default function Profile() {
           {MENU_PROFILE.map((item) => (
             <div
               key={item.value}
-              className={`w-1/2 whitespace-nowrap text-center text-base pb-1 md:pb-2 border-b-2 cursor-pointer ${feature === item.value ? "font-semibold text-purple-base border-purple-selected" : "border-purple-base/10"}`}
+              className={`w-1/2 whitespace-nowrap text-center text-base pb-1.5 md:pb-3 border-b-2 cursor-pointer ${feature === item.value ? "font-semibold text-purple-base border-purple-selected" : "border-purple-base/10"}`}
               onClick={() => setFeature(item.value)}
             >
               {t(item.label)}

@@ -4,7 +4,6 @@ import {
   selectTypeUpdateProfile,
 } from "@/store/modules/auth/selector";
 import { setTypeUpdateProfile } from "@/store/modules/auth/slice";
-import { formatDate } from "@/utils";
 import { PenLine } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ChangeInforModal from "./ChangeInforModal";
@@ -40,7 +39,7 @@ export default function GenInformation() {
           <div className="flex flex-col col-span-1 gap-1">
             <span className="text-sm">{t("birthday")}</span>
             <span className="font-medium text-base">
-              {formatDate(profile?.dateOfBirth as Date)}
+              {profile?.dateOfBirth}
             </span>
           </div>
         </div>
@@ -61,6 +60,8 @@ export default function GenInformation() {
             <div
               className="cursor-pointer"
               onClick={() => dispatch(setTypeUpdateProfile("PHONE"))}
+              data-tooltip-id="global-tooltip"
+              data-tooltip-content={t("user.phone-edit")}
             >
               <PenLine className="size-4 text-primary-base hover:text-primary-hover" />
             </div>
@@ -76,6 +77,8 @@ export default function GenInformation() {
             <div
               className="cursor-pointer"
               onClick={() => dispatch(setTypeUpdateProfile("EMAIL"))}
+              data-tooltip-id="global-tooltip"
+              data-tooltip-content={t("user.email-edit")}
             >
               <PenLine className="size-4 text-primary-base hover:text-primary-hover" />
             </div>
@@ -91,6 +94,8 @@ export default function GenInformation() {
             <div
               className="cursor-pointer"
               onClick={() => dispatch(setTypeUpdateProfile("ADDRESS"))}
+              data-tooltip-id="global-tooltip"
+              data-tooltip-content={t("user.address-edit")}
             >
               <PenLine className="size-4 text-primary-base hover:text-primary-hover" />
             </div>

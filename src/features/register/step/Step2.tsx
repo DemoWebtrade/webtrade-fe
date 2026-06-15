@@ -41,6 +41,7 @@ export default function Step2({
     formState: { errors },
     control,
     reset,
+    getValues,
   } = useForm<Step2Form>();
 
   useEffect(() => {
@@ -56,13 +57,29 @@ export default function Step2({
     }
   }, [registerData, reset]);
 
+  const handlePrevStep = async () => {
+    const currentValue = getValues();
+    const { fullName, birthday, gender, address } = currentValue;
+
+    await dispatch(
+      setRegisterData({
+        ...registerData,
+        fullName,
+        dateOfBirth: birthday ? formatDate(birthday) : "",
+        gender,
+        address,
+      }),
+    );
+
+    prevStep();
+  };
+
   const handleSubmitStep = async (data: Step2Form) => {
     if (loadingRegister) return;
     const { fullName, birthday, gender, address } = data;
     try {
       await dispatch(
         registerThunk({
-          username: registerData?.phone ?? "",
           password: registerData?.password ?? "",
           email: registerData?.email ?? "",
           fullName,
@@ -155,17 +172,17 @@ export default function Step2({
             placeholder={t("input.address-placeholder")}
           />
         </div>
-        <div className="flex flex-row gap-2 col-span-1">
-          <Button variant="none" onClick={prevStep} className="w-1/2">
-            {t("button.previous")}
-          </Button>{" "}
+        <div className="flex flex-row-reverse gap-2 col-span-1">
           <Button
             className="w-1/2"
             isLoading={loadingRegister}
             disabled={loadingRegister}
           >
             {t("register.title")}
-          </Button>
+          </Button>{" "}
+          <Button variant="none" onClick={handlePrevStep} className="w-1/2">
+            {t("button.previous")}
+          </Button>{" "}
         </div>
       </form>
     </div>
