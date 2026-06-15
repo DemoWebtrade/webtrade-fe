@@ -156,7 +156,15 @@
     "title-infor": "Customer Information",
     "secure-setting": "Security Settings",
     "change-pass": "Change Password",
-    "infor": "Account Information"
+    "infor": "Account Information",
+    "gen-infor": "General Information",
+    "account-ben": "Beneficiary Account",
+    "security": "Security",
+    "account-info": "PERSONAL INFORMATION",
+    "account-name": "Legal Name",
+    "account-lh": "CONTACT INFORMATION",
+    "account-lk": "LINKED ACCOUNTS",
+    "account-add": "+ Add Account"
   },
 
   "register": {
@@ -175,6 +183,8 @@
   "button": {
     "continue": "Continue",
     "previous": "Back",
-    "start_trading": "Start trading"
+    "start_trading": "Start trading",
+    "save-change": "Save Changes",
+    "cancel": "Cancel"
   }
 }

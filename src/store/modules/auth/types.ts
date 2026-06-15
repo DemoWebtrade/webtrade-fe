@@ -6,16 +6,20 @@ export type AuthState = {
   registerData: Partial<RegisterPayload> | null;
   profile: Profile | null;
 
+  typeUpdateProfile: string | null;
+
   loading: {
     login: boolean;
     register: boolean;
     profile: boolean;
+    updateProfile: boolean;
   };
 
   error: {
     login: string | null;
     register: string | null;
     profile: string | null;
+    updateProfile: string | null;
   };
 };
 
@@ -81,4 +85,10 @@ export type Profile = {
         },
       ]
     | [];
+};
+
+export type UpdateProfilePayload = {
+  email?: string;
+  phone?: string;
+  address?: string;
 };

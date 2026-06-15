@@ -128,14 +128,15 @@ export function StringToDouble(pString: string | number): number {
   }
 }
 
-export const formatDate = (date: Date): string => {
+export const formatDate = (date: Date | string | null | undefined): string => {
   if (!date) return "-";
-  const d = String(date.getDate()).padStart(2, "0");
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const y = date.getFullYear();
-  return `${d}/${m}/${y}`;
+  const d = date instanceof Date ? date : new Date(date);
+  if (isNaN(d.getTime())) return "-";
+  const day = String(d.getDate()).padStart(2, "0");
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const y = d.getFullYear();
+  return `${day}/${m}/${y}`;
 };
-
 export const parseDate = (input: string): Date => {
   const [d, m, y] = input.split("/").map(Number);
   return new Date(y, m - 1, d);

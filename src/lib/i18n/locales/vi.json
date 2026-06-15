@@ -157,10 +157,14 @@
     "secure-setting": "Cài đặt bảo mật",
     "change-pass": "Thay đổi mật khẩu",
     "infor": "Thông tin tài khoản",
-
     "gen-infor": "Thông tin chung",
     "account-ben": "Tài khoản thụ hưởng",
-    "security": "Bảo mật"
+    "security": "Bảo mật",
+    "account-info": "THÔNG TIN CÁ NHÂN",
+    "account-name": "Tên pháp lý",
+    "account-lh": "THÔNG TIN LIÊN HỆ",
+    "account-lk": "TÀI KHOẢN ĐÃ LIÊN KẾT",
+    "account-add": "+ Thêm tài khoản"
   },
 
   "register": {
@@ -179,6 +183,8 @@
   "button": {
     "continue": "Tiếp tục",
     "previous": "Quay lại",
-    "start_trading": "Bắt đầu giao dịch"
+    "start_trading": "Bắt đầu giao dịch",
+    "save-change": "Lưu thay đổi",
+    "cancel": "Hủy"
   }
 }

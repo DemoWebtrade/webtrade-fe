@@ -16,3 +16,9 @@ export const selectLoadingRegister = (state: RootState) =>
 export const selectProfile = (state: RootState) => state.auth.profile;
 export const selectLoadingProfile = (state: RootState) =>
   state.auth.loading.profile;
+
+export const selectLoadingUpdateProfile = (state: RootState) =>
+  state.auth.loading.updateProfile;
+
+export const selectTypeUpdateProfile = (state: RootState) =>
+  state.auth.typeUpdateProfile;

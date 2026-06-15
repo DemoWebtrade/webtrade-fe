@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProfileThunk, loginThunk, registerThunk } from "./api";
+import {
+  getProfileThunk,
+  loginThunk,
+  registerThunk,
+  updateProfileThunk,
+} from "./api";
 import type { AuthState } from "./types";
 
 const initialState: AuthState = {
@@ -11,16 +16,20 @@ const initialState: AuthState = {
 
   profile: null,
 
+  typeUpdateProfile: null,
+
   loading: {
     login: false,
     register: false,
     profile: false,
+    updateProfile: false,
   },
 
   error: {
     login: null,
     register: null,
     profile: null,
+    updateProfile: null,
   },
 };
 
@@ -40,6 +49,10 @@ const authSlice = createSlice({
 
     setRegisterData(state, action) {
       state.registerData = action.payload;
+    },
+
+    setTypeUpdateProfile(state, action) {
+      state.typeUpdateProfile = action.payload;
     },
   },
 
@@ -86,9 +99,24 @@ const authSlice = createSlice({
         state.loading.profile = false;
         state.error.profile = action.payload as string;
       });
+
+    builder
+      .addCase(updateProfileThunk.pending, (state) => {
+        state.loading.updateProfile = true;
+        state.error.updateProfile = null;
+      })
+      .addCase(updateProfileThunk.fulfilled, (state, action) => {
+        state.loading.updateProfile = false;
+        state.profile = action.payload;
+      })
+      .addCase(updateProfileThunk.rejected, (state, action) => {
+        state.loading.updateProfile = false;
+        state.error.updateProfile = action.payload as string;
+      });
   },
 });
 
-export const { logout, setRegisterData, setIsLogin } = authSlice.actions;
+export const { logout, setRegisterData, setIsLogin, setTypeUpdateProfile } =
+  authSlice.actions;
 
 export default authSlice.reducer;

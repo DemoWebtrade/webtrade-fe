@@ -1,0 +1,227 @@
+import { Button } from "@/components/ui/Button";
+import InputField from "@/components/ui/inputs/InputField";
+import { backdropVariants, modalVariants } from "@/configs";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { updateProfileThunk } from "@/store/modules/auth/api";
+import {
+  selectLoadingUpdateProfile,
+  selectProfile,
+} from "@/store/modules/auth/selector";
+import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
+import { useEffect } from "react";
+import { useForm, type FieldError } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+
+export default function ChangeInforModal({
+  isOpen,
+  type,
+  onClose,
+}: {
+  isOpen: boolean;
+  type: string;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const loading = useAppSelector(selectLoadingUpdateProfile);
+  const profile = useAppSelector(selectProfile);
+
+  useEffect(() => {
+    if (profile && isOpen && type) {
+      const { email, phone, address } = profile;
+
+      const fieldMap: Record<string, object> = {
+        EMAIL: { email },
+        PHONE: { phone },
+        ADDRESS: { address },
+      };
+      reset(fieldMap[type]);
+    }
+  }, [profile, reset, type, isOpen]);
+
+  const onSubmit = async (data: {
+    email?: string;
+    phone?: string;
+    address?: string;
+  }) => {
+    const { email, phone, address } = data;
+    try {
+      const fieldMap: Record<string, object> = {
+        EMAIL: { email },
+        PHONE: { phone },
+        ADDRESS: { address },
+      };
+
+      await dispatch(updateProfileThunk(fieldMap[type])).unwrap();
+      toast.success("Thay đổi thông tin thành công");
+
+      onClose();
+    } catch (error) {
+      toast.error(error as string);
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+            onClick={onClose}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="flex flex-col gap-6 py-6 max-w-[90%] w-full md:w-120 rounded-lg shadow-2xl overflow-hidden border border-border bg-bg-primary"
+            >
+              {/* Header */}
+              <div className="flex items-baseline justify-between px-6">
+                {type === "EMAIL" && (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-xl font-medium">Cập nhật email</h2>
+                    <span className="text-sm text-content-secondary">
+                      Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi
+                    </span>
+                  </div>
+                )}
+                {type === "PHONE" && (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-xl font-medium">
+                      Cập nhật số điện thoại
+                    </h2>
+                    <span className="text-sm text-content-secondary">
+                      Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi
+                    </span>
+                  </div>
+                )}
+                {type === "ADDRESS" && (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-xl font-medium">
+                      Thay đổi địa chỉ liên hệ
+                    </h2>
+                    <span className="text-sm text-content-secondary">
+                      Vui lòng chọn địa chỉ liên hệ trước khi sát nhập
+                    </span>
+                  </div>
+                )}
+
+                <div className="text-content-primary" onClick={onClose}>
+                  <X size={20} />
+                </div>
+              </div>
+
+              <div className="w-full h-px bg-border"></div>
+
+              {/* Form */}
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-6"
+              >
+                <div className="px-6 space-y-5">
+                  {type === "EMAIL" && (
+                    <div>
+                      <label htmlFor="email">{t("Email")}</label>
+                      <InputField
+                        name="email"
+                        type="text"
+                        autoComplete="off"
+                        registration={register("email", {
+                          required: t("validate.email-required"),
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: t("validate.email-incorrect"),
+                          },
+                        })}
+                        error={errors?.email as FieldError}
+                        className="h-8! md:h-10!"
+                        placeholder={t("input.email-placeholder")}
+                      />
+                    </div>
+                  )}
+                  {type === "PHONE" && (
+                    <div>
+                      <label htmlFor="phone">{t("phone-number")}</label>
+                      <InputField
+                        name="phone"
+                        type="text"
+                        autoComplete="off"
+                        registration={register("phone", {
+                          required: t("validate.phone-required"),
+                          pattern: {
+                            value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
+                            message: t("validate.phone-incorrect"),
+                          },
+                          minLength: {
+                            value: 10,
+                            message: t("validate.phone-incorrect"),
+                          },
+                          maxLength: {
+                            value: 10,
+                            message: t("validate.phone-incorrect"),
+                          },
+                        })}
+                        error={errors?.phone as FieldError}
+                        placeholder={t("input.phone-placeholder")}
+                        className="h-8! md:h-10!"
+                      />
+                    </div>
+                  )}
+                  {type === "ADDRESS" && (
+                    <div>
+                      <label htmlFor="address">{t("address")}</label>
+                      <InputField
+                        name="address"
+                        type="text"
+                        autoComplete="off"
+                        registration={register("address", {
+                          required: t("validate.address-required"),
+                        })}
+                        error={errors?.address as FieldError}
+                        className="h-8! md:h-10!"
+                        placeholder={t("input.address-placeholder")}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="w-full h-px bg-border"></div>
+
+                <div className="flex flex-row gap-2 col-span-1 px-6">
+                  <Button variant="none" onClick={onClose} className="w-1/2">
+                    {t("button.cancel")}
+                  </Button>{" "}
+                  <Button
+                    className="w-1/2"
+                    isLoading={loading}
+                    disabled={loading}
+                  >
+                    {t("button.save-change")}
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}

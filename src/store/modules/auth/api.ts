@@ -2,7 +2,13 @@ import i18n from "@/lib/i18n";
 import apiClient from "@/services/api/apiClient";
 import { getMessageFromError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { LoginPayload, Profile, RegisterPayload, User } from "./types";
+import type {
+  LoginPayload,
+  Profile,
+  RegisterPayload,
+  UpdateProfilePayload,
+  User,
+} from "./types";
 
 export const loginThunk = createAsyncThunk(
   "auth/login",
@@ -43,6 +49,22 @@ export const getProfileThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await apiClient.get("/auth/profile");
+      if (res?.data?.code !== 1) {
+        return rejectWithValue(res?.data?.message || i18n.t("api.error"));
+      }
+      return res.data.data as Profile;
+    } catch (error: unknown) {
+      const message = getMessageFromError(error);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const updateProfileThunk = createAsyncThunk(
+  "auth/updateProfile",
+  async (action: UpdateProfilePayload, { rejectWithValue }) => {
+    try {
+      const res = await apiClient.put("/auth/profile", action);
       if (res?.data?.code !== 1) {
         return rejectWithValue(res?.data?.message || i18n.t("api.error"));
       }

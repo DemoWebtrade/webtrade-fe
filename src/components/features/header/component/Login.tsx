@@ -5,6 +5,7 @@ import {
   selectIsLogin,
   selectProfile,
   selectToken,
+  selectTypeUpdateProfile,
 } from "@/store/modules/auth/selector";
 import { logout, setIsLogin } from "@/store/modules/auth/slice";
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,6 +23,7 @@ export default function Login() {
   const token = useAppSelector(selectToken);
   const isLogin = useAppSelector(selectIsLogin);
   const profile = useAppSelector(selectProfile);
+  const typeUpdateProfile = useAppSelector(selectTypeUpdateProfile);
 
   const [isOpenInfo, setIsOpenInfo] = useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
@@ -57,7 +59,7 @@ export default function Login() {
   });
 
   useClickOutside(refProfile, () => {
-    setIsOpenProfile(false);
+    if (!typeUpdateProfile) setIsOpenProfile(false);
   });
 
   return (
