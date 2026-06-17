@@ -120,7 +120,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     htmlFor="identifier"
                     className="block text-sm font-normal mb-2"
                   >
-                    {t("identifier")}
+                    {t("username")}
                   </label>
                   <InputField
                     name="identifier"

@@ -167,7 +167,12 @@
     "account-add": "+ Thêm tài khoản",
     "phone-edit": "Thay đổi số điện thoại",
     "email-edit": "Thay đổi email",
-    "address-edit": "Thay đổi địa chỉ liên hệ"
+    "address-edit": "Thay đổi địa chỉ liên hệ",
+    "email-change": "Cập nhật Email",
+    "pe-change-title": "Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi",
+    "phone-change": "Chập nhật số điện thoại",
+    "address-change": "Thay đổi địa chỉ liên hệ",
+    "address-edit-title": "Vui lòng chọn địa chỉ liên hệ trước khi sát nhập"
   },
 
   "register": {
@@ -189,5 +194,9 @@
     "start_trading": "Bắt đầu giao dịch",
     "save-change": "Lưu thay đổi",
     "cancel": "Hủy"
+  },
+
+  "toast": {
+    "change-info-success": "Thay đổi thông tin thành công"
   }
 }

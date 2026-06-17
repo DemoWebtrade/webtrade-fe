@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  getBeneficiariesThunk,
   getProfileThunk,
   loginThunk,
   registerThunk,
@@ -18,11 +19,16 @@ const initialState: AuthState = {
 
   typeUpdateProfile: null,
 
+  beneficiaries: null,
+
+  isOpenAddAccountBen: false,
+
   loading: {
     login: false,
     register: false,
     profile: false,
     updateProfile: false,
+    beneficiaries: false,
   },
 
   error: {
@@ -30,6 +36,7 @@ const initialState: AuthState = {
     register: null,
     profile: null,
     updateProfile: null,
+    beneficiaries: null,
   },
 };
 
@@ -53,6 +60,10 @@ const authSlice = createSlice({
 
     setTypeUpdateProfile(state, action) {
       state.typeUpdateProfile = action.payload;
+    },
+
+    setIsOpenAddAccountBen(state, action) {
+      state.isOpenAddAccountBen = action.payload;
     },
   },
 
@@ -113,10 +124,29 @@ const authSlice = createSlice({
         state.loading.updateProfile = false;
         state.error.updateProfile = action.payload as string;
       });
+
+    builder
+      .addCase(getBeneficiariesThunk.pending, (state) => {
+        state.loading.beneficiaries = true;
+        state.error.beneficiaries = null;
+      })
+      .addCase(getBeneficiariesThunk.fulfilled, (state, action) => {
+        state.loading.beneficiaries = false;
+        state.beneficiaries = action.payload;
+      })
+      .addCase(getBeneficiariesThunk.rejected, (state, action) => {
+        state.loading.beneficiaries = false;
+        state.error.beneficiaries = action.payload as string;
+      });
   },
 });
 
-export const { logout, setRegisterData, setIsLogin, setTypeUpdateProfile } =
-  authSlice.actions;
+export const {
+  logout,
+  setRegisterData,
+  setIsLogin,
+  setTypeUpdateProfile,
+  setIsOpenAddAccountBen,
+} = authSlice.actions;
 
 export default authSlice.reducer;

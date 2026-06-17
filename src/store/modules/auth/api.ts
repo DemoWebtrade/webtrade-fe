@@ -3,6 +3,7 @@ import apiClient from "@/services/api/apiClient";
 import { getMessageFromError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type {
+  Beneficiari,
   LoginPayload,
   Profile,
   RegisterPayload,
@@ -69,6 +70,22 @@ export const updateProfileThunk = createAsyncThunk(
         return rejectWithValue(res?.data?.message || i18n.t("api.error"));
       }
       return res.data.data as Profile;
+    } catch (error: unknown) {
+      const message = getMessageFromError(error);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const getBeneficiariesThunk = createAsyncThunk(
+  "auth/getBeneficiaries",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await apiClient.get("/auth/beneficiaries");
+      if (res?.data?.code !== 1) {
+        return rejectWithValue(res?.data?.message || i18n.t("api.error"));
+      }
+      return res.data.data as Beneficiari[];
     } catch (error: unknown) {
       const message = getMessageFromError(error);
       return rejectWithValue(message);

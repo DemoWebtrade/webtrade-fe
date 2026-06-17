@@ -8,11 +8,16 @@ export type AuthState = {
 
   typeUpdateProfile: string | null;
 
+  beneficiaries: Beneficiari[] | null;
+
+  isOpenAddAccountBen: boolean;
+
   loading: {
     login: boolean;
     register: boolean;
     profile: boolean;
     updateProfile: boolean;
+    beneficiaries: boolean;
   };
 
   error: {
@@ -20,6 +25,7 @@ export type AuthState = {
     register: string | null;
     profile: string | null;
     updateProfile: string | null;
+    beneficiaries: string | null;
   };
 };
 
@@ -72,22 +78,20 @@ export type Profile = {
         },
       ]
     | [];
-  beneficiaries:
-    | [
-        {
-          id: string;
-          bankName: string;
-          bankBranch?: string;
-          accountNumber: string;
-          accountHolder: string;
-          isDefault: boolean;
-        },
-      ]
-    | [];
+  beneficiaries: Beneficiari[] | [];
 };
 
 export type UpdateProfilePayload = {
   email?: string;
   phone?: string;
   address?: string;
+};
+
+export type Beneficiari = {
+  id: string;
+  bankName: string;
+  bankBranch?: string;
+  accountNumber: string;
+  accountHolder: string;
+  isDefault: boolean;
 };

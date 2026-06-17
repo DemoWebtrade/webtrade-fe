@@ -22,3 +22,11 @@ export const selectLoadingUpdateProfile = (state: RootState) =>
 
 export const selectTypeUpdateProfile = (state: RootState) =>
   state.auth.typeUpdateProfile;
+
+export const selectBeneficiaries = (state: RootState) =>
+  state.auth.beneficiaries;
+export const selectLoadingBeneficiaries = (state: RootState) =>
+  state.auth.loading.beneficiaries;
+
+export const selectIsOpenAddAccountBen = (state: RootState) =>
+  state.auth.isOpenAddAccountBen;

@@ -167,7 +167,12 @@
     "account-add": "+ Add Account",
     "phone-edit": "Update Phone Number",
     "email-edit": "Update Email Address",
-    "address-edit": "Update Contact Address"
+    "address-edit": "Update Contact Address",
+    "email-change": "Update Email",
+    "pe-change-title": "You will need to re-verify your identity to complete this change",
+    "phone-change": "Update Phone Number",
+    "address-change": "Update Contact Address",
+    "address-edit-title": "Please select a contact address before merging"
   },
 
   "register": {
@@ -189,5 +194,9 @@
     "start_trading": "Start trading",
     "save-change": "Save Changes",
     "cancel": "Cancel"
+  },
+
+  "toast": {
+    "change-info-success": "Profile updated successfully"
   }
 }

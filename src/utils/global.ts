@@ -7,3 +7,12 @@ export function getBrowserPreferredLang(): "vi" | "en" | "other" {
   if (primary === "en") return "en";
   return "vi";
 }
+
+const bankLogos = import.meta.glob("/src/assets/imgs/bank/*.png", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+// Helper lấy logo theo bank code
+export const getBankLogo = (bankCode: string) =>
+  bankLogos[`/src/assets/imgs/bank/${bankCode}.png`];

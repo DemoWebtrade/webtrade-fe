@@ -63,7 +63,7 @@ export default function ChangeInforModal({
       };
 
       await dispatch(updateProfileThunk(fieldMap[type])).unwrap();
-      toast.success("Thay đổi thông tin thành công");
+      toast.success(t("toast.change-info-success"));
 
       onClose();
     } catch (error) {
@@ -97,29 +97,31 @@ export default function ChangeInforModal({
               <div className="flex items-baseline justify-between px-6">
                 {type === "EMAIL" && (
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-xl font-medium">Cập nhật email</h2>
+                    <h2 className="text-xl font-medium">
+                      {t("user.email-change")}
+                    </h2>
                     <span className="text-sm text-content-secondary">
-                      Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi
+                      {t("user.pe-change-title")}
                     </span>
                   </div>
                 )}
                 {type === "PHONE" && (
                   <div className="flex flex-col gap-2">
                     <h2 className="text-xl font-medium">
-                      Cập nhật số điện thoại
+                      {t("user.phone-change")}
                     </h2>
                     <span className="text-sm text-content-secondary">
-                      Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi
+                      {t("user.pe-change-title")}
                     </span>
                   </div>
                 )}
                 {type === "ADDRESS" && (
                   <div className="flex flex-col gap-2">
                     <h2 className="text-xl font-medium">
-                      Thay đổi địa chỉ liên hệ
+                      {t("user.address-change")}
                     </h2>
                     <span className="text-sm text-content-secondary">
-                      Vui lòng chọn địa chỉ liên hệ trước khi sát nhập
+                      {t("user.address-change-title")}
                     </span>
                   </div>
                 )}
