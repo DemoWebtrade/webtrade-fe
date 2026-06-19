@@ -98,7 +98,9 @@
     "fullname-placeholder": "Nhập họ và tên",
     "address-placeholder": "Nhập địa chỉ liên hệ",
     "date-placeholder": "dd/mm/yyyy",
-    "gender-placeholder": "Chọn giới tính..."
+    "gender-placeholder": "Chọn giới tính...",
+    "bank-placeholder": "Tìm kiếm ngân hàng",
+    "accountCode-placeholder": "Nhập số tài khoản"
   },
 
   "validate": {
@@ -110,6 +112,8 @@
     "birthday-required": "Ngày sinh không được để trống",
     "gender-required": "Giới tính không được để trống",
     "address-required": "Địa chỉ không được để trống",
+    "bank-required": "Ngân hàng không được để trống",
+    "accountCode-required": "Số tài khoản không được để trống",
 
     "phone-incorrect": "Số điện thoại không hợp lệ",
     "email-incorrect": "Email không hợp lệ",
@@ -123,12 +127,15 @@
   },
 
   "noti": {
+    "header": "Thông báo",
     "title": "Thông báo của bạn hiển thị tại đây.",
     "detail": "Hãy bật thông báo và đăng nhập để nhận những cập nhật mới nhất về thông tin và tài khoản của bạn.",
     "browser-block": "Trình duyệt đã chặn",
     "turn-on": "Đang bật",
     "turn-off": "Chưa bật",
-    "receive-notifications": "Nhận thông báo"
+    "receive-notifications": "Nhận thông báo",
+    "not-support": "Thông báo chưa được hỗ trợ trên trình duyệt này",
+    "browser-lock": "Trình duyệt đã chặn. Vào cài đặt trình duyệt để bật lại."
   },
 
   "tooltip": {
@@ -159,6 +166,7 @@
     "infor": "Thông tin tài khoản",
     "gen-infor": "Thông tin chung",
     "account-ben": "Tài khoản thụ hưởng",
+    "account-ben-add": "Thêm tài khoản thụ hưởng",
     "security": "Bảo mật",
     "account-info": "THÔNG TIN CÁ NHÂN",
     "account-name": "Tên pháp lý",
@@ -172,7 +180,11 @@
     "pe-change-title": "Bạn sẽ cần xác thực lại danh tính để hoàn tất thay đổi",
     "phone-change": "Chập nhật số điện thoại",
     "address-change": "Thay đổi địa chỉ liên hệ",
-    "address-edit-title": "Vui lòng chọn địa chỉ liên hệ trước khi sát nhập"
+    "address-edit-title": "Vui lòng chọn địa chỉ liên hệ trước khi sát nhập",
+    "account-code": "Số tài khoản",
+    "name": "Họ tên",
+    "account-c": "Chủ tài khoản",
+    "bank": "Ngân hàng"
   },
 
   "register": {

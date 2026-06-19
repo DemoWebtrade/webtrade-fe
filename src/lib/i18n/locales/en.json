@@ -99,7 +99,9 @@
     "fullname-placeholder": "Enter your full name",
     "address-placeholder": "Enter your contact address",
     "date-placeholder": "dd/mm/yyyy",
-    "gender-placeholder": "Select gender..."
+    "gender-placeholder": "Select gender...",
+    "bank-placeholder": "Search Bank",
+    "accountCode-placeholder": "Enter Account Number"
   },
 
   "validate": {
@@ -111,6 +113,8 @@
     "birthday-required": "Date of birth is required",
     "gender-required": "Gender is required",
     "address-required": "Address is required",
+    "bank-required": "Bank is required",
+    "accountCode-required": "Account number is required",
 
     "phone-incorrect": "Invalid phone number",
     "email-incorrect": "Invalid email address",
@@ -123,12 +127,15 @@
     "detail-2": "For feedback or inquiries, feel free to reach out via this email:"
   },
   "noti": {
+    "header": "Notifications",
     "title": "Your notifications will appear here.",
     "detail": "Enable notifications and sign in to receive the latest updates about your information and account.",
     "browser-block": "Browser blocked",
     "turn-on": "On",
     "turn-off": "Off",
-    "receive-notifications": "Receive notifications"
+    "receive-notifications": "Receive Notifications",
+    "not-support": "Notifications are not supported on this browser",
+    "browser-lock": "Browser has blocked notifications. Please go to your browser settings to enable them."
   },
 
   "tooltip": {
@@ -159,6 +166,7 @@
     "infor": "Account Information",
     "gen-infor": "General Information",
     "account-ben": "Beneficiary Account",
+    "account-ben-add": "Add Beneficiary Account",
     "security": "Security",
     "account-info": "PERSONAL INFORMATION",
     "account-name": "Legal Name",
@@ -172,7 +180,11 @@
     "pe-change-title": "You will need to re-verify your identity to complete this change",
     "phone-change": "Update Phone Number",
     "address-change": "Update Contact Address",
-    "address-edit-title": "Please select a contact address before merging"
+    "address-edit-title": "Please select a contact address before merging",
+    "account-code": "Account Number",
+    "name": "Full Name",
+    "account-c": "Account Holder",
+    "bank": "Bank"
   },
 
   "register": {

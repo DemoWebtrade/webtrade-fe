@@ -64,10 +64,11 @@ export default function Notifications() {
       className="relative flex items-center justify-center"
     >
       <div
-        className="p-1 hover:bg-bg-button rounded-md"
+        className="p-1 hover:bg-bg-button rounded-md cursor-pointer"
         data-tooltip-id="global-tooltip"
         data-tooltip-content={t("announce")}
-        onClick={() => setOpen(true)}
+        data-tooltip-place="left"
+        onClick={() => setOpen((pre) => !pre)}
       >
         <Bell className="size-5" />
       </div>
@@ -82,7 +83,7 @@ export default function Notifications() {
           >
             <div className="flex flex-row items-center justify-between p-2 border-b border-border">
               <h1 className="text-base text-content-primary font-semibold">
-                Thông báo
+                {t("noti.header")}
               </h1>
               <div
                 className="p-1 rounded-md relative"
@@ -93,7 +94,7 @@ export default function Notifications() {
               >
                 <Settings
                   className="size-5"
-                  onClick={() => setOpenSetting(true)}
+                  onClick={() => setOpenSetting((pre) => !pre)}
                 />
                 {openSetting && (
                   <motion.div
@@ -126,7 +127,7 @@ export default function Notifications() {
                     ) : (
                       <div className="px-4 py-3 border-t border-border">
                         <p className="text-xs text-text-secondary">
-                          Thông báo chưa được hỗ trợ trên trình duyệt này
+                          {t("noti.not-support")}
                         </p>
                       </div>
                     )}
@@ -168,8 +169,7 @@ export default function Notifications() {
                     {denied && (
                       <div className="px-4 py-2.5 bg-warning/10 border-t border-border">
                         <p className="text-xs text-warning">
-                          Trình duyệt đã chặn. Vào cài đặt trình duyệt để bật
-                          lại.
+                          {t("noti.browser-lock")}
                         </p>
                       </div>
                     )}

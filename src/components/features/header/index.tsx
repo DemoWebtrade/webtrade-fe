@@ -1,54 +1,17 @@
 import Logo from "@/assets/imgs/logo/lhc_logo.png";
-import { LANGUAGE_KEY } from "@/configs/global";
-import type { LanguageKey } from "@/types";
-import { getBrowserPreferredLang } from "@/utils/global";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Earth, Expand, Info, Lightbulb, Settings, Shrink } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { Expand, Shrink } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ClientSetting from "./component/ClientSetting";
 import DayTrading from "./component/DayTrading";
-import LanguageSetting from "./component/LanguageSetting";
 import Login from "./component/Login";
 import Notifications from "./component/Notifications";
 import Slogan from "./component/Slogan";
-import ThemeSetting from "./component/ThemeSetting";
 
 export default function Header() {
   const { t } = useTranslation();
 
-  const { i18n } = useTranslation();
   const [isZoom, setIsZoom] = useState(false);
-
-  const currentLang = (i18n.resolvedLanguage ||
-    i18n.language ||
-    "vi") as LanguageKey;
-
-  useEffect(() => {
-    const saved = localStorage.getItem(LANGUAGE_KEY) as LanguageKey | null;
-
-    if (saved === "vi" || saved === "en") {
-      if (saved !== i18n.resolvedLanguage) {
-        i18n.changeLanguage(saved);
-      }
-      document.documentElement.lang = saved;
-      return;
-    }
-
-    const preferred = getBrowserPreferredLang();
-    const initial: LanguageKey = preferred === "vi" ? "vi" : "en";
-
-    i18n.changeLanguage(initial);
-    document.documentElement.lang = initial;
-    localStorage.setItem(LANGUAGE_KEY, initial);
-  }, []);
-
-  // Toggle handler
-  const handleChangeLanguage = useCallback(() => {
-    const next = currentLang === "vi" ? "en" : "vi";
-    i18n.changeLanguage(next);
-    localStorage.setItem(LANGUAGE_KEY, next);
-    document.documentElement.lang = next;
-  }, [currentLang, i18n]);
 
   const handleToggleFullscreen = () => {
     const elem = document.documentElement as HTMLElement;
@@ -147,68 +110,16 @@ export default function Header() {
             <Notifications />
           </div>
 
-          {/* Cài đặt giao diện */}
-          <Menu as="div" className="relative inline-block" data-tour="prop-3">
-            <MenuButton className="flex w-full justify-center rounded-md hover:bg-red-hover active:bg-primary-active">
-              <div
-                className="hover:bg-bg-button p-1 rounded-md"
-                data-tooltip-id="global-tooltip"
-                data-tooltip-content={t("setting-view")}
-                data-tooltip-place="left"
-              >
-                <Settings className="size-5" />
-              </div>
-            </MenuButton>
-
-            <MenuItems
-              transition
-              className="absolute right-0 z-10 md:px-4 md:py-2 px-2 py-1 bg-border rounded-md md:w-60 w-44 border border-border-informative/10 flex flex-col gap-3 origin-top-right outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-            >
-              <div className="flex flex-col gap-1 md:gap-3">
-                <MenuItem>
-                  <div className="flex flex-row items-center justify-between">
-                    <div className="text-sm flex flex-row items-center justify-center gap-2">
-                      <Lightbulb className="size-5 text-purple-base" />
-                      <span>{t("topic")}</span>
-                    </div>
-                    <ThemeSetting />
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex flex-row items-center justify-between">
-                    <div className="text-sm flex flex-row items-center justify-center gap-2">
-                      <Earth className="size-5 text-purple-base" />
-                      <span>{t("language")}</span>
-                    </div>
-                    <LanguageSetting
-                      language={currentLang || "vi"}
-                      handleChangeLanguage={handleChangeLanguage}
-                    />
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex flex-row gap-1 items-center border-t border-border h-8 px-2">
-                    <span className="text-xs mt-2 hover:underline hover:text-purple-500">
-                      {t("guide")}
-                    </span>
-                    <div
-                      className="flex items-center justify-center mt-2"
-                      data-tooltip-id="global-tooltip"
-                      data-tooltip-content={t("tooltip.support")}
-                    >
-                      <Info size={12} className="text-content-disable" />
-                    </div>
-                  </div>
-                </MenuItem>
-              </div>
-            </MenuItems>
-          </Menu>
+          <div data-tour="prop-3">
+            {/* Cài đặt giao diện */}
+            <ClientSetting />
+          </div>
 
           {/* Zoom web */}
           <div data-tour="prop-4">
             {isZoom ? (
               <div
-                className="p-1 hover:bg-bg-button rounded-md"
+                className="p-1 hover:bg-bg-button rounded-md cursor-pointer"
                 data-tooltip-id="global-tooltip"
                 data-tooltip-content={t("shrink-web")}
                 onClick={() => handleToggleFullscreen()}
@@ -217,7 +128,7 @@ export default function Header() {
               </div>
             ) : (
               <div
-                className="p-1 hover:bg-bg-button rounded-md"
+                className="p-1 hover:bg-bg-button rounded-md cursor-pointer"
                 data-tooltip-id="global-tooltip"
                 data-tooltip-content={t("explan-web")}
                 onClick={() => handleToggleFullscreen()}

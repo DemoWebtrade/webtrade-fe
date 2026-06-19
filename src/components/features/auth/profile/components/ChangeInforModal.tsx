@@ -208,10 +208,16 @@ export default function ChangeInforModal({
                 <div className="w-full h-px bg-border"></div>
 
                 <div className="flex flex-row gap-2 col-span-1 px-6">
-                  <Button variant="none" onClick={onClose} className="w-1/2">
+                  <Button
+                    type="button"
+                    variant="none"
+                    onClick={onClose}
+                    className="w-1/2"
+                  >
                     {t("button.cancel")}
                   </Button>{" "}
                   <Button
+                    type="submit"
                     className="w-1/2"
                     isLoading={loading}
                     disabled={loading}

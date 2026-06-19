@@ -26,7 +26,7 @@ export default function Profile() {
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 10, scale: 0.95 }}
       transition={{ duration: 0.2 }}
-      className="absolute top-12 md:top-10 right-0 md:-right-1.5 z-10 bg-bg-tertiary shadow-md py-2 md:py-3 rounded-md md:w-100 w-[calc(100svw-4px)] h-[calc(100svh-51px)] overflow-auto"
+      className="absolute top-[calc(100%+13px)] right-0 md:-right-1.5 z-10 bg-bg-tertiary shadow-md py-2 md:py-3 rounded-md md:w-100 w-[calc(100svw-4px)] h-[calc(100svh-51px)] overflow-auto"
     >
       <div className="flex flex-col gap-2">
         {/* Menu */}

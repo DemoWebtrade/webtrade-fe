@@ -1,26 +1,41 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { getBeneficiariesThunk } from "@/store/modules/auth/api";
-import { selectLoadingBeneficiaries } from "@/store/modules/auth/selector";
+import {
+  selectBeneficiaries,
+  selectIsOpenAddAccountBen,
+  selectLoadingBeneficiaries,
+} from "@/store/modules/auth/selector";
+import { setIsOpenAddAccountBen } from "@/store/modules/auth/slice";
 import { getBankLogo } from "@/utils";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import AddBenAccountModal from "./AddBenAccountModal";
 
 export default function BenAccount() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const isLoadingBeneficiaries = useAppSelector(selectLoadingBeneficiaries);
+  const beneficiaries = useAppSelector(selectBeneficiaries);
+  const isOpenAddAccountBen = useAppSelector(selectIsOpenAddAccountBen);
 
   useEffect(() => {
     dispatch(getBeneficiariesThunk());
   }, [dispatch]);
+
+  const handleClickAdd = () => {
+    dispatch(setIsOpenAddAccountBen(true));
+  };
 
   return (
     <div className="flex flex-col gap-2 md:gap-3 md:mt-3 mt-1">
       <div className="flex flex-col gap-2 md:gap-4">
         <div className="text-base p-2 md:p-3 bg-purple-base/20 flex items-center justify-between">
           <span>{t("user.account-lk")}</span>
-          <div className="font-medium text-green-500 hover:text-green-hover">
+          <div
+            className="font-medium text-green-500 hover:text-green-hover cursor-pointer"
+            onClick={handleClickAdd}
+          >
             {t("user.account-add")}
           </div>
         </div>
@@ -36,34 +51,54 @@ export default function BenAccount() {
           </div>
         </>
       ) : (
-        <div className="px-4">
-          <div className="flex flex-col gap-4 p-4 rounded-2xl bg-bg-purple">
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row gap-4 items-center">
-                <img
-                  src={getBankLogo("MBB")}
-                  alt="logo"
-                  className="w-9 h-9 rounded-full"
-                />
-                <span className="text-sm">Ngân hàng TMCP Quân đội (MBB)</span>
-              </div>
-            </div>
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row gap-8">
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs text-content-tertiary">
-                    Số tài khoản
-                  </span>
-                  <span className="font-medium text-sm">0365218120</span>
+        <>
+          {beneficiaries &&
+            !!beneficiaries?.length &&
+            beneficiaries?.map((item) => (
+              <div className="px-4" key={item.id}>
+                <div className="flex flex-col gap-4 p-4 rounded-2xl bg-bg-purple">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row gap-4 items-center">
+                      <img
+                        src={getBankLogo("MBB")}
+                        alt="logo"
+                        className="w-9 h-9 rounded-full"
+                      />
+                      <span className="text-sm">
+                        {/* Ngân hàng TMCP Quân đội (MBB) */}
+                        {item?.bankName}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="flex flex-row gap-8">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-content-tertiary">
+                          {t("user.account-code")}
+                        </span>
+                        <span className="font-medium text-sm">
+                          {item?.accountNumber}
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-content-tertiary">
+                          {t("user.name")}
+                        </span>
+                        <span className="font-medium text-sm">
+                          {item?.accountNumber}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs text-content-tertiary">Họ tên</span>
-                  <span className="font-medium text-sm">LÊ HỒNG CHIẾN</span>
-                </div>
               </div>
-            </div>
-          </div>
-        </div>
+            ))}
+
+          <AddBenAccountModal
+            isOpen={isOpenAddAccountBen}
+            onClose={() => dispatch(setIsOpenAddAccountBen(false))}
+          />
+        </>
       )}
     </div>
   );
