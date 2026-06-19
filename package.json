@@ -12,7 +12,6 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@headlessui/react": "^2.2.9",
     "@mui/styled-engine": "^7.3.9",
     "@mui/x-date-pickers": "^8.27.2",
     "@reduxjs/toolkit": "^2.11.2",
