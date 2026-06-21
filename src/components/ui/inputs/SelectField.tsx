@@ -32,7 +32,7 @@ export default function SelectField({
     <div>
       <label className="block text-sm font-normal mb-2" htmlFor={name}>
         {label}
-        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
       <select

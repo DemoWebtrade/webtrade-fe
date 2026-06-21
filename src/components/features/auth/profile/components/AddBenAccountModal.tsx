@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
+import InputSearchField from "@/components/ui/inputs/InputSearch";
 import { backdropVariants, modalVariants } from "@/configs";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -24,10 +25,10 @@ export default function AddBenAccountModal({
   } = useForm();
 
   useEffect(() => {
-    return () => {
+    if (!isOpen) {
       reset();
-    };
-  }, [reset]);
+    }
+  }, [isOpen, reset]);
 
   const onSubmit = () => {};
 
@@ -70,38 +71,33 @@ export default function AddBenAccountModal({
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col gap-6 px-6"
+                className="flex flex-col gap-4 md:gap-6 px-6"
               >
+                <InputSearchField
+                  name="bank"
+                  label={t("user.bank")}
+                  registration={register("bank", {
+                    required: t("validate.bank-required"),
+                  })}
+                  error={errors?.bank as FieldError}
+                  className="h-10!"
+                  placeholder={t("input.bank-placeholder")}
+                  required
+                />
+                <InputField
+                  name="accountCode"
+                  type="text"
+                  autoComplete="off"
+                  registration={register("accountCode", {
+                    required: t("validate.accountCode-required"),
+                  })}
+                  error={errors?.accountCode as FieldError}
+                  className="h-10!"
+                  placeholder={t("input.accountCode-placeholder")}
+                  label={t("user.account-code")}
+                  required
+                />
                 <div>
-                  <label htmlFor="bank">{t("user.bank")}</label>
-                  <InputField
-                    name="bank"
-                    type="text"
-                    autoComplete="off"
-                    registration={register("bank", {
-                      required: t("validate.bank-required"),
-                    })}
-                    error={errors?.bank as FieldError}
-                    className="h-8! md:h-10!"
-                    placeholder={t("input.bank-placeholder")}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="accountCode">{t("user.account-code")}</label>
-                  <InputField
-                    name="accountCode"
-                    type="text"
-                    autoComplete="off"
-                    registration={register("accountCode", {
-                      required: t("validate.accountCode-required"),
-                    })}
-                    error={errors?.accountCode as FieldError}
-                    className="h-8! md:h-10!"
-                    placeholder={t("input.accountCode-placeholder")}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="fullName">{t("full-name")}</label>
                   <InputField
                     name="fullName"
                     type="text"
@@ -111,7 +107,9 @@ export default function AddBenAccountModal({
                     })}
                     error={errors?.fullName as FieldError}
                     placeholder={t("input.fullname-placeholder")}
-                    className="h-8! md:h-10!"
+                    className="h-10!"
+                    label={t("full-name")}
+                    required
                   />
                 </div>
 

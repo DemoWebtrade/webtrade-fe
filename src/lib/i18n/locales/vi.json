@@ -86,6 +86,9 @@
   "male": "Nam",
   "female": "Nữ",
 
+  "loading-search": "Đang tải ...",
+  "banks-not-found": "Không tìm thấy ngân hàng",
+
   "auth": {
     "sessionExpired": "Phiên giao dịch của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
   },
@@ -184,7 +187,8 @@
     "account-code": "Số tài khoản",
     "name": "Họ tên",
     "account-c": "Chủ tài khoản",
-    "bank": "Ngân hàng"
+    "bank": "Ngân hàng",
+    "code": "Mã"
   },
 
   "register": {

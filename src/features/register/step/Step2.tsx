@@ -111,7 +111,6 @@ export default function Step2({
         className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8 w-full"
       >
         <div className="col-span-1">
-          <label htmlFor="fullName">{t("full-name")}</label>
           <InputField
             name="fullName"
             type="text"
@@ -129,22 +128,24 @@ export default function Step2({
             })}
             error={errors?.fullName as FieldError}
             placeholder={t("input.fullname-placeholder")}
-            className="h-8! md:h-10!"
+            className="h-10!"
+            label={t("full-name")}
+            required
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="birthday">{t("birthday")}</label>
           <InputDate
             name="birthday"
             control={control}
             rules={{ required: t("validate.birthday-required") }}
             error={errors?.birthday as FieldError}
             placeholder={t("input.date-placeholder")}
-            className="h-8! md:h-10!"
+            className="h-10!"
+            label={t("birthday")}
+            required
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="gender">{t("gender")}</label>
           <SelectField
             name="gender"
             options={[
@@ -156,10 +157,11 @@ export default function Step2({
               required: t("validate.gender-required"),
             })}
             error={errors.gender as FieldError}
+            label={t("gender")}
+            required
           />
         </div>
         <div className="col-span-1 md:col-span-2">
-          <label htmlFor="address">{t("address")}</label>
           <InputField
             name="address"
             type="text"
@@ -168,8 +170,10 @@ export default function Step2({
               required: t("validate.address-required"),
             })}
             error={errors?.address as FieldError}
-            className="h-8! md:h-10!"
+            className="h-10!"
             placeholder={t("input.address-placeholder")}
+            label={t("address")}
+            required
           />
         </div>
         <div className="flex flex-row-reverse gap-2 col-span-1">

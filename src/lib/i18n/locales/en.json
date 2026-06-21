@@ -87,6 +87,9 @@
   "male": "Male",
   "female": "Female",
 
+  "loading-search": "Loading...",
+  "banks-not-found": "No banks found",
+
   "auth": {
     "sessionExpired": "Your trading session has expired. Please log in again to continue."
   },
@@ -184,7 +187,8 @@
     "account-code": "Account Number",
     "name": "Full Name",
     "account-c": "Account Holder",
-    "bank": "Bank"
+    "bank": "Bank",
+    "code": "Code"
   },
 
   "register": {

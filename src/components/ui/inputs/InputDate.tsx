@@ -66,7 +66,7 @@ export default function InputDate<T extends FieldValues>({
     <div>
       <label className="block text-sm font-normal mb-2" htmlFor={name}>
         {label}
-        {required && <span className="text-red-500">*</span>}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
       <Controller

@@ -140,68 +140,65 @@ export default function ChangeInforModal({
               >
                 <div className="px-6 space-y-5">
                   {type === "EMAIL" && (
-                    <div>
-                      <label htmlFor="email">{t("Email")}</label>
-                      <InputField
-                        name="email"
-                        type="text"
-                        autoComplete="off"
-                        registration={register("email", {
-                          required: t("validate.email-required"),
-                          pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: t("validate.email-incorrect"),
-                          },
-                        })}
-                        error={errors?.email as FieldError}
-                        className="h-8! md:h-10!"
-                        placeholder={t("input.email-placeholder")}
-                      />
-                    </div>
+                    <InputField
+                      name="email"
+                      type="text"
+                      autoComplete="off"
+                      registration={register("email", {
+                        required: t("validate.email-required"),
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: t("validate.email-incorrect"),
+                        },
+                      })}
+                      error={errors?.email as FieldError}
+                      className="h-10!"
+                      placeholder={t("input.email-placeholder")}
+                      label={t("Email")}
+                      required
+                    />
                   )}
                   {type === "PHONE" && (
-                    <div>
-                      <label htmlFor="phone">{t("phone-number")}</label>
-                      <InputField
-                        name="phone"
-                        type="text"
-                        autoComplete="off"
-                        registration={register("phone", {
-                          required: t("validate.phone-required"),
-                          pattern: {
-                            value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
-                            message: t("validate.phone-incorrect"),
-                          },
-                          minLength: {
-                            value: 10,
-                            message: t("validate.phone-incorrect"),
-                          },
-                          maxLength: {
-                            value: 10,
-                            message: t("validate.phone-incorrect"),
-                          },
-                        })}
-                        error={errors?.phone as FieldError}
-                        placeholder={t("input.phone-placeholder")}
-                        className="h-8! md:h-10!"
-                      />
-                    </div>
+                    <InputField
+                      name="phone"
+                      type="text"
+                      autoComplete="off"
+                      registration={register("phone", {
+                        required: t("validate.phone-required"),
+                        pattern: {
+                          value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
+                          message: t("validate.phone-incorrect"),
+                        },
+                        minLength: {
+                          value: 10,
+                          message: t("validate.phone-incorrect"),
+                        },
+                        maxLength: {
+                          value: 10,
+                          message: t("validate.phone-incorrect"),
+                        },
+                      })}
+                      error={errors?.phone as FieldError}
+                      placeholder={t("input.phone-placeholder")}
+                      className="h-10!"
+                      label={t("phone-number")}
+                      required
+                    />
                   )}
                   {type === "ADDRESS" && (
-                    <div>
-                      <label htmlFor="address">{t("address")}</label>
-                      <InputField
-                        name="address"
-                        type="text"
-                        autoComplete="off"
-                        registration={register("address", {
-                          required: t("validate.address-required"),
-                        })}
-                        error={errors?.address as FieldError}
-                        className="h-8! md:h-10!"
-                        placeholder={t("input.address-placeholder")}
-                      />
-                    </div>
+                    <InputField
+                      name="address"
+                      type="text"
+                      autoComplete="off"
+                      registration={register("address", {
+                        required: t("validate.address-required"),
+                      })}
+                      error={errors?.address as FieldError}
+                      className="h-10!"
+                      placeholder={t("input.address-placeholder")}
+                      label={t("address")}
+                      required
+                    />
                   )}
                 </div>
 

@@ -53,7 +53,6 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
         className="grid md:grid-cols-2 grid-cols-1 items-center gap-2 md:gap-6 xl:w-1/2 md:px-30 px-8 w-full"
       >
         <div className="col-span-1">
-          <label htmlFor="phone">{t("phone-number")}</label>
           <InputField
             name="phone"
             type="text"
@@ -75,11 +74,12 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
             })}
             error={errors?.phone as FieldError}
             placeholder={t("input.phone-placeholder")}
-            className="h-8! md:h-10!"
+            className="h-10!"
+            label={t("phone-number")}
+            required
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="email">{t("Email")}</label>
           <InputField
             name="email"
             type="text"
@@ -92,12 +92,13 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
               },
             })}
             error={errors?.email as FieldError}
-            className="h-8! md:h-10!"
+            className="h-10!"
             placeholder={t("input.email-placeholder")}
+            label={t("email")}
+            required
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="password">{t("password")}</label>
           <InputField
             name="password"
             type="password"
@@ -106,12 +107,13 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
               required: t("validate.password-required"),
             })}
             error={errors?.password as FieldError}
-            className="h-8! md:h-10!"
+            className="h-10!"
             placeholder={t("input.password-placeholder")}
+            label={t("password")}
+            required
           />
         </div>
         <div className="col-span-1">
-          <label htmlFor="confirmPassword">{t("confirm-password")}</label>
           <InputField
             name="confirmPassword"
             type="password"
@@ -123,8 +125,10 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
                 t("validate.password-not-match"),
             })}
             error={errors?.confirmPassword as FieldError}
-            className="h-8! md:h-10!"
+            className="h-10!"
             placeholder={t("input.confirm-placeholder")}
+            label={t("confirm-password")}
+            required
           />
         </div>
 
