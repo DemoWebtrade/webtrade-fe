@@ -22,6 +22,7 @@ export default function AddBenAccountModal({
     register,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
   useEffect(() => {
@@ -82,8 +83,10 @@ export default function AddBenAccountModal({
                   error={errors?.bank as FieldError}
                   className="h-10!"
                   placeholder={t("input.bank-placeholder")}
+                  setValue={setValue}
                   required
                 />
+
                 <InputField
                   name="accountCode"
                   type="text"
@@ -97,21 +100,20 @@ export default function AddBenAccountModal({
                   label={t("user.account-code")}
                   required
                 />
-                <div>
-                  <InputField
-                    name="fullName"
-                    type="text"
-                    autoComplete="off"
-                    registration={register("fullName", {
-                      required: t("validate.fullname-required"),
-                    })}
-                    error={errors?.fullName as FieldError}
-                    placeholder={t("input.fullname-placeholder")}
-                    className="h-10!"
-                    label={t("full-name")}
-                    required
-                  />
-                </div>
+
+                <InputField
+                  name="fullName"
+                  type="text"
+                  autoComplete="off"
+                  registration={register("fullName", {
+                    required: t("validate.fullname-required"),
+                  })}
+                  error={errors?.fullName as FieldError}
+                  placeholder={t("input.fullname-placeholder")}
+                  className="h-10!"
+                  label={t("full-name")}
+                  required
+                />
 
                 <div className="w-full h-px bg-border"></div>
 

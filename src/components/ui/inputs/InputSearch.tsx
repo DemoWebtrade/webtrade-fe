@@ -42,6 +42,11 @@ type InputSearchFieldProps = {
   placeholder?: string;
   className?: string;
   onBankSelect?: (bank: Bank) => void;
+  setValue?: (
+    name: string,
+    value: string,
+    options?: { shouldValidate?: boolean },
+  ) => void;
 };
 
 export default function InputSearchField({
@@ -54,6 +59,7 @@ export default function InputSearchField({
   placeholder = "Tìm kiếm ngân hàng...",
   className,
   onBankSelect,
+  setValue,
 }: InputSearchFieldProps) {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
@@ -69,21 +75,6 @@ export default function InputSearchField({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<ListImperativeAPI>(null);
-
-  const hanldeGetValue = useCallback(
-    (value: string | null) => {
-      if (registration?.onChange) {
-        const fakeEvent = {
-          target: {
-            name,
-            value: value,
-          },
-        } as React.ChangeEvent<HTMLInputElement>;
-        registration.onChange(fakeEvent);
-      }
-    },
-    [registration, name],
-  );
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,8 +92,10 @@ export default function InputSearchField({
       );
       setFilteredBanks(filtered);
       setHighlightedIndex(filtered.length > 0 ? 0 : -1);
+
+      registration?.onChange?.(e);
     },
-    [],
+    [registration],
   );
 
   const handleBankSelect = useCallback(
@@ -112,16 +105,16 @@ export default function InputSearchField({
           ? bank?.bankName
           : (bank?.englishBankName ?? bank?.bankName);
 
-      hanldeGetValue(bank?.bankCode);
-
       setSearchValue(displayName);
       onBankSelect?.(bank);
       setSelectedBank(bank?.bankCode || "");
       setIsOpen(false);
       setHighlightedIndex(-1);
       setFilteredBanks([bank]);
+
+      setValue?.(name, bank?.bankCode, { shouldValidate: true });
     },
-    [currentLang, onBankSelect, hanldeGetValue],
+    [currentLang, onBankSelect, setValue, name],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -171,7 +164,6 @@ export default function InputSearchField({
     setHighlightedIndex(-1);
     if (!selectedBank) {
       setSearchValue("");
-      hanldeGetValue("");
       setFilteredBanks(LIST_BANKS);
     }
   });
@@ -258,7 +250,7 @@ export default function InputSearchField({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-[calc(100%+6px)] left-0 w-full bg-bg-tertiary border border-outline-base rounded-lg shadow-xl z-50 overflow-hidden"
+              className="absolute top-[calc(100%+6px)] left-0 w-full bg-bg-tertiary border border-outline-base rounded-md shadow-xl z-50 overflow-hidden"
             >
               {filteredBanks.length === 0 ? (
                 <div className="grid place-items-center h-13 px-4 text-center text-content-tertiary text-sm">
