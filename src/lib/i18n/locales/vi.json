@@ -146,7 +146,8 @@
     "board-setting": "Cài đặt bảng giá",
     "board-csv": "Xuất file Excel",
     "scroll-auto": "Tự động cuộn",
-    "scroll-stop": "Tạm dừng cuộn"
+    "scroll-stop": "Tạm dừng cuộn",
+    "setting-cols": "Nhấn để chọn các cột thông tin"
   },
 
   "status": {

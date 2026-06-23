@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectScroll } from "@/store/modules/priceboard/selector";
 import { setExport, setStartScroll } from "@/store/modules/priceboard/slice";
-import { BookX, Pause, Play } from "lucide-react";
+import { BookX, Columns3Cog, Pause, Play } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function SettingBoard() {
@@ -38,7 +38,7 @@ export default function SettingBoard() {
         </div>
       </div>
 
-      {/* Cài đặt bảng giá */}
+      {/* Xuất file Excel */}
       <div
         className="hover:bg-bg-button p-1 rounded-md"
         data-tooltip-id="global-tooltip"
@@ -48,6 +48,17 @@ export default function SettingBoard() {
         data-tour="prop-8"
       >
         <BookX className="size-5" />
+      </div>
+
+      {/* Cài đặt bảng giá */}
+      <div
+        className="hover:bg-bg-button p-1 rounded-md"
+        data-tooltip-id="global-tooltip"
+        data-tooltip-content={t("tooltip.setting-cols")}
+        data-tooltip-place="left"
+        data-tour="prop-9"
+      >
+        <Columns3Cog size={20} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import {
   coloredCellStyle,
   FLASH_COLORS,
+  HEADER_TABLE_BASE_CONFIG,
   PRICE_COLS,
   TEXT_COLORS,
   VOL_COLS,
@@ -332,6 +333,7 @@ export default function BaseTable({ id }: { id: string }) {
         lockPosition: "left",
         cellRenderer: SymbolRow,
         cellStyle: coloredCellStyle,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("symbol"),
       },
 
       // Giá tham chiếu
@@ -342,6 +344,7 @@ export default function BaseTable({ id }: { id: string }) {
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("ceil"),
       },
       {
         field: "ref",
@@ -350,6 +353,7 @@ export default function BaseTable({ id }: { id: string }) {
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("ref"),
       },
       {
         field: "floor",
@@ -358,6 +362,7 @@ export default function BaseTable({ id }: { id: string }) {
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("floor"),
       },
 
       // Bên mua
@@ -372,6 +377,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyPrice3"),
           },
           {
             field: "buyVol3",
@@ -380,6 +386,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyVol3"),
           },
           {
             field: "buyPrice2",
@@ -388,6 +395,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyPrice2"),
           },
           {
             field: "buyVol2",
@@ -396,6 +404,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyVol2"),
           },
           {
             field: "buyPrice1",
@@ -404,6 +413,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyPrice1"),
           },
           {
             field: "buyVol1",
@@ -412,6 +422,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("buyVol1"),
           },
         ],
       },
@@ -428,6 +439,7 @@ export default function BaseTable({ id }: { id: string }) {
             cellStyle: coloredCellStyle,
 
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("matchPrice"),
           },
           {
             field: "matchVol",
@@ -436,6 +448,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1.2,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("matchVol"),
           },
           {
             field: "change",
@@ -444,6 +457,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("change"),
           },
           {
             field: "changePct",
@@ -452,6 +466,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 0.8,
             cellStyle: coloredCellStyle,
             valueFormatter: changePctFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("changePct"),
           },
         ],
       },
@@ -467,6 +482,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellPrice1"),
           },
           {
             field: "sellVol1",
@@ -475,6 +491,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellVol1"),
           },
           {
             field: "sellPrice2",
@@ -483,6 +500,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellPrice2"),
           },
           {
             field: "sellVol2",
@@ -491,6 +509,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellVol2"),
           },
           {
             field: "sellPrice3",
@@ -499,6 +518,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellPrice3"),
           },
           {
             field: "sellVol3",
@@ -507,6 +527,7 @@ export default function BaseTable({ id }: { id: string }) {
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("sellVol3"),
           },
         ],
       },
@@ -519,6 +540,7 @@ export default function BaseTable({ id }: { id: string }) {
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("high"),
       },
       {
         field: "low",
@@ -527,6 +549,7 @@ export default function BaseTable({ id }: { id: string }) {
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("low"),
       },
       {
         field: "totalVolume",
@@ -534,6 +557,7 @@ export default function BaseTable({ id }: { id: string }) {
         minWidth: 72,
         flex: 1.5,
         valueFormatter: volFormatter,
+        hide: !HEADER_TABLE_BASE_CONFIG.includes("totalVolume"),
       },
 
       // Nhà đầu tư nước ngoài
@@ -547,6 +571,7 @@ export default function BaseTable({ id }: { id: string }) {
             minWidth: 72,
             flex: 1.5,
             valueFormatter: volFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("nnBuy"),
           },
           {
             field: "nnSell",
@@ -554,6 +579,7 @@ export default function BaseTable({ id }: { id: string }) {
             minWidth: 72,
             flex: 1.5,
             valueFormatter: volFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("nnSell"),
           },
           {
             field: "nnRoom",
@@ -563,6 +589,7 @@ export default function BaseTable({ id }: { id: string }) {
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
             valueFormatter: volFormatter,
+            hide: !HEADER_TABLE_BASE_CONFIG.includes("nnRoom"),
           },
         ],
       },

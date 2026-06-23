@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { MarketSocket } from "@/services/socket/market";
 import { useAppSelector } from "@/store/hook";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -7,7 +8,6 @@ import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
 import SettingBoard from "./setting";
 import Table from "./table";
-import { MarketSocket } from "@/services/socket/market";
 
 const IndexInfor = lazy(() => import("./index-infor"));
 
@@ -66,7 +66,7 @@ export default function PriceBoard() {
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
           {/* Đặt lệnh */}
-          <div data-tour="prop-9">
+          <div data-tour="prop-10">
             {" "}
             <Button className="w-auto whitespace-nowrap" variant="success">
               {t("order")}

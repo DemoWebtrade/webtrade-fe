@@ -7,6 +7,9 @@ const initialState: PriceboardState = {
   export: false,
   stocks: {},
   symbols: [],
+  headerTableBaseConfig: JSON.parse(
+    localStorage.getItem("headerTableBaseConfig") || "[]",
+  ),
 };
 
 const priceboardSlice = createSlice({
@@ -46,6 +49,14 @@ const priceboardSlice = createSlice({
         Object.assign(state.stocks[symbol], partial);
       }
     },
+
+    setHeaderTableBaseConfig(state, action: PayloadAction<string[]>) {
+      state.headerTableBaseConfig = action.payload;
+      localStorage.setItem(
+        "headerTableBaseConfig",
+        JSON.stringify(action.payload),
+      );
+    },
   },
 });
 
@@ -55,6 +66,7 @@ export const {
   batchUpdateStocks,
   snapshotStocks,
   clearStocks,
+  setHeaderTableBaseConfig,
 } = priceboardSlice.actions;
 
 export default priceboardSlice.reducer;

@@ -146,7 +146,8 @@
     "board-setting": "Price board settings",
     "board-csv": "Export Excel file",
     "scroll-auto": "Auto scroll",
-    "scroll-stop": "Pause scroll"
+    "scroll-stop": "Pause scroll",
+    "setting-cols": "Click to select stock column"
   },
 
   "status": {

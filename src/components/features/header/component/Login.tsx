@@ -126,7 +126,7 @@ export default function Login() {
         </div>
       ) : (
         <>
-          <div data-tour="prop-10">
+          <div data-tour="prop-11">
             <Button onClick={() => dispatch(setIsLogin(true))}>
               {t("login")}
             </Button>

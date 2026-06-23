@@ -13,3 +13,6 @@ export const selectRowData = createSelector(
   selectStocksMap,
   (symbols, stocks): StockData[] => symbols.map((s) => stocks[s]),
 );
+
+export const selectHeaderTableBaseConfig = (state: RootState) =>
+  state.priceboard.headerTableBaseConfig;

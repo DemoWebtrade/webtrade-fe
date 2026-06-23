@@ -5,4 +5,6 @@ export interface PriceboardState {
   export: boolean;
   stocks: Record<string, StockData>;
   symbols: string[];
+
+  headerTableBaseConfig: string[];
 }

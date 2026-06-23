@@ -55,11 +55,16 @@ const steps = [
   },
   {
     target: '[data-tour="prop-9"]',
+    title: "Cài đặt cột bảng giá",
+    content: "Chọn và hiện thị các cột của bảng giá.",
+  },
+  {
+    target: '[data-tour="prop-10"]',
     title: "Đặt lệnh",
     content: "Mở nhanh cửa sổ đặt lệnh để thực hiện mua/bán chứng khoán.",
   },
   {
-    target: '[data-tour="prop-10"]',
+    target: '[data-tour="prop-11"]',
     title: "Đăng nhập",
     content:
       "Xác thực tài khoản để truy cập toàn bộ chức năng giao dịch và quản lý dữ liệu cá nhân.",
