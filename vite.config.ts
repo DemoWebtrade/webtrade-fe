@@ -11,6 +11,17 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (
+            id.includes("react") ||
+            id.includes("react-dom") ||
+            id.includes("floating-ui") ||
+            id.includes("@floating-ui") ||
+            id.includes("tippy") ||
+            id.includes("popper") ||
+            id.includes("tooltip")
+          ) {
+            return "vendor-react";
+          }
+          if (
             id.includes("ag-grid-community") ||
             id.includes("ag-grid-react")
           ) {
