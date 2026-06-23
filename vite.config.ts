@@ -11,8 +11,21 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (
-            id.includes("react") ||
+            id.includes("ag-grid-community") ||
+            id.includes("ag-grid-react")
+          ) {
+            return "vendor-aggrid";
+          }
+
+          if (id.includes("react-tooltip")) {
+            return "vendor-react";
+          }
+
+          if (
             id.includes("react-dom") ||
+            id.includes("react-router-dom") ||
+            id.includes("react/") ||
+            id.includes("/react/") ||
             id.includes("floating-ui") ||
             id.includes("@floating-ui") ||
             id.includes("tippy") ||
@@ -21,20 +34,7 @@ export default defineConfig({
           ) {
             return "vendor-react";
           }
-          if (
-            id.includes("ag-grid-community") ||
-            id.includes("ag-grid-react")
-          ) {
-            return "vendor-aggrid";
-          }
-          // React ecosystem
-          if (id.includes("react-dom") || id.includes("react-router-dom")) {
-            return "vendor-react";
-          }
-          if (id.includes("react-tooltip")) {
-            return "vendor-tooltip";
-          }
-          // Các vendor còn lại
+
           if (id.includes("@mui/material")) return "vendor-mui";
           if (id.includes("firebase")) return "vendor-firebase";
           if (id.includes("lightweight-charts")) return "vendor-charts";
