@@ -14,9 +14,9 @@ export default function PriceBoardPage() {
   usePageTitle(t("price-board"));
 
   const handleGetConfigHeader = () => {
-    const isCheck = localStorage.getItem("headerTableBaseConfig");
+    // const isCheck = localStorage.getItem("headerTableBaseConfig");
 
-    if (isCheck) return;
+    // if (isCheck) return;
     dispatch(setHeaderTableBaseConfig(HEADER_TABLE_BASE_CONFIG));
   };
 
