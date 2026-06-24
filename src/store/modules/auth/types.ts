@@ -18,6 +18,9 @@ export type AuthState = {
     profile: boolean;
     updateProfile: boolean;
     beneficiaries: boolean;
+    addAccountBen: boolean;
+    defaultBen: boolean;
+    deleteBen: boolean;
   };
 
   error: {
@@ -26,6 +29,9 @@ export type AuthState = {
     profile: string | null;
     updateProfile: string | null;
     beneficiaries: string | null;
+    addAccountBen: string | null;
+    defaultBen: string | null;
+    deleteBen: string | null;
   };
 };
 
@@ -88,10 +94,23 @@ export type UpdateProfilePayload = {
 };
 
 export type Beneficiari = {
-  id: string;
-  bankName: string;
-  bankBranch?: string;
-  accountNumber: string;
   accountHolder: string;
-  isDefault: boolean;
+  accountNumber: string;
+  bankCode: string;
+  bankName: string;
+  createdAt: string;
+  fullName: string;
+  isDefault: false;
+  updatedAt: string;
+  userId: string;
+  __v: number;
+  _id: string;
+};
+
+export type AddBenAccountPayload = {
+  bankName: string | null;
+  bankCode: string;
+  fullName: string;
+  accountNumber: string;
+  accountHolder: string | null;
 };

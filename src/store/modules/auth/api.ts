@@ -3,6 +3,7 @@ import apiClient from "@/services/api/apiClient";
 import { getMessageFromError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type {
+  AddBenAccountPayload,
   Beneficiari,
   LoginPayload,
   Profile,
@@ -86,6 +87,54 @@ export const getBeneficiariesThunk = createAsyncThunk(
         return rejectWithValue(res?.data?.message || i18n.t("api.error"));
       }
       return res.data.data as Beneficiari[];
+    } catch (error: unknown) {
+      const message = getMessageFromError(error);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const createBeneficiariesThunk = createAsyncThunk(
+  "auth/createBeneficiaries",
+  async (action: AddBenAccountPayload, { rejectWithValue }) => {
+    try {
+      const res = await apiClient.post("/auth/beneficiaries", action);
+      if (res?.data?.code !== 1) {
+        return rejectWithValue(res?.data?.message || i18n.t("api.error"));
+      }
+      return res.data.data as Beneficiari[];
+    } catch (error: unknown) {
+      const message = getMessageFromError(error);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const setDefaultBeneficiariesThunk = createAsyncThunk(
+  "auth/setDefaultBeneficiaries",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await apiClient.patch(`/auth/beneficiaries/${id}/default`);
+      if (res?.data?.code !== 1) {
+        return rejectWithValue(res?.data?.message || i18n.t("api.error"));
+      }
+      return;
+    } catch (error: unknown) {
+      const message = getMessageFromError(error);
+      return rejectWithValue(message);
+    }
+  },
+);
+
+export const deleteBeneficiariesThunk = createAsyncThunk(
+  "auth/deleteBeneficiaries",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await apiClient.delete(`/auth/beneficiaries/${id}`);
+      if (res?.data?.code !== 1) {
+        return rejectWithValue(res?.data?.message || i18n.t("api.error"));
+      }
+      return;
     } catch (error: unknown) {
       const message = getMessageFromError(error);
       return rejectWithValue(message);

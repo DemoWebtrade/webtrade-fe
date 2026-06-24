@@ -10,9 +10,9 @@ export default function SettingBoard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const scroll = useAppSelector(selectScroll);
+  const [isOpenSetting, setIsOpenSetting] = useState(false);
 
-  const [openSetting, setOpenSetting] = useState(false);
+  const scroll = useAppSelector(selectScroll);
 
   const hanldeClickScroll = () => {
     dispatch(setStartScroll(!scroll));
@@ -61,14 +61,16 @@ export default function SettingBoard() {
         data-tooltip-content={t("tooltip.setting-cols")}
         data-tooltip-place="left"
         data-tour="prop-9"
-        onClick={() => setOpenSetting(true)}
+        onClick={() => setIsOpenSetting(true)}
       >
         <Columns3Cog size={20} />
       </div>
 
       <SettingModal
-        isOpen={openSetting}
-        onClose={() => setOpenSetting(false)}
+        isOpen={isOpenSetting}
+        onClose={() => {
+          setIsOpenSetting(false);
+        }}
       />
     </div>
   );

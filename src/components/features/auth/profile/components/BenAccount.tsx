@@ -55,12 +55,12 @@ export default function BenAccount() {
           {beneficiaries &&
             !!beneficiaries?.length &&
             beneficiaries?.map((item) => (
-              <div className="px-4" key={item.id}>
+              <div className="px-4" key={item._id}>
                 <div className="flex flex-col gap-4 p-4 rounded-2xl bg-bg-purple">
                   <div className="flex flex-row items-center justify-between">
                     <div className="flex flex-row gap-4 items-center">
                       <img
-                        src={getBankLogo("MBB")}
+                        src={getBankLogo(item.bankCode)}
                         alt="logo"
                         className="w-9 h-9 rounded-full"
                       />
@@ -71,8 +71,8 @@ export default function BenAccount() {
                     </div>
                   </div>
                   <div className="flex flex-row items-center justify-between">
-                    <div className="flex flex-row gap-8">
-                      <div className="flex flex-col gap-1">
+                    <div className="flex flex-row gap-8 w-full">
+                      <div className="flex flex-col gap-1 w-1/2">
                         <span className="text-xs text-content-tertiary">
                           {t("user.account-code")}
                         </span>
@@ -80,12 +80,12 @@ export default function BenAccount() {
                           {item?.accountNumber}
                         </span>
                       </div>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1 w-1/2">
                         <span className="text-xs text-content-tertiary">
                           {t("user.name")}
                         </span>
                         <span className="font-medium text-sm">
-                          {item?.accountNumber}
+                          {item?.fullName}
                         </span>
                       </div>
                     </div>

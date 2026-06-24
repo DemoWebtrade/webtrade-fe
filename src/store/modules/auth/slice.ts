@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  createBeneficiariesThunk,
+  deleteBeneficiariesThunk,
   getBeneficiariesThunk,
   getProfileThunk,
   loginThunk,
   registerThunk,
+  setDefaultBeneficiariesThunk,
   updateProfileThunk,
 } from "./api";
 import type { AuthState } from "./types";
@@ -29,6 +32,9 @@ const initialState: AuthState = {
     profile: false,
     updateProfile: false,
     beneficiaries: false,
+    addAccountBen: false,
+    defaultBen: false,
+    deleteBen: false,
   },
 
   error: {
@@ -37,6 +43,9 @@ const initialState: AuthState = {
     profile: null,
     updateProfile: null,
     beneficiaries: null,
+    addAccountBen: null,
+    defaultBen: null,
+    deleteBen: null,
   },
 };
 
@@ -137,6 +146,46 @@ const authSlice = createSlice({
       .addCase(getBeneficiariesThunk.rejected, (state, action) => {
         state.loading.beneficiaries = false;
         state.error.beneficiaries = action.payload as string;
+      });
+
+    builder
+      .addCase(createBeneficiariesThunk.pending, (state) => {
+        state.loading.addAccountBen = true;
+        state.error.addAccountBen = null;
+      })
+      .addCase(createBeneficiariesThunk.fulfilled, (state, action) => {
+        state.loading.addAccountBen = false;
+        state.beneficiaries = action.payload;
+      })
+      .addCase(createBeneficiariesThunk.rejected, (state, action) => {
+        state.loading.addAccountBen = false;
+        state.error.addAccountBen = action.payload as string;
+      });
+
+    builder
+      .addCase(setDefaultBeneficiariesThunk.pending, (state) => {
+        state.loading.defaultBen = true;
+        state.error.defaultBen = null;
+      })
+      .addCase(setDefaultBeneficiariesThunk.fulfilled, (state) => {
+        state.loading.defaultBen = false;
+      })
+      .addCase(setDefaultBeneficiariesThunk.rejected, (state, action) => {
+        state.loading.defaultBen = false;
+        state.error.defaultBen = action.payload as string;
+      });
+
+    builder
+      .addCase(deleteBeneficiariesThunk.pending, (state) => {
+        state.loading.deleteBen = true;
+        state.error.deleteBen = null;
+      })
+      .addCase(deleteBeneficiariesThunk.fulfilled, (state) => {
+        state.loading.deleteBen = false;
+      })
+      .addCase(deleteBeneficiariesThunk.rejected, (state, action) => {
+        state.loading.deleteBen = false;
+        state.error.deleteBen = action.payload as string;
       });
   },
 });

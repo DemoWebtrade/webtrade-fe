@@ -136,71 +136,69 @@ export default function ChangeInforModal({
               {/* Form */}
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-4 md:gap-6 px-6"
               >
-                <div className="px-6 space-y-5">
-                  {type === "EMAIL" && (
-                    <InputField
-                      name="email"
-                      type="text"
-                      autoComplete="off"
-                      registration={register("email", {
-                        required: t("validate.email-required"),
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: t("validate.email-incorrect"),
-                        },
-                      })}
-                      error={errors?.email as FieldError}
-                      className="h-10!"
-                      placeholder={t("input.email-placeholder")}
-                      label={t("Email")}
-                      required
-                    />
-                  )}
-                  {type === "PHONE" && (
-                    <InputField
-                      name="phone"
-                      type="text"
-                      autoComplete="off"
-                      registration={register("phone", {
-                        required: t("validate.phone-required"),
-                        pattern: {
-                          value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
-                          message: t("validate.phone-incorrect"),
-                        },
-                        minLength: {
-                          value: 10,
-                          message: t("validate.phone-incorrect"),
-                        },
-                        maxLength: {
-                          value: 10,
-                          message: t("validate.phone-incorrect"),
-                        },
-                      })}
-                      error={errors?.phone as FieldError}
-                      placeholder={t("input.phone-placeholder")}
-                      className="h-10!"
-                      label={t("phone-number")}
-                      required
-                    />
-                  )}
-                  {type === "ADDRESS" && (
-                    <InputField
-                      name="address"
-                      type="text"
-                      autoComplete="off"
-                      registration={register("address", {
-                        required: t("validate.address-required"),
-                      })}
-                      error={errors?.address as FieldError}
-                      className="h-10!"
-                      placeholder={t("input.address-placeholder")}
-                      label={t("address")}
-                      required
-                    />
-                  )}
-                </div>
+                {type === "EMAIL" && (
+                  <InputField
+                    name="email"
+                    type="text"
+                    autoComplete="off"
+                    registration={register("email", {
+                      required: t("validate.email-required"),
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: t("validate.email-incorrect"),
+                      },
+                    })}
+                    error={errors?.email as FieldError}
+                    className="h-10!"
+                    placeholder={t("input.email-placeholder")}
+                    label={t("Email")}
+                    required
+                  />
+                )}
+                {type === "PHONE" && (
+                  <InputField
+                    name="phone"
+                    type="text"
+                    autoComplete="off"
+                    registration={register("phone", {
+                      required: t("validate.phone-required"),
+                      pattern: {
+                        value: /(0[3|5|7|8|9])+([0-9]{8})\b/g,
+                        message: t("validate.phone-incorrect"),
+                      },
+                      minLength: {
+                        value: 10,
+                        message: t("validate.phone-incorrect"),
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: t("validate.phone-incorrect"),
+                      },
+                    })}
+                    error={errors?.phone as FieldError}
+                    placeholder={t("input.phone-placeholder")}
+                    className="h-10!"
+                    label={t("phone-number")}
+                    required
+                  />
+                )}
+                {type === "ADDRESS" && (
+                  <InputField
+                    name="address"
+                    type="text"
+                    autoComplete="off"
+                    registration={register("address", {
+                      required: t("validate.address-required"),
+                    })}
+                    error={errors?.address as FieldError}
+                    className="h-10!"
+                    placeholder={t("input.address-placeholder")}
+                    label={t("address")}
+                    required
+                  />
+                )}
 
                 <div className="w-full h-px bg-border"></div>
 

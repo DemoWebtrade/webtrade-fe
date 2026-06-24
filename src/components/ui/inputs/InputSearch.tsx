@@ -5,7 +5,14 @@ import { getBankLogo } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dot, Search } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import type {
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormRegisterReturn,
+  UseFormSetValue,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   List,
@@ -32,24 +39,20 @@ type Bank = {
   flagForeign: number;
 };
 
-type InputSearchFieldProps = {
+type InputSearchFieldProps<TForm extends FieldValues = FieldValues> = {
   label?: string;
   required?: boolean;
-  name: string;
+  name: Path<TForm>;
   error?: FieldError;
   registration?: UseFormRegisterReturn;
   disabled?: boolean;
   placeholder?: string;
   className?: string;
   onBankSelect?: (bank: Bank) => void;
-  setValue?: (
-    name: string,
-    value: string,
-    options?: { shouldValidate?: boolean },
-  ) => void;
+  setValue?: UseFormSetValue<TForm>;
 };
 
-export default function InputSearchField({
+export const InputSearchField = <TForm extends FieldValues = FieldValues>({
   label,
   required,
   name,
@@ -60,7 +63,7 @@ export default function InputSearchField({
   className,
   onBankSelect,
   setValue,
-}: InputSearchFieldProps) {
+}: InputSearchFieldProps<TForm>) => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
   const currentLang = (i18n.resolvedLanguage ||
@@ -112,7 +115,9 @@ export default function InputSearchField({
       setHighlightedIndex(-1);
       setFilteredBanks([bank]);
 
-      setValue?.(name, bank?.bankCode, { shouldValidate: true });
+      setValue?.(name, bank?.bankCode as PathValue<TForm, typeof name>, {
+        shouldValidate: true,
+      });
     },
     [currentLang, onBankSelect, setValue, name],
   );
@@ -283,4 +288,4 @@ export default function InputSearchField({
       )}
     </div>
   );
-}
+};

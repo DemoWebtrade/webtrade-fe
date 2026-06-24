@@ -1,12 +1,25 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
-import InputSearchField from "@/components/ui/inputs/InputSearch";
-import { backdropVariants, modalVariants } from "@/configs";
+import { InputSearchField } from "@/components/ui/inputs/InputSearch";
+import { backdropVariants, LIST_BANKS, modalVariants } from "@/configs";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import {
+  createBeneficiariesThunk,
+  getBeneficiariesThunk,
+} from "@/store/modules/auth/api";
+import { selectProfile } from "@/store/modules/auth/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect } from "react";
 import { useForm, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+
+interface AddBenAccountForm {
+  bank: string;
+  accountCode: string;
+  fullName: string;
+}
 
 export default function AddBenAccountModal({
   isOpen,
@@ -16,6 +29,9 @@ export default function AddBenAccountModal({
   onClose: () => void;
 }) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const profile = useAppSelector(selectProfile);
 
   const {
     handleSubmit,
@@ -23,7 +39,7 @@ export default function AddBenAccountModal({
     formState: { errors },
     reset,
     setValue,
-  } = useForm();
+  } = useForm<AddBenAccountForm>();
 
   useEffect(() => {
     if (!isOpen) {
@@ -31,7 +47,29 @@ export default function AddBenAccountModal({
     }
   }, [isOpen, reset]);
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: AddBenAccountForm) => {
+    const { bank, accountCode, fullName } = data;
+
+    try {
+      await dispatch(
+        createBeneficiariesThunk({
+          bankName:
+            LIST_BANKS.find((item) => item.bankCode === bank)?.bankName || "",
+          bankCode: bank,
+          fullName: fullName,
+          accountNumber: accountCode,
+          accountHolder:
+            (profile?.tradingAccounts[0] &&
+              profile?.tradingAccounts[0].accountNumber) ||
+            "",
+        }),
+      ).unwrap();
+      await dispatch(getBeneficiariesThunk()).unwrap();
+      toast.success(t("Thêm mới tài khoản thụ hưởng thành công"));
+    } catch (error) {
+      toast.error(error as string);
+    }
+  };
 
   return (
     <AnimatePresence>
