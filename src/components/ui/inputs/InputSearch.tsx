@@ -94,7 +94,7 @@ export const InputSearchField = <TForm extends FieldValues = FieldValues>({
             false),
       );
       setFilteredBanks(filtered);
-      setHighlightedIndex(filtered.length > 0 ? 0 : -1);
+      setHighlightedIndex(-1);
 
       registration?.onChange?.(e);
     },
@@ -114,7 +114,6 @@ export const InputSearchField = <TForm extends FieldValues = FieldValues>({
       setIsOpen(false);
       setHighlightedIndex(-1);
       setFilteredBanks([bank]);
-
       setValue?.(name, bank?.bankCode as PathValue<TForm, typeof name>, {
         shouldValidate: true,
       });

@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import InputCheckbox from "@/components/ui/inputs/InputCheckbox";
 import { backdropVariants, modalVariants } from "@/configs/modal";
+import { useAppSelector } from "@/store/hook";
+import { selectHeaderTableBaseConfig } from "@/store/modules/priceboard/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCw, X } from "lucide-react";
 import { useCallback, useEffect } from "react";
@@ -14,6 +16,8 @@ interface SettingModalProps {
 
 export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   const { t } = useTranslation();
+
+  const headerTableBaseConfig = useAppSelector(selectHeaderTableBaseConfig);
 
   const {
     handleSubmit,
@@ -76,11 +80,18 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                 className="flex flex-col gap-4 md:gap-6 px-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <InputCheckbox
-                  name="test"
-                  error={errors?.test as FieldError}
-                  label={t("test")}
-                />
+                <div className="grid grid-cols-3 gap-2">
+                  {headerTableBaseConfig?.length > 0 &&
+                    headerTableBaseConfig?.map((item, index) => (
+                      <div key={index}>
+                        <InputCheckbox
+                          name={item?.id}
+                          error={errors?.test as FieldError}
+                          label={t(item?.label)}
+                        />
+                      </div>
+                    ))}
+                </div>
 
                 <div className="w-full h-px bg-border"></div>
 

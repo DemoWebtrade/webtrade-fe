@@ -7,6 +7,7 @@ type InputCheckboxProps = {
   error?: FieldError;
   registration?: UseFormRegisterReturn;
   disabled?: boolean;
+  checked?: boolean;
   className?: string;
 };
 
@@ -18,6 +19,7 @@ export default function InputCheckbox({
   disabled,
   error,
   className,
+  checked = false,
 }: InputCheckboxProps) {
   return (
     <div>
@@ -29,6 +31,7 @@ export default function InputCheckbox({
           type="checkbox"
           {...registration}
           disabled={disabled}
+          checked={checked}
         />
         <label className="text-sm font-normal" htmlFor={name}>
           {label}

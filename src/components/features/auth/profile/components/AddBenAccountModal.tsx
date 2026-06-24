@@ -66,6 +66,7 @@ export default function AddBenAccountModal({
       ).unwrap();
       await dispatch(getBeneficiariesThunk()).unwrap();
       toast.success(t("Thêm mới tài khoản thụ hưởng thành công"));
+      onClose();
     } catch (error) {
       toast.error(error as string);
     }

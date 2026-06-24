@@ -17,7 +17,7 @@ export default function GenInformation() {
   const profile = useAppSelector(selectProfile);
 
   return (
-    <div className="flex flex-col gap-2 md:gap-3 md:mt-3 mt-1">
+    <div className="flex flex-col gap-2 md:gap-3 md:mt-3 mt-1 h-full w-full">
       <div className="flex flex-col gap-2 md:gap-4">
         <div className="text-sm p-2 md:p-3 bg-purple-base/20 flex items-center">
           {t("user.account-info")}

@@ -1,6 +1,6 @@
 import type { StockData } from "@/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { PriceboardState } from "./types";
+import type { HeaderTableBaseConfig, PriceboardState } from "./types";
 
 const initialState: PriceboardState = {
   scroll: false,
@@ -50,7 +50,10 @@ const priceboardSlice = createSlice({
       }
     },
 
-    setHeaderTableBaseConfig(state, action: PayloadAction<string[]>) {
+    setHeaderTableBaseConfig(
+      state,
+      action: PayloadAction<HeaderTableBaseConfig[]>,
+    ) {
       state.headerTableBaseConfig = action.payload;
       localStorage.setItem(
         "headerTableBaseConfig",

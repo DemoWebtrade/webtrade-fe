@@ -6,5 +6,12 @@ export interface PriceboardState {
   stocks: Record<string, StockData>;
   symbols: string[];
 
-  headerTableBaseConfig: string[];
+  headerTableBaseConfig: HeaderTableBaseConfig[];
 }
+
+export type HeaderTableBaseConfig = {
+  id: string;
+  field: string;
+  hide: boolean;
+  label: string;
+};
