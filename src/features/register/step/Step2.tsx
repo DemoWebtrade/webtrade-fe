@@ -184,7 +184,11 @@ export default function Step2({
           >
             {t("register.title")}
           </Button>{" "}
-          <Button variant="none" onClick={handlePrevStep} className="w-1/2">
+          <Button
+            variant="secondary"
+            onClick={handlePrevStep}
+            className="w-1/2"
+          >
             {t("button.previous")}
           </Button>{" "}
         </div>

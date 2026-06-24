@@ -11,6 +11,12 @@ const buttonVariants = cva(
           "bg-purple-base text-white text-sm hover:bg-purple-hover disabled:bg-purple-disabled disabled:text-content-disable",
         success:
           "bg-green-base text-white text-sm hover:bg-green-hover disabled:bg-green-disabled disabled:text-content-disable",
+        error:
+          "bg-red-base text-white text-sm hover:bg-red-hover disabled:bg-red-disabled disabled:text-content-disable",
+        warning:
+          "bg-yellow-base text-white text-sm hover:bg-yellow-hover disabled:bg-yellow-disabled disabled:text-content-disable",
+        secondary:
+          "bg-secondary-base text-white text-sm hover:bg-secondary-hover disabled:bg-secondary-disabled disabled:text-content-disable",
         none: "text-sm text-purple-base hover:bg-secondary-hover disabled:text-content-disable disabled:bg-content-disable",
       },
       size: {

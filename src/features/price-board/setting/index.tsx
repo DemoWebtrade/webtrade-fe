@@ -2,13 +2,17 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectScroll } from "@/store/modules/priceboard/selector";
 import { setExport, setStartScroll } from "@/store/modules/priceboard/slice";
 import { BookX, Columns3Cog, Pause, Play } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import SettingModal from "./SettingModal";
 
 export default function SettingBoard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const scroll = useAppSelector(selectScroll);
+
+  const [openSetting, setOpenSetting] = useState(false);
 
   const hanldeClickScroll = () => {
     dispatch(setStartScroll(!scroll));
@@ -57,9 +61,15 @@ export default function SettingBoard() {
         data-tooltip-content={t("tooltip.setting-cols")}
         data-tooltip-place="left"
         data-tour="prop-9"
+        onClick={() => setOpenSetting(true)}
       >
         <Columns3Cog size={20} />
       </div>
+
+      <SettingModal
+        isOpen={openSetting}
+        onClose={() => setOpenSetting(false)}
+      />
     </div>
   );
 }

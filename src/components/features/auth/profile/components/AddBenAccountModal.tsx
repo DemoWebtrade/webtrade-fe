@@ -56,7 +56,7 @@ export default function AddBenAccountModal({
               className="flex flex-col gap-6 py-6 max-w-[90%] w-full md:w-120 rounded-lg shadow-2xl overflow-hidden border border-border bg-bg-primary"
             >
               {/* Header */}
-              <div className="flex items-baseline justify-between px-6">
+              <div className="flex items-center justify-between px-6">
                 <h1 className="text-xl font-medium">
                   {t("user.account-ben-add")}
                 </h1>
@@ -120,7 +120,7 @@ export default function AddBenAccountModal({
                 <div className="flex flex-row gap-2 col-span-1 px-6">
                   <Button
                     type="button"
-                    variant="none"
+                    variant="secondary"
                     onClick={onClose}
                     className="w-1/2"
                   >

@@ -207,7 +207,7 @@ export default function ChangeInforModal({
                 <div className="flex flex-row gap-2 col-span-1 px-6">
                   <Button
                     type="button"
-                    variant="none"
+                    variant="secondary"
                     onClick={onClose}
                     className="w-1/2"
                   >

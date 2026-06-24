@@ -210,7 +210,10 @@
     "previous": "Quay lại",
     "start_trading": "Bắt đầu giao dịch",
     "save-change": "Lưu thay đổi",
-    "cancel": "Hủy"
+    "cancel": "Hủy",
+    "reset": "Làm lại",
+    "close": "Đóng",
+    "save": "Lưu"
   },
 
   "toast": {

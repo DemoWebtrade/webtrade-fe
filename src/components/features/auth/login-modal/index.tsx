@@ -115,40 +115,28 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 onSubmit={handleSubmit(handleLogin)}
                 className="p-6 space-y-5"
               >
-                <div>
-                  <label
-                    htmlFor="identifier"
-                    className="block text-sm font-normal mb-2"
-                  >
-                    {t("username")}
-                  </label>
-                  <InputField
-                    name="identifier"
-                    autoComplete="current-identifier"
-                    registration={register("identifier", {
-                      required: t("validate.identifier-required"),
-                    })}
-                    error={errors?.identifier as FieldError}
-                  />
-                </div>
+                <InputField
+                  label={t("username")}
+                  name="identifier"
+                  autoComplete="current-identifier"
+                  registration={register("identifier", {
+                    required: t("validate.identifier-required"),
+                  })}
+                  error={errors?.identifier as FieldError}
+                  required
+                />
 
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-normal mb-2"
-                  >
-                    {t("password")}
-                  </label>
-                  <InputField
-                    name="password"
-                    registration={register("password", {
-                      required: t("validate.password-required"),
-                    })}
-                    type="password"
-                    autoComplete="current-password"
-                    error={errors?.password as FieldError}
-                  />
-                </div>
+                <InputField
+                  name="password"
+                  registration={register("password", {
+                    required: t("validate.password-required"),
+                  })}
+                  type="password"
+                  autoComplete="current-password"
+                  error={errors?.password as FieldError}
+                  label={t("password")}
+                  required
+                />
 
                 <Button
                   type="submit"
