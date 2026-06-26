@@ -10,8 +10,8 @@ export interface PriceboardState {
 }
 
 export type HeaderTableBaseConfig = {
-  id: string;
+  index: number;
+  label: string;
   field: string;
   hide: boolean;
-  label: string;
 };

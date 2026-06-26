@@ -3,6 +3,7 @@ import InputCheckbox from "@/components/ui/inputs/InputCheckbox";
 import { backdropVariants, modalVariants } from "@/configs/modal";
 import { useAppSelector } from "@/store/hook";
 import { selectHeaderTableBaseConfig } from "@/store/modules/priceboard/selector";
+import type { HeaderTableBaseConfig } from "@/store/modules/priceboard/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCw, X } from "lucide-react";
 import { useCallback, useEffect } from "react";
@@ -13,6 +14,35 @@ interface SettingModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const CheckboxGroup = ({
+  items,
+  reverse = false,
+  indent = false,
+}: {
+  items: HeaderTableBaseConfig[];
+  reverse?: boolean;
+  indent?: boolean;
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div
+      className={`flex flex-col gap-2 ${reverse ? "flex-col-reverse" : ""} ${
+        indent ? "ml-5" : ""
+      }`}
+    >
+      {items.map((item) => (
+        <InputCheckbox
+          key={item.field}
+          name={item.field}
+          label={t(item.label)}
+          defaultChecked={!item.hide}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   const { t } = useTranslation();
@@ -39,6 +69,11 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   }, [handleClose]);
 
   const onSubmit = () => {};
+
+  const filterByRange = (min: number, max: number) =>
+    headerTableBaseConfig.filter(
+      (item) => item.index >= min && item.index <= max,
+    );
 
   return (
     <AnimatePresence>
@@ -80,20 +115,67 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                 className="flex flex-col gap-4 md:gap-6 px-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="grid grid-cols-3 gap-2">
-                  {headerTableBaseConfig?.length > 0 &&
-                    headerTableBaseConfig?.map((item, index) => (
-                      <div key={index}>
-                        <InputCheckbox
-                          name={item?.id}
-                          error={errors?.test as FieldError}
-                          label={t(item?.label)}
-                        />
-                      </div>
-                    ))}
+                <div className="grid grid-cols-3 gap-x-4 gap-y-2">
+                  {/* Col 1 */}
+                  <div className="flex flex-col gap-2">
+                    <CheckboxGroup items={filterByRange(0, 4)} />
+                    <div className="flex flex-col gap-2">
+                      <InputCheckbox
+                        name="bid"
+                        label={t("bid")}
+                        error={errors?.bid as FieldError}
+                      />
+                      <CheckboxGroup
+                        items={filterByRange(5, 10)}
+                        reverse
+                        indent
+                      />
+                    </div>
+                  </div>
+
+                  {/* Col 2 */}
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
+                      <InputCheckbox
+                        name="matched"
+                        label={t("matched")}
+                        error={errors?.matched as FieldError}
+                      />
+                      <CheckboxGroup items={filterByRange(11, 14)} indent />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <InputCheckbox
+                        name="asked"
+                        label={t("asked")}
+                        error={errors?.asked as FieldError}
+                      />
+                      <CheckboxGroup
+                        items={filterByRange(15, 20)}
+                        reverse
+                        indent
+                      />
+                    </div>
+                  </div>
+
+                  {/* Col 3 */}
+                  <div className="flex flex-col gap-2">
+                    <CheckboxGroup items={filterByRange(21, 23)} />
+                    <div className="flex flex-col gap-2">
+                      <InputCheckbox
+                        name="foreign"
+                        label={t("foreign")}
+                        error={errors?.foreign as FieldError}
+                      />
+                      <CheckboxGroup
+                        items={filterByRange(24, Infinity)}
+                        reverse
+                        indent
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="w-full h-px bg-border"></div>
+                <div className="w-full h-px bg-border" />
 
                 <div className="flex flex-row items-center justify-center w-full gap-2 px-6">
                   <Button
@@ -112,12 +194,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                     <RotateCw size={16} className="mr-2" />
                     {t("button.reset")}
                   </Button>
-                  <Button
-                    type="submit"
-                    className="w-1/3 md:w-40"
-                    // isLoading={loading}
-                    // disabled={loading}
-                  >
+                  <Button type="submit" className="w-1/3 md:w-40">
                     {t("button.save")}
                   </Button>
                 </div>

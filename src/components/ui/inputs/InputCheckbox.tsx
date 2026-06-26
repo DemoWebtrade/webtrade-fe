@@ -7,8 +7,9 @@ type InputCheckboxProps = {
   error?: FieldError;
   registration?: UseFormRegisterReturn;
   disabled?: boolean;
-  checked?: boolean;
+  defaultChecked?: boolean;
   className?: string;
+  checked?: boolean;
 };
 
 export default function InputCheckbox({
@@ -19,18 +20,19 @@ export default function InputCheckbox({
   disabled,
   error,
   className,
-  checked = false,
+  defaultChecked = false,
+  checked,
 }: InputCheckboxProps) {
   return (
     <div>
       <div className="flex flex-row gap-2 items-center">
         <input
-          name={name}
           id={name}
-          className={`${className ?? ""} ${error ? "border-red-500" : "border-outline-base"}`}
           type="checkbox"
-          {...registration}
+          className={`${className ?? ""} ${error ? "border-red-500" : "border-outline-base"}`}
+          defaultChecked={defaultChecked}
           disabled={disabled}
+          {...registration}
           checked={checked}
         />
         <label className="text-sm font-normal" htmlFor={name}>
@@ -39,9 +41,7 @@ export default function InputCheckbox({
         </label>
       </div>
 
-      {error && (
-        <div className="text-red-500 text-xs mt-1">{error?.message}</div>
-      )}
+      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
     </div>
   );
 }
