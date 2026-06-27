@@ -1,7 +1,7 @@
 import Marquee from "react-fast-marquee";
 import { useTranslation } from "react-i18next";
 
-const email = import.meta.env.VITE_EMAIL_URL || "lhc021120@gmail.com";
+const email = import.meta.env.VITE_EMAIL_URL || "lehongchien.it@gmail.com";
 
 export default function Slogan() {
   const { t } = useTranslation();
