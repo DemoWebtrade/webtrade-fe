@@ -316,7 +316,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
 
                 <div className="w-full h-px bg-border" />
 
-                <div className="flex flex-row items-center justify-center w-full gap-2 px-6">
+                <div className="flex flex-row items-center justify-center w-full gap-2 md:px-6">
                   <Button
                     type="button"
                     variant="secondary"
@@ -328,10 +328,10 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                   <Button
                     type="button"
                     variant="secondary"
-                    className="w-1/3 md:w-40"
+                    className="w-1/3 md:w-40 whitespace-nowrap"
                     onClick={handleReset}
                   >
-                    <RotateCw size={16} className="mr-2" />
+                    <RotateCw size={16} className="md:mr-2 mr-1" />
                     {t("button.reset")}
                   </Button>
                   <Button
