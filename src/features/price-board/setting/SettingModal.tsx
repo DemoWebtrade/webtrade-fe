@@ -1,13 +1,19 @@
 import { Button } from "@/components/ui/Button";
 import InputCheckbox from "@/components/ui/inputs/InputCheckbox";
 import { backdropVariants, modalVariants } from "@/configs/modal";
-import { useAppSelector } from "@/store/hook";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectHeaderTableBaseConfig } from "@/store/modules/priceboard/selector";
+import { setHeaderTableBaseConfig } from "@/store/modules/priceboard/slice";
 import type { HeaderTableBaseConfig } from "@/store/modules/priceboard/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCw, X } from "lucide-react";
 import { useCallback, useEffect } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import {
+  useForm,
+  useWatch,
+  type FieldValues,
+  type UseFormRegister,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 interface SettingModalProps {
@@ -19,10 +25,12 @@ const CheckboxGroup = ({
   items,
   reverse = false,
   indent = false,
+  register,
 }: {
   items: HeaderTableBaseConfig[];
   reverse?: boolean;
   indent?: boolean;
+  register: UseFormRegister<FieldValues>;
 }) => {
   const { t } = useTranslation();
 
@@ -38,6 +46,7 @@ const CheckboxGroup = ({
           name={item.field}
           label={t(item.label)}
           defaultChecked={!item.hide}
+          registration={register(item.field)}
         />
       ))}
     </div>
@@ -46,16 +55,73 @@ const CheckboxGroup = ({
 
 export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const headerTableBaseConfig = useAppSelector(selectHeaderTableBaseConfig);
 
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting },
+    setValue,
+    register,
+    getValues,
+    reset,
+    control,
   } = useForm();
+
+  const bidValue = useWatch({ control, name: "bid" });
+  const matchedValue = useWatch({ control, name: "matched" });
+  const askedValue = useWatch({ control, name: "asked" });
+  const foreignValue = useWatch({ control, name: "foreign" });
+
+  const filterByRange = (min: number, max: number) =>
+    headerTableBaseConfig.filter(
+      (item) => item.index >= min && item.index <= max,
+    );
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const bidItems = filterByRange(5, 10);
+
+    bidItems.forEach((item) => {
+      setValue(item.field, bidValue);
+    });
+  }, [bidValue, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const matchedItems = filterByRange(11, 14);
+
+    matchedItems.forEach((item) => {
+      setValue(item.field, matchedValue);
+    });
+  }, [matchedValue, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const askedItems = filterByRange(15, 20);
+
+    askedItems.forEach((item) => {
+      setValue(item.field, askedValue);
+    });
+  }, [askedValue, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const foreignItems = filterByRange(24, Infinity);
+
+    foreignItems.forEach((item) => {
+      setValue(item.field, foreignValue);
+    });
+  }, [foreignValue, isOpen]);
 
   const handleClose = useCallback(() => {
     onClose();
+    reset();
   }, [onClose]);
 
   useEffect(() => {
@@ -68,12 +134,72 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  const onSubmit = () => {};
+  const handleSetValue = () => {
+    const bidItems = filterByRange(5, 10);
+    const matchedItems = filterByRange(11, 14);
+    const askedItems = filterByRange(15, 20);
+    const foreignItems = filterByRange(24, Infinity);
 
-  const filterByRange = (min: number, max: number) =>
-    headerTableBaseConfig.filter(
-      (item) => item.index >= min && item.index <= max,
-    );
+    const allBidVisibleItems = bidItems?.every((item) => !item.hide);
+
+    if (allBidVisibleItems) {
+      setValue("bid", true);
+    }
+
+    const allMatchedVisibleItems = matchedItems?.every((item) => !item.hide);
+
+    if (allMatchedVisibleItems) {
+      setValue("matched", true);
+    }
+
+    const allAskVisibleItems = askedItems?.every((item) => !item.hide);
+
+    if (allAskVisibleItems) {
+      setValue("asked", true);
+    }
+
+    const allForeignVisibleItems = foreignItems?.every((item) => !item.hide);
+
+    if (allForeignVisibleItems) {
+      setValue("foreign", true);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      handleSetValue();
+    }
+  }, [isOpen]);
+
+  const buildUpdatedConfig = (
+    config: HeaderTableBaseConfig[],
+    formValues: FieldValues,
+  ) => {
+    return config.map((item) => {
+      return {
+        ...item,
+        hide: !formValues[item.field],
+      };
+    });
+  };
+
+  const handleReset = async () => {
+    headerTableBaseConfig.forEach((item) => setValue(item.field, true));
+    setValue("bid", true);
+    setValue("matched", true);
+    setValue("asked", true);
+    setValue("foreign", true);
+  };
+
+  const onSubmit = async () => {
+    const data = getValues();
+
+    const updatedConfig = buildUpdatedConfig(headerTableBaseConfig, data);
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await dispatch(setHeaderTableBaseConfig(updatedConfig));
+    handleClose();
+  };
 
   return (
     <AnimatePresence>
@@ -118,17 +244,21 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                 <div className="grid grid-cols-3 gap-x-4 gap-y-2">
                   {/* Col 1 */}
                   <div className="flex flex-col gap-2">
-                    <CheckboxGroup items={filterByRange(0, 4)} />
+                    <CheckboxGroup
+                      items={filterByRange(0, 4)}
+                      register={register}
+                    />
                     <div className="flex flex-col gap-2">
                       <InputCheckbox
                         name="bid"
                         label={t("bid")}
-                        error={errors?.bid as FieldError}
+                        registration={register("bid")}
                       />
                       <CheckboxGroup
                         items={filterByRange(5, 10)}
                         reverse
                         indent
+                        register={register}
                       />
                     </div>
                   </div>
@@ -139,37 +269,46 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                       <InputCheckbox
                         name="matched"
                         label={t("matched")}
-                        error={errors?.matched as FieldError}
+                        registration={register("matched")}
                       />
-                      <CheckboxGroup items={filterByRange(11, 14)} indent />
+                      <CheckboxGroup
+                        items={filterByRange(11, 14)}
+                        indent
+                        register={register}
+                      />
                     </div>
                     <div className="flex flex-col gap-2">
                       <InputCheckbox
                         name="asked"
                         label={t("asked")}
-                        error={errors?.asked as FieldError}
+                        registration={register("asked")}
                       />
                       <CheckboxGroup
                         items={filterByRange(15, 20)}
                         reverse
                         indent
+                        register={register}
                       />
                     </div>
                   </div>
 
                   {/* Col 3 */}
                   <div className="flex flex-col gap-2">
-                    <CheckboxGroup items={filterByRange(21, 23)} />
+                    <CheckboxGroup
+                      items={filterByRange(21, 23)}
+                      register={register}
+                    />
                     <div className="flex flex-col gap-2">
                       <InputCheckbox
                         name="foreign"
                         label={t("foreign")}
-                        error={errors?.foreign as FieldError}
+                        registration={register("foreign")}
                       />
                       <CheckboxGroup
                         items={filterByRange(24, Infinity)}
                         reverse
                         indent
+                        register={register}
                       />
                     </div>
                   </div>
@@ -181,8 +320,8 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                   <Button
                     type="button"
                     variant="secondary"
-                    onClick={onClose}
                     className="w-1/3 md:w-40"
+                    onClick={handleClose}
                   >
                     {t("button.close")}
                   </Button>
@@ -190,11 +329,17 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                     type="button"
                     variant="secondary"
                     className="w-1/3 md:w-40"
+                    onClick={handleReset}
                   >
                     <RotateCw size={16} className="mr-2" />
                     {t("button.reset")}
                   </Button>
-                  <Button type="submit" className="w-1/3 md:w-40">
+                  <Button
+                    type="submit"
+                    className="w-1/3 md:w-40"
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                  >
                     {t("button.save")}
                   </Button>
                 </div>

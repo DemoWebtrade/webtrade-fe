@@ -342,7 +342,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ceil",
         headerName: t("ceil"),
-        minWidth: 42,
+        minWidth: 50,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -352,7 +352,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ref",
         headerName: t("ref"),
-        minWidth: 42,
+        minWidth: 50,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -362,7 +362,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "floor",
         headerName: t("floor"),
-        minWidth: 42,
+        minWidth: 50,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -378,7 +378,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -389,7 +389,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -400,7 +400,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -411,7 +411,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -422,7 +422,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -433,7 +433,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "buyVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -451,7 +451,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "matchPrice",
             headerName: `${t("price")}`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
 
@@ -463,7 +463,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "matchVol",
             headerName: t("vol"),
-            minWidth: 66,
+            minWidth: 60,
             flex: 1.2,
             cellStyle: coloredCellStyle,
             valueFormatter: volFormatter,
@@ -503,7 +503,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellPrice1",
             headerName: `${t("p")}1`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -514,7 +514,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellVol1",
             headerName: `${t("vol")}1`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -525,7 +525,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellPrice2",
             headerName: `${t("p")}2`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -536,7 +536,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellVol2",
             headerName: `${t("vol")}2`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -547,7 +547,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellPrice3",
             headerName: `${t("p")}3`,
-            minWidth: 42,
+            minWidth: 50,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -558,7 +558,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "sellVol3",
             headerName: `${t("vol")}3`,
-            minWidth: 66,
+            minWidth: 60,
             flex: 1,
             valueFormatter: volFormatter,
             cellStyle: coloredCellStyle,
@@ -628,7 +628,7 @@ export default function BaseTable({ id }: { id: string }) {
           {
             field: "nnRoom",
             headerName: `${t("room")}`,
-            minWidth: 72,
+            minWidth: 75,
             flex: 1.5,
             headerClass: "text-xs",
             cellClass: "text-xs text-right",
@@ -730,8 +730,6 @@ export default function BaseTable({ id }: { id: string }) {
     () => ({
       sortable: true,
       resizable: false,
-      cellFlashDuration: 500,
-      cellFadeDuration: 300,
       headerClass: "text-xs! font-normal! border-r! border-border!",
       headerTooltip: `${t("change-col")}`,
       enableCellChangeFlash: false,

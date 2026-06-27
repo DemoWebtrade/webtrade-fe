@@ -47,6 +47,16 @@ export default function AddBenAccountModal({
     }
   }, [isOpen, reset]);
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
   const onSubmit = async (data: AddBenAccountForm) => {
     const { bank, accountCode, fullName } = data;
 

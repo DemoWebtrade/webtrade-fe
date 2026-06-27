@@ -1,3 +1,4 @@
+import type { HeaderTableBaseConfig } from "@/store/modules/priceboard/types";
 import type { CellClassParams, CellStyle } from "ag-grid-community";
 
 interface RowData {
@@ -131,10 +132,10 @@ export const FLASH_CLASS_MAP: Record<string, string> = {
   "var(--border-secondary)": "cell-flashing-volume",
 };
 
-export const HEADER_TABLE_BASE_CONFIG = [
+export const HEADER_TABLE_BASE_CONFIG: HeaderTableBaseConfig[] = [
   { index: 1, label: "symbol", field: "symbol", hide: false },
   { index: 2, label: "ceil", field: "ceil", hide: false },
-  { index: 3, label: "ref", hide: false },
+  { index: 3, label: "ref", field: "ref", hide: false },
   { index: 4, label: "floor", field: "floor", hide: false },
   { index: 5, label: "p3", field: "buyPrice3", hide: false },
   { index: 6, label: "vol3", field: "buyVol3", hide: false },

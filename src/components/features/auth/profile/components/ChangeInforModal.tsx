@@ -37,6 +37,16 @@ export default function ChangeInforModal({
   const profile = useAppSelector(selectProfile);
 
   useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
+  useEffect(() => {
     if (profile && isOpen && type) {
       const { email, phone, address } = profile;
 
