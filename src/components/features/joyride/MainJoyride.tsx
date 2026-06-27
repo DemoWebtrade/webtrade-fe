@@ -205,7 +205,7 @@ export default function MainJoyride({ isOpen, onClose }: MainJoyrideProps) {
             exit="exit"
             className="fixed inset-0 bg-black/65 backdrop-blur-sm z-40"
           />
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 z-9999999 flex items-center justify-center">
             <motion.div
               variants={modalVariants}
               initial="hidden"

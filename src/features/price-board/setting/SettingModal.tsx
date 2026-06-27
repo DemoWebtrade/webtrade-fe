@@ -216,7 +216,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 z-9999999 flex items-center justify-center">
             <motion.div
               variants={modalVariants}
               initial="hidden"
@@ -226,9 +226,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
             >
               {/* Header */}
               <div className="flex items-center justify-between px-6">
-                <h2 className="text-xl font-medium">
-                  {t("Tùy chỉnh hiển thị")}
-                </h2>
+                <h2 className="text-xl font-medium">{t("display-options")}</h2>
 
                 <div className="text-content-primary" onClick={handleClose}>
                   <X size={20} />
@@ -238,7 +236,7 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
               <div className="w-full h-px bg-border"></div>
 
               <form
-                className="flex flex-col gap-4 md:gap-6 px-6"
+                className="flex flex-col gap-4 md:gap-6 md:px-6 px-2"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="grid grid-cols-3 gap-x-4 gap-y-2">

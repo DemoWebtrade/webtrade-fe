@@ -95,7 +95,7 @@ export default function ChangeInforModal({
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 z-9999999 flex items-center justify-center">
             <motion.div
               variants={modalVariants}
               initial="hidden"

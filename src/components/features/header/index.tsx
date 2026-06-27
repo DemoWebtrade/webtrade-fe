@@ -84,9 +84,13 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:px-2 pr-0.5 border-b border-border md:gap-8 gap-4 max-[425px]:gap-0">
-      <div className="flex flex-row items-center md:gap-6">
-        <img src={Logo} alt="logo" className="w-12 h-full" />
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:px-2 pr-0.5 border-b border-border md:gap-8">
+      <div className="flex flex-row items-center gap-2">
+        <img src={Logo} alt="logo" className="w-12 min-w-8 h-full" />
+
+        <div data-tour="prop-1" className="max-[620px]:block hidden">
+          <DayTrading />
+        </div>
       </div>
 
       <div className="flex flex-row items-center justify-center md:gap-4 gap-1">
@@ -95,9 +99,9 @@ export default function Header() {
           <Slogan />
         </div>
 
-        <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
+        <div className="h-4 w-px bg-border md:mx-2 max-[620px]:hidden"></div>
         {/* time */}
-        <div data-tour="prop-1">
+        <div data-tour="prop-1" className="max-[620px]:hidden">
           <DayTrading />
         </div>
 

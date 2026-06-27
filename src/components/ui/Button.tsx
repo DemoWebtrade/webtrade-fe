@@ -55,8 +55,8 @@ function Button({
       {...props}
     >
       {isLoading ? (
-        <div className="flex items-center justify-center gap-2.5">
-          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+        <div className="flex items-center justify-center gap-1 md:gap-2.5">
+          <div className="md:w-5 md:h-5 w-4 h-4 border-2 border-content-disable border-t-transparent rounded-full animate-spin" />
           <span>{t("loading")}</span>
         </div>
       ) : (

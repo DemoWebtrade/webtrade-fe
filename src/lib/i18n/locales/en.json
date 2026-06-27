@@ -96,6 +96,8 @@
   "loading-search": "Loading...",
   "banks-not-found": "No banks found",
 
+  "display-options": "Display Options",
+
   "auth": {
     "sessionExpired": "Your trading session has expired. Please log in again to continue."
   },
@@ -216,7 +218,10 @@
     "previous": "Back",
     "start_trading": "Start trading",
     "save-change": "Save Changes",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "close": "Close",
+    "save": "Save"
   },
 
   "toast": {

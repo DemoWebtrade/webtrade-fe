@@ -95,6 +95,8 @@
   "loading-search": "Đang tải ...",
   "banks-not-found": "Không tìm thấy ngân hàng",
 
+  "display-options": "Tùy chỉnh hiển thị",
+
   "auth": {
     "sessionExpired": "Phiên giao dịch của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
   },
