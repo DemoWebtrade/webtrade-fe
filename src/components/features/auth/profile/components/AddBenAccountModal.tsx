@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
-import { InputSearchField } from "@/components/ui/inputs/InputSearch";
+import { InputSearchBankField } from "@/components/ui/inputs/InputSearchBankField";
 import { backdropVariants, LIST_BANKS, modalVariants } from "@/configs";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
@@ -123,7 +123,7 @@ export default function AddBenAccountModal({
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-4 md:gap-6 px-6"
               >
-                <InputSearchField
+                <InputSearchBankField
                   name="bank"
                   label={t("user.bank")}
                   registration={register("bank", {

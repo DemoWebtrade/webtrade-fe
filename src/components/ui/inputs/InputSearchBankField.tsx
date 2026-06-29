@@ -39,7 +39,7 @@ type Bank = {
   flagForeign: number;
 };
 
-type InputSearchFieldProps<TForm extends FieldValues = FieldValues> = {
+type InputSearchBankFieldProps<TForm extends FieldValues = FieldValues> = {
   label?: string;
   required?: boolean;
   name: Path<TForm>;
@@ -52,7 +52,7 @@ type InputSearchFieldProps<TForm extends FieldValues = FieldValues> = {
   setValue?: UseFormSetValue<TForm>;
 };
 
-export const InputSearchField = <TForm extends FieldValues = FieldValues>({
+export const InputSearchBankField = <TForm extends FieldValues = FieldValues>({
   label,
   required,
   name,
@@ -63,7 +63,7 @@ export const InputSearchField = <TForm extends FieldValues = FieldValues>({
   className,
   onBankSelect,
   setValue,
-}: InputSearchFieldProps<TForm>) => {
+}: InputSearchBankFieldProps<TForm>) => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
   const currentLang = (i18n.resolvedLanguage ||
