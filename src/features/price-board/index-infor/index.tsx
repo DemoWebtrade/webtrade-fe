@@ -100,9 +100,10 @@ export default function IndexInfor() {
         modules={[Navigation]}
         breakpoints={{
           0: { slidesPerView: 1 },
-          500: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1440: { slidesPerView: 4 },
+          550: { slidesPerView: 2 },
+          840: { slidesPerView: 3 },
+          1065: { slidesPerView: 3 },
+          1140: { slidesPerView: 4 },
         }}
         zoom={false}
         allowTouchMove={false}

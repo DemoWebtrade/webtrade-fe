@@ -61,6 +61,12 @@
 
   "order": "Đặt lệnh",
 
+  "data-updated": "Dữ liệu đã cập nhật",
+  "reconnecting": "Đang kết nối lại",
+  "disconnected": "Mất kết nối",
+  "connection-error": "Lỗi kết nối",
+  "unable-connect": "Không thể kết nối",
+
   "trading-tooltip": {
     "default": "Ngày nghỉ giao dịch chính thức",
     "2026-01-01": "Tết Dương lịch - Thị trường đóng cửa",

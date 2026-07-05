@@ -85,6 +85,8 @@
   --color-orange-active: var(--orange-active);
   --color-orange-selected: var(--orange-selected);
   --color-orange-disabled: var(--orange-disabled);
+
+  --animate-wifi-pulse: wifiPulse 0.8s ease-in-out infinite alternate;
 }
 
 :root {
@@ -260,4 +262,13 @@
   --orange-active: #cc7422;
   --orange-selected: #e8903a;
   --orange-disabled: #2b1f0e;
+}
+
+@keyframes wifiPulse {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
 import SettingBoard from "./setting";
+import Status from "./status";
 import Table from "./table";
 
 const IndexInfor = lazy(() => import("./index-infor"));
@@ -28,7 +29,7 @@ export default function PriceBoard() {
   }, [marketStatus, id]);
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 relative px-2 md:px-4">
+    <div className="w-full h-full flex flex-col gap-3 relative p-2 md:p-4">
       <div className="h-40 w-full">
         <Suspense fallback={<SekeletonChartIndex />}>
           <IndexInfor />
@@ -39,28 +40,6 @@ export default function PriceBoard() {
         <MenuBoard id={id} setId={setId} />
 
         <div className="flex flex-row items-center justify-between md:gap-4 gap-2">
-          {/* status socket market */}
-          <div
-            data-tooltip-id="global-tooltip"
-            data-tooltip-content={`${t("status.status")}: ${
-              marketStatus === "connected"
-                ? t("status.connected")
-                : t("status.disconnected")
-            }`}
-            className="cursor-pointer"
-          >
-            <span className="relative flex size-2">
-              <span
-                className={`absolute inline-flex h-full w-full animate-ping rounded-full ${marketStatus === "connected" ? "bg-green-500" : "bg-red-active"}  opacity-75`}
-              ></span>
-              <span
-                className={`relative inline-flex size-2 rounded-full  ${marketStatus === "connected" ? "bg-green-500" : "bg-red-active"}`}
-              ></span>
-            </span>
-          </div>
-
-          <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
-
           <SettingBoard />
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
@@ -75,8 +54,12 @@ export default function PriceBoard() {
         </div>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col bg-secondary-base rounded-xl">
         <Table id={id} />
+
+        <div className="w-full">
+          <Status marketStatus={marketStatus} />
+        </div>
       </div>
     </div>
   );

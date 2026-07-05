@@ -7,7 +7,7 @@ export default function Slogan() {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-purple-base/10 h-6 flex items-center justify-center rounded overflow-hidden">
+    <div className="bg-secondary-base/50 h-6 flex items-center justify-center rounded overflow-hidden">
       <Marquee
         speed={50}
         pauseOnHover={true}

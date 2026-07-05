@@ -61,6 +61,12 @@
 
   "order": "Order",
 
+  "data-updated": "Data Updated",
+  "reconnecting": "Reconnecting...",
+  "disconnected": "Disconnected",
+  "connection-error": "Connection Error",
+  "unable-connect": "Unable to Connect",
+
   "trading-tooltip": {
     "default": "Official non-trading day",
     "2026-01-01": "New Year's Day - Market closed",

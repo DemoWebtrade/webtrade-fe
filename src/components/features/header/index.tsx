@@ -84,29 +84,32 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:px-2 pr-0.5 border-b border-border md:gap-8">
-      <div className="flex flex-row items-center gap-2">
-        <img src={Logo} alt="logo" className="w-12 min-w-8 h-full" />
+    <header className="flex items-center justify-between w-full h-full bg-bg-secondary md:px-4 px-2 pr-0.5 gap-1 md:gap-8">
+      <div className="flex flex-row items-center gap-1 md:gap-2">
+        <img src={Logo} alt="logo" className="w-10 min-w-8 h-full" />
 
-        <div data-tour="prop-1" className="max-[620px]:block hidden">
-          <DayTrading />
+        <div className="flex flex-row items-center gap-1 md:gap-2 max-[425px]:hidden">
+          <span className="text-base font-bold">WebTrade</span>
+          <div className="text-[8px] font-bold px-1 rounded bg-purple-selected text-white grid place-items-center h-max">
+            PRO
+          </div>
         </div>
       </div>
 
       <div className="flex flex-row items-center justify-center md:gap-4 gap-1">
         {/* slogan */}
-        <div className="max-[620px]:hidden min-[620px]:w-50 lg:w-100">
+        <div className="max-[870px]:hidden w-50 min-[1057px]:w-90 min-[1120px]:w-100 min-[1120px]:flex">
           <Slogan />
         </div>
 
-        <div className="h-4 w-px bg-border md:mx-2 max-[620px]:hidden"></div>
+        <div className="h-4 w-px bg-border md:mx-2 max-[1120px]:hidden"></div>
         {/* time */}
-        <div data-tour="prop-1" className="max-[620px]:hidden">
+        <div data-tour="prop-1">
           <DayTrading />
         </div>
 
         {/* Chức năng */}
-        <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1">
+        <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1 pr-3 md:pr-2">
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
 
           <div data-tour="prop-2">
