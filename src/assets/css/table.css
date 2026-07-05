@@ -106,3 +106,7 @@
     opacity: 0;
   }
 }
+
+.ag-body-viewport {
+  border-radius: 0px !important;
+}
