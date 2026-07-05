@@ -49,7 +49,7 @@ export default function Status({ marketStatus }: { marketStatus: string }) {
           : "text-red-active";
 
   return (
-    <div className="h-full w-full flex flex-row items-center justify-between px-1 md:px-4 py-1 rounded-b-xl border-x border-b border-border">
+    <div className="h-full w-full flex flex-row items-center justify-between px-1 py-0.5 md:px-4 rounded-b-xl border-x border-b border-border">
       <div className="text-[8px] md:text-[10px] flex flex-row gap-0.5 md:gap-1 items-center justify-center text-content-primary">
         <span>{t("price-table", { price: "1,000" })}</span>
         <span>{t("volume-table", { volume: "1" })}</span>
@@ -78,7 +78,11 @@ export default function Status({ marketStatus }: { marketStatus: string }) {
         {/* Độ trễ */}
         <div className="flex flex-row items-center gap-0.5 md:gap-1.5">
           <span className={`text-xs ${latencyColor}`}>
-            {isConnected && latency !== null ? `${latency}ms` : <Minus />}
+            {isConnected && latency !== null ? (
+              `${latency}ms`
+            ) : (
+              <Minus size={12} />
+            )}
           </span>
         </div>
       </div>
