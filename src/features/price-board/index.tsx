@@ -28,7 +28,7 @@ export default function PriceBoard() {
   }, [marketStatus, id]);
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 relative">
+    <div className="w-full h-full flex flex-col gap-3 relative px-2 md:px-4">
       <div className="h-40 w-full">
         <Suspense fallback={<SekeletonChartIndex />}>
           <IndexInfor />
