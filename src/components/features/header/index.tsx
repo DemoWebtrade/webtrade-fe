@@ -98,7 +98,7 @@ export default function Header() {
 
       <div className="flex flex-row items-center justify-center md:gap-4 gap-1">
         {/* slogan */}
-        <div className="max-[870px]:hidden w-50 min-[1057px]:w-90 min-[1120px]:w-100 min-[1120px]:flex">
+        <div className="max-[870px]:hidden w-50 min-[1057px]:w-90 min-[1120px]:w-100 min-[1120px]:flex xl:w-130 2xl:w-180">
           <Slogan />
         </div>
 
