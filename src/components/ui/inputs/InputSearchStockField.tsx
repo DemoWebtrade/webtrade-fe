@@ -3,7 +3,7 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import type { LanguageKey } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import type {
   FieldError,
   FieldValues,
@@ -54,6 +54,26 @@ type InputSearchStockFieldProps<TForm extends FieldValues = FieldValues> = {
   setValue?: UseFormSetValue<TForm>;
 };
 
+const TYPE_ORDER: Record<string, number> = {
+  s: 0, // Cổ phiếu
+  f: 1, // Phái sinh
+  b: 2, // Trái phiếu
+  w: 3, // Chứng quyền
+  e: 4, // ETF
+  i: 5, // Cổ phiếu
+  m: 6, // Chứng chỉ quỹ
+};
+
+const TYPE_LABEL: Record<string, string> = {
+  s: "input.product-stock",
+  f: "input.product-derivatives",
+  b: "input.product-bonds",
+  w: "input.product-coveredWarrants",
+  e: "input.product-etf",
+  i: "input.product-stock",
+  m: "input.product-fundCertificate",
+};
+
 export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   label,
   required,
@@ -72,8 +92,19 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
     i18n.language ||
     "vi") as LanguageKey;
 
+  const sortedStocks = useMemo(
+    () =>
+      [...(LIST_STOCKS ?? [])].sort((a, b) => {
+        const typeDiff =
+          (TYPE_ORDER[a.type] ?? 99) - (TYPE_ORDER[b.type] ?? 99);
+        if (typeDiff !== 0) return typeDiff;
+        return a.code.localeCompare(b.code);
+      }),
+    [],
+  );
+
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredStocks, setFilteredStocks] = useState<Stock[]>(LIST_STOCKS);
+  const [filteredStocks, setFilteredStocks] = useState<Stock[]>(sortedStocks);
   const [searchValue, setSearchValue] = useState("");
   const [selectedStock, setSelectedStock] = useState<string | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -88,7 +119,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
       setSelectedStock(null);
       setIsOpen(true);
 
-      const filtered = LIST_STOCKS.filter(
+      const filtered = sortedStocks.filter(
         (stock) =>
           stock?.code.toLowerCase().includes(value.toLowerCase()) ||
           stock?.fullName.toLowerCase().includes(value.toLowerCase()) ||
@@ -101,7 +132,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
 
       registration?.onChange?.(e);
     },
-    [registration],
+    [registration, sortedStocks],
   );
 
   const handleStockSelect = useCallback(
@@ -171,7 +202,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
     setHighlightedIndex(-1);
     if (!selectedStock) {
       setSearchValue("");
-      setFilteredStocks(LIST_STOCKS);
+      setFilteredStocks(sortedStocks);
     }
   });
 
@@ -194,23 +225,21 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
         className={`${isSelected ? "bg-purple-selected" : isHighlighted ? "bg-purple-hover" : ""} hover:bg-purple-hover px-2 flex items-center gap-4 cursor-pointer transition-colors`}
         style={style}
       >
-        <div className="flex flex-row min-w-0">
-          <span className="text-sm truncate">
+        <div className="grid grid-cols-[1fr_3fr_2fr] items-center min-w-0 w-full ">
+          <span className="text-sm font-bold">
             {filteredStocks?.[index]?.code}
           </span>
-          <span className="text-sm truncate uppercase">
+          <span className="text-sm uppercase">
             {currentLang === "vi"
               ? filteredStocks?.[index]?.clientName
               : (filteredStocks?.[index]?.clientNameEn ??
                 filteredStocks?.[index]?.clientName)}
           </span>
-          <span className="flex flex-row items-center text-xs text-content-tertiary">
-            {filteredStocks?.[index]?.type === "s"
-              ? t("Cổ phiếu")
-              : filteredStocks?.[index]?.type === "f"
-                ? t("Phái sinh")
-                : ""}{" "}
-            - {filteredStocks?.[index]?.exchange}
+          <span className="flex flex-row items-center text-xs text-content-tertiary ml-auto">
+            {t(TYPE_LABEL[filteredStocks?.[index]?.type ?? ""] ?? "")} -{" "}
+            {filteredStocks?.[index]?.type === "i"
+              ? "upcom"
+              : filteredStocks?.[index]?.exchange}
           </span>
         </div>
       </div>
@@ -260,7 +289,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-[calc(100%+6px)] left-0 bg-bg-tertiary border border-outline-base rounded-md shadow-xl z-50 overflow-hidden md:w-96"
+              className="absolute top-[calc(100%+6px)] left-0 bg-bg-tertiary border border-outline-base rounded-md shadow-xl z-50 overflow-hidden md:w-110 w-80"
             >
               {filteredStocks.length === 0 ? (
                 <div className="grid place-items-center h-13 px-4 text-center text-content-tertiary text-sm">

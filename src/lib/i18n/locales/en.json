@@ -118,7 +118,13 @@
     "date-placeholder": "dd/mm/yyyy",
     "gender-placeholder": "Select gender...",
     "bank-placeholder": "Search Bank",
-    "accountCode-placeholder": "Enter Account Number"
+    "accountCode-placeholder": "Enter Account Number",
+    "product-stock": "Stocks",
+    "product-derivatives": "Derivatives",
+    "product-bonds": "Bonds",
+    "product-coveredWarrants": "Covered Warrants",
+    "product-etf": "ETFs",
+    "product-fundCertificate": "Fund Certificates"
   },
 
   "validate": {

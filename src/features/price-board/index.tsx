@@ -38,11 +38,15 @@ export default function PriceBoard() {
       </div>
 
       <div className="h-10 w-full flex flex-row items-center justify-between md:gap-4 gap-2">
-        <SearchStock />
+        <div className="flex flex-row gap-2 items-center flex-1 min-w-0">
+          <SearchStock />
 
-        <MenuBoard id={id} setId={setId} />
+          <div className="flex-1 min-w-0">
+            <MenuBoard id={id} setId={setId} />
+          </div>
+        </div>
 
-        <div className="flex flex-row items-center justify-between md:gap-4 gap-2">
+        <div className="flex flex-row items-center justify-between md:gap-4 gap-2 shrink-0">
           <SettingBoard />
 
           <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>

@@ -117,7 +117,13 @@
     "date-placeholder": "dd/mm/yyyy",
     "gender-placeholder": "Chọn giới tính...",
     "bank-placeholder": "Tìm kiếm ngân hàng",
-    "accountCode-placeholder": "Nhập số tài khoản"
+    "accountCode-placeholder": "Nhập số tài khoản",
+    "product-stock": "Cổ phiếu",
+    "product-derivatives": "Phái sinh",
+    "product-bonds": "Trái phiếu",
+    "product-coveredWarrants": "Chứng quyền",
+    "product-etf": "ETF",
+    "product-fundCertificate": "Chứng chỉ quỹ"
   },
 
   "validate": {

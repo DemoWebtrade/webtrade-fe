@@ -37,15 +37,16 @@ export const ShiftingDropDown = ({
         checkOnclick={checkOnclick}
       >
         <div className="flex flex-row md:gap-1 gap-0.5 items-center justify-center">
-          <span className="text-center text-sm grid place-items-center">
+          <div className="text-sm flex items-center justify-center leading-0">
             {t?.children?.some((i) => i?.id === id)
               ? i18n.t(`${t?.children?.find((i) => i?.id === id)?.title}`)
               : i18n.t(`${t?.title}`)}
-          </span>
+          </div>
 
           {t?.children && (
             <ChevronDown
-              className={`size-4 ${selected === t.id && "rotate-180"}`}
+              size={16}
+              className={`${selected === t.id && "rotate-180"}`}
             />
           )}
         </div>
@@ -90,7 +91,7 @@ const Tab: FC<TabProps> = ({
         handleSetSelected(tab);
         if (checkOnclick) handleChangeId(tab);
       }}
-      className={`flex items-center justify-center gap-1 rounded-md px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors ${
+      className={`flex items-center justify-center gap-1 rounded-md px-1 md:px-3 md:py-1.5 py-0.5 text-sm transition-colors h-7 ${
         selected === tab
           ? "bg-purple-active text-white"
           : "text-content-primary"
