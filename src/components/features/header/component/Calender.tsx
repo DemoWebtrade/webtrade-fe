@@ -35,7 +35,9 @@ export default function Day({ openCalendar }: { openCalendar: boolean }) {
 
   return (
     <div className="relative cursor-pointer leading-3">
-      <span className="text-min leading-3 whitespace-nowrap">{day}</span>
+      <span className="text-min text-content-tertiary leading-3 whitespace-nowrap">
+        {day}
+      </span>
 
       <AnimatePresence>
         {openCalendar && (

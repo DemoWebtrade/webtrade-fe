@@ -3,6 +3,7 @@
   --ag-foreground-color: var(--content-primary) !important;
   --ag-header-background-color: var(--bg-secondary) !important;
   --ag-odd-row-background-color: var(--bg-secondary) !important;
+  --ag-border-radius: 12px !important;
   --ag-border-color: var(--border) !important;
   --ag-font-size: clamp(10px, 0.8vw, 12px);
   --ag-inherited-font-family: "Hanken Grotesk";
@@ -13,7 +14,7 @@
 }
 
 .ag-theme-quartz-custom {
-  border-radius: 8px;
+  border-radius: 12px;
   border-bottom: none !important;
 }
 
@@ -41,7 +42,7 @@
 .ag-body-vertical-scroll::-webkit-scrollbar-thumb,
 .ag-body-viewport::-webkit-scrollbar-thumb {
   background-color: #475569 !important;
-  border-radius: 8px !important;
+  border-radius: 12px !important;
 }
 
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb:hover,
@@ -90,6 +91,7 @@
 }
 
 .ag-layout-normal {
+  border-radius: 12px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
@@ -103,4 +105,8 @@
   .ag-header-cell-resize {
     opacity: 0;
   }
+}
+
+.ag-body-viewport {
+  border-radius: 0px !important;
 }

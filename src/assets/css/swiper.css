@@ -4,3 +4,7 @@
   height: 24px !important;
   color: var(--color-bg-button);
 }
+
+.swiper-wrapper {
+  box-sizing: border-box !important;
+}

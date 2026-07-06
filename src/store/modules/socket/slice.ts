@@ -3,6 +3,7 @@ import type { SocketState } from "./types";
 
 const initialState: SocketState = {
   marketStatus: "",
+  latency: null,
 };
 
 const socketSlice = createSlice({
@@ -12,9 +13,12 @@ const socketSlice = createSlice({
     setMarketStatus: (state, action: PayloadAction<string>) => {
       state.marketStatus = action.payload;
     },
+    setLatency: (state, action: PayloadAction<number | null>) => {
+      state.latency = action.payload;
+    },
   },
 });
 
-export const { setMarketStatus } = socketSlice.actions;
+export const { setMarketStatus, setLatency } = socketSlice.actions;
 
 export default socketSlice.reducer;

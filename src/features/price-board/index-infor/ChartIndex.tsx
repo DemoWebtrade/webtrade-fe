@@ -10,7 +10,6 @@ import {
   type IChartApi,
   type ISeriesApi,
   LastPriceAnimationMode,
-  LineStyle,
   type MouseEventParams,
   type Time,
   type UTCTimestamp,
@@ -162,6 +161,7 @@ const ChartIndex = (props: Props) => {
         },
       },
       timeScale: {
+        visible: false,
         fixLeftEdge: true,
         fixRightEdge: true,
         borderVisible: false,
@@ -222,7 +222,7 @@ const ChartIndex = (props: Props) => {
     });
     volumeSeries.priceScale().applyOptions({
       scaleMargins: {
-        top: 0.7,
+        top: 0.8,
         bottom: 0,
       },
     });
@@ -269,13 +269,13 @@ const ChartIndex = (props: Props) => {
     });
 
     // Xóa price line cũ và tạo mới
-    baselineSeriesRef.current.createPriceLine({
-      price: openIndex,
-      color: "#525151",
-      lineWidth: 1,
-      lineStyle: LineStyle.LargeDashed,
-      axisLabelVisible: true,
-    });
+    // baselineSeriesRef.current.createPriceLine({
+    //   price: openIndex,
+    //   color: "#525151",
+    //   lineWidth: 1,
+    //   lineStyle: LineStyle.LargeDashed,
+    //   axisLabelVisible: true,
+    // });
 
     // Chuẩn bị dữ liệu
     const chartData: { time: UTCTimestamp; value: number }[] = [];

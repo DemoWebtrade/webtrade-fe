@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-purple-base text-white text-sm hover:bg-purple-hover disabled:bg-purple-disabled disabled:text-content-disable",
+          "bg-purple-base text-white text-sm hover:bg-purple-hover disabled:bg-purple-disabled disabled:text-content-disable whitespace-nowrap",
         success:
           "bg-green-base text-white text-sm hover:bg-green-hover disabled:bg-green-disabled disabled:text-content-disable",
         error:
