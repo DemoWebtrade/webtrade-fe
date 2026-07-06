@@ -225,6 +225,7 @@
   },
 
   "toast": {
-    "change-info-success": "Thay đổi thông tin thành công"
+    "change-info-success": "Thay đổi thông tin thành công",
+    "limited_other": "Bạn đã vượt quá giới hạn thao tác. Vui lòng thử lại sau {{count}} phút {{count}} giây."
   }
 }

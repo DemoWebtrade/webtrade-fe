@@ -6,6 +6,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SekeletonChartIndex from "./index-infor/Sekeleton";
 import MenuBoard from "./menu-board";
+import SearchStock from "./search-stock";
 import SettingBoard from "./setting";
 import Table from "./table";
 
@@ -36,6 +37,8 @@ export default function PriceBoard() {
       </div>
 
       <div className="h-10 w-full flex flex-row items-center justify-between md:gap-4 gap-2">
+        <SearchStock />
+
         <MenuBoard id={id} setId={setId} />
 
         <div className="flex flex-row items-center justify-between md:gap-4 gap-2">

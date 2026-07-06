@@ -7,6 +7,7 @@ import {
   selectLoadingUpdateProfile,
   selectProfile,
 } from "@/store/modules/auth/selector";
+import { rateLimiter } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect } from "react";
@@ -65,6 +66,23 @@ export default function ChangeInforModal({
     address?: string;
   }) => {
     const { email, phone, address } = data;
+
+    const RATE_LIMITER = {
+      maxRequests: 1,
+      windowMs: 1000,
+      blockDurationMs: 2000, // Block for 1 seconds if exceeded
+    };
+
+    if (!rateLimiter.checkRateLimit("change-infor-form", RATE_LIMITER)) {
+      const timeUntilReset = rateLimiter.getTimeUntilReset(
+        "change-infor-form",
+        RATE_LIMITER,
+      );
+      const minutes = Math.ceil(timeUntilReset / 60000);
+      toast.error(t("toast.limited_other", { count: minutes }));
+      return;
+    }
+
     try {
       const fieldMap: Record<string, object> = {
         EMAIL: { email },

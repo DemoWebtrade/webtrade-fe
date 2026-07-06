@@ -225,6 +225,7 @@
   },
 
   "toast": {
-    "change-info-success": "Profile updated successfully"
+    "change-info-success": "Profile updated successfully",
+    "contact-form-limited_other": "Rate limit exceeded. Please try again in {{count}} minute {{count}} seconds."
   }
 }

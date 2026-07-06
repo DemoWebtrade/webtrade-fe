@@ -8,6 +8,7 @@ import {
   getBeneficiariesThunk,
 } from "@/store/modules/auth/api";
 import { selectProfile } from "@/store/modules/auth/selector";
+import { rateLimiter } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect } from "react";
@@ -59,6 +60,22 @@ export default function AddBenAccountModal({
 
   const onSubmit = async (data: AddBenAccountForm) => {
     const { bank, accountCode, fullName } = data;
+
+    const RATE_LIMITER = {
+      maxRequests: 1,
+      windowMs: 1000,
+      blockDurationMs: 2000, // Block for 1 seconds if exceeded
+    };
+
+    if (!rateLimiter.checkRateLimit("add-accountBen-form", RATE_LIMITER)) {
+      const timeUntilReset = rateLimiter.getTimeUntilReset(
+        "add-accountBen-form",
+        RATE_LIMITER,
+      );
+      const minutes = Math.ceil(timeUntilReset / 60000);
+      toast.error(t("toast.colimited_other", { count: minutes }));
+      return;
+    }
 
     try {
       await dispatch(
