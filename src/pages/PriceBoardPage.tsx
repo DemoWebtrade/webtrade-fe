@@ -17,9 +17,9 @@ export default function PriceBoardPage() {
     const isCheck = localStorage.getItem("headerTableBaseConfig");
 
     if (isCheck) {
-      localStorage.removeItem("headerTableBaseConfig");
-    }
-    dispatch(setHeaderTableBaseConfig(HEADER_TABLE_BASE_CONFIG));
+      // localStorage.removeItem("headerTableBaseConfig");
+      dispatch(setHeaderTableBaseConfig(JSON.parse(isCheck)));
+    } else dispatch(setHeaderTableBaseConfig(HEADER_TABLE_BASE_CONFIG));
   };
 
   useEffect(() => {
