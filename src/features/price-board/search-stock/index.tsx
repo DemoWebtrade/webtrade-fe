@@ -21,7 +21,7 @@ export default function SearchStock() {
         name="stock"
         placeholder={t("Tìm kiếm CK")}
         registration={register("stock")}
-        className="h-8! min-w-20 w-20 md:w-60"
+        className="h-8! w-30! min-[380px]:w-40! md:w-60!"
         setValue={setValue}
       />
     </form>

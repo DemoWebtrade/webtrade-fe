@@ -21,6 +21,7 @@ export const OverflowMenu: FC<OverflowMenuProps> = ({
   const moreRef = useRef<HTMLDivElement>(null);
   const [visibleCount, setVisibleCount] = useState(items.length);
   const [showMore, setShowMore] = useState(false);
+  const GAP = 8;
 
   useEffect(() => {
     const calc = () => {
@@ -33,13 +34,19 @@ export const OverflowMenu: FC<OverflowMenuProps> = ({
       let count = items.length;
 
       for (let i = 0; i < items.length; i++) {
-        total += itemRefs.current[i]?.offsetWidth ?? 0;
-        const needsMore = i < items.length - 1;
-        if (total + (needsMore ? moreWidth : 0) > containerWidth) {
+        const itemWidth = itemRefs.current[i]?.offsetWidth ?? 0;
+        const gapBefore = i === 0 ? 0 : GAP;
+        const isLast = i === items.length - 1;
+        const reserveForMore = isLast ? 0 : moreWidth + GAP;
+
+        total += gapBefore + itemWidth;
+
+        if (total + reserveForMore > containerWidth) {
           count = i;
           break;
         }
       }
+
       setVisibleCount(count);
     };
 
@@ -60,8 +67,9 @@ export const OverflowMenu: FC<OverflowMenuProps> = ({
       ref={containerRef}
       className="relative flex flex-nowrap gap-2 w-full min-w-0"
     >
+      {/* bản đo ẩn */}
       <div
-        className="absolute opacity-0 pointer-events-none -z-10 flex gap-2"
+        className="absolute top-0 left-0 w-0 h-0 overflow-hidden opacity-0 pointer-events-none -z-10 flex gap-2"
         aria-hidden
       >
         {items.map((t, i) => (
@@ -80,19 +88,22 @@ export const OverflowMenu: FC<OverflowMenuProps> = ({
         ))}
       </div>
 
-      {visibleItems.map((t) => (
-        <ShiftingDropDown
-          key={t.id}
-          t={t}
-          id={activeId}
-          handleChangeId={handleChangeId}
-        />
-      ))}
+      {/* Vùng list hiển thị*/}
+      <div className="flex flex-nowrap gap-2 min-w-0 flex-1">
+        {visibleItems.map((t) => (
+          <ShiftingDropDown
+            key={t.id}
+            t={t}
+            id={activeId}
+            handleChangeId={handleChangeId}
+          />
+        ))}
+      </div>
 
       {hiddenItems.length > 0 && (
         <div
           ref={moreRef}
-          className="relative"
+          className="relative shrink-0"
           onMouseLeave={() => setShowMore(false)}
         >
           <button
@@ -193,7 +204,7 @@ const HiddenMenuItem: FC<HiddenMenuItemProps> = ({
             initial={{ opacity: 0, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }}
-            className="absolute left-[calc(100%+10px)] top-0 w-40 rounded-lg border border-neutral-600 bg-bg-secondary p-2 flex flex-col gap-1 z-50"
+            className="absolute top-[calc(100%+6px)] md:top-0 md:left-[calc(100%+12px)]  w-40 rounded-lg border border-neutral-600 bg-bg-secondary p-2 flex flex-col gap-1 z-50"
           >
             <SideBridge />
             {t.children.map((c) => (
