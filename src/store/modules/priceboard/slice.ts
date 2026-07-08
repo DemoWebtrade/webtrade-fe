@@ -10,6 +10,7 @@ const initialState: PriceboardState = {
   headerTableBaseConfig: JSON.parse(
     localStorage.getItem("headerTableBaseConfig") || "[]",
   ),
+  stockSearch: "",
 };
 
 const priceboardSlice = createSlice({
@@ -60,6 +61,10 @@ const priceboardSlice = createSlice({
         JSON.stringify(action.payload),
       );
     },
+
+    setStockSearch(state, action: PayloadAction<string>) {
+      state.stockSearch = action.payload;
+    },
   },
 });
 
@@ -70,6 +75,7 @@ export const {
   snapshotStocks,
   clearStocks,
   setHeaderTableBaseConfig,
+  setStockSearch,
 } = priceboardSlice.actions;
 
 export default priceboardSlice.reducer;

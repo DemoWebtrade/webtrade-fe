@@ -16,3 +16,6 @@ export const selectRowData = createSelector(
 
 export const selectHeaderTableBaseConfig = (state: RootState) =>
   state.priceboard.headerTableBaseConfig;
+
+export const selectStockSearch = (state: RootState) =>
+  state.priceboard.stockSearch;

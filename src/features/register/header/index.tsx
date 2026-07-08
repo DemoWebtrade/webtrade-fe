@@ -8,7 +8,7 @@ export default function RegisterHeader() {
       <Link className="flex flex-row items-center gap-1 md:gap-2" to="/">
         <img src={Logo} alt="logo" className="w-10 min-w-8 h-full" />
 
-        <div className="flex flex-row items-center gap-1 md:gap-2 max-[425px]:hidden">
+        <div className="flex flex-row items-center gap-1 md:gap-2">
           <span className="text-base font-bold">WebTrade</span>
           <div className="text-[8px] font-bold px-1 rounded bg-purple-selected text-white grid place-items-center h-max">
             PRO

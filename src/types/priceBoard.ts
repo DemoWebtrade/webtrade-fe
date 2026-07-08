@@ -32,3 +32,18 @@ export interface StockData {
   nnSell: number;
   nnRoom: number;
 }
+
+export type StockListItem = {
+  isin?: string;
+  exchange: string;
+  code: string;
+  name: string;
+  symbol: string;
+  fullName: string;
+  clientName: string;
+  clientNameEn: string;
+  type: string;
+  keywords: string[];
+
+  [key: string]: string | string[] | number | boolean | undefined | null;
+};

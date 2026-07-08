@@ -1,6 +1,6 @@
 import { LIST_STOCKS } from "@/configs";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import type { LanguageKey } from "@/types";
+import type { LanguageKey, StockListItem } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -20,27 +20,13 @@ import {
 } from "react-window";
 
 type RowProps = {
-  filteredStocks: Stock[];
+  filteredStocks: StockListItem[];
   currentLang: LanguageKey;
   selectedStock: string | null;
   highlightedIndex: number;
-  onSelect: (stock: Stock) => void;
+  onSelect: (stock: StockListItem) => void;
 };
 
-type Stock = {
-  isin?: string;
-  exchange: string;
-  code: string;
-  name: string;
-  symbol: string;
-  fullName: string;
-  clientName: string;
-  clientNameEn: string;
-  type: string;
-  keywords: string[];
-
-  [key: string]: string | string[] | number | boolean | undefined | null;
-};
 type InputSearchStockFieldProps<TForm extends FieldValues = FieldValues> = {
   label?: string;
   required?: boolean;
@@ -50,7 +36,8 @@ type InputSearchStockFieldProps<TForm extends FieldValues = FieldValues> = {
   disabled?: boolean;
   placeholder?: string;
   className?: string;
-  onStockSelect?: (stock: Stock) => void;
+  isClearValue?: boolean;
+  onStockSelect?: (stock: StockListItem) => void;
   setValue?: UseFormSetValue<TForm>;
 };
 
@@ -83,6 +70,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   error,
   placeholder = "Tìm kiếm ngân hàng...",
   className,
+  isClearValue,
   onStockSelect,
   setValue,
 }: InputSearchStockFieldProps<TForm>) => {
@@ -104,7 +92,8 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredStocks, setFilteredStocks] = useState<Stock[]>(sortedStocks);
+  const [filteredStocks, setFilteredStocks] =
+    useState<StockListItem[]>(sortedStocks);
   const [searchValue, setSearchValue] = useState("");
   const [selectedStock, setSelectedStock] = useState<string | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -119,13 +108,8 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
       setSelectedStock(null);
       setIsOpen(true);
 
-      const filtered = sortedStocks.filter(
-        (stock) =>
-          stock?.code.toLowerCase().includes(value.toLowerCase()) ||
-          stock?.fullName.toLowerCase().includes(value.toLowerCase()) ||
-          stock?.clientName.toLowerCase().includes(value.toLowerCase()) ||
-          (stock?.clientNameEn?.toLowerCase().includes(value.toLowerCase()) ??
-            false),
+      const filtered = sortedStocks.filter((stock) =>
+        stock?.code.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredStocks(filtered);
       setHighlightedIndex(-1);
@@ -136,23 +120,25 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   );
 
   const handleStockSelect = useCallback(
-    (stock: Stock) => {
-      const displayName =
-        currentLang === "vi"
-          ? stock?.clientName
-          : (stock?.clientNameEn ?? stock?.clientName);
+    (stock: StockListItem) => {
+      if (isClearValue) {
+        setSearchValue("");
+        onStockSelect?.(stock);
+        setFilteredStocks(sortedStocks);
+      } else {
+        setSearchValue(stock?.code);
+        onStockSelect?.(stock);
+        setSelectedStock(stock?.code || "");
+        setHighlightedIndex(-1);
+        setFilteredStocks([stock]);
+        setValue?.(name, stock?.code as PathValue<TForm, typeof name>, {
+          shouldValidate: true,
+        });
+      }
 
-      setSearchValue(displayName);
-      onStockSelect?.(stock);
-      setSelectedStock(stock?.code || "");
       setIsOpen(false);
-      setHighlightedIndex(-1);
-      setFilteredStocks([stock]);
-      setValue?.(name, stock?.code as PathValue<TForm, typeof name>, {
-        shouldValidate: true,
-      });
     },
-    [currentLang, onStockSelect, setValue, name],
+    [onStockSelect, setValue, name, isClearValue, sortedStocks],
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -186,7 +172,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
     if (e.key === "Enter") {
       if (isOpen && highlightedIndex >= 0 && filteredStocks[highlightedIndex]) {
         e.preventDefault();
-        handleStockSelect(filteredStocks[highlightedIndex] as Stock);
+        handleStockSelect(filteredStocks[highlightedIndex] as StockListItem);
       }
       return;
     }
@@ -221,7 +207,7 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
     return (
       <div
         key={filteredStocks?.[index]?.code}
-        onClick={() => onSelect(filteredStocks?.[index] as Stock)}
+        onClick={() => onSelect(filteredStocks?.[index] as StockListItem)}
         className={`${isSelected ? "bg-purple-selected" : isHighlighted ? "bg-purple-hover" : ""} hover:bg-purple-hover px-2 flex items-center gap-4 cursor-pointer transition-colors`}
         style={style}
       >

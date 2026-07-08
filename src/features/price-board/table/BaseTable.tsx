@@ -15,8 +15,9 @@ import {
   selectHeaderTableBaseConfig,
   selectRowData,
   selectScroll,
+  selectStockSearch,
 } from "@/store/modules/priceboard/selector";
-import { setExport } from "@/store/modules/priceboard/slice";
+import { setExport, setStockSearch } from "@/store/modules/priceboard/slice";
 import type { StockData } from "@/types";
 import {
   changePctFormatter,
@@ -35,6 +36,7 @@ import {
   ColumnApiModule,
   ColumnAutoSizeModule,
   CsvExportModule,
+  HighlightChangesModule,
   ModuleRegistry,
   PinnedRowModule,
   RowApiModule,
@@ -67,6 +69,7 @@ ModuleRegistry.registerModules([
   CsvExportModule,
   ColumnApiModule,
   ColumnAutoSizeModule,
+  HighlightChangesModule,
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
@@ -78,6 +81,7 @@ export default function BaseTable({ id }: { id: string }) {
   const exportFile = useAppSelector(selectExport);
   const data = useAppSelector(selectRowData);
   const headerTableBaseConfig = useAppSelector(selectHeaderTableBaseConfig);
+  const stockSearch = useAppSelector(selectStockSearch);
 
   const { gridRef, resumeAutoScroll, stopAutoScroll } = useAgGridAutoScroll({
     durationPerCycle: data?.length * 1000,
@@ -652,6 +656,36 @@ export default function BaseTable({ id }: { id: string }) {
       stopAutoScroll();
     }
   }, [scroll, resumeAutoScroll, stopAutoScroll]);
+
+  useEffect(() => {
+    if (!stockSearch?.trim() || !gridRef.current?.api) return;
+
+    const api = gridRef.current.api;
+    const searchValue = stockSearch.trim().toUpperCase();
+
+    api.forEachNode((node) => {
+      const symbol = (node.data?.symbol || node.data?.code || "")
+        .toString()
+        .toUpperCase();
+
+      if (symbol === searchValue) {
+        api.ensureNodeVisible(node, "top");
+
+        setTimeout(
+          () =>
+            api.flashCells({
+              rowNodes: [node],
+              flashDuration: 3000, // ms flash on
+              fadeDuration: 500, // ms fade out
+            }),
+          100,
+        );
+
+        dispatch(setStockSearch(""));
+        return false;
+      }
+    });
+  }, [stockSearch, dispatch]);
 
   //TODO: export
   useEffect(() => {

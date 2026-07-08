@@ -3,6 +3,9 @@
   --ag-foreground-color: var(--content-primary) !important;
   --ag-header-background-color: var(--bg-secondary) !important;
   --ag-odd-row-background-color: var(--bg-secondary) !important;
+  --ag-value-change-value-highlight-background-color: var(
+    --secondary-selected
+  ) !important;
   --ag-border-radius: 12px !important;
   --ag-border-color: var(--border) !important;
   --ag-font-size: clamp(10px, 0.8vw, 12px);
