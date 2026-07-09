@@ -346,8 +346,8 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ceil",
         headerName: t("ceil"),
-        minWidth: 45,
-        flex: 0.9,
+        minWidth: 50,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
         hide: headerTableBaseConfig?.find((item) => item?.field === "ceil")
@@ -356,8 +356,8 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ref",
         headerName: t("ref"),
-        minWidth: 45,
-        flex: 0.9,
+        minWidth: 50,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
         hide: headerTableBaseConfig?.find((item) => item?.field === "ref")
@@ -366,8 +366,8 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "floor",
         headerName: t("floor"),
-        minWidth: 45,
-        flex: 0.9,
+        minWidth: 50,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
         hide: headerTableBaseConfig?.find((item) => item?.field === "floor")
@@ -578,7 +578,7 @@ export default function BaseTable({ id }: { id: string }) {
         field: "high",
         headerName: `${t("high")}`,
         minWidth: 44,
-        flex: 0.9,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
         hide: headerTableBaseConfig?.find((item) => item?.field === "high")
@@ -588,7 +588,7 @@ export default function BaseTable({ id }: { id: string }) {
         field: "low",
         headerName: `${t("low")}`,
         minWidth: 44,
-        flex: 0.9,
+        flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
         hide: headerTableBaseConfig?.find((item) => item?.field === "low")
