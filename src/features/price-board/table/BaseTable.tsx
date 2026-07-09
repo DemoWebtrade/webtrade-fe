@@ -346,7 +346,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ceil",
         headerName: t("ceil"),
-        minWidth: 50,
+        minWidth: 45,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -356,7 +356,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "ref",
         headerName: t("ref"),
-        minWidth: 50,
+        minWidth: 45,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,
@@ -366,7 +366,7 @@ export default function BaseTable({ id }: { id: string }) {
       {
         field: "floor",
         headerName: t("floor"),
-        minWidth: 50,
+        minWidth: 45,
         flex: 1,
         cellStyle: coloredCellStyle,
         valueFormatter: priceFormatter,

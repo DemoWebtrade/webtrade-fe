@@ -62,12 +62,12 @@ export default function Status({ marketStatus }: { marketStatus: string }) {
       <div className="flex flex-row gap-1 md:gap-2 items-center">
         {/* Wifi icon + trạng thái */}
         <div className="flex flex-row items-center gap-1 md:gap-1.5">
-          <span className="relative flex size-1.5">
+          <span className="relative flex size-1 md:size-1.5">
             <span
               className={`absolute inline-flex h-full w-full animate-ping rounded-full ${config.dotColor} opacity-75`}
             />
             <span
-              className={`relative inline-flex size-1.5 rounded-full ${config.dotColor}`}
+              className={`relative inline-flex size-1 md:size-1.5 rounded-full ${config.dotColor}`}
             />
           </span>
           <span className="text-content-tertiary text-xs">{config.label}</span>
