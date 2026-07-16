@@ -29,21 +29,17 @@ export function flashCellWithColor(
   const existingTimeout = timeoutMap.get(cacheKey);
   if (existingTimeout) {
     clearTimeout(existingTimeout);
-    cellEl.style.transition = "";
   }
 
-  cellEl.style.transition = "background-color 0s";
   cellEl.style.backgroundColor = flash;
   cellEl.style.color = colId === "symbol" ? color : "#fffff8";
 
   const timeout = setTimeout(() => {
     if (!cellEl) return;
-    cellEl.style.transition =
-      "background-color 0.4s ease-out, color 0.1s ease-out";
     cellEl.style.backgroundColor = "transparent";
     cellEl.style.color = color;
     timeoutMap.delete(cacheKey);
-  }, 300);
+  }, 500);
 
   timeoutMap.set(cacheKey, timeout);
 }

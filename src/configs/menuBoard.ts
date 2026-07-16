@@ -22,7 +22,7 @@ export const MENU_BOARD = [
     title: "HNX30",
   },
   {
-    id: "HSX",
+    id: "HOSE",
     title: "HOSE",
   },
   {
@@ -34,3 +34,12 @@ export const MENU_BOARD = [
     title: "UPCOM",
   },
 ];
+
+export const VALID_TOPICS = [
+  "VN30",
+  "VN100",
+  "HNX30",
+  "HNX",
+  "HOSE",
+  "UPCOM",
+] as const;

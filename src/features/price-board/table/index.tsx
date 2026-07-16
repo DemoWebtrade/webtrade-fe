@@ -3,11 +3,17 @@ import { lazy, Suspense } from "react";
 
 const BaseTable = lazy(() => import("./BaseTable"));
 
-export default function Table({ id }: { id: string }) {
+export default function Table({
+  id,
+  setId,
+}: {
+  id: string;
+  setId: (id: string) => void;
+}) {
   return (
     <div className="w-full h-full flex flex-col items-center">
       <Suspense fallback={<ProgessLoader />}>
-        <BaseTable id={id} />
+        <BaseTable id={id} setId={setId} />
       </Suspense>
     </div>
   );

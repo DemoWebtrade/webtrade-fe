@@ -123,15 +123,6 @@ export const TEXT_COLORS: Record<string, string> = {
   "cell-flash-ref": "var(--yellow-base)",
 };
 
-export const FLASH_CLASS_MAP: Record<string, string> = {
-  "var(--green-active)": "cell-flashing-up",
-  "var(--red-active)": "cell-flashing-down",
-  "var(--purple-active)": "cell-flashing-ceil",
-  "var(--blue-active)": "cell-flashing-floor",
-  "var(--yellow-active)": "cell-flashing-ref",
-  "var(--border-secondary)": "cell-flashing-volume",
-};
-
 export const HEADER_TABLE_BASE_CONFIG: HeaderTableBaseConfig[] = [
   { index: 1, label: "symbol", field: "symbol", hide: false },
   { index: 2, label: "ceil", field: "ceil", hide: false },

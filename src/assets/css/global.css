@@ -52,35 +52,3 @@ body.tour-active {
   border-radius: 8px;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
 }
-
-.cell-flash-fade {
-  background-color: transparent !important;
-  transition:
-    background-color 0.4s ease-out,
-    color 0.1s ease-out;
-}
-
-.cell-flashing-up {
-  background-color: var(--green-active) !important;
-  transition: background-color 0s;
-}
-.cell-flashing-down {
-  background-color: var(--red-active) !important;
-  transition: background-color 0s;
-}
-.cell-flashing-ceil {
-  background-color: var(--purple-active) !important;
-  transition: background-color 0s;
-}
-.cell-flashing-floor {
-  background-color: var(--blue-active) !important;
-  transition: background-color 0s;
-}
-.cell-flashing-ref {
-  background-color: var(--yellow-active) !important;
-  transition: background-color 0s;
-}
-.cell-flashing-volume {
-  background-color: var(--border-secondary) !important;
-  transition: background-color 0s;
-}

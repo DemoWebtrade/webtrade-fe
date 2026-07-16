@@ -1,8 +1,10 @@
 import {
   coloredCellStyle,
   FLASH_COLORS,
+  LIST_STOCKS,
   PRICE_COLS,
   TEXT_COLORS,
+  VALID_TOPICS,
   VOL_COLS,
   VOL_PRICE_COLS,
   VOL_TO_PRICE,
@@ -73,7 +75,13 @@ ModuleRegistry.registerModules([
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
-export default function BaseTable({ id }: { id: string }) {
+export default function BaseTable({
+  id,
+  setId,
+}: {
+  id: string;
+  setId: (id: string) => void;
+}) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -92,6 +100,370 @@ export default function BaseTable({ id }: { id: string }) {
   const [loadingTimeout, setLoadingTimeout] = useState<boolean>(true);
   const prevId = usePrevious(id);
 
+  const pendingSearchRef = useRef<string | null>(null);
+
+  //TODO: column default
+  const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
+    () => [
+      {
+        field: "pinRow",
+        colId: "pinRow",
+        headerName: " ",
+        width: 28,
+        pinned: "left",
+        lockPinned: true,
+        lockPosition: "left",
+        cellRenderer: PinRow,
+      },
+      {
+        field: "symbol",
+        headerName: t("symbol"),
+        width: 60, // giữ width cố định vì pinned
+        minWidth: 55,
+        maxWidth: 55,
+        pinned: "left",
+        lockPinned: true,
+        lockPosition: "left",
+        cellRenderer: SymbolRow,
+        cellStyle: coloredCellStyle,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "symbol")
+          ?.hide,
+      },
+
+      // Giá tham chiếu
+      {
+        field: "ceil",
+        headerName: t("ceil"),
+        minWidth: 50,
+        flex: 1,
+        cellStyle: coloredCellStyle,
+        valueFormatter: priceFormatter,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "ceil")
+          ?.hide,
+      },
+      {
+        field: "ref",
+        headerName: t("ref"),
+        minWidth: 50,
+        flex: 1,
+        cellStyle: coloredCellStyle,
+        valueFormatter: priceFormatter,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "ref")
+          ?.hide,
+      },
+      {
+        field: "floor",
+        headerName: t("floor"),
+        minWidth: 50,
+        flex: 1,
+        cellStyle: coloredCellStyle,
+        valueFormatter: priceFormatter,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "floor")
+          ?.hide,
+      },
+
+      // Bên mua
+      {
+        headerName: t("bid"),
+
+        children: [
+          {
+            field: "buyPrice3",
+            headerName: `${t("p")}3`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyPrice3",
+            )?.hide,
+          },
+          {
+            field: "buyVol3",
+            headerName: `${t("vol")}3`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyVol3",
+            )?.hide,
+          },
+          {
+            field: "buyPrice2",
+            headerName: `${t("p")}2`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyPrice2",
+            )?.hide,
+          },
+          {
+            field: "buyVol2",
+            headerName: `${t("vol")}2`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyVol2",
+            )?.hide,
+          },
+          {
+            field: "buyPrice1",
+            headerName: `${t("p")}1`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyPrice1",
+            )?.hide,
+          },
+          {
+            field: "buyVol1",
+            headerName: `${t("vol")}1`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "buyVol1",
+            )?.hide,
+          },
+        ],
+      },
+
+      // Khớp lệnh
+      {
+        headerName: `${t("matched")}`,
+        children: [
+          {
+            field: "matchPrice",
+            headerName: `${t("price")}`,
+            minWidth: 55,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "matchPrice",
+            )?.hide,
+          },
+          {
+            field: "matchVol",
+            headerName: t("vol"),
+            minWidth: 55,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: volFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "matchVol",
+            )?.hide,
+          },
+          {
+            field: "change",
+            headerName: "+/-",
+            minWidth: 55,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "change",
+            )?.hide,
+          },
+          {
+            field: "changePct",
+            headerName: "%",
+            minWidth: 55,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: changePctFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "changePct",
+            )?.hide,
+          },
+        ],
+      },
+
+      // Bên bán
+      {
+        headerName: `${t("asked")}`,
+        children: [
+          {
+            field: "sellPrice1",
+            headerName: `${t("p")}1`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellPrice1",
+            )?.hide,
+          },
+          {
+            field: "sellVol1",
+            headerName: `${t("vol")}1`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellVol1",
+            )?.hide,
+          },
+          {
+            field: "sellPrice2",
+            headerName: `${t("p")}2`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellPrice2",
+            )?.hide,
+          },
+          {
+            field: "sellVol2",
+            headerName: `${t("vol")}2`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellVol2",
+            )?.hide,
+          },
+          {
+            field: "sellPrice3",
+            headerName: `${t("p")}3`,
+            minWidth: 50,
+            flex: 1,
+            cellStyle: coloredCellStyle,
+            valueFormatter: priceFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellPrice3",
+            )?.hide,
+          },
+          {
+            field: "sellVol3",
+            headerName: `${t("vol")}3`,
+            minWidth: 60,
+            flex: 1,
+            valueFormatter: volFormatter,
+            cellStyle: coloredCellStyle,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "sellVol3",
+            )?.hide,
+          },
+        ],
+      },
+
+      // Thông tin khác
+      {
+        field: "high",
+        headerName: `${t("high")}`,
+        minWidth: 50,
+        flex: 1,
+        cellStyle: coloredCellStyle,
+        valueFormatter: priceFormatter,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "high")
+          ?.hide,
+      },
+      {
+        field: "low",
+        headerName: `${t("low")}`,
+        minWidth: 50,
+        flex: 1,
+        cellStyle: coloredCellStyle,
+        valueFormatter: priceFormatter,
+        hide: headerTableBaseConfig?.find((item) => item?.field === "low")
+          ?.hide,
+      },
+      {
+        field: "totalVolume",
+        headerName: `${t("total-vol")}`,
+        minWidth: 72,
+        flex: 1.5,
+        valueFormatter: volFormatter,
+        hide: headerTableBaseConfig?.find(
+          (item) => item?.field === "totalVolume",
+        )?.hide,
+      },
+
+      // Nhà đầu tư nước ngoài
+      {
+        headerName: `${t("foreign")}`,
+        headerClass: "text-xs text-center",
+        children: [
+          {
+            field: "nnBuy",
+            headerName: `${t("fbuy")}`,
+            minWidth: 72,
+            flex: 1.5,
+            valueFormatter: volFormatter,
+            hide: headerTableBaseConfig?.find((item) => item?.field === "nnBuy")
+              ?.hide,
+          },
+          {
+            field: "nnSell",
+            headerName: `${t("fsell")}`,
+            minWidth: 72,
+            flex: 1.5,
+            valueFormatter: volFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "nnSell",
+            )?.hide,
+          },
+          {
+            field: "nnRoom",
+            headerName: `${t("room")}`,
+            minWidth: 75,
+            flex: 1.5,
+            headerClass: "text-xs",
+            cellClass: "text-xs text-right",
+            valueFormatter: volFormatter,
+            hide: headerTableBaseConfig?.find(
+              (item) => item?.field === "nnRoom",
+            )?.hide,
+          },
+        ],
+      },
+    ],
+    [t, headerTableBaseConfig],
+  );
+
+  const findInPinned = (rowId: string): IRowNode<StockData> | null => {
+    const count = gridRef.current?.api.getPinnedTopRowCount() ?? 0;
+    for (let i = 0; i < count; i++) {
+      const node = gridRef.current?.api.getPinnedTopRow(i);
+      if (node?.data?.symbol === rowId) return node;
+    }
+    return null;
+  };
+
+  const findAndFlashNode = useCallback((searchValue: string): boolean => {
+    const api = gridRef.current?.api;
+    if (!api) return false;
+
+    const node = api.getRowNode(searchValue) ?? findInPinned(searchValue);
+    if (!node) return false;
+
+    api.ensureNodeVisible(node, "top");
+
+    setTimeout(() => {
+      api.flashCells({
+        rowNodes: [node],
+        flashDuration: 5000,
+        fadeDuration: 500,
+      });
+    }, 100);
+
+    return true;
+  }, []);
+
   useEffect(() => {
     if (id && id !== prevId) {
       prevDataRef.current = new Map();
@@ -109,15 +481,6 @@ export default function BaseTable({ id }: { id: string }) {
       }
     }
   }, [id, prevId, gridRef]);
-
-  const findInPinned = (rowId: string): IRowNode<StockData> | null => {
-    const count = gridRef.current?.api.getPinnedTopRowCount() ?? 0;
-    for (let i = 0; i < count; i++) {
-      const node = gridRef.current?.api.getPinnedTopRow(i);
-      if (node?.data?.symbol === rowId) return node;
-    }
-    return null;
-  };
 
   //TODO: flash cell
   useEffect(() => {
@@ -308,344 +671,12 @@ export default function BaseTable({ id }: { id: string }) {
   useEffect(() => {
     const timmer = setTimeout(() => {
       setLoadingTimeout(false);
-    }, 30_000);
+    }, 5_000);
 
     return () => {
       clearTimeout(timmer);
     };
   }, [data]);
-
-  const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
-    () => [
-      {
-        field: "pinRow",
-        colId: "pinRow",
-        headerName: " ",
-        width: 28,
-        pinned: "left",
-        lockPinned: true,
-        lockPosition: "left",
-        cellRenderer: PinRow,
-      },
-      {
-        field: "symbol",
-        headerName: t("symbol"),
-        width: 60, // giữ width cố định vì pinned
-        minWidth: 55,
-        maxWidth: 55,
-        pinned: "left",
-        lockPinned: true,
-        lockPosition: "left",
-        cellRenderer: SymbolRow,
-        cellStyle: coloredCellStyle,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "symbol")
-          ?.hide,
-      },
-
-      // Giá tham chiếu
-      {
-        field: "ceil",
-        headerName: t("ceil"),
-        minWidth: 50,
-        flex: 1,
-        cellStyle: coloredCellStyle,
-        valueFormatter: priceFormatter,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "ceil")
-          ?.hide,
-      },
-      {
-        field: "ref",
-        headerName: t("ref"),
-        minWidth: 50,
-        flex: 1,
-        cellStyle: coloredCellStyle,
-        valueFormatter: priceFormatter,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "ref")
-          ?.hide,
-      },
-      {
-        field: "floor",
-        headerName: t("floor"),
-        minWidth: 50,
-        flex: 1,
-        cellStyle: coloredCellStyle,
-        valueFormatter: priceFormatter,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "floor")
-          ?.hide,
-      },
-
-      // Bên mua
-      {
-        headerName: t("bid"),
-
-        children: [
-          {
-            field: "buyPrice3",
-            headerName: `${t("p")}3`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyPrice3",
-            )?.hide,
-          },
-          {
-            field: "buyVol3",
-            headerName: `${t("vol")}3`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyVol3",
-            )?.hide,
-          },
-          {
-            field: "buyPrice2",
-            headerName: `${t("p")}2`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyPrice2",
-            )?.hide,
-          },
-          {
-            field: "buyVol2",
-            headerName: `${t("vol")}2`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyVol2",
-            )?.hide,
-          },
-          {
-            field: "buyPrice1",
-            headerName: `${t("p")}1`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyPrice1",
-            )?.hide,
-          },
-          {
-            field: "buyVol1",
-            headerName: `${t("vol")}1`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "buyVol1",
-            )?.hide,
-          },
-        ],
-      },
-
-      // Khớp lệnh
-      {
-        headerName: `${t("matched")}`,
-        children: [
-          {
-            field: "matchPrice",
-            headerName: `${t("price")}`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "matchPrice",
-            )?.hide,
-          },
-          {
-            field: "matchVol",
-            headerName: t("vol"),
-            minWidth: 60,
-            flex: 1.2,
-            cellStyle: coloredCellStyle,
-            valueFormatter: volFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "matchVol",
-            )?.hide,
-          },
-          {
-            field: "change",
-            headerName: "+/-",
-            minWidth: 35,
-            flex: 0.8,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "change",
-            )?.hide,
-          },
-          {
-            field: "changePct",
-            headerName: "%",
-            minWidth: 35,
-            flex: 0.8,
-            cellStyle: coloredCellStyle,
-            valueFormatter: changePctFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "changePct",
-            )?.hide,
-          },
-        ],
-      },
-
-      // Bên bán
-      {
-        headerName: `${t("asked")}`,
-        children: [
-          {
-            field: "sellPrice1",
-            headerName: `${t("p")}1`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellPrice1",
-            )?.hide,
-          },
-          {
-            field: "sellVol1",
-            headerName: `${t("vol")}1`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellVol1",
-            )?.hide,
-          },
-          {
-            field: "sellPrice2",
-            headerName: `${t("p")}2`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellPrice2",
-            )?.hide,
-          },
-          {
-            field: "sellVol2",
-            headerName: `${t("vol")}2`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellVol2",
-            )?.hide,
-          },
-          {
-            field: "sellPrice3",
-            headerName: `${t("p")}3`,
-            minWidth: 50,
-            flex: 1,
-            cellStyle: coloredCellStyle,
-            valueFormatter: priceFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellPrice3",
-            )?.hide,
-          },
-          {
-            field: "sellVol3",
-            headerName: `${t("vol")}3`,
-            minWidth: 60,
-            flex: 1,
-            valueFormatter: volFormatter,
-            cellStyle: coloredCellStyle,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "sellVol3",
-            )?.hide,
-          },
-        ],
-      },
-
-      // Thông tin khác
-      {
-        field: "high",
-        headerName: `${t("high")}`,
-        minWidth: 44,
-        flex: 1,
-        cellStyle: coloredCellStyle,
-        valueFormatter: priceFormatter,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "high")
-          ?.hide,
-      },
-      {
-        field: "low",
-        headerName: `${t("low")}`,
-        minWidth: 44,
-        flex: 1,
-        cellStyle: coloredCellStyle,
-        valueFormatter: priceFormatter,
-        hide: headerTableBaseConfig?.find((item) => item?.field === "low")
-          ?.hide,
-      },
-      {
-        field: "totalVolume",
-        headerName: `${t("total-vol")}`,
-        minWidth: 72,
-        flex: 1.5,
-        valueFormatter: volFormatter,
-        hide: headerTableBaseConfig?.find(
-          (item) => item?.field === "totalVolume",
-        )?.hide,
-      },
-
-      // Nhà đầu tư nước ngoài
-      {
-        headerName: `${t("foreign")}`,
-        headerClass: "text-xs text-center",
-        children: [
-          {
-            field: "nnBuy",
-            headerName: `${t("fbuy")}`,
-            minWidth: 72,
-            flex: 1.5,
-            valueFormatter: volFormatter,
-            hide: headerTableBaseConfig?.find((item) => item?.field === "nnBuy")
-              ?.hide,
-          },
-          {
-            field: "nnSell",
-            headerName: `${t("fsell")}`,
-            minWidth: 72,
-            flex: 1.5,
-            valueFormatter: volFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "nnSell",
-            )?.hide,
-          },
-          {
-            field: "nnRoom",
-            headerName: `${t("room")}`,
-            minWidth: 75,
-            flex: 1.5,
-            headerClass: "text-xs",
-            cellClass: "text-xs text-right",
-            valueFormatter: volFormatter,
-            hide: headerTableBaseConfig?.find(
-              (item) => item?.field === "nnRoom",
-            )?.hide,
-          },
-        ],
-      },
-    ],
-    [t, headerTableBaseConfig],
-  );
 
   useEffect(() => {
     if (!gridRef.current) return;
@@ -660,32 +691,40 @@ export default function BaseTable({ id }: { id: string }) {
   useEffect(() => {
     if (!stockSearch?.trim() || !gridRef.current?.api) return;
 
-    const api = gridRef.current.api;
     const searchValue = stockSearch.trim().toUpperCase();
 
-    api.forEachNode((node) => {
-      const symbol = (node.data?.symbol || node.data?.code || "")
-        .toString()
-        .toUpperCase();
+    if (findAndFlashNode(searchValue)) {
+      dispatch(setStockSearch(""));
+      return;
+    }
 
-      if (symbol === searchValue) {
-        api.ensureNodeVisible(node, "top");
+    const stockInfor = LIST_STOCKS.find(
+      (s) => s?.code?.toUpperCase() === searchValue,
+    );
 
-        setTimeout(
-          () =>
-            api.flashCells({
-              rowNodes: [node],
-              flashDuration: 3000, // ms flash on
-              fadeDuration: 500, // ms fade out
-            }),
-          100,
-        );
+    const checkStock =
+      stockInfor &&
+      VALID_TOPICS?.some((e) => e === stockInfor?.exchange?.toUpperCase());
 
-        dispatch(setStockSearch(""));
-        return false;
-      }
-    });
-  }, [stockSearch, dispatch]);
+    if (checkStock) {
+      const targetExchange = stockInfor.exchange?.toUpperCase();
+
+      pendingSearchRef.current = searchValue;
+      setId(targetExchange);
+    }
+
+    dispatch(setStockSearch(""));
+  }, [stockSearch, dispatch, setId, findAndFlashNode]);
+
+  useEffect(() => {
+    if (!pendingSearchRef.current) return;
+    if (!data?.length) return;
+
+    const found = findAndFlashNode(pendingSearchRef.current);
+    if (found) {
+      pendingSearchRef.current = null;
+    }
+  }, [data, findAndFlashNode]);
 
   //TODO: export
   useEffect(() => {

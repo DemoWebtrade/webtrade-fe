@@ -62,7 +62,7 @@ export default function PriceBoard() {
       </div>
 
       <div className="flex-1 flex flex-col bg-secondary-base rounded-xl">
-        <Table id={id} />
+        <Table id={id} setId={setId} />
 
         <div className="w-full">
           <Status marketStatus={marketStatus} />
