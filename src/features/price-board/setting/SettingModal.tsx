@@ -7,10 +7,10 @@ import { setHeaderTableBaseConfig } from "@/store/modules/priceboard/slice";
 import type { HeaderTableBaseConfig } from "@/store/modules/priceboard/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCw, X } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   useForm,
-  useWatch,
+  type ChangeHandler,
   type FieldValues,
   type UseFormRegister,
 } from "react-hook-form";
@@ -21,16 +21,30 @@ interface SettingModalProps {
   onClose: () => void;
 }
 
+// Config hoá 4 nhóm cha-con thay vì lặp code 4 lần
+const GROUPS = [
+  { name: "bid", min: 5, max: 10, reverse: true },
+  { name: "matched", min: 11, max: 14, reverse: false },
+  { name: "asked", min: 15, max: 20, reverse: true },
+  { name: "foreign", min: 24, max: Infinity, reverse: true },
+] as const;
+
+type GroupName = (typeof GROUPS)[number]["name"];
+
 const CheckboxGroup = ({
   items,
   reverse = false,
   indent = false,
   register,
+  groupName,
+  onChildChange,
 }: {
   items: HeaderTableBaseConfig[];
   reverse?: boolean;
   indent?: boolean;
   register: UseFormRegister<FieldValues>;
+  groupName?: GroupName;
+  onChildChange?: (groupName: GroupName) => void;
 }) => {
   const { t } = useTranslation();
 
@@ -40,15 +54,26 @@ const CheckboxGroup = ({
         indent ? "ml-5" : ""
       }`}
     >
-      {items.map((item) => (
-        <InputCheckbox
-          key={item.field}
-          name={item.field}
-          label={t(item.label)}
-          defaultChecked={!item.hide}
-          registration={register(item.field)}
-        />
-      ))}
+      {items.map((item) => {
+        const reg = register(item.field);
+        const onChange: ChangeHandler = async (e) => {
+          const result = await reg.onChange(e);
+          if (groupName && onChildChange) {
+            onChildChange(groupName);
+          }
+          return result;
+        };
+
+        return (
+          <InputCheckbox
+            key={item.field}
+            name={item.field}
+            label={t(item.label)}
+            defaultChecked={!item.hide}
+            registration={{ ...reg, onChange }}
+          />
+        );
+      })}
     </div>
   );
 };
@@ -66,63 +91,67 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     register,
     getValues,
     reset,
-    control,
   } = useForm();
 
-  const bidValue = useWatch({ control, name: "bid" });
-  const matchedValue = useWatch({ control, name: "matched" });
-  const askedValue = useWatch({ control, name: "asked" });
-  const foreignValue = useWatch({ control, name: "foreign" });
+  const filterByRange = useCallback(
+    (min: number, max: number) =>
+      headerTableBaseConfig.filter(
+        (item) => item.index >= min && item.index <= max,
+      ),
+    [headerTableBaseConfig],
+  );
 
-  const filterByRange = (min: number, max: number) =>
-    headerTableBaseConfig.filter(
-      (item) => item.index >= min && item.index <= max,
+  const groupItemsMap = useMemo(() => {
+    return GROUPS.reduce<Record<GroupName, HeaderTableBaseConfig[]>>(
+      (acc, g) => {
+        acc[g.name] = filterByRange(g.min, g.max);
+        return acc;
+      },
+      {} as Record<GroupName, HeaderTableBaseConfig[]>,
     );
+  }, [filterByRange]);
+
+  const handleParentChange = useCallback(
+    (groupName: GroupName, value: boolean) => {
+      groupItemsMap[groupName]?.forEach((item) => {
+        setValue(item.field, value);
+      });
+    },
+    [groupItemsMap, setValue],
+  );
+
+  const handleChildChange = useCallback(
+    (groupName: GroupName) => {
+      const items = groupItemsMap[groupName];
+      if (!items) return;
+      const allChecked = items.every((item) => getValues(item.field));
+      setValue(groupName, allChecked);
+    },
+    [groupItemsMap, getValues, setValue],
+  );
+
+  const loadConfigIntoForm = useCallback(() => {
+    headerTableBaseConfig.forEach((item) => {
+      setValue(item.field, !item.hide);
+    });
+
+    GROUPS.forEach((g) => {
+      const items = groupItemsMap[g.name];
+      const allVisible = items?.every((item) => !item.hide);
+      setValue(g.name, !!allVisible);
+    });
+  }, [headerTableBaseConfig, groupItemsMap, setValue]);
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    const bidItems = filterByRange(5, 10);
-
-    bidItems.forEach((item) => {
-      setValue(item.field, bidValue);
-    });
-  }, [bidValue, isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const matchedItems = filterByRange(11, 14);
-
-    matchedItems.forEach((item) => {
-      setValue(item.field, matchedValue);
-    });
-  }, [matchedValue, isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const askedItems = filterByRange(15, 20);
-
-    askedItems.forEach((item) => {
-      setValue(item.field, askedValue);
-    });
-  }, [askedValue, isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const foreignItems = filterByRange(24, Infinity);
-
-    foreignItems.forEach((item) => {
-      setValue(item.field, foreignValue);
-    });
-  }, [foreignValue, isOpen]);
+    if (isOpen) {
+      loadConfigIntoForm();
+    }
+  }, [isOpen, loadConfigIntoForm]);
 
   const handleClose = useCallback(() => {
     onClose();
     reset();
-  }, [onClose]);
+  }, [onClose, reset]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -134,71 +163,39 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  const handleSetValue = () => {
-    const bidItems = filterByRange(5, 10);
-    const matchedItems = filterByRange(11, 14);
-    const askedItems = filterByRange(15, 20);
-    const foreignItems = filterByRange(24, Infinity);
-
-    const allBidVisibleItems = bidItems?.every((item) => !item.hide);
-
-    if (allBidVisibleItems) {
-      setValue("bid", true);
-    }
-
-    const allMatchedVisibleItems = matchedItems?.every((item) => !item.hide);
-
-    if (allMatchedVisibleItems) {
-      setValue("matched", true);
-    }
-
-    const allAskVisibleItems = askedItems?.every((item) => !item.hide);
-
-    if (allAskVisibleItems) {
-      setValue("asked", true);
-    }
-
-    const allForeignVisibleItems = foreignItems?.every((item) => !item.hide);
-
-    if (allForeignVisibleItems) {
-      setValue("foreign", true);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      handleSetValue();
-    }
-  }, [isOpen]);
-
   const buildUpdatedConfig = (
     config: HeaderTableBaseConfig[],
     formValues: FieldValues,
   ) => {
-    return config.map((item) => {
-      return {
-        ...item,
-        hide: !formValues[item.field],
-      };
-    });
+    return config.map((item) => ({
+      ...item,
+      hide: !formValues[item.field],
+    }));
   };
 
-  const handleReset = async () => {
+  const handleReset = () => {
     headerTableBaseConfig.forEach((item) => setValue(item.field, true));
-    setValue("bid", true);
-    setValue("matched", true);
-    setValue("asked", true);
-    setValue("foreign", true);
+    GROUPS.forEach((g) => setValue(g.name, true));
   };
 
   const onSubmit = async () => {
     const data = getValues();
-
     const updatedConfig = buildUpdatedConfig(headerTableBaseConfig, data);
 
     await new Promise((resolve) => setTimeout(resolve, 300));
     await dispatch(setHeaderTableBaseConfig(updatedConfig));
     handleClose();
+  };
+
+  // Helper: tạo registration cho checkbox cha, tự gọi handleParentChange khi đổi
+  const registerParent = (groupName: GroupName) => {
+    const reg = register(groupName);
+    const onChange: ChangeHandler = async (e) => {
+      const result = await reg.onChange(e);
+      handleParentChange(groupName, e.target.checked);
+      return result;
+    };
+    return { ...reg, onChange };
   };
 
   return (
@@ -250,13 +247,15 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                       <InputCheckbox
                         name="bid"
                         label={t("bid")}
-                        registration={register("bid")}
+                        registration={registerParent("bid")}
                       />
                       <CheckboxGroup
-                        items={filterByRange(5, 10)}
+                        items={groupItemsMap.bid}
                         reverse
                         indent
                         register={register}
+                        groupName="bid"
+                        onChildChange={handleChildChange}
                       />
                     </div>
                   </div>
@@ -267,25 +266,29 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                       <InputCheckbox
                         name="matched"
                         label={t("matched")}
-                        registration={register("matched")}
+                        registration={registerParent("matched")}
                       />
                       <CheckboxGroup
-                        items={filterByRange(11, 14)}
+                        items={groupItemsMap.matched}
                         indent
                         register={register}
+                        groupName="matched"
+                        onChildChange={handleChildChange}
                       />
                     </div>
                     <div className="flex flex-col gap-2">
                       <InputCheckbox
                         name="asked"
                         label={t("asked")}
-                        registration={register("asked")}
+                        registration={registerParent("asked")}
                       />
                       <CheckboxGroup
-                        items={filterByRange(15, 20)}
+                        items={groupItemsMap.asked}
                         reverse
                         indent
                         register={register}
+                        groupName="asked"
+                        onChildChange={handleChildChange}
                       />
                     </div>
                   </div>
@@ -300,13 +303,15 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
                       <InputCheckbox
                         name="foreign"
                         label={t("foreign")}
-                        registration={register("foreign")}
+                        registration={registerParent("foreign")}
                       />
                       <CheckboxGroup
-                        items={filterByRange(24, Infinity)}
+                        items={groupItemsMap.foreign}
                         reverse
                         indent
                         register={register}
+                        groupName="foreign"
+                        onChildChange={handleChildChange}
                       />
                     </div>
                   </div>

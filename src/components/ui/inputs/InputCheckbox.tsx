@@ -30,10 +30,9 @@ export default function InputCheckbox({
           id={name}
           type="checkbox"
           className={`${className ?? ""} ${error ? "border-red-500" : "border-outline-base"}`}
-          defaultChecked={defaultChecked}
           disabled={disabled}
           {...registration}
-          checked={checked}
+          {...(checked !== undefined ? { checked } : { defaultChecked })}
         />
         <label className="text-sm font-normal" htmlFor={name}>
           {label}
