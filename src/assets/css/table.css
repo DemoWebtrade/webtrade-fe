@@ -113,3 +113,14 @@
 .ag-body-viewport {
   border-radius: 0px !important;
 }
+
+.ag-body-vertical-scroll-viewport {
+  scrollbar-width: thin;
+  min-width: 9px !important;
+  max-width: 9px !important;
+  width: 9px !important;
+}
+
+.ag-body-horizontal-scroll-viewport {
+  display: none;
+}

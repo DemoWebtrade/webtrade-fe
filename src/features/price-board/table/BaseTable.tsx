@@ -266,7 +266,7 @@ export default function BaseTable({
           {
             field: "change",
             headerName: "+/-",
-            minWidth: 55,
+            minWidth: 48,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: priceFormatter,
@@ -277,7 +277,7 @@ export default function BaseTable({
           {
             field: "changePct",
             headerName: "%",
-            minWidth: 55,
+            minWidth: 48,
             flex: 1,
             cellStyle: coloredCellStyle,
             valueFormatter: changePctFormatter,
