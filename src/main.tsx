@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import App from "./App.tsx";
 import { store } from "./store";
 
-window.onerror = (msg, src, line, col, err) => {
+window.onerror = () => {
   document.body.innerHTML = `
     <div style="
       display:flex;
@@ -45,25 +45,6 @@ window.onerror = (msg, src, line, col, err) => {
         ">
           Tải lại trang
         </button>
-
-        <details style="margin-top:20px;text-align:left">
-          <summary style="cursor:pointer;color:#999;font-size:13px">
-            Thông tin kỹ thuật (dành cho dev)
-          </summary>
-          <div style="
-            margin-top:10px;
-            font-size:12px;
-            color:#c62828;
-            background:#fafafa;
-            padding:10px;
-            border-radius:6px;
-          ">
-            <b>Lỗi:</b> ${msg}<br/>
-            <b>File:</b> ${src}<br/>
-            <b>Dòng:</b> ${line}:${col}<br/>
-            <pre style="white-space:pre-wrap">${err?.stack ?? "Không có stack trace"}</pre>
-          </div>
-        </details>
       </div>
     </div>
   `;
