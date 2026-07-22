@@ -7,11 +7,11 @@ on:
     branches: [main, develop]
   schedule:
     - cron: "0 2 * * 1"
-  workflow_dispatch: {}
+  workflow_dispatch: {} # cho phép bấm chạy tay trong tab Actions
 
 permissions:
   contents: read
-  security-events: write
+  security-events: write # cần quyền này để upload kết quả CodeQL/Semgrep SARIF
 
 jobs:
   # ─────────────────────────────────────────────────────────────
@@ -30,6 +30,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
   # ─────────────────────────────────────────────────────────────
   # 2. Semgrep - static analysis tìm lỗ hổng trong code (XSS, injection...)
@@ -44,10 +45,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Semgrep
-        run: semgrep ci --sarif --output=semgrep-results.sarif
-        env:
-          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-        continue-on-error: true # không chặn pipeline, chỉ report
+        run: semgrep scan --config=auto --sarif --output=semgrep-results.sarif
+        continue-on-error: true
 
       - name: Upload kết quả lên tab Security
         uses: github/codeql-action/upload-sarif@v3
