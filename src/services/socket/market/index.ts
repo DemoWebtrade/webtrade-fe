@@ -35,9 +35,9 @@ const PING_TIMEOUT = 3000; // chờ tối đa 3s mỗi lần ping
 
 // ── Latency ───────────────────────────────────────────────────────────────────
 
-// Thêm hàm tryReconnect
 let reconnectAttempt = 0;
 const MAX_RECONNECT = 5;
+const JITTER_MAX = 300; // random thêm tối đa 300ms
 
 const tryReconnect = () => {
   if (reconnectAttempt >= MAX_RECONNECT) {
@@ -49,7 +49,10 @@ const tryReconnect = () => {
   }
 
   reconnectAttempt++;
-  const delay = Math.min(1000 * reconnectAttempt, 5000); // tăng dần: 1s, 2s, 3s...
+
+  const delay =
+    Math.min(1000 * reconnectAttempt, 5000) + Math.random() * JITTER_MAX;
+
   console.log(
     `[Socket] Reconnect lần ${reconnectAttempt}/${MAX_RECONNECT} sau ${delay}ms`,
   );
