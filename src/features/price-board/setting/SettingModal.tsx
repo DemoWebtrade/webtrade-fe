@@ -187,7 +187,6 @@ export default function SettingModal({ isOpen, onClose }: SettingModalProps) {
     handleClose();
   };
 
-  // Helper: tạo registration cho checkbox cha, tự gọi handleParentChange khi đổi
   const registerParent = (groupName: GroupName) => {
     const reg = register(groupName);
     const onChange: ChangeHandler = async (e) => {

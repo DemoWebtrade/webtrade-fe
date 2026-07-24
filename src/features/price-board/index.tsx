@@ -1,3 +1,4 @@
+import Order from "@/components/order";
 import { Button } from "@/components/ui/Button";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppSelector } from "@/store/hook";
@@ -68,6 +69,9 @@ export default function PriceBoard() {
           <Status marketStatus={marketStatus} />
         </div>
       </div>
+
+      {/* Đặt lệnh */}
+      <Order />
     </div>
   );
 }
