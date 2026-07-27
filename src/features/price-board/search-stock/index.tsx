@@ -18,7 +18,7 @@ export default function SearchStock() {
 
   const handleStockSelect = (data: StockListItem) => {
     if (!data?.code) {
-      toast.error("Mã chứng khoán không hợp lệ");
+      toast.error(t("toast.stock-invalid"));
 
       return;
     }
@@ -30,7 +30,7 @@ export default function SearchStock() {
     <form>
       <InputSearchStockField
         name="stock"
-        placeholder={t("Tìm kiếm CK")}
+        placeholder={t("input.stock-search-placeholder")}
         registration={register("stock")}
         className="h-8! w-30! min-[380px]:w-40! md:w-60!"
         onStockSelect={handleStockSelect}

@@ -59,8 +59,6 @@
 
   "guide": "Hướng dẫn sử dụng",
 
-  "order": "Đặt lệnh",
-
   "data-updated": "Dữ liệu đã cập nhật",
   "reconnecting": "Đang kết nối lại",
   "disconnected": "Mất kết nối",
@@ -123,7 +121,8 @@
     "product-bonds": "Trái phiếu",
     "product-coveredWarrants": "Chứng quyền",
     "product-etf": "ETF",
-    "product-fundCertificate": "Chứng chỉ quỹ"
+    "product-fundCertificate": "Chứng chỉ quỹ",
+    "stock-search-placeholder": "Tìm kiếm CK"
   },
 
   "validate": {
@@ -167,7 +166,8 @@
     "board-csv": "Xuất file Excel",
     "scroll-auto": "Tự động cuộn",
     "scroll-stop": "Tạm dừng cuộn",
-    "setting-cols": "Nhấn để chọn các cột thông tin"
+    "setting-cols": "Nhấn để chọn các cột thông tin",
+    "buy-power": "Tài khoản có sử dụng dịch vụ ứng trước tiền bán tự động sẽ được tự động tăng sức mua ngay sau khi lệnh bán khớp. Quý khách sử dụng sức mua trên tiền bán chờ về sẽ phát sinh phí ứng trước theo biểu phí hiện hành."
   },
 
   "status": {
@@ -233,11 +233,18 @@
     "cancel": "Hủy",
     "reset": "Làm lại",
     "close": "Đóng",
-    "save": "Lưu"
+    "save": "Lưu",
+    "order": "Đặt lệnh"
   },
 
   "toast": {
     "change-info-success": "Thay đổi thông tin thành công",
-    "limited_other": "Bạn đã vượt quá giới hạn thao tác. Vui lòng thử lại sau {{count}} phút {{count}} giây."
+    "limited_other": "Bạn đã vượt quá giới hạn thao tác. Vui lòng thử lại sau {{count}} phút {{count}} giây.",
+    "stock-invalid": "Mã chứng khoán không hợp lệ"
+  },
+
+  "order": {
+    "normal": "Giao dịch cơ sở",
+    "conditional": "Đặt lệnh điều kiện"
   }
 }

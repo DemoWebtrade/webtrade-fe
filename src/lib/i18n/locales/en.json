@@ -59,8 +59,6 @@
 
   "guide": "User guide",
 
-  "order": "Order",
-
   "data-updated": "Data Updated",
   "reconnecting": "Reconnecting...",
   "disconnected": "Disconnected",
@@ -124,7 +122,8 @@
     "product-bonds": "Bonds",
     "product-coveredWarrants": "Covered Warrants",
     "product-etf": "ETFs",
-    "product-fundCertificate": "Fund Certificates"
+    "product-fundCertificate": "Fund Certificates",
+    "stock-search-placeholder": "Search Symbol"
   },
 
   "validate": {
@@ -167,7 +166,8 @@
     "board-csv": "Export Excel file",
     "scroll-auto": "Auto scroll",
     "scroll-stop": "Pause scroll",
-    "setting-cols": "Click to select stock column"
+    "setting-cols": "Click to select stock column",
+    "buy-power": "Accounts that use the automatic cash in advance service will automatically have buying power increased as soon as the sell order is matched. If you use the purchasing power, an advance fee will be incurred according to the current fee schedule."
   },
 
   "status": {
@@ -233,11 +233,19 @@
     "cancel": "Cancel",
     "reset": "Reset",
     "close": "Close",
-    "save": "Save"
+    "save": "Save",
+    "order": "Order"
   },
 
   "toast": {
     "change-info-success": "Profile updated successfully",
-    "contact-form-limited_other": "Rate limit exceeded. Please try again in {{count}} minute {{count}} seconds."
+    "contact-form-limited_other": "Rate limit exceeded. Please try again in {{count}} minute {{count}} seconds.",
+    "stock-invalid": "Invalid stock code"
+  },
+
+  "order": {
+    "title": "Order",
+    "normal": "Equities trading",
+    "conditional": "Conditional order"
   }
 }

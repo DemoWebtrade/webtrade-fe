@@ -56,7 +56,7 @@ export default function PriceBoard() {
           <div data-tour="prop-10">
             {" "}
             <Button className="w-auto whitespace-nowrap" variant="success">
-              {t("order")}
+              {t("button.order")}
             </Button>
           </div>
         </div>
