@@ -1,7 +1,8 @@
 import Order from "@/components/order";
 import { Button } from "@/components/ui/Button";
 import { MarketSocket } from "@/services/socket/market";
-import { useAppSelector } from "@/store/hook";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { setOpenOrder } from "@/store/modules/order/slice";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,7 @@ const IndexInfor = lazy(() => import("./index-infor"));
 
 export default function PriceBoard() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const marketStatus = useAppSelector(selectMarketStatus);
 
   const [id, setId] = useState<string>("VN30");
@@ -29,6 +31,10 @@ export default function PriceBoard() {
       if (id) MarketSocket.unsubscribe(id);
     };
   }, [marketStatus, id]);
+
+  const handleOpenOrder = () => {
+    dispatch(setOpenOrder(true));
+  };
 
   return (
     <div className="w-full h-full flex flex-col gap-3 relative p-2 md:p-4">
@@ -55,7 +61,11 @@ export default function PriceBoard() {
           {/* Đặt lệnh */}
           <div data-tour="prop-10">
             {" "}
-            <Button className="w-auto whitespace-nowrap" variant="success">
+            <Button
+              className="w-auto whitespace-nowrap"
+              variant="success"
+              onClick={handleOpenOrder}
+            >
               {t("button.order")}
             </Button>
           </div>

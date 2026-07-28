@@ -30,17 +30,17 @@ export default function SelectField({
 }: SelectFieldProps) {
   return (
     <div>
-      <label className="block text-sm font-normal mb-2" htmlFor={name}>
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
-      </label>
+      {label && (
+        <label className="block text-sm font-normal mb-2" htmlFor={name}>
+          {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
+        </label>
+      )}
 
       <select
         name={name}
         id={name}
-        className={`${className ?? ""} w-full px-3 py-2.5 rounded bg-bg-secondary text-sm text-content-base outline-none transition border appearance-none cursor-pointer focus:border-outline-selected ${
-          error ? "border-red-500" : "border-outline-base"
-        }`}
+        className={`${className ?? ""} cursor-pointer w-full px-3 py-2.5 rounded bg-bg-secondary text-sm text-content-base outline-none transition border focus:border-outline-selected ${error ? "border-red-500" : "border-outline-base"}`}
         {...registration}
         disabled={disabled}
       >

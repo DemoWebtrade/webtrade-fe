@@ -37,7 +37,7 @@ type InputSearchStockSmartFieldProps<TForm extends FieldValues = FieldValues> =
     disabled?: boolean;
     className?: string;
     isClearValue?: boolean;
-    defaultValue?: string;
+    value?: string;
     onStockSelect?: (stock: StockListItem) => void;
     setValue?: UseFormSetValue<TForm>;
   };
@@ -73,7 +73,7 @@ export const InputSearchStockSmartField = <
   error,
   className,
   isClearValue,
-  defaultValue,
+  value,
   onStockSelect,
   setValue,
 }: InputSearchStockSmartFieldProps<TForm>) => {
@@ -95,15 +95,15 @@ export const InputSearchStockSmartField = <
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState(defaultValue ?? "");
+  const [searchValue, setSearchValue] = useState(value ?? "");
   const [selectedStock, setSelectedStock] = useState<string | null>(
-    defaultValue ?? null,
+    value ?? null,
   );
 
   const [filteredStocks, setFilteredStocks] = useState<StockListItem[]>(() => {
-    if (!defaultValue) return sortedStocks;
+    if (!value) return sortedStocks;
     return sortedStocks.filter((stock) =>
-      stock.code.toLowerCase().includes(defaultValue.toLowerCase()),
+      stock.code.toLowerCase().includes(value.toLowerCase()),
     );
   });
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -204,7 +204,7 @@ export const InputSearchStockSmartField = <
     setIsOpen(false);
     setHighlightedIndex(-1);
     if (!selectedStock) {
-      const fallback = defaultValue ?? "";
+      const fallback = value ?? "";
 
       setSearchValue(fallback);
       setSelectedStock(fallback);
@@ -277,9 +277,7 @@ export const InputSearchStockSmartField = <
             ref={inputRef}
             name={name}
             id={name}
-            className={`
-            px-3 py-0 rounded bg-bg-secondary text-sm text-content-base outline-none transition border-none uppercase ${className ?? ""} ${selectedStock ? (selectedStock.length > 3 ? "w-21" : "w-12") : "w-30"}
-          `}
+            className={`px-3 py-0 rounded bg-bg-secondary text-sm text-content-base outline-none transition border-none uppercase ${className ?? ""} ${selectedStock ? (selectedStock.length > 3 ? "w-21" : "w-12") : "w-30"}`}
             type="text"
             {...registration}
             disabled={disabled}

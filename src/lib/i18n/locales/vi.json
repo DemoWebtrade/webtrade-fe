@@ -101,6 +101,8 @@
 
   "display-options": "Tùy chỉnh hiển thị",
 
+  "vnd": "VNĐ",
+
   "auth": {
     "sessionExpired": "Phiên giao dịch của bạn đã hết hạn. Vui lòng đăng nhập lại để tiếp tục."
   },
@@ -122,7 +124,10 @@
     "product-coveredWarrants": "Chứng quyền",
     "product-etf": "ETF",
     "product-fundCertificate": "Chứng chỉ quỹ",
-    "stock-search-placeholder": "Tìm kiếm CK"
+    "stock-search-placeholder": "Tìm kiếm CK",
+    "order-account": "Tài khoản đặt lệnh",
+    "order-volume": "Khối lượng",
+    "order-price": "Giá (x1000 VNĐ)"
   },
 
   "validate": {
@@ -173,7 +178,8 @@
   "status": {
     "status": "Trạng thái kết nối",
     "connected": "Kết nối",
-    "disconnected": "Không kết nối"
+    "disconnected": "Không kết nối",
+    "closed": "Đóng cửa"
   },
 
   "api": {
@@ -234,7 +240,9 @@
     "reset": "Làm lại",
     "close": "Đóng",
     "save": "Lưu",
-    "order": "Đặt lệnh"
+    "order": "Đặt lệnh",
+    "buy": "Mua",
+    "sell": "Bán"
   },
 
   "toast": {
@@ -245,6 +253,9 @@
 
   "order": {
     "normal": "Giao dịch cơ sở",
-    "conditional": "Đặt lệnh điều kiện"
+    "conditional": "Đặt lệnh điều kiện",
+    "buy-power": "Sức mua",
+    "value": "Giá trị",
+    "value-total": "Tổng KL"
   }
 }

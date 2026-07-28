@@ -102,6 +102,8 @@
 
   "display-options": "Display Options",
 
+  "vnd": "VND",
+
   "auth": {
     "sessionExpired": "Your trading session has expired. Please log in again to continue."
   },
@@ -123,7 +125,10 @@
     "product-coveredWarrants": "Covered Warrants",
     "product-etf": "ETFs",
     "product-fundCertificate": "Fund Certificates",
-    "stock-search-placeholder": "Search Symbol"
+    "stock-search-placeholder": "Search Symbol",
+    "order-account": "Account",
+    "order-volume": "Volume",
+    "order-price": "Price (x1000 VND)"
   },
 
   "validate": {
@@ -173,7 +178,8 @@
   "status": {
     "status": "Status",
     "connected": "Connected",
-    "disconnected": "Disconnected"
+    "disconnected": "Disconnected",
+    "closed": "Closed"
   },
 
   "api": {
@@ -234,7 +240,9 @@
     "reset": "Reset",
     "close": "Close",
     "save": "Save",
-    "order": "Order"
+    "order": "Order",
+    "buy": "Buy",
+    "sell": "Sell"
   },
 
   "toast": {
@@ -246,6 +254,9 @@
   "order": {
     "title": "Order",
     "normal": "Equities trading",
-    "conditional": "Conditional order"
+    "conditional": "Conditional order",
+    "buy-power": "Purchasing power",
+    "value": "Value",
+    "value-total": "Total Vol"
   }
 }
