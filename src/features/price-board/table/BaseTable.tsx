@@ -671,7 +671,7 @@ export default function BaseTable({
   useEffect(() => {
     const timmer = setTimeout(() => {
       setLoadingTimeout(false);
-    }, 5_000);
+    }, 30_000);
 
     return () => {
       clearTimeout(timmer);

@@ -3,18 +3,21 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { getProfileThunk } from "@/store/modules/auth/api";
 import {
   selectIsLogin,
+  selectIsOpenProfile,
   selectProfile,
   selectToken,
-  selectTypeUpdateProfile,
 } from "@/store/modules/auth/selector";
-import { logout, setIsLogin } from "@/store/modules/auth/slice";
+import {
+  logout,
+  setIsLogin,
+  setIsOpenProfile,
+} from "@/store/modules/auth/slice";
 import { AnimatePresence, motion } from "framer-motion";
 import { UserRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../../store/hook";
 import LoginModal from "../../auth/login-modal";
-import Profile from "../../auth/profile";
 
 export default function Login() {
   const { t } = useTranslation();
@@ -23,13 +26,11 @@ export default function Login() {
   const token = useAppSelector(selectToken);
   const isLogin = useAppSelector(selectIsLogin);
   const profile = useAppSelector(selectProfile);
-  const typeUpdateProfile = useAppSelector(selectTypeUpdateProfile);
+  const isOpenProfile = useAppSelector(selectIsOpenProfile);
 
   const [isOpenInfo, setIsOpenInfo] = useState(false);
-  const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const refInfo = useRef<HTMLDivElement>(null);
-  const refProfile = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -46,20 +47,16 @@ export default function Login() {
 
   const handleClickUser = () => {
     setIsOpenInfo((prev) => (isOpenProfile ? false : !prev));
-    setIsOpenProfile(false);
+    dispatch(setIsOpenProfile(false));
   };
 
   const handleClickProfile = () => {
-    setIsOpenProfile(true);
+    dispatch(setIsOpenProfile(true));
     setIsOpenInfo(false);
   };
 
   useClickOutside(refInfo, () => {
     setIsOpenInfo(false);
-  });
-
-  useClickOutside(refProfile, () => {
-    if (!typeUpdateProfile || !isOpenProfile) setIsOpenProfile(false);
   });
 
   return (
@@ -117,12 +114,6 @@ export default function Login() {
               </motion.div>
             )}
           </AnimatePresence>
-
-          <div ref={refProfile}>
-            <AnimatePresence>
-              {isOpenProfile && <Profile key="profile" />}
-            </AnimatePresence>
-          </div>
         </div>
       ) : (
         <>

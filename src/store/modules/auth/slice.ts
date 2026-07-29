@@ -26,6 +26,8 @@ const initialState: AuthState = {
 
   isOpenAddAccountBen: false,
 
+  isOpenProfile: false,
+
   loading: {
     login: false,
     register: false,
@@ -73,6 +75,10 @@ const authSlice = createSlice({
 
     setIsOpenAddAccountBen(state, action) {
       state.isOpenAddAccountBen = action.payload;
+    },
+
+    setIsOpenProfile(state, action) {
+      state.isOpenProfile = action.payload;
     },
   },
 
@@ -196,6 +202,7 @@ export const {
   setIsLogin,
   setTypeUpdateProfile,
   setIsOpenAddAccountBen,
+  setIsOpenProfile,
 } = authSlice.actions;
 
 export default authSlice.reducer;

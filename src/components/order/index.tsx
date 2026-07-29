@@ -33,23 +33,23 @@ export default function Order() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{
-            duration: 0.25,
-            ease: "easeInOut",
-          }}
-          className="min-[488px]:w-md w-full h-[calc(100%-4px)] bg-bg-secondary absolute right-0 top-1 z-1"
-        >
-          <div>
-            <div className="w-full flex flex-row items-center justify-between border-b border-border">
+        <div className="min-[488px]:w-md w-[90%] h-[calc(100%-4px)] absolute right-0 top-1 z-1 overflow-hidden">
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{
+              duration: 0.25,
+              ease: "easeInOut",
+            }}
+            className="bg-bg-secondary w-full h-full"
+          >
+            <div className="relative w-full border-b border-border">
               <div className="flex flex-row">
                 {MENU_ORDER.map((item) => (
                   <span
                     key={item.key}
-                    className={`px-4 py-1 text-base text-center hover:text-content-primary ${tabActive === item.key ? "border-b-2 border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
+                    className={`w-1/2 whitespace-nowrap text-center text-base pt-1 pb-1.5 md:pb-3 border-b-2 cursor-pointer ${tabActive === item.key ? "border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
                     onClick={() => setTabActive(item.key)}
                   >
                     {t(item.label)}
@@ -58,16 +58,16 @@ export default function Order() {
               </div>
 
               <div
-                className="text-content-primary cursor-pointer"
+                className="text-content-primary cursor-pointer absolute top-1 right-1"
                 onClick={onClose}
               >
                 <X className="size-4 md:size-5" />
               </div>
-            </div>
 
-            {tabActive === "BASE" && <OrderNormal />}
-          </div>
-        </motion.div>
+              {tabActive === "BASE" && <OrderNormal />}
+            </div>
+          </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

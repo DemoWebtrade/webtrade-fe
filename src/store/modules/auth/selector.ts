@@ -33,3 +33,6 @@ export const selectIsOpenAddAccountBen = (state: RootState) =>
 
 export const selectLoadingAddAccountBen = (state: RootState) =>
   state.auth.loading.addAccountBen;
+
+export const selectIsOpenProfile = (state: RootState) =>
+  state.auth.isOpenProfile;

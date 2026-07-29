@@ -12,6 +12,8 @@ export type AuthState = {
 
   isOpenAddAccountBen: boolean;
 
+  isOpenProfile: boolean;
+
   loading: {
     login: boolean;
     register: boolean;
