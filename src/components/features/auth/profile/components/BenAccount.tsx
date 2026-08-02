@@ -11,7 +11,7 @@ import {
   selectLoadingBeneficiaries,
 } from "@/store/modules/auth/selector";
 import { setIsOpenAddAccountBen } from "@/store/modules/auth/slice";
-import { getBankLogo } from "@/utils";
+import { getBankLogo, getBankName } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { EllipsisVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -107,14 +107,13 @@ export default function BenAccount() {
                         className="w-9 h-9 rounded-full"
                       />
                       <span className="text-sm">
-                        {/* Ngân hàng TMCP Quân đội (MBB) */}
-                        {item?.bankName}
+                        {getBankName(item?.bankCode)}
                       </span>
 
                       <div className="ml-auto flex flex-row gap-1 items-center justify-center">
                         {item?.isDefault && (
                           <div className="rounded-2xl bg-purple-base/20 text-xs px-1 py-0.5 whitespace-nowrap">
-                            Mac dinh
+                            {t("user.default")}
                           </div>
                         )}
                         <div

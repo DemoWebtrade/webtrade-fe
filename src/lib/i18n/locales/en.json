@@ -215,7 +215,8 @@
     "name": "Full Name",
     "account-c": "Account Holder",
     "bank": "Bank",
-    "code": "Code"
+    "code": "Code",
+    "default": "Default"
   },
 
   "register": {

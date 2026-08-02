@@ -67,7 +67,7 @@ export default function Login() {
           className="p-1 rounded-md bg-purple-base/30 hover:bg-purple-hover/30 relative"
         >
           <div
-            className="flex flex-row items-center gap-1"
+            className="flex flex-row items-center gap-1 cursor-pointer"
             onClick={handleClickUser}
           >
             <UserRound className="size-3.5" />

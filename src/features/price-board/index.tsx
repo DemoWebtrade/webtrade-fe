@@ -2,6 +2,8 @@ import Order from "@/components/order";
 import { Button } from "@/components/ui/Button";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { selectToken } from "@/store/modules/auth/selector";
+import { setIsLogin } from "@/store/modules/auth/slice";
 import { setOpenOrder } from "@/store/modules/order/slice";
 import { selectMarketStatus } from "@/store/modules/socket/selector";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -19,6 +21,7 @@ export default function PriceBoard() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const marketStatus = useAppSelector(selectMarketStatus);
+  const token = useAppSelector(selectToken);
 
   const [id, setId] = useState<string>("VN30");
 
@@ -33,7 +36,11 @@ export default function PriceBoard() {
   }, [marketStatus, id]);
 
   const handleOpenOrder = () => {
-    dispatch(setOpenOrder(true));
+    if (token) {
+      dispatch(setOpenOrder(true));
+    } else {
+      dispatch(setIsLogin(true));
+    }
   };
 
   return (

@@ -21,7 +21,7 @@ export default function Profile() {
   const [feature, setFeature] = useState("INFOR");
 
   return (
-    <div className="absolute -top-1 right-1 z-10 shadow-md py-2 md:py-3 md:w-100 w-[90%] h-full overflow-hidden">
+    <div className="absolute -top-1 right-1 z-10 shadow-md md:w-md w-[90%] h-full overflow-hidden">
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: 0 }}

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import OrderCondition from "./OrderCondition";
 import OrderNormal from "./OrderNormal";
 
 const MENU_ORDER = [
@@ -28,6 +29,7 @@ export default function Order() {
 
   const onClose = () => {
     dispatch(setOpenOrder(false));
+    setTabActive("BASE");
   };
 
   return (
@@ -44,7 +46,7 @@ export default function Order() {
             }}
             className="bg-bg-secondary w-full h-full"
           >
-            <div className="relative w-full border-b border-border">
+            <div className="w-full">
               <div className="flex flex-row">
                 {MENU_ORDER.map((item) => (
                   <span
@@ -65,6 +67,7 @@ export default function Order() {
               </div>
 
               {tabActive === "BASE" && <OrderNormal />}
+              {tabActive === "COND" && <OrderCondition />}
             </div>
           </motion.div>
         </div>

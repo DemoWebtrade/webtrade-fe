@@ -215,7 +215,8 @@
     "name": "Họ tên",
     "account-c": "Chủ tài khoản",
     "bank": "Ngân hàng",
-    "code": "Mã"
+    "code": "Mã",
+    "default": "Mặc định"
   },
 
   "register": {

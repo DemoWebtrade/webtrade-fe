@@ -39,7 +39,7 @@ export function flashCellWithColor(
     cellEl.style.backgroundColor = "transparent";
     cellEl.style.color = color;
     timeoutMap.delete(cacheKey);
-  }, 500);
+  }, 300);
 
   timeoutMap.set(cacheKey, timeout);
 }
