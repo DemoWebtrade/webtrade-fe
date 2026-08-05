@@ -1,4 +1,6 @@
-import { PRICE_TYPE } from "@/configs";
+import { LIST_STOCKS, MARKET_TYPE, PRICE_TYPE } from "@/configs";
+import { useAppSelector } from "@/store/hook";
+import { selectListAccount } from "@/store/modules/auth/selector";
 import { numberFormat, StringToInt } from "@/utils";
 import { Info } from "lucide-react";
 import { Controller, useForm, useWatch } from "react-hook-form";
@@ -11,27 +13,29 @@ import SelectField from "../ui/inputs/SelectField";
 
 type OrderFormValues = {
   stockCode: string;
-  orderPrice: string;
-  orderVolume: string;
+  orderPrice: string | number;
+  orderVolume: number | null;
 };
 
 export default function OrderNormal() {
   const { t } = useTranslation();
 
+  const listAccount = useAppSelector(selectListAccount);
+
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm<OrderFormValues>({
-    defaultValues: {
-      stockCode: "ACB",
-    },
-  });
+  } = useForm<OrderFormValues>();
 
   const stockCode = useWatch({
     control,
     name: "stockCode",
   });
+
+  const stock = LIST_STOCKS.find((s) => s.code === stockCode);
+
   const orderPrice = useWatch({
     control,
     name: "orderPrice",
@@ -41,13 +45,80 @@ export default function OrderNormal() {
     name: "orderVolume",
   });
 
-  const onSubmit = () => {};
+  const handleValidateVolume = (volume: string | number | null) => {
+    if (!volume) {
+      return "Vui lòng nhập khối lượng";
+    }
+
+    const numericVolume = StringToInt(volume);
+
+    if (
+      !numericVolume ||
+      numericVolume <= 0 ||
+      (numericVolume > 100 && numericVolume % 100 !== 0)
+    ) {
+      return "Khối lượng không hợp lệ";
+    }
+
+    if (numericVolume > 500_000 && stock?.exchange?.toUpperCase() === "HOSE") {
+      return "Khối lượng không hợp lệ";
+    }
+  };
+
+  const handleValidatePrice = (price: number | string | null) => {
+    if (!price) {
+      return "Vui lòng nhập giá";
+    }
+
+    // validate theo sàn
+    const market = stock?.exchange?.toUpperCase();
+
+    if (typeof price === "string" && price && PRICE_TYPE?.includes(price)) {
+      if (market && !MARKET_TYPE?.[market]?.includes(price)) {
+        return market === "HOSE"
+          ? "HOSE không đặt giá MOK/MAK/PLO"
+          : market === "HNX"
+            ? "HNX không đặt giá MP"
+            : market === "UPCOM"
+              ? "UPCOM không đặt giá thị trường"
+              : "Giá đặt không hợp lệ";
+      }
+
+      return;
+    }
+
+    const numericPrice = StringToInt(price);
+
+    if (!numericPrice || numericPrice <= 0) {
+      return "Giá không hợp lệ";
+    }
+
+    const priceInVnd = Math.round(numericPrice * 1000);
+    const step = numericPrice < 10 ? 10 : numericPrice < 50 ? 50 : 100;
+
+    if (market === "HOSE") {
+      if (Math.round(priceInVnd % step) !== 0) {
+        return "Giá đặt không hợp lệ";
+      }
+    }
+
+    if (market === "HNX") {
+      if (Math.round(priceInVnd % 100) !== 0) {
+        return "Giá đặt không hợp lệ";
+      }
+    }
+  };
+
+  const onBuy = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  const onSell = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="p-1 md:p-2 text-sm flex flex-col gap-2"
-    >
+    <form className="p-1 md:p-2 text-sm flex flex-col gap-2">
       <div className="flex flex-row items-center">
         <div className="w-1/3">
           <Controller
@@ -58,7 +129,14 @@ export default function OrderNormal() {
                 name="stockCode"
                 className="text-base! px-1!"
                 value={field.value}
-                onStockSelect={(stock) => field.onChange(stock.code)}
+                onStockSelect={(stock) => {
+                  field.onChange(stock.code);
+                  reset({
+                    stockCode: stock.code,
+                    orderPrice: "",
+                    orderVolume: null,
+                  });
+                }}
               />
             )}
           />
@@ -100,12 +178,10 @@ export default function OrderNormal() {
         <div className="flex-1">
           <SelectField
             name="gender"
-            options={
-              [
-                // { label: t("male"), value: "MALE" },
-                // { label: t("female"), value: "FEMALE" },
-              ]
-            }
+            options={listAccount?.map((item) => ({
+              label: item.accountNumber,
+              value: item.accountNumber,
+            }))}
             className="px-1! py-0.5!"
           />{" "}
         </div>
@@ -140,6 +216,10 @@ export default function OrderNormal() {
             control={control}
             error={errors.orderVolume}
             className="px-1! py-0.5!"
+            rules={{
+              required: "Vui lòng nhập khối lượng",
+              validate: (value) => handleValidateVolume(value),
+            }}
           />
         </div>
       </div>
@@ -155,6 +235,10 @@ export default function OrderNormal() {
             error={errors.orderPrice}
             className="px-1! py-0.5!"
             symbol={stockCode}
+            rules={{
+              required: "Vui lòng nhập giá đặt",
+              validate: (value) => handleValidatePrice(value),
+            }}
           />
         </div>
       </div>
@@ -166,7 +250,7 @@ export default function OrderNormal() {
         {orderVolume && orderPrice ? (
           <div className="flex-1 flex flex-row justify-end">
             <p className="pr-1">
-              {PRICE_TYPE.includes(orderPrice)
+              {PRICE_TYPE.includes(orderPrice + "")
                 ? ""
                 : numberFormat(
                     StringToInt(orderVolume) * StringToInt(+orderPrice * 1000),
@@ -179,10 +263,20 @@ export default function OrderNormal() {
       </div>{" "}
       {/* submit */}
       <div className="flex flex-row gap-2 w-full">
-        <Button type="button" className="w-1/2 h-7.5!" variant="success">
+        <Button
+          type="button"
+          className="w-1/2 h-7.5!"
+          variant="success"
+          onClick={onBuy}
+        >
           {t("button.buy")}
         </Button>
-        <Button type="button" className="w-1/2 h-7.5!" variant="error">
+        <Button
+          type="button"
+          className="w-1/2 h-7.5!"
+          variant="error"
+          onClick={onSell}
+        >
           {t("button.sell")}
         </Button>
       </div>

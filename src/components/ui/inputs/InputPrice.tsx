@@ -1,11 +1,11 @@
-import { LIST_STOCKS, MARKET_TYPE } from "@/configs";
+import { LIST_STOCKS, MARKET_TYPE, PRICE_TYPE } from "@/configs";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
 import type {
   Control,
   FieldError,
   FieldPath,
   FieldValues,
+  RegisterOptions,
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IMaskInput } from "react-imask";
@@ -21,6 +21,7 @@ type InputPriceProps<TFieldValues extends FieldValues> = {
   className?: string;
   placeholder?: string;
   symbol?: string;
+  rules?: RegisterOptions<TFieldValues, FieldPath<TFieldValues>>;
 };
 
 export default function InputPrice<TFieldValues extends FieldValues>({
@@ -34,9 +35,8 @@ export default function InputPrice<TFieldValues extends FieldValues>({
   className,
   placeholder,
   symbol,
+  rules,
 }: InputPriceProps<TFieldValues>) {
-  const [isChecked, setIsChecked] = useState(false);
-
   const stock = LIST_STOCKS?.find((s) => s?.code === symbol);
   const market =
     stock?.type === "i" ? "UPCOM" : (stock?.exchange.toLocaleUpperCase() ?? "");
@@ -59,9 +59,13 @@ export default function InputPrice<TFieldValues extends FieldValues>({
         <Controller
           name={name}
           control={control}
+          rules={rules}
           render={({ field: { value, onChange, onBlur, ref } }) => {
             const numericValue =
               value !== undefined && value !== null ? Number(value) : 0;
+
+            const isSpecialPrice =
+              typeof value === "string" && PRICE_TYPE.includes(value);
 
             const handleStep = (delta: number) => {
               if (disabled) return;
@@ -73,11 +77,10 @@ export default function InputPrice<TFieldValues extends FieldValues>({
 
             return (
               <>
-                {isChecked ? (
+                {isSpecialPrice ? (
                   <div
                     className={`${className ?? ""} cursor-pointer w-full rounded border border-outline-base text-sm text-content-base outline-none bg-bg-secondary text-center min-w-0`}
                     onClick={() => {
-                      setIsChecked(false);
                       onChange("");
                     }}
                   >
@@ -142,6 +145,12 @@ export default function InputPrice<TFieldValues extends FieldValues>({
                   </div>
                 )}
 
+                {error && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {error?.message}
+                  </div>
+                )}
+
                 {symbol && (
                   <div className="text-sm text-content-base flex flex-wrap gap-2 mt-1">
                     {(MARKET_TYPE?.[market] ?? [])?.map((m) => (
@@ -150,7 +159,6 @@ export default function InputPrice<TFieldValues extends FieldValues>({
                         onClick={() => {
                           if (disabled) return;
                           onChange(m as never);
-                          setIsChecked(true);
                         }}
                         className="py-1 px-2 bg-secondary-base hover:bg-secondary-hover rounded flex-1 flex items-center justify-center cursor-pointer"
                       >
@@ -163,10 +171,6 @@ export default function InputPrice<TFieldValues extends FieldValues>({
             );
           }}
         />
-
-        {error && (
-          <div className="text-red-500 text-xs mt-1">{error?.message}</div>
-        )}
       </div>
     </div>
   );

@@ -23,6 +23,10 @@ export const selectLoadingUpdateProfile = (state: RootState) =>
 export const selectTypeUpdateProfile = (state: RootState) =>
   state.auth.typeUpdateProfile;
 
+export const selectListAccount = (state: RootState) => {
+  return state.auth.profile?.tradingAccounts || [];
+};
+
 export const selectBeneficiaries = (state: RootState) =>
   state.auth.beneficiaries;
 export const selectLoadingBeneficiaries = (state: RootState) =>

@@ -277,7 +277,7 @@ export const InputSearchStockSmartField = <
             ref={inputRef}
             name={name}
             id={name}
-            className={`px-3 py-0 rounded bg-bg-secondary text-sm text-content-base outline-none transition border-none uppercase ${className ?? ""} ${selectedStock ? (selectedStock.length > 3 ? "w-21" : "w-12") : "w-30"}`}
+            className={`px-3 py-0 rounded bg-bg-secondary text-sm text-content-base outline-none transition border-none uppercase ${className ?? ""} ${selectedStock ? (selectedStock.length > 3 ? "w-21" : "w-12") : "w-21"}`}
             type="text"
             {...registration}
             disabled={disabled}
@@ -327,7 +327,7 @@ export const InputSearchStockSmartField = <
             );
 
             return (
-              <span className="ml-2 text-xs text-content-tertiary uppercase">
+              <span className="ml-1 text-xs text-content-tertiary uppercase">
                 {stock?.type === "i" ? "(UPCOM)" : "(" + stock?.exchange + ")"}
               </span>
             );

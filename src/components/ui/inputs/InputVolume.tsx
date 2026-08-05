@@ -1,9 +1,11 @@
+import { StringToInt } from "@/utils";
 import { Minus, Plus } from "lucide-react";
 import type {
   Control,
   FieldError,
   FieldPath,
   FieldValues,
+  RegisterOptions,
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { IMaskInput } from "react-imask";
@@ -19,6 +21,7 @@ type InputVolumeProps<TFieldValues extends FieldValues> = {
   className?: string;
   placeholder?: string;
   step?: number; // số lượng tăng/giảm mỗi lần bấm, mặc định 100
+  rules?: RegisterOptions<TFieldValues, FieldPath<TFieldValues>>;
 };
 
 export default function InputVolume<TFieldValues extends FieldValues>({
@@ -32,6 +35,7 @@ export default function InputVolume<TFieldValues extends FieldValues>({
   className,
   placeholder,
   step = 100,
+  rules,
 }: InputVolumeProps<TFieldValues>) {
   return (
     <div>
@@ -45,9 +49,10 @@ export default function InputVolume<TFieldValues extends FieldValues>({
       <Controller
         name={name}
         control={control}
+        rules={rules}
         render={({ field: { value, onChange, onBlur, ref } }) => {
           const numericValue =
-            value !== undefined && value !== null ? Number(value) : 0;
+            value !== undefined && value !== null ? StringToInt(value) : 0;
 
           const handleStep = (delta: number) => {
             if (disabled) return;
