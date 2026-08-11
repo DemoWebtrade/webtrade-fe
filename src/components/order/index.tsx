@@ -97,7 +97,7 @@ export default function Order() {
                 {MENU_HISTORY.map((item) => (
                   <span
                     key={item.key}
-                    className={`px-2 whitespace-nowrap text-center text-base pt-1 pb-1.5 md:pb-3 cursor-pointer ${tabHisTabActive === item.key ? "border-b-2 border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
+                    className={`px-2 whitespace-nowrap text-center text-sm pt-1 pb-1.5 cursor-pointer ${tabHisTabActive === item.key ? "border-b-2 border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
                     onClick={() => setHisTabActive(item.key)}
                   >
                     {t(item.label)}

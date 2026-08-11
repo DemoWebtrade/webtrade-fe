@@ -1,25 +1,16 @@
 import { AgGridReact } from "ag-grid-react";
+import { useTranslation } from "react-i18next";
 
 export default function OrderHistory() {
-  const rowData = [
-    { make: "Tesla", model: "Model Y", price: 64950 },
-    { make: "Ford", model: "F-Series", price: 33850 },
-    { make: "Toyota", model: "Corolla", price: 29600 },
-    { make: "Mercedes", model: "EQA", price: 48890 },
-    { make: "Fiat", model: "500", price: 15774 },
-    { make: "Nissan", model: "Juke", price: 20675 },
-  ];
+  const { t } = useTranslation();
 
-  const columnDefs = [
+  const columnDefs: any = [
     {
       headerName: "Make & Model",
-      valueGetter: (params: any) => `${params.data.make} ${params.data.model}`,
       flex: 2,
     },
     {
       field: "price",
-      valueFormatter: (params: any) =>
-        `£${Math.floor(params.value).toLocaleString()}`,
       flex: 1,
     },
   ];
@@ -27,14 +18,22 @@ export default function OrderHistory() {
   return (
     <div className="ag-theme-custom h-full w-full">
       <AgGridReact
-        rowData={rowData}
+        rowData={[]}
         columnDefs={columnDefs}
         defaultColDef={{
           sortable: false,
           resizable: false,
+          headerClass: "text-xs! font-normal!",
+          cellClass: "text-xs! font-normal! grid! place-items-center!",
         }}
+        overlayNoRowsTemplate={`
+          <div class="md:text-sm text-xs py-4">
+            ${t("no-data")}
+          </div>`}
         suppressMovableColumns={true}
         suppressCellFocus={true}
+        rowHeight={28}
+        headerHeight={28}
       />
     </div>
   );
