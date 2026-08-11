@@ -107,6 +107,11 @@
   border: 1px solid var(--border) !important;
 }
 
+.table-price .ag-floating-top {
+  border-left: 1px solid var(--border) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
 .table-price .ag-body {
   border-bottom: 1px solid var(--border) !important;
   border-left: 1px solid var(--border) !important;
@@ -146,6 +151,13 @@
 }
 
 .ag-body-horizontal-scroll {
+  display: none;
+  height: 0px !important;
+  max-height: 0px !important;
+  min-height: 0px !important;
+}
+
+.ag-body-vertical-scroll {
   display: none;
   height: 0px !important;
   max-height: 0px !important;
