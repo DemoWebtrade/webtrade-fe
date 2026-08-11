@@ -5,8 +5,13 @@ import type { HeaderTableBaseConfig, PriceboardState } from "./types";
 const initialState: PriceboardState = {
   scroll: false,
   export: false,
+
   stocks: {},
   symbols: [],
+
+  stockDetail: null,
+  symbolDetail: null,
+
   headerTableBaseConfig: JSON.parse(
     localStorage.getItem("headerTableBaseConfig") || "[]",
   ),
@@ -48,7 +53,43 @@ const priceboardSlice = createSlice({
         if (!symbol || !state.stocks[symbol]) continue;
 
         Object.assign(state.stocks[symbol], partial);
+
+        if (state.stockDetail?.symbol === symbol) {
+          Object.assign(state.stockDetail, partial);
+        }
       }
+    },
+
+    // detail stock
+    setSymbolStocksDetail(state, action: PayloadAction<string>) {
+      state.symbolDetail = action.payload;
+      if (state.symbols?.includes(action.payload))
+        state.stockDetail = state.stocks[action.payload];
+    },
+
+    snapshotStockDetail(state, action: PayloadAction<StockData[]>) {
+      state.stockDetail = action.payload?.[0];
+    },
+
+    batchUpdateStockDetail(state, action: PayloadAction<Partial<StockData>[]>) {
+      if (
+        !state.stockDetail ||
+        state.symbols?.includes(state.stockDetail?.symbol)
+      )
+        return;
+
+      const partial = action.payload.find(
+        (p) => p.symbol === state.stockDetail?.symbol,
+      );
+
+      if (partial) {
+        Object.assign(state.stockDetail, partial);
+      }
+    },
+
+    clearStockDetail(state) {
+      state.stockDetail = null;
+      state.symbolDetail = null;
     },
 
     setHeaderTableBaseConfig(
@@ -74,6 +115,10 @@ export const {
   batchUpdateStocks,
   snapshotStocks,
   clearStocks,
+  setSymbolStocksDetail,
+  snapshotStockDetail,
+  batchUpdateStockDetail,
+  clearStockDetail,
   setHeaderTableBaseConfig,
   setStockSearch,
 } = priceboardSlice.actions;

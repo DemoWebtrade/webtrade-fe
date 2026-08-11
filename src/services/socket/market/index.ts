@@ -1,7 +1,10 @@
 import { store } from "@/store";
 import {
+  batchUpdateStockDetail,
   batchUpdateStocks,
+  clearStockDetail,
   clearStocks,
+  snapshotStockDetail,
   snapshotStocks,
 } from "@/store/modules/priceboard/slice";
 import { setLatency, setMarketStatus } from "@/store/modules/socket/slice";
@@ -20,11 +23,15 @@ const marketWorker = new Worker(new URL("./market.woker.ts", import.meta.url), {
 marketWorker.onmessage = (e: MessageEvent) => {
   if (e.data.type !== "BATCH_READY") return;
   store.dispatch(batchUpdateStocks(e.data.payload));
+  store.dispatch(batchUpdateStockDetail(e.data.payload));
 };
 
 let socket: Socket | null = null;
 let latencyInterval: ReturnType<typeof setInterval> | null = null;
+
 const pendingSubscriptions: string[] = [];
+const pendingSymbolSubscriptions: string[] = [];
+
 const pendingListeners = new Map<string, (data: unknown) => void>();
 
 let pingFailCount = 0;
@@ -129,6 +136,9 @@ const flushPending = () => {
   while (pendingSubscriptions.length > 0) {
     socket!.emit("subscribe", pendingSubscriptions.shift()!);
   }
+  while (pendingSymbolSubscriptions.length > 0) {
+    socket!.emit("subscribe", pendingSubscriptions);
+  }
   pendingListeners.forEach((cb, event) => socket!.on(event, cb));
 };
 
@@ -181,6 +191,10 @@ const connect = () => {
     store.dispatch(snapshotStocks(data));
   });
 
+  socket.on("marketSnapshot_symbol", (data: StockData[]) => {
+    store.dispatch(snapshotStockDetail(data));
+  });
+
   socket.connect();
   return socket;
 };
@@ -213,6 +227,7 @@ const close = () => {
   }
   pendingListeners.clear();
   pendingSubscriptions.length = 0;
+  pendingSymbolSubscriptions.length = 0;
 };
 
 const subscribe = (topic: string) => {
@@ -226,6 +241,22 @@ const subscribe = (topic: string) => {
 
 const unsubscribe = (topic: string) => {
   socket?.emit("unsubscribe", topic);
+  pendingSubscriptions?.filter((s) => s !== topic);
+};
+
+const subscribeSymbols = (symbols: string[]) => {
+  if (socket?.connected) {
+    socket.emit("subscribeSymbols", symbols);
+    store.dispatch(clearStockDetail());
+    return;
+  }
+
+  pendingSymbolSubscriptions.push(...symbols);
+};
+
+const unsubscribeSymbols = (symbols: string[]) => {
+  socket?.emit("unsubscribeSymbols", symbols);
+  pendingSymbolSubscriptions?.filter((s) => !symbols.includes(s));
 };
 
 const on = <T>(event: string, callback: (data: T) => void) => {
@@ -248,6 +279,8 @@ export const MarketSocket = {
   close,
   subscribe,
   unsubscribe,
+  subscribeSymbols,
+  unsubscribeSymbols,
   on,
   off,
   getMarketSocket,

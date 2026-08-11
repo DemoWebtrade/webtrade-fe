@@ -1,7 +1,7 @@
-.ag-theme-quartz-custom {
+.ag-theme-custom {
   --ag-background-color: var(--bg-primary) !important;
   --ag-foreground-color: var(--content-primary) !important;
-  --ag-header-background-color: var(--bg-secondary) !important;
+  --ag-header-background-color: var(--bg-tertiary) !important;
   --ag-odd-row-background-color: var(--bg-secondary) !important;
   --ag-value-change-value-highlight-background-color: var(
     --secondary-selected
@@ -93,10 +93,14 @@
   border-right: 1px solid var(--border) !important;
 }
 
-.ag-layout-normal {
+.ag-theme-quartz-custom .ag-layout-normal {
   border-radius: 12px !important;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
+}
+
+.ag-layout-normal {
+  border-radius: 0px !important;
 }
 
 .ag-header-cell,

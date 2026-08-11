@@ -2,10 +2,13 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectOpenOrder } from "@/store/modules/order/selector";
 import { setOpenOrder } from "@/store/modules/order/slice";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { ChevronDown, Funnel, Scan, X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import Asset from "./Asset";
+import CategoryList from "./CategoryList";
 import OrderCondition from "./OrderCondition";
+import OrderHistory from "./OrderHistory";
 import OrderNormal from "./OrderNormal";
 
 const MENU_ORDER = [
@@ -13,9 +16,24 @@ const MENU_ORDER = [
     key: "BASE",
     label: "order.normal",
   },
+  // {
+  //   key: "COND",
+  //   label: "order.conditional",
+  // },
+];
+
+const MENU_HISTORY = [
   {
-    key: "COND",
-    label: "order.conditional",
+    key: "ORDER",
+    label: "Sổ lệnh",
+  },
+  {
+    key: "CATEGORY",
+    label: "Danh mục",
+  },
+  {
+    key: "ASSET",
+    label: "Tài sản",
   },
 ];
 
@@ -26,6 +44,8 @@ export default function Order() {
   const isOpen = useAppSelector(selectOpenOrder);
 
   const [tabActive, setTabActive] = useState<string>("BASE");
+  const [tabHisTabActive, setHisTabActive] = useState<string>("ORDER");
+  const [isHiddenHisTab, setIsHiddenHisTab] = useState<boolean>(false);
 
   const onClose = () => {
     dispatch(setOpenOrder(false));
@@ -44,9 +64,9 @@ export default function Order() {
               duration: 0.25,
               ease: "easeInOut",
             }}
-            className="bg-bg-secondary w-full h-full"
+            className="bg-bg-secondary w-full h-full flex flex-col gap-3"
           >
-            <div className="w-full">
+            <div>
               <div className="flex flex-row">
                 {MENU_ORDER.map((item) => (
                   <span
@@ -68,6 +88,55 @@ export default function Order() {
 
               {tabActive === "BASE" && <OrderNormal />}
               {tabActive === "COND" && <OrderCondition />}
+            </div>
+
+            <div className="flex-1 min-h-0 flex flex-col gap-2">
+              <div
+                className={`flex flex-wrap border-b border-t border-border select-none w-full ${isHiddenHisTab ? "absolute bottom-0" : ""}`}
+              >
+                {MENU_HISTORY.map((item) => (
+                  <span
+                    key={item.key}
+                    className={`px-2 whitespace-nowrap text-center text-base pt-1 pb-1.5 md:pb-3 cursor-pointer ${tabHisTabActive === item.key ? "border-b-2 border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
+                    onClick={() => setHisTabActive(item.key)}
+                  >
+                    {t(item.label)}
+                  </span>
+                ))}
+
+                <div className="flex flex-row gap-2 items-center ml-auto mr-2">
+                  <div
+                    className="cursor-pointer"
+                    data-tooltip-id="global-tooltip"
+                    data-tooltip-content={t("Mở rộng")}
+                  >
+                    <Scan className="size-3.5" />
+                  </div>
+
+                  <div
+                    className="cursor-pointer"
+                    data-tooltip-id="global-tooltip"
+                    data-tooltip-content={t("Bộ lọc")}
+                  >
+                    <Funnel className="size-3.5" />
+                  </div>
+
+                  <div
+                    className={`cursor-pointer ${isHiddenHisTab ? "rotate-180" : ""}`}
+                    onClick={() => setIsHiddenHisTab((pre) => !pre)}
+                  >
+                    <ChevronDown className="size-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {!isHiddenHisTab && (
+                <div className="flex-1 min-h-0">
+                  {tabHisTabActive === "ORDER" && <OrderHistory />}
+                  {tabHisTabActive === "CATEGORY" && <CategoryList />}
+                  {tabHisTabActive === "ASSET" && <Asset />}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>

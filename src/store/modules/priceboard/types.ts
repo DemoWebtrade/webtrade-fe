@@ -6,6 +6,9 @@ export interface PriceboardState {
   stocks: Record<string, StockData>;
   symbols: string[];
 
+  stockDetail: StockData | null;
+  symbolDetail: string | null;
+
   stockSearch: string;
 
   headerTableBaseConfig: HeaderTableBaseConfig[];

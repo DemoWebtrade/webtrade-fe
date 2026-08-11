@@ -72,6 +72,10 @@ export function formatVolPrice(vol: number) {
       : numberFormat(vol, 0, "");
 }
 
+export function formatPrice(price: number) {
+  return numberFormat(StringToDouble(price) / 1000, 2, "");
+}
+
 export const priceFormatter = (
   params: Params & { value: string | number },
 ): string => {

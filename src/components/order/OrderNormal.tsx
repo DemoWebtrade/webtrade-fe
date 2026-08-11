@@ -1,8 +1,16 @@
 import { LIST_STOCKS, MARKET_TYPE, PRICE_TYPE } from "@/configs";
-import { useAppSelector } from "@/store/hook";
+import { MarketSocket } from "@/services/socket/market";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectListAccount } from "@/store/modules/auth/selector";
-import { numberFormat, StringToInt } from "@/utils";
+import {
+  selectStockDetail,
+  selectSymbols,
+} from "@/store/modules/priceboard/selector";
+import { setSymbolStocksDetail } from "@/store/modules/priceboard/slice";
+import { formatPrice, numberFormat, StringToInt } from "@/utils";
+import { getColorClass } from "@/utils/stock";
 import { Info } from "lucide-react";
+import { useEffect } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button";
@@ -19,22 +27,31 @@ type OrderFormValues = {
 
 export default function OrderNormal() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const listAccount = useAppSelector(selectListAccount);
+  const stockDetail = useAppSelector(selectStockDetail);
+  const symbols = useAppSelector(selectSymbols);
 
   const {
     handleSubmit,
     control,
     reset,
     formState: { errors },
-  } = useForm<OrderFormValues>();
+  } = useForm<OrderFormValues>({
+    defaultValues: {
+      stockCode: "ACB",
+      orderPrice: "",
+      orderVolume: null,
+    },
+  });
 
   const stockCode = useWatch({
     control,
     name: "stockCode",
   });
 
-  const stock = LIST_STOCKS.find((s) => s.code === stockCode);
+  const stockInfor = LIST_STOCKS.find((s) => s.code === stockCode);
 
   const orderPrice = useWatch({
     control,
@@ -45,12 +62,40 @@ export default function OrderNormal() {
     name: "orderVolume",
   });
 
+  useEffect(() => {
+    return () => {
+      reset({
+        stockCode: "",
+        orderPrice: "",
+        orderVolume: null,
+      });
+    };
+  }, [reset]);
+
+  useEffect(() => {
+    if (!stockCode) return;
+    dispatch(setSymbolStocksDetail(stockCode));
+
+    if (!symbols?.includes(stockCode)) {
+      MarketSocket.subscribeSymbols([stockCode]);
+    }
+
+    return () => {
+      if (stockCode && !symbols?.includes(stockCode))
+        MarketSocket.unsubscribeSymbols([stockCode]);
+    };
+  }, [stockCode, symbols, dispatch]);
+
   const handleValidateVolume = (volume: string | number | null) => {
     if (!volume) {
       return "Vui lòng nhập khối lượng";
     }
 
     const numericVolume = StringToInt(volume);
+
+    if (numericVolume < 100 && typeof orderPrice !== "number") {
+      return "Khối lượng lệnh không hợp lệ. Vui lòng đặt đúng lô giao dịch";
+    }
 
     if (
       !numericVolume ||
@@ -60,7 +105,10 @@ export default function OrderNormal() {
       return "Khối lượng không hợp lệ";
     }
 
-    if (numericVolume > 500_000 && stock?.exchange?.toUpperCase() === "HOSE") {
+    if (
+      numericVolume > 500_000 &&
+      stockInfor?.exchange?.toUpperCase() === "HOSE"
+    ) {
       return "Khối lượng không hợp lệ";
     }
   };
@@ -71,7 +119,7 @@ export default function OrderNormal() {
     }
 
     // validate theo sàn
-    const market = stock?.exchange?.toUpperCase();
+    const market = stockInfor?.exchange?.toUpperCase();
 
     if (typeof price === "string" && price && PRICE_TYPE?.includes(price)) {
       if (market && !MARKET_TYPE?.[market]?.includes(price)) {
@@ -95,6 +143,14 @@ export default function OrderNormal() {
 
     const priceInVnd = Math.round(numericPrice * 1000);
     const step = numericPrice < 10 ? 10 : numericPrice < 50 ? 50 : 100;
+
+    if (stockDetail && priceInVnd > stockDetail?.ceil) {
+      return "Giá phải nhỏ hơn hoặc bằng giá trần";
+    }
+
+    if (stockDetail && priceInVnd < stockDetail?.floor) {
+      return "Giá phải lớn hơn hoặc bằng giá sàn";
+    }
 
     if (market === "HOSE") {
       if (Math.round(priceInVnd % step) !== 0) {
@@ -143,30 +199,55 @@ export default function OrderNormal() {
         </div>
 
         <div className="flex-1">
-          <div className="flex flex-row items-center justify-between text-sm">
-            {" "}
-            {/* Thông tin mã chứng khoán */}
-            <div className="flex flex-col items-start w-1/2">
-              <div className="flex flex-row gap-1">
-                <span className="font-medium">22.00</span>
-                <span>(-0.88 -3.51%)</span>
+          {stockCode ? (
+            <div className="flex flex-row items-center justify-between text-sm">
+              {" "}
+              {/* Thông tin mã chứng khoán */}
+              <div className="flex flex-col items-start w-1/2">
+                <div
+                  className={`flex flex-row gap-1 ${getColorClass(stockDetail?.matchPrice, stockDetail?.ref || 0, stockDetail?.ceil || 0, stockDetail?.floor || 0)}`}
+                >
+                  <span className="font-medium">
+                    {stockDetail?.matchPrice
+                      ? formatPrice(stockDetail?.matchPrice)
+                      : "0"}
+                  </span>
+                  <span>
+                    (
+                    {stockDetail?.change
+                      ? formatPrice(stockDetail?.change)
+                      : "0"}{" "}
+                    {stockDetail?.changePct
+                      ? formatPrice(stockDetail?.changePct || 0)
+                      : "0"}
+                    %)
+                  </span>
+                </div>
+                <div className="flex flex-row items-center justify-between w-full">
+                  <span className="text-purple-base">
+                    {formatPrice(stockDetail?.ceil || 0)}
+                  </span>
+                  <span className="text-yellow-base">
+                    {formatPrice(stockDetail?.ref || 0)}
+                  </span>
+                  <span className="text-blue-base">
+                    {formatPrice(stockDetail?.floor || 0)}
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-row items-center justify-between w-full">
-                <span className="text-purple-base">24.35</span>
-                <span className="text-yellow-base">22.80</span>
-                <span className="text-blue-base">21.25</span>
+              <div className="flex flex-col items-end w-1/2 ">
+                <span>{t("status.closed")}</span>
+                <span>
+                  <span className="text-content-tertiary">
+                    {t("order.value-total")}
+                  </span>{" "}
+                  {numberFormat(stockDetail?.totalVolume)}
+                </span>
               </div>
             </div>
-            <div className="flex flex-col items-end w-1/2 ">
-              <span>{t("status.closed")}</span>
-              <span>
-                <span className="text-content-tertiary">
-                  {t("order.value-total")}
-                </span>{" "}
-                16,500,400
-              </span>
-            </div>
-          </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
       {/* Tài khoản đặt lệnh */}

@@ -825,7 +825,7 @@ export default function BaseTable({
   }, [loadingTimeout, data, id, prevId]);
 
   return (
-    <div className="w-full h-full ag-theme-quartz-custom flex flex-col min-h-50">
+    <div className="w-full h-full ag-theme-custom ag-theme-quartz-custom table-price flex flex-col min-h-50">
       <AgGridReact
         ref={gridRef}
         getRowId={(p) => p.data.symbol}
