@@ -21,11 +21,19 @@
   border-bottom: none !important;
 }
 
-.table-price .ag-header {
-  border-top-left-radius: 12px !important;
-  border-top-right-radius: 12px !important;
+.ag-cell {
+  padding: 0 !important;
+  font-size: clamp(10px, 0.8vw, 12px) !important;
+  font-weight: 500 !important;
 }
 
+.header-center .ag-header-cell-text {
+  width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* Scroll */
 .ag-body-horizontal-scroll-viewport,
 .ag-body-vertical-scroll,
 .ag-body-viewport {
@@ -62,60 +70,6 @@
 /* scroll ngang pin */
 .ag-horizontal-left-spacer {
   display: none !important;
-}
-
-.ag-header-cell-comp-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500 !important;
-}
-
-.ag-header-cell-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ag-header-cell,
-.ag-header-group-cell {
-  border-right: 1px solid var(--border) !important;
-}
-
-.ag-header-cell-label,
-.ag-header-group-cell-label {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-}
-
-.ag-cell {
-  padding: 0 !important;
-  font-size: clamp(10px, 0.8vw, 12px) !important;
-  font-weight: 500 !important;
-  text-align: center !important;
-  border-right: 1px solid var(--border) !important;
-}
-
-.table-price .ag-layout-normal {
-  border-radius: 0px !important;
-  border: none !important;
-}
-
-.table-price .ag-header {
-  border: 1px solid var(--border) !important;
-}
-
-.table-price .ag-floating-top {
-  border-left: 1px solid var(--border) !important;
-  border-right: 1px solid var(--border) !important;
-}
-
-.table-price .ag-body {
-  border-bottom: 1px solid var(--border) !important;
-  border-left: 1px solid var(--border) !important;
-  border-right: 1px solid var(--border) !important;
 }
 
 .ag-layout-normal {
@@ -162,4 +116,58 @@
   height: 0px !important;
   max-height: 0px !important;
   min-height: 0px !important;
+}
+
+/* ========PriceBoard====== */
+.table-price .ag-cell {
+  text-align: center !important;
+}
+
+.table-price .ag-header {
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+.table-price .ag-layout-normal {
+  border-radius: 0px !important;
+  border: none !important;
+}
+
+.table-price .ag-header {
+  border: 1px solid var(--border) !important;
+}
+
+.table-price .ag-header-cell,
+.table-price .ag-header-group-cell {
+  border-right: 1px solid var(--border) !important;
+}
+
+.table-price .ag-floating-top {
+  border-left: 1px solid var(--border) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+.table-price .ag-body {
+  border-bottom: 1px solid var(--border) !important;
+  border-left: 1px solid var(--border) !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+.table-price .ag-cell {
+  border-right: 1px solid var(--border) !important;
+}
+
+.table-price .ag-header-cell-comp-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500 !important;
+}
+
+.table-price .ag-header-cell-label,
+.table-price .ag-header-group-cell-label {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
 }
