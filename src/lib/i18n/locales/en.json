@@ -259,5 +259,41 @@
     "buy-power": "Purchasing power",
     "value": "Value",
     "value-total": "Total Vol"
+  },
+
+  "asset": {
+    "total": "Total assets",
+    "buy-power": "Buying Power",
+    "net-asset": "Net Asset",
+    "cash-balance": "Cash Balance",
+    "value-list-sec": "Value of listed securities",
+    "withdraw-amount": "Withdrawable Amount",
+    "liability": "Liability",
+    "net-sell-value": "Net Sell Value",
+    "advanced-cash": "Advanced Cash",
+    "right-sub": "Right Subcription",
+    "cash-dividend": "Cash dividend"
+  },
+
+  "table": {
+    "symbol": "Symbol",
+    "buy-sell": "Buy/Sell",
+    "quantity": "Quantity",
+    "price-order": "Price Order",
+    "status": "Status",
+    "edit-cancel": "Edit/Cancel",
+    "tradeable-qty": "Tradeable Qty",
+    "total-vol": "Total Vol",
+    "mkt-price": "Mkt Price",
+    "avg-price": "Avg Price",
+    "market-value": "Market Value",
+    "profit-loss": "Profit/Loss",
+    "sell": "Sell"
+  },
+
+  "menu": {
+    "orders": "Orders",
+    "portfolio": "Portfolio",
+    "asset": "Asset"
   }
 }

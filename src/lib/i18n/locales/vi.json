@@ -258,5 +258,41 @@
     "buy-power": "Sức mua",
     "value": "Giá trị",
     "value-total": "Tổng KL"
+  },
+
+  "asset": {
+    "total": "Tổng tài sản TKCK",
+    "buy-power": "Sức mua tối đa",
+    "net-asset": "Tổng tài sản thực có",
+    "cash-balance": "Số dư tiền",
+    "value-list-sec": "Giá trị CK niêm yết",
+    "withdraw-amount": "Tiền có thể rút",
+    "liability": "Tổng nợ",
+    "net-sell-value": "Tiền chờ về",
+    "advanced-cash": "Tiền bán đã ứng",
+    "right-sub": "ĐK quyền mua",
+    "cash-dividend": "Tiền cổ tức chờ về"
+  },
+
+  "table": {
+    "symbol": "Mã CK",
+    "buy-sell": "Mua/Bán",
+    "quantity": "KL đặt",
+    "price-order": "Giá đặt",
+    "status": "Trạng thái",
+    "edit-cancel": "Sửa/Hủy",
+    "tradeable-qty": "KLGD",
+    "total-vol": "Tổng KL",
+    "mkt-price": "Giá TT",
+    "avg-price": "Giá vốn",
+    "market-value": "Giá trị TT",
+    "profit-loss": "Lãi/Lỗ",
+    "sell": "Bán"
+  },
+
+  "menu": {
+    "orders": "Sổ lệnh",
+    "portfolio": "Danh mục",
+    "asset": "Tài sản"
   }
 }

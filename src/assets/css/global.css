@@ -23,6 +23,12 @@ body {
   width: 8px;
 }
 
+@media (max-width: 767px) {
+  *::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
 *::-webkit-scrollbar-track {
   background: #1e1e1e;
 }

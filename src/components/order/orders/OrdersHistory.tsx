@@ -15,37 +15,10 @@ ModuleRegistry.registerModules([
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
-export default function OrderHistory() {
+export default function OrdersHistory() {
   const { t } = useTranslation();
 
-  const rowData = [
-    {
-      symbol: "VN30",
-      type: "Mua",
-      quantity: 100,
-      price: 10,
-      status: "Hóa đơn",
-      action: "Sửa",
-    },
-    {
-      symbol: "VN30",
-      type: "Mua",
-      quantity: 100,
-      price: 10,
-      status: "Hóa đơn",
-      action: "Sửa",
-    },
-    {
-      symbol: "VN30",
-      type: "Mua",
-      quantity: 100,
-      price: 10,
-      status: "Hóa đơn",
-      action: "Sửa",
-    },
-  ];
-
-  const CustomButtonComponent = () => {
+  const ActionComponent = () => {
     return (
       <div className="flex flex-row gap-2 items-center justify-center w-full h-full">
         <button
@@ -67,47 +40,47 @@ export default function OrderHistory() {
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
       {
-        headerName: t("Mã CK"),
+        headerName: t("table.symbol"),
         field: "symbol",
-        flex: 1,
+        flex: 0.8,
         cellClass: "pl-1!",
         headerClass: "pl-1!",
       },
       {
-        headerName: t("Mua/Bán"),
+        headerName: t("table.buy-sell"),
         field: "type",
         flex: 0.8,
         cellClass: "text-left!",
         headerClass: "text-left!",
       },
       {
-        headerName: t("KL đặt"),
+        headerName: t("table.quantity"),
         field: "quantity",
         flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
       },
       {
-        headerName: t("Giá đặt"),
+        headerName: t("table.price-order"),
         field: "price",
         flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
       },
       {
-        headerName: t("Trạng thái"),
+        headerName: t("table.status"),
         field: "status",
         flex: 1.2,
         cellClass: "text-center!",
         headerClass: "header-center",
       },
       {
-        headerName: t("Sửa/Hủy"),
+        headerName: t("table.edit-cancel"),
         field: "action",
         flex: 1,
         cellClass: "text-center!",
         headerClass: "header-center",
-        cellRenderer: CustomButtonComponent,
+        cellRenderer: ActionComponent,
       },
     ],
     [t],
@@ -116,7 +89,7 @@ export default function OrderHistory() {
   return (
     <div className="ag-theme-custom h-full w-full">
       <AgGridReact
-        rowData={rowData}
+        rowData={[]}
         columnDefs={columnDefs}
         defaultColDef={{
           sortable: false,

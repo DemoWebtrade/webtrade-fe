@@ -3,6 +3,8 @@ import type { OrderState } from "./types";
 
 const initialState: OrderState = {
   openOrder: false,
+
+  openFilter: false,
 };
 
 const orderSlice = createSlice({
@@ -12,9 +14,13 @@ const orderSlice = createSlice({
     setOpenOrder: (state, action: PayloadAction<boolean>) => {
       state.openOrder = action.payload;
     },
+
+    setOpenFilter: (state, action: PayloadAction<boolean>) => {
+      state.openFilter = action.payload;
+    },
   },
 });
 
-export const { setOpenOrder } = orderSlice.actions;
+export const { setOpenOrder, setOpenFilter } = orderSlice.actions;
 
 export default orderSlice.reducer;

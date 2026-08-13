@@ -1,15 +1,20 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { selectOpenOrder } from "@/store/modules/order/selector";
-import { setOpenOrder } from "@/store/modules/order/slice";
+import {
+  selectOpenFilter,
+  selectOpenOrder,
+} from "@/store/modules/order/selector";
+import { setOpenFilter, setOpenOrder } from "@/store/modules/order/slice";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Funnel, Scan, X } from "lucide-react";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
+import SprinnerLoader from "../features/skeletons/SprinnerLoader";
 import Asset from "./Asset";
 import CategoryList from "./CategoryList";
 import OrderCondition from "./OrderCondition";
-import OrderHistory from "./OrderHistory";
 import OrderNormal from "./OrderNormal";
+
+const Orders = lazy(() => import("./orders"));
 
 const MENU_ORDER = [
   {
@@ -25,15 +30,15 @@ const MENU_ORDER = [
 const MENU_HISTORY = [
   {
     key: "ORDER",
-    label: "Sổ lệnh",
+    label: "menu.orders",
   },
   {
     key: "CATEGORY",
-    label: "Danh mục",
+    label: "menu.portfolio",
   },
   {
     key: "ASSET",
-    label: "Tài sản",
+    label: "menu.asset",
   },
 ];
 
@@ -42,6 +47,7 @@ export default function Order() {
   const dispatch = useAppDispatch();
 
   const isOpen = useAppSelector(selectOpenOrder);
+  const isOpenFilter = useAppSelector(selectOpenFilter);
 
   const [tabActive, setTabActive] = useState<string>("BASE");
   const [tabHisTabActive, setHisTabActive] = useState<string>("ORDER");
@@ -117,6 +123,7 @@ export default function Order() {
                     className="cursor-pointer"
                     data-tooltip-id="global-tooltip"
                     data-tooltip-content={t("Bộ lọc")}
+                    onClick={() => dispatch(setOpenFilter(!isOpenFilter))}
                   >
                     <Funnel className="size-3.5" />
                   </div>
@@ -132,9 +139,21 @@ export default function Order() {
 
               {!isHiddenHisTab && (
                 <div className="flex-1 min-h-0">
-                  {tabHisTabActive === "ORDER" && <OrderHistory />}
-                  {tabHisTabActive === "CATEGORY" && <CategoryList />}
-                  {tabHisTabActive === "ASSET" && <Asset />}
+                  {tabHisTabActive === "ORDER" && (
+                    <Suspense fallback={<SprinnerLoader />}>
+                      <Orders />
+                    </Suspense>
+                  )}
+                  {tabHisTabActive === "CATEGORY" && (
+                    <Suspense fallback={<SprinnerLoader />}>
+                      <CategoryList />
+                    </Suspense>
+                  )}
+                  {tabHisTabActive === "ASSET" && (
+                    <Suspense fallback={<SprinnerLoader />}>
+                      <Asset />
+                    </Suspense>
+                  )}
                 </div>
               )}
             </div>
