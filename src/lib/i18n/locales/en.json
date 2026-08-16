@@ -294,6 +294,10 @@
   "menu": {
     "orders": "Orders",
     "portfolio": "Portfolio",
-    "asset": "Asset"
+    "asset": "Asset",
+    "title": "Menu",
+    "board": "Market Watch",
+    "order": "Place Order",
+    "statement": "Statement"
   }
 }

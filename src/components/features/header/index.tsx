@@ -3,7 +3,6 @@ import { Expand, Shrink } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ClientSetting from "./component/ClientSetting";
-import DayTrading from "./component/DayTrading";
 import Login from "./component/Login";
 import Notifications from "./component/Notifications";
 import Slogan from "./component/Slogan";
@@ -104,9 +103,9 @@ export default function Header() {
 
         <div className="h-4 w-px bg-border md:mx-2 max-[1120px]:hidden"></div>
         {/* time */}
-        <div data-tour="prop-1">
+        {/* <div data-tour="prop-1">
           <DayTrading />
-        </div>
+        </div> */}
 
         {/* Chức năng */}
         <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1 pr-3 md:pr-2">

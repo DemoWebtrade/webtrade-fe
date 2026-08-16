@@ -9,8 +9,7 @@ const steps = [
   {
     target: '[data-tour="prop-1"]',
     title: "Lịch giao dịch",
-    content:
-      "Xem lịch hoạt động của thị trường, bao gồm ngày nghỉ, ngày đóng cửa và thời gian giao dịch.",
+    content: "Đăng nhập mở menu để sử dụng các tính năng của web.",
   },
   {
     target: '[data-tour="prop-2"]',

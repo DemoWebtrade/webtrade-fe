@@ -1,5 +1,6 @@
 import Profile from "@/components/features/auth/profile";
 import Header from "@/components/features/header";
+import Menu from "@/components/features/menu";
 import Toaster from "@/components/features/toaster";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { useClickOutside } from "@/hooks/useClickOutside";
@@ -63,6 +64,8 @@ export default function MainLayout() {
           <Header />
         </div>
         <div className="flex-1 px-1 pb-1 relative">
+          <Menu />
+
           <Outlet />
 
           {/* Thông tin tài khoản */}
