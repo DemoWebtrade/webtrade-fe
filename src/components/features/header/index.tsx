@@ -109,8 +109,6 @@ export default function Header() {
 
         {/* Chức năng */}
         <div className="flex flex-row items-center justify-center md:gap-2 min-[321px]:gap-1 pr-3 md:pr-2">
-          <div className="h-4 w-px bg-border md:mx-2 max-[550px]:hidden"></div>
-
           <div data-tour="prop-2">
             {/* Thông báo */}
             <Notifications />

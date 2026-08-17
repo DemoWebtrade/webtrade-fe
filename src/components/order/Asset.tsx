@@ -30,7 +30,7 @@ export default function Asset() {
         <span className="text-content-primary">860,186</span>
       </div>
       <div className="w-full h-full flex flex-row items-center justify-between px-2 py-2.5">
-        <span>{t("asset.wiliability")}</span>
+        <span>{t("asset.liability")}</span>
         <span className="text-content-primary">26</span>
       </div>
       <div className="w-full h-full flex flex-row items-center justify-between px-2 py-2.5 bg-bg-tertiary">

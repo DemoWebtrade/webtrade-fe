@@ -1,4 +1,9 @@
 import { useClickOutside } from "@/hooks/useClickOutside"; // chỉnh lại path cho đúng
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { selectToken } from "@/store/modules/auth/selector";
+import { setIsLogin } from "@/store/modules/auth/slice";
+import { selectOpenMenu, selectTabMenu } from "@/store/modules/common/selector";
+import { setIsOpenMenu, setTabMenu } from "@/store/modules/common/slice";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChartCandlestick,
@@ -6,31 +11,82 @@ import {
   SquareChevronRight,
   SquarePen,
   Wallet,
+  type LucideProps,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
+} from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import DayTrading from "../header/component/DayTrading";
 
 const MENU_ITEMS = [
-  { key: "BOARD", label: "menu.board", icon: ChartCandlestick },
-  { key: "ORDER", label: "menu.order", icon: SquarePen },
-  { key: "ASSET", label: "menu.asset", icon: Wallet },
-  { key: "STATEMENT", label: "menu.statement", icon: FileClock },
+  { key: "BOARD", label: "menu.board", icon: ChartCandlestick, link: "/" },
+  { key: "ORDER", label: "menu.order", icon: SquarePen, link: "/order" },
+  { key: "ASSET", label: "menu.asset", icon: Wallet, link: "/asset" },
+  {
+    key: "STATEMENT",
+    label: "menu.statement",
+    icon: FileClock,
+    link: "/statement",
+  },
 ];
 
+type MenuItem = {
+  key: string;
+  label: string;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+  link: string;
+};
+
 export default function Menu() {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [tabActive, setTabActive] = useState<string>("BOARD");
+  const navigate = useNavigate();
+
+  const tabActive = useAppSelector(selectTabMenu);
+  const isOpenMenu = useAppSelector(selectOpenMenu);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(menuRef, () => setIsOpenMenu(false));
+  const token = useAppSelector(selectToken);
+
+  useEffect(() => {
+    if (!tabActive) return;
+
+    const tabInfo = MENU_ITEMS.find((item) => item.key === tabActive);
+    if (!tabInfo) return;
+
+    navigate(tabInfo.link);
+    dispatch(setIsOpenMenu(true));
+  }, [tabActive, navigate, dispatch]);
+
+  const onClickChangeTab = useCallback(
+    (tabInfor: MenuItem) => {
+      if (!token) {
+        dispatch(setIsLogin(true));
+        return;
+      }
+
+      dispatch(setTabMenu(tabInfor.key));
+      navigate(tabInfor.link);
+    },
+    [token, dispatch, navigate],
+  );
+
+  useClickOutside(menuRef, () => dispatch(setIsOpenMenu(false)));
 
   return (
     <div
       ref={menuRef}
       className="absolute top-0 left-0 z-10 h-full"
-      onMouseEnter={() => setIsOpenMenu(true)}
+      onMouseEnter={() => dispatch(setIsOpenMenu(true))}
     >
       <AnimatePresence>
         {isOpenMenu && (
@@ -39,7 +95,7 @@ export default function Menu() {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="relative z-10 h-full md:w-56 w-46 bg-bg-tertiary shadow-[10px_0_30px_-10px_rgba(0,0,0,1)] flex flex-col pb-3"
+            className="relative z-10 h-full md:w-56 w-46 bg-bg-secondary shadow-[10px_0px_15px_-3px_rgba(0,0,0,1)] flex flex-col pb-3"
           >
             <div className="py-3">
               <DayTrading />
@@ -57,7 +113,7 @@ export default function Menu() {
                 return (
                   <button
                     key={item.key}
-                    onClick={() => setTabActive(item.key)}
+                    onClick={() => onClickChangeTab(item)}
                     className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150 ${
                       isActive
                         ? "bg-purple-active/10 text-purple-active font-medium"
@@ -95,7 +151,7 @@ export default function Menu() {
         data-tooltip-id="global-tooltip"
         data-tooltip-place="right"
         data-tooltip-content={t("Menu")}
-        onClick={() => setIsOpenMenu((prev) => !prev)}
+        onClick={() => dispatch(setIsOpenMenu(!isOpenMenu))}
         data-tour="prop-1"
       >
         <SquareChevronRight className="size-3.5 text-content-tertiary" />

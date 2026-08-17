@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { setTabMenu } from "@/store/modules/common/slice";
 import {
   selectOpenFilter,
   selectOpenOrder,
@@ -62,6 +63,18 @@ export default function Order() {
   const onClickChangeHistory = (id: string) => {
     setHisTabActive(id);
     setIsHiddenHisTab(false);
+  };
+
+  const onClickScan = () => {
+    const tabId =
+      tabHisTabActive === "ORDER"
+        ? "ORDER"
+        : tabHisTabActive === "CATEGORY" || tabHisTabActive === "ASSET"
+          ? "ASSET"
+          : "BOARD";
+
+    dispatch(setTabMenu(tabId));
+    onClose();
   };
 
   return (
@@ -156,6 +169,7 @@ export default function Order() {
                     className="cursor-pointer"
                     data-tooltip-id="global-tooltip"
                     data-tooltip-content={t("tooltip.expand")}
+                    onClick={onClickScan}
                   >
                     <Scan className="size-3.5" />
                   </div>
