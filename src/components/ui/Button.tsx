@@ -18,6 +18,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary-base text-white text-sm hover:bg-secondary-hover disabled:bg-secondary-disabled disabled:text-content-disable",
         none: "text-sm text-purple-base hover:bg-secondary-hover disabled:text-content-disable disabled:bg-content-disable",
+        link: "text-sm text-content-secondary hover:text-content-primary disabled:text-content-disable",
       },
       size: {
         default: "md:px-[18px] md:px-3 px-2 py-2 has-[>svg]:px-3",

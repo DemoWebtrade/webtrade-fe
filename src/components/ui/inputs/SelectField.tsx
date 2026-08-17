@@ -1,4 +1,5 @@
 import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type SelectOption = {
   label: string;
@@ -28,8 +29,10 @@ export default function SelectField({
   placeholder,
   className,
 }: SelectFieldProps) {
+  const { t } = useTranslation();
+
   return (
-    <div>
+    <div className="w-full">
       {label && (
         <label className="block text-sm font-normal mb-2" htmlFor={name}>
           {label}
@@ -46,12 +49,12 @@ export default function SelectField({
       >
         {placeholder && (
           <option value="" disabled hidden>
-            {placeholder}
+            {t(placeholder)}
           </option>
         )}
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
-            {opt.label}
+            {t(opt.label)}
           </option>
         ))}
       </select>

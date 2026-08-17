@@ -52,10 +52,16 @@ export default function Order() {
   const [tabActive, setTabActive] = useState<string>("BASE");
   const [tabHisTabActive, setHisTabActive] = useState<string>("ORDER");
   const [isHiddenHisTab, setIsHiddenHisTab] = useState<boolean>(false);
+  const [showContent, setShowContent] = useState<boolean>(!isHiddenHisTab);
 
   const onClose = () => {
     dispatch(setOpenOrder(false));
     setTabActive("BASE");
+  };
+
+  const onClickChangeHistory = (id: string) => {
+    setHisTabActive(id);
+    setIsHiddenHisTab(false);
   };
 
   return (
@@ -96,66 +102,114 @@ export default function Order() {
               {tabActive === "COND" && <OrderCondition />}
             </div>
 
-            <div className="flex-1 min-h-0 flex flex-col gap-2">
-              <div
-                className={`flex flex-wrap border-b border-t border-border select-none w-full ${isHiddenHisTab ? "absolute bottom-0" : ""}`}
+            <div className="flex-1 min-h-0 flex flex-col gap-1">
+              <motion.div
+                layout
+                className={`flex flex-wrap border-t border-border py-1 select-none w-full ${
+                  isHiddenHisTab ? "absolute bottom-0" : ""
+                }`}
+                initial={false}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                onAnimationComplete={() => {
+                  if (!isHiddenHisTab) {
+                    setShowContent(true);
+                  }
+                }}
               >
                 {MENU_HISTORY.map((item) => (
-                  <span
+                  <div
                     key={item.key}
-                    className={`px-2 whitespace-nowrap text-center text-sm pt-1 pb-1.5 cursor-pointer ${tabHisTabActive === item.key ? "border-b-2 border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
-                    onClick={() => setHisTabActive(item.key)}
+                    className="flex flex-col gap-2 items-center justify-center flex-1 cursor-pointer py-1"
+                    onClick={() => onClickChangeHistory(item.key)}
                   >
-                    {t(item.label)}
-                  </span>
+                    <span
+                      className={`px-2 whitespace-nowrap text-center text-sm ${
+                        tabHisTabActive === item.key
+                          ? "font-medium text-content-primary"
+                          : "text-content-tertiary"
+                      }`}
+                    >
+                      {t(item.label)}
+                    </span>
+
+                    <AnimatePresence initial={false}>
+                      {!isHiddenHisTab &&
+                        (tabHisTabActive === item.key ? (
+                          <motion.div
+                            className="w-full h-0.5 bg-purple-active"
+                            layoutId="menu-active-history"
+                            transition={{ duration: 0.25 }}
+                          />
+                        ) : (
+                          <div className="w-full h-0.5 bg-border" />
+                        ))}
+                    </AnimatePresence>
+                  </div>
                 ))}
 
-                <div className="flex flex-row gap-2 items-center ml-auto mr-2">
+                <div className="flex flex-row gap-2 items-center justify-end mr-1 flex-1">
                   <div
                     className="cursor-pointer"
                     data-tooltip-id="global-tooltip"
-                    data-tooltip-content={t("Mở rộng")}
+                    data-tooltip-content={t("tooltip.expand")}
                   >
                     <Scan className="size-3.5" />
                   </div>
 
-                  <div
-                    className="cursor-pointer"
-                    data-tooltip-id="global-tooltip"
-                    data-tooltip-content={t("Bộ lọc")}
-                    onClick={() => dispatch(setOpenFilter(!isOpenFilter))}
-                  >
-                    <Funnel className="size-3.5" />
-                  </div>
+                  {(tabHisTabActive === "CATEGORY" ||
+                    tabHisTabActive === "ORDER") && (
+                    <div
+                      className="cursor-pointer"
+                      data-tooltip-id="global-tooltip"
+                      data-tooltip-content={t("tooltip.filter")}
+                      onClick={() => dispatch(setOpenFilter(!isOpenFilter))}
+                    >
+                      <Funnel className="size-3.5" />
+                    </div>
+                  )}
 
-                  <div
-                    className={`cursor-pointer ${isHiddenHisTab ? "rotate-180" : ""}`}
+                  <motion.div
+                    className="cursor-pointer"
+                    animate={{ rotate: isHiddenHisTab ? 180 : 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
                     onClick={() => setIsHiddenHisTab((pre) => !pre)}
                   >
                     <ChevronDown className="size-3.5" />
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
 
-              {!isHiddenHisTab && (
-                <div className="flex-1 min-h-0">
-                  {tabHisTabActive === "ORDER" && (
-                    <Suspense fallback={<SprinnerLoader />}>
-                      <Orders />
-                    </Suspense>
-                  )}
-                  {tabHisTabActive === "CATEGORY" && (
-                    <Suspense fallback={<SprinnerLoader />}>
-                      <CategoryList />
-                    </Suspense>
-                  )}
-                  {tabHisTabActive === "ASSET" && (
-                    <Suspense fallback={<SprinnerLoader />}>
-                      <Asset />
-                    </Suspense>
-                  )}
-                </div>
-              )}
+              <AnimatePresence>
+                {showContent && !isHiddenHisTab && (
+                  <motion.div
+                    className="flex-1 min-h-0"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                  >
+                    {tabHisTabActive === "ORDER" && (
+                      <Suspense fallback={<SprinnerLoader />}>
+                        <Orders />
+                      </Suspense>
+                    )}
+                    {tabHisTabActive === "CATEGORY" && (
+                      <Suspense fallback={<SprinnerLoader />}>
+                        <CategoryList />
+                      </Suspense>
+                    )}
+                    {tabHisTabActive === "ASSET" && (
+                      <Suspense fallback={<SprinnerLoader />}>
+                        <Asset />
+                      </Suspense>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>

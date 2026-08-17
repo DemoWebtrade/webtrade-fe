@@ -37,11 +37,24 @@ export default function Profile() {
           <div className="flex flex-row items-center w-full">
             {MENU_PROFILE.map((item) => (
               <div
-                key={item.value}
-                className={`w-1/2 whitespace-nowrap text-center text-base pt-1 pb-1.5 md:pb-3 border-b-2 cursor-pointer ${feature === item.value ? "border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
+                className="flex flex-col gap-2 items-center justify-center flex-1 cursor-pointer py-1"
                 onClick={() => setFeature(item.value)}
               >
-                {t(item.label)}
+                <div
+                  key={item.value}
+                  className={`w-full whitespace-nowrap text-center text-base ${feature === item.value ? "font-medium text-content-primary" : "text-content-tertiary"}`}
+                >
+                  {t(item.label)}
+                </div>
+                {feature === item.value ? (
+                  <motion.div
+                    className="w-full h-0.5 bg-purple-active"
+                    layoutId="menu-active-profile"
+                    transition={{ duration: 0.2 }}
+                  />
+                ) : (
+                  <div className="w-full h-0.5 bg-border" />
+                )}
               </div>
             ))}
           </div>

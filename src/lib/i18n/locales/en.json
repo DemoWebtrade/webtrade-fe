@@ -146,7 +146,19 @@
     "phone-incorrect": "Invalid phone number",
     "email-incorrect": "Invalid email address",
     "password-not-match": "Passwords do not match",
-    "fullname-incorrect": "Invalid full name"
+    "fullname-incorrect": "Invalid full name",
+
+    "volume-required": "Please enter the volume",
+    "volume-incorrect": "Invalid volume",
+    "volume-incorrect-pl": "Invalid order volume. Please enter a valid trading lot",
+
+    "price-required": "Please enter the price",
+    "price-incorrect": "Invalid price",
+    "price-incorrect-hose": "HOSE does not allow MOK/MAK/PLO prices",
+    "price-incorrect-hnx": "HNX does not allow MP prices",
+    "price-incorrect-upcom": "UPCOM does not allow market prices",
+    "price-incorrect-ceil": "Price must be less than or equal to the ceiling price",
+    "price-incorrect-floor": "Price must be greater than or equal to the floor price"
   },
 
   "slogan": {
@@ -172,7 +184,9 @@
     "scroll-auto": "Auto scroll",
     "scroll-stop": "Pause scroll",
     "setting-cols": "Click to select stock column",
-    "buy-power": "Accounts that use the automatic cash in advance service will automatically have buying power increased as soon as the sell order is matched. If you use the purchasing power, an advance fee will be incurred according to the current fee schedule."
+    "buy-power": "Accounts that use the automatic cash in advance service will automatically have buying power increased as soon as the sell order is matched. If you use the purchasing power, an advance fee will be incurred according to the current fee schedule.",
+    "expand": "Expand",
+    "filter": "Filter"
   },
 
   "status": {
@@ -243,7 +257,8 @@
     "save": "Save",
     "order": "Order",
     "buy": "Buy",
-    "sell": "Sell"
+    "sell": "Sell",
+    "export-data": "Export"
   },
 
   "toast": {
@@ -299,5 +314,17 @@
     "board": "Market Watch",
     "order": "Place Order",
     "statement": "Statement"
+  },
+
+  "select": {
+    "sell-buy": "Buy/Sell",
+    "buy": "Buy",
+    "sell": "Sell",
+    "all": "All",
+    "pending-order": "Pending",
+    "matched-order": "Matched",
+    "cancelled-order": "Cancelled",
+    "pendingprocess-order": "Processing",
+    "reject-order": "Rejected"
   }
 }

@@ -8,6 +8,7 @@ import type {
   RegisterOptions,
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { IMaskInput } from "react-imask";
 
 type InputVolumeProps<TFieldValues extends FieldValues> = {
@@ -37,6 +38,8 @@ export default function InputVolume<TFieldValues extends FieldValues>({
   step = 100,
   rules,
 }: InputVolumeProps<TFieldValues>) {
+  const { t } = useTranslation();
+
   return (
     <div>
       {label && (
@@ -121,7 +124,9 @@ export default function InputVolume<TFieldValues extends FieldValues>({
       />
 
       {error && (
-        <div className="text-red-500 text-xs mt-1">{error?.message}</div>
+        <div className="text-red-500 text-xs mt-1">
+          {t(error?.message ?? "")}
+        </div>
       )}
     </div>
   );

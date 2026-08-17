@@ -88,13 +88,13 @@ export default function OrderNormal() {
 
   const handleValidateVolume = (volume: string | number | null) => {
     if (!volume) {
-      return "Vui lòng nhập khối lượng";
+      return "validate.volume-required";
     }
 
     const numericVolume = StringToInt(volume);
 
     if (numericVolume < 100 && typeof orderPrice !== "number") {
-      return "Khối lượng lệnh không hợp lệ. Vui lòng đặt đúng lô giao dịch";
+      return "validate.volume-incorrect-pl";
     }
 
     if (
@@ -102,20 +102,20 @@ export default function OrderNormal() {
       numericVolume <= 0 ||
       (numericVolume > 100 && numericVolume % 100 !== 0)
     ) {
-      return "Khối lượng không hợp lệ";
+      return "validate.volume-incorrect";
     }
 
     if (
       numericVolume > 500_000 &&
       stockInfor?.exchange?.toUpperCase() === "HOSE"
     ) {
-      return "Khối lượng không hợp lệ";
+      return "validate.volume-incorrect";
     }
   };
 
   const handleValidatePrice = (price: number | string | null) => {
     if (!price) {
-      return "Vui lòng nhập giá";
+      return "validate.price-required";
     }
 
     // validate theo sàn
@@ -124,12 +124,12 @@ export default function OrderNormal() {
     if (typeof price === "string" && price && PRICE_TYPE?.includes(price)) {
       if (market && !MARKET_TYPE?.[market]?.includes(price)) {
         return market === "HOSE"
-          ? "HOSE không đặt giá MOK/MAK/PLO"
+          ? "validate.price-incorrect-hose"
           : market === "HNX"
-            ? "HNX không đặt giá MP"
+            ? "validate.price-incorrect-hnx"
             : market === "UPCOM"
-              ? "UPCOM không đặt giá thị trường"
-              : "Giá đặt không hợp lệ";
+              ? "validate.price-incorrect-upcom"
+              : "validate.price-incorrect";
       }
 
       return;
@@ -138,29 +138,29 @@ export default function OrderNormal() {
     const numericPrice = StringToInt(price);
 
     if (!numericPrice || numericPrice <= 0) {
-      return "Giá không hợp lệ";
+      return "validate.price-incorrect";
     }
 
     const priceInVnd = Math.round(numericPrice * 1000);
     const step = numericPrice < 10 ? 10 : numericPrice < 50 ? 50 : 100;
 
     if (stockDetail && priceInVnd > stockDetail?.ceil) {
-      return "Giá phải nhỏ hơn hoặc bằng giá trần";
+      return "validate.price-incorrect-ceil";
     }
 
     if (stockDetail && priceInVnd < stockDetail?.floor) {
-      return "Giá phải lớn hơn hoặc bằng giá sàn";
+      return "validate.price-incorrect-floor";
     }
 
     if (market === "HOSE") {
       if (Math.round(priceInVnd % step) !== 0) {
-        return "Giá đặt không hợp lệ";
+        return "validate.price-incorrect";
       }
     }
 
     if (market === "HNX") {
       if (Math.round(priceInVnd % 100) !== 0) {
-        return "Giá đặt không hợp lệ";
+        return "validate.price-incorrect";
       }
     }
   };
@@ -298,7 +298,6 @@ export default function OrderNormal() {
             error={errors.orderVolume}
             className="px-1! py-0.5!"
             rules={{
-              required: "Vui lòng nhập khối lượng",
               validate: (value) => handleValidateVolume(value),
             }}
           />
@@ -317,7 +316,6 @@ export default function OrderNormal() {
             className="px-1! py-0.5!"
             symbol={stockCode}
             rules={{
-              required: "Vui lòng nhập giá đặt",
               validate: (value) => handleValidatePrice(value),
             }}
           />
@@ -335,7 +333,9 @@ export default function OrderNormal() {
                 ? ""
                 : numberFormat(
                     StringToInt(orderVolume) * StringToInt(+orderPrice * 1000),
-                  ) + " VNĐ"}
+                  ) +
+                  " " +
+                  t("vnd")}
             </p>
           </div>
         ) : (

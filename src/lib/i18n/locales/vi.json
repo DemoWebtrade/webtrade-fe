@@ -145,7 +145,19 @@
     "phone-incorrect": "Số điện thoại không hợp lệ",
     "email-incorrect": "Email không hợp lệ",
     "password-not-match": "Mật không trùng nhau",
-    "fullname-incorrect": "Họ tên không hợp lệ"
+    "fullname-incorrect": "Họ tên không hợp lệ",
+
+    "volume-required": "Vui lòng nhập khối lượng",
+    "volume-incorrect": "Khối lượng không hợp lệ",
+    "volume-incorrect-pl": "Khối lượng lệnh không hợp lệ. Vui lòng đặt đúng lô giao dịch",
+
+    "price-required": "Vui lòng nhập giá",
+    "price-incorrect": "Giá không hợp lệ",
+    "price-incorrect-hose": "HOSE không đặt giá MOK/MAK/PLO",
+    "price-incorrect-hnx": "HNX không đặt giá MP",
+    "price-incorrect-upcom": "UPCOM không đặt giá thị trường",
+    "price-incorrect-ceil": "Giá phải nhỏ hơn hoặc bằng giá trần",
+    "price-incorrect-floor": "Giá phải lớn hơn hoặc bằng giá sàn"
   },
 
   "slogan": {
@@ -172,7 +184,9 @@
     "scroll-auto": "Tự động cuộn",
     "scroll-stop": "Tạm dừng cuộn",
     "setting-cols": "Nhấn để chọn các cột thông tin",
-    "buy-power": "Tài khoản có sử dụng dịch vụ ứng trước tiền bán tự động sẽ được tự động tăng sức mua ngay sau khi lệnh bán khớp. Quý khách sử dụng sức mua trên tiền bán chờ về sẽ phát sinh phí ứng trước theo biểu phí hiện hành."
+    "buy-power": "Tài khoản có sử dụng dịch vụ ứng trước tiền bán tự động sẽ được tự động tăng sức mua ngay sau khi lệnh bán khớp. Quý khách sử dụng sức mua trên tiền bán chờ về sẽ phát sinh phí ứng trước theo biểu phí hiện hành.",
+    "expand": "Mở rộng",
+    "filter": "Bộ lọc"
   },
 
   "status": {
@@ -243,7 +257,8 @@
     "save": "Lưu",
     "order": "Đặt lệnh",
     "buy": "Mua",
-    "sell": "Bán"
+    "sell": "Bán",
+    "export-data": "Xuất dữ liệu"
   },
 
   "toast": {
@@ -298,5 +313,17 @@
     "board": "Bảng giá",
     "order": "Đặt lệnh",
     "statement": "Báo cáo"
+  },
+
+  "select": {
+    "sell-buy": "Mua/Bán",
+    "buy": "Mua",
+    "sell": "Bán",
+    "all": "Tất cả",
+    "pending-order": "Chờ khớp",
+    "matched-order": "Khớp",
+    "cancelled-order": "Đã hủy",
+    "pendingprocess-order": "Đang xử lý",
+    "reject-order": "Từ chối"
   }
 }

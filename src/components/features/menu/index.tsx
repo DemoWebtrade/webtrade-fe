@@ -39,7 +39,7 @@ export default function Menu() {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="relative z-10 h-full md:w-56 w-40 bg-bg-tertiary shadow-[10px_0_30px_-10px_rgba(0,0,0,1)] flex flex-col pb-3"
+            className="relative z-10 h-full md:w-56 w-46 bg-bg-tertiary shadow-[10px_0_30px_-10px_rgba(0,0,0,1)] flex flex-col pb-3"
           >
             <div className="py-3">
               <DayTrading />

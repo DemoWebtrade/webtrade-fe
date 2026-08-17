@@ -8,6 +8,7 @@ import type {
   RegisterOptions,
 } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { IMaskInput } from "react-imask";
 
 type InputPriceProps<TFieldValues extends FieldValues> = {
@@ -37,6 +38,8 @@ export default function InputPrice<TFieldValues extends FieldValues>({
   symbol,
   rules,
 }: InputPriceProps<TFieldValues>) {
+  const { t } = useTranslation();
+
   const stock = LIST_STOCKS?.find((s) => s?.code === symbol);
   const market =
     stock?.type === "i" ? "UPCOM" : (stock?.exchange.toLocaleUpperCase() ?? "");
@@ -147,7 +150,7 @@ export default function InputPrice<TFieldValues extends FieldValues>({
 
                 {error && (
                   <div className="text-red-500 text-xs mt-1">
-                    {error?.message}
+                    {t(error?.message ?? "")}
                   </div>
                 )}
 

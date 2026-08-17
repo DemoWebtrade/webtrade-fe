@@ -25,7 +25,7 @@ export default function CategoryList() {
           onClick={() => window.alert("clicked")}
           className="hover:text-red-hover text-red-base underline"
         >
-          Bán
+          {t("button.sell")}
         </button>
       </div>
     );

@@ -27,18 +27,19 @@ type RowProps = {
   onSelect: (stock: StockListItem) => void;
 };
 
-type InputSearchStockFieldProps<TForm extends FieldValues = FieldValues> = {
+type InputSearchStockMiniFieldProps<TForm extends FieldValues = FieldValues> = {
   label?: string;
   required?: boolean;
   name: Path<TForm>;
   error?: FieldError;
   registration?: UseFormRegisterReturn;
   disabled?: boolean;
-  placeholder?: string;
   className?: string;
   isClearValue?: boolean;
+  value?: string;
   onStockSelect?: (stock: StockListItem) => void;
   setValue?: UseFormSetValue<TForm>;
+  placeholder?: string;
 };
 
 const TYPE_ORDER: Record<string, number> = {
@@ -61,19 +62,22 @@ const TYPE_LABEL: Record<string, string> = {
   m: "input.product-fundCertificate",
 };
 
-export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
+export const InputSearchStockMiniField = <
+  TForm extends FieldValues = FieldValues,
+>({
   label,
   required,
   name,
   registration,
   disabled,
   error,
-  placeholder = "Tìm kiếm CK",
   className,
   isClearValue,
+  value,
+  placeholder = "input.stock-search-placeholder",
   onStockSelect,
   setValue,
-}: InputSearchStockFieldProps<TForm>) => {
+}: InputSearchStockMiniFieldProps<TForm>) => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
   const currentLang = (i18n.resolvedLanguage ||
@@ -92,14 +96,22 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredStocks, setFilteredStocks] =
-    useState<StockListItem[]>(sortedStocks);
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedStock, setSelectedStock] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState(value ?? "");
+  const [selectedStock, setSelectedStock] = useState<string | null>(
+    value ?? null,
+  );
+
+  const [filteredStocks, setFilteredStocks] = useState<StockListItem[]>(() => {
+    if (!value) return sortedStocks;
+    return sortedStocks.filter((stock) =>
+      stock.code.toLowerCase().includes(value.toLowerCase()),
+    );
+  });
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<ListImperativeAPI>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,11 +195,19 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
     }
   };
 
+  const handleClickSearch = () => {
+    inputRef.current?.focus();
+    inputRef.current?.select();
+    setIsOpen(true);
+  };
+
   useClickOutside(containerRef, () => {
     setIsOpen(false);
     setHighlightedIndex(-1);
     if (!selectedStock) {
       setSearchValue("");
+      setSelectedStock("");
+
       setFilteredStocks(sortedStocks);
     }
   });
@@ -233,27 +253,24 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
   }
 
   return (
-    <div>
+    <div className="flex flex-row items-center w-full">
       {label && (
         <label className="block text-sm font-normal mb-2" htmlFor={name}>
           {label}
           {required && <span className="text-red-500">*</span>}
         </label>
       )}
+
       <div className="relative" ref={containerRef}>
         <input
+          ref={inputRef}
           name={name}
           id={name}
-          className={`
-            w-full px-3 py-2.5 rounded bg-bg-secondary text-sm text-content-base
-            outline-none transition border focus:border-outline-selected
-            ${error ? "border-red-500" : "border-outline-base"}
-            ${className ?? ""}
-          `}
+          className={`w-full px-3 py-0 rounded border border-border bg-bg-secondary text-sm placeholder:text-xs placeholder:normal-case text-content-base transition uppercase ${className ?? ""}`}
           type="text"
+          placeholder={t(placeholder ?? "")}
           {...registration}
           disabled={disabled}
-          placeholder={placeholder}
           value={searchValue}
           onChange={handleInputChange}
           onFocus={() => setIsOpen(true)}
@@ -264,8 +281,11 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
           autoComplete="off"
         />
 
-        <div className="absolute top-1/2 right-3 transform -translate-y-1/2 text-content-disable pointer-events-none">
-          <Search size={18} />
+        <div
+          className="text-content-disable cursor-pointer absolute right-1 top-1/2 -translate-y-1/2"
+          onClick={() => handleClickSearch()}
+        >
+          <Search className="size-3" />
         </div>
 
         <AnimatePresence>
@@ -275,13 +295,9 @@ export const InputSearchStockField = <TForm extends FieldValues = FieldValues>({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-[calc(100%+6px)] left-0 bg-bg-tertiary border border-outline-base rounded-md shadow-xl z-50 overflow-hidden md:w-110 w-80"
+              className={`${filteredStocks.length !== 0 ? "border border-outline-base" : ""} absolute top-[calc(100%+6px)] -left-[calc(100%+60px)] bg-bg-tertiary rounded-md shadow-xl z-50 overflow-hidden md:w-110 w-80`}
             >
-              {filteredStocks.length === 0 ? (
-                <div className="grid place-items-center h-13 px-4 text-center text-content-tertiary text-sm">
-                  {t("banks-not-found")}
-                </div>
-              ) : (
+              {filteredStocks.length !== 0 && (
                 <List
                   id={`${name}-stock-list`}
                   listRef={listRef}
