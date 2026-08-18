@@ -22,6 +22,7 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import packageJson from "../../../../package.json";
 import DayTrading from "../header/component/DayTrading";
 
 const MENU_ITEMS = [
@@ -155,6 +156,11 @@ export default function Menu() {
         data-tour="prop-1"
       >
         <SquareChevronRight className="size-3.5 text-content-tertiary" />
+      </div>
+
+      {/* Version */}
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs text-content-tertiary z-11">
+        v{packageJson.version}
       </div>
     </div>
   );
