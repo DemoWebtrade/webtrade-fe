@@ -1,4 +1,4 @@
-import Order from "@/components/order";
+import OrderSmart from "@/components/order-smart";
 import { Button } from "@/components/ui/Button";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
@@ -88,7 +88,7 @@ export default function PriceBoard() {
       </div>
 
       {/* Đặt lệnh */}
-      <Order />
+      <OrderSmart />
     </div>
   );
 }

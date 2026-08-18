@@ -311,8 +311,8 @@
     "portfolio": "Portfolio",
     "asset": "Asset",
     "title": "Menu",
-    "board": "Market Watch",
-    "order": "Place Order",
+    "board": "Priceboard",
+    "order": "Order",
     "statement": "Statement"
   },
 

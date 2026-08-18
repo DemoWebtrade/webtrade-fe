@@ -176,7 +176,7 @@ export default function OrderNormal() {
   return (
     <form className="p-1 md:p-2 text-sm flex flex-col gap-2">
       <div className="flex flex-row items-center">
-        <div className="w-1/3">
+        <div className="w-2/5 md:w-1/3">
           <Controller
             name="stockCode"
             control={control}
@@ -200,19 +200,23 @@ export default function OrderNormal() {
 
         <div className="flex-1">
           {stockCode ? (
-            <div className="flex flex-row items-center justify-between text-sm">
-              {" "}
+            <div className="flex flex-row items-start justify-between text-xs gap-2">
               {/* Thông tin mã chứng khoán */}
-              <div className="flex flex-col items-start w-1/2">
+              <div className="flex flex-col items-start w-1/2 min-w-0">
                 <div
-                  className={`flex flex-row gap-1 ${getColorClass(stockDetail?.matchPrice, stockDetail?.ref || 0, stockDetail?.ceil || 0, stockDetail?.floor || 0)}`}
+                  className={`flex flex-row items-baseline gap-1 flex-wrap ${getColorClass(
+                    stockDetail?.matchPrice,
+                    stockDetail?.ref || 0,
+                    stockDetail?.ceil || 0,
+                    stockDetail?.floor || 0,
+                  )}`}
                 >
-                  <span className="font-medium">
+                  <span className="font-medium truncate">
                     {stockDetail?.matchPrice
                       ? formatPrice(stockDetail?.matchPrice)
                       : "0"}
                   </span>
-                  <span>
+                  <span className="whitespace-nowrap text-[10px] sm:text-xs">
                     (
                     {stockDetail?.change
                       ? formatPrice(stockDetail?.change)
@@ -223,21 +227,23 @@ export default function OrderNormal() {
                     %)
                   </span>
                 </div>
-                <div className="flex flex-row items-center justify-between w-full">
-                  <span className="text-purple-base">
+
+                <div className="flex flex-row items-center justify-between w-full gap-1">
+                  <span className="text-purple-base truncate">
                     {formatPrice(stockDetail?.ceil || 0)}
                   </span>
-                  <span className="text-yellow-base">
+                  <span className="text-yellow-base truncate">
                     {formatPrice(stockDetail?.ref || 0)}
                   </span>
-                  <span className="text-blue-base">
+                  <span className="text-blue-base truncate">
                     {formatPrice(stockDetail?.floor || 0)}
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col items-end w-1/2 ">
-                <span>{t("status.closed")}</span>
-                <span>
+
+              <div className="flex flex-col items-end w-1/2 min-w-0">
+                <span className="whitespace-nowrap">{t("status.closed")}</span>
+                <span className="text-right truncate w-full">
                   <span className="text-content-tertiary">
                     {t("order.value-total")}
                   </span>{" "}
@@ -252,7 +258,7 @@ export default function OrderNormal() {
       </div>
       {/* Tài khoản đặt lệnh */}
       <div className="flex flex-row items-start">
-        <span className="font-medium w-1/3 text-sm text-content-tertiary">
+        <span className="font-medium w-2/5 md:w-1/3 text-xs sm:text-sm text-content-tertiary">
           {t("input.order-account")}
         </span>
 
@@ -269,7 +275,7 @@ export default function OrderNormal() {
       </div>
       {/* Sức mua */}
       <div className="flex flex-row items-start">
-        <div className="font-medium w-1/3 text-sm text-content-tertiary flex flex-wrap items-center gap-1">
+        <div className="font-medium w-2/5 md:w-1/3 text-xs sm:text-sm text-content-tertiary flex flex-wrap items-center gap-1">
           <span className="font-medium">{t("order.buy-power")}</span>
           <div
             className="flex items-center justify-center"
@@ -288,7 +294,7 @@ export default function OrderNormal() {
       </div>
       {/* Khối lượng */}
       <div className="flex flex-row items-start">
-        <span className="font-medium w-1/3 text-sm text-content-tertiary">
+        <span className="font-medium w-2/5 md:w-1/3 text-xs sm:text-sm text-content-tertiary">
           {t("input.order-volume")}
         </span>
         <div className="flex-1">
@@ -305,7 +311,7 @@ export default function OrderNormal() {
       </div>
       {/* Giá */}
       <div className="flex flex-row items-start">
-        <span className="font-medium w-1/3 text-sm text-content-tertiary">
+        <span className="font-medium w-2/5 md:w-1/3 text-xs sm:text-sm text-content-tertiary">
           {t("input.order-price")}
         </span>
         <div className="flex-1">
@@ -323,7 +329,7 @@ export default function OrderNormal() {
       </div>
       {/* Giá trị */}
       <div className="flex flex-row items-start">
-        <span className="font-medium w-1/3 text-content-tertiary text-sm ">
+        <span className="font-medium w-2/5 md:w-1/3 text-content-tertiary text-xs sm:text-sm ">
           {t("order.value")}
         </span>
         {orderVolume && orderPrice ? (

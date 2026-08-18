@@ -43,7 +43,7 @@ const MENU_HISTORY = [
   },
 ];
 
-export default function Order() {
+export default function OrderSmart() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 

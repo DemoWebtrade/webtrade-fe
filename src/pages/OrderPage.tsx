@@ -1,3 +1,4 @@
+import Order from "@/features/order";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { useTranslation } from "react-i18next";
 
@@ -6,5 +7,9 @@ export default function OrderPage() {
 
   usePageTitle(t("menu.order"));
 
-  return <div>OrderPage</div>;
+  return (
+    <>
+      <Order />
+    </>
+  );
 }

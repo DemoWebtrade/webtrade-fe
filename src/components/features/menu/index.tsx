@@ -146,7 +146,7 @@ export default function Menu() {
 
       <div
         className={`cursor-pointer bg-bg-primary border border-border rounded-full p-1.5 absolute top-[calc(100%-150px)] translate-y-1/2 z-20 transition-[left] duration-300 ease-in-out ${
-          isOpenMenu ? "left-52 rotate-180" : "left-0"
+          isOpenMenu ? "md:left-52 left-42 rotate-180" : "left-0"
         }`}
         data-tooltip-id="global-tooltip"
         data-tooltip-place="right"
