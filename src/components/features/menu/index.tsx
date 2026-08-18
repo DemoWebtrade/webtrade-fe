@@ -141,6 +141,11 @@ export default function Menu() {
                 );
               })}
             </nav>
+
+            {/* Version */}
+            <div className="text-xs text-content-tertiary absolute bottom-1 left-1/2 -translate-x-1/2">
+              v{packageJson.version}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -156,11 +161,6 @@ export default function Menu() {
         data-tour="prop-1"
       >
         <SquareChevronRight className="size-3.5 text-content-tertiary" />
-      </div>
-
-      {/* Version */}
-      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs text-content-tertiary z-11">
-        v{packageJson.version}
       </div>
     </div>
   );
