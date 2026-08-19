@@ -72,7 +72,19 @@ export function formatVolPrice(vol: number) {
       : numberFormat(vol, 0, "");
 }
 
-export function formatPrice(price: number) {
+export function formatPrice(price: string | number | undefined | null) {
+  if (
+    price === null ||
+    price === undefined ||
+    price === "" ||
+    price === " " ||
+    price === "-" ||
+    price === 0 ||
+    price === "0" ||
+    price === "NaN"
+  ) {
+    return "";
+  }
   return numberFormat(StringToDouble(price) / 1000, 2, "");
 }
 

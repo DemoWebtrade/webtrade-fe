@@ -1,8 +1,8 @@
 export function getColorClass(
   comparePrice: number | undefined,
-  ref: number,
-  ceil: number,
-  floor: number,
+  ref: number = 0,
+  ceil: number = 0,
+  floor: number = 0,
 ): string {
   if (comparePrice == null) return "";
   if (comparePrice === ceil) return "text-purple-base";

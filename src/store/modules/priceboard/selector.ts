@@ -11,7 +11,7 @@ export const selectSymbols = (state: RootState) => state.priceboard.symbols;
 export const selectRowData = createSelector(
   selectSymbols,
   selectStocksMap,
-  (symbols, stocks): StockData[] => symbols.map((s) => stocks[s]),
+  (symbols, stocks): StockData[] => symbols.map((s: string) => stocks[s]),
 );
 
 export const selectStockDetail = (state: RootState) =>
