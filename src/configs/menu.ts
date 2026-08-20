@@ -58,7 +58,7 @@ export const MENU_ITEMS = [
   },
 ];
 
-export const MENU_ORDER = [
+export const MENU_ORDER_SMART = [
   {
     key: "BASE",
     label: "order.normal",
@@ -75,11 +75,22 @@ export const MENU_HISTORY = [
     label: "menu.orders",
   },
   {
-    key: "CATEGORY",
+    key: "PORTFOLIO",
     label: "menu.portfolio",
   },
   {
     key: "ASSET",
     label: "menu.asset",
+  },
+];
+
+export const MENU_ORDER = [
+  {
+    key: "ORDER",
+    label: "menu.orders",
+  },
+  {
+    key: "PORTFOLIO",
+    label: "menu.portfolio",
   },
 ];

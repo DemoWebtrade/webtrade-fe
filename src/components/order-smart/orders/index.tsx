@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectOpenFilter } from "@/store/modules/order/selector";
 import { setOpenFilter } from "@/store/modules/order/slice";
 import { useEffect } from "react";
-import OrdersHistory from "./OrdersHistory";
+import OrdersHistory from "./OrdersHistorySmart";
 import OrdersSearchForm from "./OrdersSearch";
 
 export default function Orders() {

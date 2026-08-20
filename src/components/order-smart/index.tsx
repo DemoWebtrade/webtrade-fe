@@ -1,4 +1,4 @@
-import { MENU_HISTORY, MENU_ITEMS, MENU_ORDER } from "@/configs";
+import { MENU_HISTORY, MENU_ITEMS, MENU_ORDER_SMART } from "@/configs";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { setTabMenu } from "@/store/modules/common/slice";
 import {
@@ -13,9 +13,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import SprinnerLoader from "../features/skeletons/SprinnerLoader";
 import Asset from "./Asset";
-import CategoryList from "./CategoryList";
 import OrderCondition from "./OrderCondition";
 import OrderNormal from "./OrderNormal";
+import PortfolioListSmart from "./PortfolioListSmart";
 
 const Orders = lazy(() => import("./orders"));
 
@@ -46,7 +46,7 @@ export default function OrderSmart() {
     const tabId =
       tabHisTabActive === "ORDER"
         ? "ORDER"
-        : tabHisTabActive === "CATEGORY" || tabHisTabActive === "ASSET"
+        : tabHisTabActive === "PORTFOLIO" || tabHisTabActive === "ASSET"
           ? "ASSET"
           : "BOARD";
     const path = MENU_ITEMS.find((item) => item.key === tabId)?.link ?? "/";
@@ -73,7 +73,7 @@ export default function OrderSmart() {
           >
             <div>
               <div className="flex flex-row">
-                {MENU_ORDER.map((item) => (
+                {MENU_ORDER_SMART.map((item) => (
                   <span
                     key={item.key}
                     className={`w-1/2 whitespace-nowrap text-center text-base pt-1 pb-1.5 md:pb-3 border-b-2 cursor-pointer ${tabActive === item.key ? "border-purple-active font-medium text-content-primary" : "text-content-tertiary"}`}
@@ -154,7 +154,7 @@ export default function OrderSmart() {
                     <Scan className="size-3.5" />
                   </div>
 
-                  {(tabHisTabActive === "CATEGORY" ||
+                  {(tabHisTabActive === "PORTFOLIO" ||
                     tabHisTabActive === "ORDER") && (
                     <div
                       className="cursor-pointer"
@@ -191,9 +191,9 @@ export default function OrderSmart() {
                         <Orders />
                       </Suspense>
                     )}
-                    {tabHisTabActive === "CATEGORY" && (
+                    {tabHisTabActive === "PORTFOLIO" && (
                       <Suspense fallback={<SprinnerLoader />}>
-                        <CategoryList />
+                        <PortfolioListSmart />
                       </Suspense>
                     )}
                     {tabHisTabActive === "ASSET" && (

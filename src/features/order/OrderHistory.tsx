@@ -1,5 +1,6 @@
 import {
   CellStyleModule,
+  ClientSideRowModelModule,
   ModuleRegistry,
   ValidationModule,
   type ColDef,
@@ -12,10 +13,11 @@ import { useTranslation } from "react-i18next";
 
 ModuleRegistry.registerModules([
   CellStyleModule,
+  ClientSideRowModelModule,
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
-export default function OrdersHistory() {
+export default function OrderHistory() {
   const { t } = useTranslation();
 
   const ActionComponent = () => {
@@ -45,13 +47,15 @@ export default function OrdersHistory() {
         flex: 0.8,
         cellClass: "pl-1!",
         headerClass: "pl-1!",
+        minWidth: 70,
       },
       {
         headerName: t("table.buy-sell"),
         field: "type",
         flex: 0.8,
-        cellClass: "text-left!",
-        headerClass: "text-left!",
+        cellClass: "text-center!",
+        headerClass: "header-center",
+        minWidth: 50,
       },
       {
         headerName: t("table.quantity"),
@@ -59,6 +63,7 @@ export default function OrdersHistory() {
         flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
+        minWidth: 70,
       },
       {
         headerName: t("table.price-order"),
@@ -66,6 +71,23 @@ export default function OrdersHistory() {
         flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
+        minWidth: 70,
+      },
+      {
+        headerName: t("KL Khớp"),
+        field: "price",
+        flex: 1,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
+      },
+      {
+        headerName: t("Giá khớp TB"),
+        field: "price",
+        flex: 1,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
       },
       {
         headerName: t("table.status"),
@@ -73,6 +95,7 @@ export default function OrdersHistory() {
         flex: 1.2,
         cellClass: "text-center!",
         headerClass: "header-center",
+        minWidth: 100,
       },
       {
         headerName: t("table.edit-cancel"),
@@ -81,13 +104,14 @@ export default function OrdersHistory() {
         cellClass: "text-center!",
         headerClass: "header-center",
         cellRenderer: ActionComponent,
+        minWidth: 70,
       },
     ],
     [t],
   );
 
   return (
-    <div className="ag-theme-custom h-full w-full">
+    <div className="ag-theme-custom table-history h-full w-full">
       <AgGridReact
         rowData={[]}
         columnDefs={columnDefs}

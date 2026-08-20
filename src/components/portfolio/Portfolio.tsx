@@ -1,5 +1,6 @@
 import {
   CellStyleModule,
+  ClientSideRowModelModule,
   ModuleRegistry,
   ValidationModule,
   type ColDef,
@@ -8,14 +9,14 @@ import {
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import TwoLineHeader from "../features/table/TwoLineHeader";
 
 ModuleRegistry.registerModules([
   CellStyleModule,
+  ClientSideRowModelModule,
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
-export default function CategoryList() {
+export default function Portfolio() {
   const { t } = useTranslation();
 
   const ActionComponent = () => {
@@ -39,46 +40,71 @@ export default function CategoryList() {
         flex: 0.8,
         cellClass: "pl-1!",
         headerClass: "pl-1!",
+        minWidth: 70,
       },
       {
-        headerComponent: TwoLineHeader,
-        headerComponentParams: {
-          line1: t("table.tradeable-qty"),
-          line2: t("table.total-vol"),
-        },
-        field: "type",
-        flex: 1,
-        cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header text-right!",
-      },
-      {
-        headerComponent: TwoLineHeader,
-        headerComponentParams: {
-          line1: t("table.mkt-price"),
-          line2: t("table.avg-price"),
-        },
-        field: "quantity",
-        flex: 1,
-        cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header text-right!",
-      },
-      {
-        headerName: t("table.market-value"),
-        field: "price",
-        flex: 1.2,
+        headerName: t("Tổng KL"),
+        field: "symbol",
+        flex: 0.8,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
+        minWidth: 50,
       },
       {
-        headerComponent: TwoLineHeader,
-        headerComponentParams: {
-          line1: t("table.profit-loss"),
-          line2: t("table.profit-loss") + " (%)",
-        },
-        field: "status",
-        flex: 1.2,
+        headerName: t("KLGD"),
+        field: "symbol",
+        flex: 0.8,
         cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header text-right!",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 50,
+      },
+      {
+        headerName: t("Giá vốn"),
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 50,
+      },
+      {
+        headerName: t("Giá TT"),
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 50,
+      },
+      {
+        headerName: t("Giá trị TT"),
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
+      },
+      {
+        headerName: t("Lãi/Lỗ"),
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
+      },
+      {
+        headerName: t("Lãi/Lỗ") + " (%)",
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 50,
+      },
+      {
+        headerName: t("%DM"),
+        field: "symbol",
+        flex: 0.8,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 50,
       },
       {
         headerName: t("table.sell"),
@@ -87,13 +113,14 @@ export default function CategoryList() {
         cellClass: "text-center!",
         headerClass: "header-center",
         cellRenderer: ActionComponent,
+        minWidth: 70,
       },
     ],
     [t],
   );
 
   return (
-    <div className="ag-theme-custom h-full w-full">
+    <div className="ag-theme-custom table-history h-full w-full">
       <AgGridReact
         rowData={[]}
         columnDefs={columnDefs}

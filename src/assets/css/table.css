@@ -118,6 +118,17 @@
   min-height: 0px !important;
 }
 
+/* ==============History======= */
+.table-history .ag-layout-normal {
+  border-radius: 0px !important;
+  border: none !important;
+}
+
+.table-history .ag-header {
+  border: none !important;
+  background-color: var(--secondary-base) !important;
+}
+
 /* ========PriceBoard====== */
 .table-price .ag-cell {
   text-align: center !important;

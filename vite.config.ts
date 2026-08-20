@@ -4,7 +4,15 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), tsconfigPaths()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [["babel-plugin-react-compiler", {}]],
+      },
+    }),
+    tailwindcss(),
+    tsconfigPaths(),
+  ],
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

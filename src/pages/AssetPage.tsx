@@ -1,3 +1,4 @@
+import Asset from "@/features/asset";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { useTranslation } from "react-i18next";
 
@@ -6,5 +7,9 @@ export default function AssetPage() {
 
   usePageTitle(t("menu.asset"));
 
-  return <div>Asset Page</div>;
+  return (
+    <>
+      <Asset />
+    </>
+  );
 }

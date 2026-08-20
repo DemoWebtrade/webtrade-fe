@@ -36,11 +36,11 @@ export default function PriceStep() {
     <div className="h-full w-full">
       {/* Header */}
       <div className="flex flex-row text-xs md:text-sm">
-        <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-0.5 md:py-1 w-1/2">
+        <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-2 w-1/2">
           <h2>KL</h2>
           <h2>Giá mua</h2>
         </div>
-        <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-0.5 md:py-1 w-1/2">
+        <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-2 w-1/2">
           <h2>Giá bán</h2>
           <h2>KL</h2>
         </div>
@@ -94,8 +94,6 @@ export default function PriceStep() {
             const price = stockDetail?.[
               `sellPrice${level}` as keyof typeof stockDetail
             ] as number | undefined;
-
-            console.log("vol", level, vol && vol / totalSell);
 
             return (
               <div
