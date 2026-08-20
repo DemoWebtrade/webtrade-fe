@@ -22,7 +22,7 @@ export default function OrderMatch() {
   const columnDefs = useMemo<(ColDef | ColGroupDef)[]>(
     () => [
       {
-        headerName: t("Thời gian"),
+        headerName: t("table.time"),
         field: "symbol",
         flex: 1.8,
         cellClass: "pl-0.5! md:pl-1!",
@@ -30,21 +30,21 @@ export default function OrderMatch() {
         minWidth: 50,
       },
       {
-        headerName: t("KL"),
+        headerName: t("table.vol"),
         field: "type",
         flex: 1.5,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
       },
       {
-        headerName: t("Giá"),
+        headerName: t("table.price"),
         field: "quantity",
         flex: 1.2,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
       },
       {
-        headerName: t("+/-(%)"),
+        headerName: t("+/- (%)"),
         field: "price",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -58,7 +58,7 @@ export default function OrderMatch() {
         headerClass: "ag-right-aligned-header",
       },
       {
-        headerName: t("M/B"),
+        headerName: t("table.b-s"),
         field: "status",
         flex: 0.5,
         cellClass: "text-center!",

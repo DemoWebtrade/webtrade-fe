@@ -186,7 +186,10 @@
     "setting-cols": "Nhấn để chọn các cột thông tin",
     "buy-power": "Tài khoản có sử dụng dịch vụ ứng trước tiền bán tự động sẽ được tự động tăng sức mua ngay sau khi lệnh bán khớp. Quý khách sử dụng sức mua trên tiền bán chờ về sẽ phát sinh phí ứng trước theo biểu phí hiện hành.",
     "expand": "Mở rộng",
-    "filter": "Bộ lọc"
+    "filter": "Bộ lọc",
+
+    "cash-hidden": "Ẩn số dư",
+    "cash-visible": "Hiển thị số dư"
   },
 
   "status": {
@@ -258,7 +261,9 @@
     "order": "Đặt lệnh",
     "buy": "Mua",
     "sell": "Bán",
-    "export-data": "Xuất dữ liệu"
+    "export-data": "Xuất dữ liệu",
+    "deposit-money": "Nộp tiền",
+    "trans-money": "Chuyển tiền"
   },
 
   "toast": {
@@ -272,7 +277,14 @@
     "conditional": "Đặt lệnh điều kiện",
     "buy-power": "Sức mua",
     "value": "Giá trị",
-    "value-total": "Tổng KL"
+    "value-total": "Tổng KL",
+    "price-depth": "Độ sâu thị trường",
+    "time-and-sales": "Khớp lệnh",
+    "quantity": "KL",
+    "bid": "Giá mua",
+    "ask": "Giá bán",
+    "bid-d": "Dư mua",
+    "ask-d": "Dư bán"
   },
 
   "asset": {
@@ -286,7 +298,16 @@
     "net-sell-value": "Tiền chờ về",
     "advanced-cash": "Tiền bán đã ứng",
     "right-sub": "ĐK quyền mua",
-    "cash-dividend": "Tiền cổ tức chờ về"
+    "cash-dividend": "Tiền cổ tức chờ về",
+    "title": "Tổng tài sản",
+    "nav": "Tài sản ròng (NAV)",
+    "portfolio-value": "Giá trị danh mục",
+    "money": "Tiền",
+    "provisional-debt": "Nợ tạm tính",
+    "profit-loss": "Lãi/Lỗ",
+    "investment-portfolio": "Danh mục đầu tư",
+    "portfolio-allocation": "Phân bổ danh mục",
+    "investment-performance": "Hiệu suất đầu tư"
   },
 
   "table": {
@@ -302,7 +323,15 @@
     "avg-price": "Giá vốn",
     "market-value": "Giá trị TT",
     "profit-loss": "Lãi/Lỗ",
-    "sell": "Bán"
+    "sell": "Bán",
+    "dm": "%DM",
+    "time": "Thời gian",
+    "vol": "KL",
+    "b-s": "Mua/Bán",
+    "price": "Giá",
+    "matched-qty": "KL Khớp",
+    "cancel-qty": "KL hủy",
+    "matched-price": "Giá khớp TB"
   },
 
   "menu": {

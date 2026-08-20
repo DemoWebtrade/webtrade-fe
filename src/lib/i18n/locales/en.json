@@ -186,7 +186,9 @@
     "setting-cols": "Click to select stock column",
     "buy-power": "Accounts that use the automatic cash in advance service will automatically have buying power increased as soon as the sell order is matched. If you use the purchasing power, an advance fee will be incurred according to the current fee schedule.",
     "expand": "Expand",
-    "filter": "Filter"
+    "filter": "Filter",
+    "cash-hidden": "Hide balance",
+    "cash-visible": "Show balance"
   },
 
   "status": {
@@ -258,7 +260,9 @@
     "order": "Order",
     "buy": "Buy",
     "sell": "Sell",
-    "export-data": "Export"
+    "export-data": "Export",
+    "deposit-money": "Deposit Money",
+    "trans-money": "Transfer Money"
   },
 
   "toast": {
@@ -273,7 +277,14 @@
     "conditional": "Conditional order",
     "buy-power": "Purchasing power",
     "value": "Value",
-    "value-total": "Total Vol"
+    "value-total": "Total Vol",
+    "price-depth": "Price Depth",
+    "time-and-sales": "Time and sales",
+    "quantity": "Quantity",
+    "bid": "Bid",
+    "ask": "Ask",
+    "bid-d": "Bid",
+    "ask-d": "Ask"
   },
 
   "asset": {
@@ -287,7 +298,16 @@
     "net-sell-value": "Net Sell Value",
     "advanced-cash": "Advanced Cash",
     "right-sub": "Right Subcription",
-    "cash-dividend": "Cash dividend"
+    "cash-dividend": "Cash dividend",
+    "title": "Total Asset",
+    "nav": "Asset (NAV)",
+    "portfolio-value": "Portfolio Value",
+    "money": "Money",
+    "provisional-debt": "Provisional Debt",
+    "profit-loss": "Profit/Loss",
+    "investment-portfolio": "Investment Portfolio",
+    "portfolio-allocation": "Portfolio allocation",
+    "investment-performance": "Investment Performance"
   },
 
   "table": {
@@ -303,7 +323,15 @@
     "avg-price": "Avg Price",
     "market-value": "Market Value",
     "profit-loss": "Profit/Loss",
-    "sell": "Sell"
+    "sell": "Sell",
+    "dm": "Weight",
+    "time": "Time",
+    "vol": "Vol",
+    "b-s": "B/S",
+    "price": "Price",
+    "matched-qty": "Matched Qty",
+    "cancel-qty": "Cancel Qty",
+    "matched-price": "Matched Price"
   },
 
   "menu": {

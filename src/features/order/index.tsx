@@ -26,13 +26,13 @@ export default function Order() {
           <div className="order-3 w-full lg:w-56 h-[18vh] lg:h-full flex flex-row lg:flex-col md:gap-2 gap-1 shrink-0">
             <div className="flex-1 bg-bg-secondary rounded-md overflow-y-auto flex flex-col border border-border">
               <h1 className="md:text-base text-sm font-medium px-2 py-1">
-                Độ sâu thị trường
+                {t("order.price-depth")}
               </h1>
               <PriceStep />
             </div>
             <div className="flex-1 bg-bg-secondary rounded-md text-xs overflow-y-auto border border-border flex flex-col">
               <h1 className="md:text-base text-sm font-medium px-2 py-1">
-                Khớp lệnh
+                {t("order.time-and-sales")}
               </h1>
               <div className="flex-1 min-h-0">
                 <OrderMatch />
@@ -99,7 +99,9 @@ export default function Order() {
 
       {/* Form đặt lệnh */}
       <div className="order-2 bg-bg-secondary w-full md:w-1/4 md:min-w-80 h-auto md:h-full rounded-md shrink-0 border border-border">
-        <h1 className="md:text-base text-sm font-medium px-2 py-1">Đặt lệnh</h1>
+        <h1 className="md:text-base text-sm font-medium px-2 py-1">
+          {t("order.title")}
+        </h1>
         <OrderNormal />
       </div>
     </div>

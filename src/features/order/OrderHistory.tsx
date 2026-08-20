@@ -74,7 +74,7 @@ export default function OrderHistory() {
         minWidth: 70,
       },
       {
-        headerName: t("KL Khớp"),
+        headerName: t("table.matched-qty"),
         field: "price",
         flex: 1,
         cellClass: "ag-right-aligned-cell",
@@ -82,7 +82,7 @@ export default function OrderHistory() {
         minWidth: 70,
       },
       {
-        headerName: t("Giá khớp TB"),
+        headerName: t("table.matched-price"),
         field: "price",
         flex: 1,
         cellClass: "ag-right-aligned-cell",
@@ -96,6 +96,14 @@ export default function OrderHistory() {
         cellClass: "text-center!",
         headerClass: "header-center",
         minWidth: 100,
+      },
+      {
+        headerName: t("table.cancel-qty"),
+        field: "price",
+        flex: 1,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
       },
       {
         headerName: t("table.edit-cancel"),

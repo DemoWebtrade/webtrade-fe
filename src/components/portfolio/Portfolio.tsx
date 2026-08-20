@@ -43,7 +43,7 @@ export default function Portfolio() {
         minWidth: 70,
       },
       {
-        headerName: t("Tổng KL"),
+        headerName: t("table.total-vol"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -51,7 +51,7 @@ export default function Portfolio() {
         minWidth: 50,
       },
       {
-        headerName: t("KLGD"),
+        headerName: t("table.tradeable-qty"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -59,7 +59,7 @@ export default function Portfolio() {
         minWidth: 50,
       },
       {
-        headerName: t("Giá vốn"),
+        headerName: t("table.avg-price"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -67,7 +67,7 @@ export default function Portfolio() {
         minWidth: 50,
       },
       {
-        headerName: t("Giá TT"),
+        headerName: t("table.mkt-price"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -75,7 +75,7 @@ export default function Portfolio() {
         minWidth: 50,
       },
       {
-        headerName: t("Giá trị TT"),
+        headerName: t("table.market-value"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -83,7 +83,7 @@ export default function Portfolio() {
         minWidth: 70,
       },
       {
-        headerName: t("Lãi/Lỗ"),
+        headerName: t("table.profit-loss"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -91,7 +91,7 @@ export default function Portfolio() {
         minWidth: 70,
       },
       {
-        headerName: t("Lãi/Lỗ") + " (%)",
+        headerName: t("table.profit-loss") + " (%)",
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
@@ -99,7 +99,7 @@ export default function Portfolio() {
         minWidth: 50,
       },
       {
-        headerName: t("%DM"),
+        headerName: t("table.dm"),
         field: "symbol",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",

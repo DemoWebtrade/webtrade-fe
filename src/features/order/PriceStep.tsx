@@ -3,8 +3,11 @@ import { selectStockDetail } from "@/store/modules/priceboard/selector";
 import { formatPrice, numberFormat } from "@/utils";
 import { getColorClass } from "@/utils/stock";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function PriceStep() {
+  const { t } = useTranslation();
+
   const stockDetail = useAppSelector(selectStockDetail);
 
   const { totalBuy, totalSell, preTotalBuy, preTotalSell } = useMemo(() => {
@@ -37,12 +40,12 @@ export default function PriceStep() {
       {/* Header */}
       <div className="flex flex-row text-xs md:text-sm">
         <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-2 w-1/2">
-          <h2>KL</h2>
-          <h2>Giá mua</h2>
+          <h2>{t("order.quantity")}</h2>
+          <h2>{t("order.bid")}</h2>
         </div>
         <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-2 w-1/2">
-          <h2>Giá bán</h2>
-          <h2>KL</h2>
+          <h2>{t("order.ask")}</h2>
+          <h2>{t("order.quantity")}</h2>
         </div>
       </div>
 
@@ -138,12 +141,16 @@ export default function PriceStep() {
 
         <div className="flex flex-row items-center justify-between w-full px-1 md:px-2">
           <div className="flex flex-row gap-0.5 md:gap-1 items-center">
-            <span>Dư mua:</span>
-            <span className="font-medium">{numberFormat(totalBuy)}</span>
+            <span>{t("order.bid-d")}:</span>
+            <span className="font-medium">
+              {numberFormat(totalBuy, 0, "-")}
+            </span>
           </div>
           <div className="flex flex-row items-center gap-0.5 md:gap-1 justify-end">
-            <span>Dư bán:</span>
-            <span className="font-medium">{numberFormat(totalSell)}</span>
+            <span>{t("order.ask-d")}:</span>
+            <span className="font-medium">
+              {numberFormat(totalSell, 0, "-")}
+            </span>
           </div>
         </div>
       </div>
