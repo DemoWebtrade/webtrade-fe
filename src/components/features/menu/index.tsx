@@ -1,3 +1,4 @@
+import { MENU_ITEMS } from "@/configs";
 import { useClickOutside } from "@/hooks/useClickOutside"; // chỉnh lại path cho đúng
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectToken } from "@/store/modules/auth/selector";
@@ -5,14 +6,7 @@ import { setIsLogin } from "@/store/modules/auth/slice";
 import { selectOpenMenu, selectTabMenu } from "@/store/modules/common/selector";
 import { setIsOpenMenu, setTabMenu } from "@/store/modules/common/slice";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ChartCandlestick,
-  FileClock,
-  SquareChevronRight,
-  SquarePen,
-  Wallet,
-  type LucideProps,
-} from "lucide-react";
+import { SquareChevronRight, type LucideProps } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -21,21 +15,9 @@ import {
   type RefAttributes,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import packageJson from "../../../../package.json";
 import DayTrading from "../header/component/DayTrading";
-
-const MENU_ITEMS = [
-  { key: "BOARD", label: "menu.board", icon: ChartCandlestick, link: "/" },
-  { key: "ORDER", label: "menu.order", icon: SquarePen, link: "/order" },
-  { key: "ASSET", label: "menu.asset", icon: Wallet, link: "/asset" },
-  {
-    key: "STATEMENT",
-    label: "menu.statement",
-    icon: FileClock,
-    link: "/statement",
-  },
-];
 
 type MenuItem = {
   key: string;
@@ -50,6 +32,7 @@ export default function Menu() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const path = useLocation().pathname;
 
   const tabActive = useAppSelector(selectTabMenu);
   const isOpenMenu = useAppSelector(selectOpenMenu);
@@ -59,14 +42,10 @@ export default function Menu() {
   const token = useAppSelector(selectToken);
 
   useEffect(() => {
-    if (!tabActive) return;
-
-    const tabInfo = MENU_ITEMS.find((item) => item.key === tabActive);
-    if (!tabInfo) return;
-
-    navigate(tabInfo.link);
-    dispatch(setIsOpenMenu(true));
-  }, [tabActive, navigate, dispatch]);
+    if (MENU_ITEMS.some((item) => item.link === path)) {
+      dispatch(setTabMenu(MENU_ITEMS.find((item) => item.link === path)?.key));
+    }
+  }, [dispatch, path]);
 
   const onClickChangeTab = useCallback(
     (tabInfor: MenuItem) => {

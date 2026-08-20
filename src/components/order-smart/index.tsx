@@ -1,3 +1,4 @@
+import { MENU_HISTORY, MENU_ITEMS, MENU_ORDER } from "@/configs";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { setTabMenu } from "@/store/modules/common/slice";
 import {
@@ -9,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Funnel, Scan, X } from "lucide-react";
 import { lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import SprinnerLoader from "../features/skeletons/SprinnerLoader";
 import Asset from "./Asset";
 import CategoryList from "./CategoryList";
@@ -17,35 +19,10 @@ import OrderNormal from "./OrderNormal";
 
 const Orders = lazy(() => import("./orders"));
 
-const MENU_ORDER = [
-  {
-    key: "BASE",
-    label: "order.normal",
-  },
-  // {
-  //   key: "COND",
-  //   label: "order.conditional",
-  // },
-];
-
-const MENU_HISTORY = [
-  {
-    key: "ORDER",
-    label: "menu.orders",
-  },
-  {
-    key: "CATEGORY",
-    label: "menu.portfolio",
-  },
-  {
-    key: "ASSET",
-    label: "menu.asset",
-  },
-];
-
 export default function OrderSmart() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isOpen = useAppSelector(selectOpenOrder);
   const isOpenFilter = useAppSelector(selectOpenFilter);
@@ -72,8 +49,11 @@ export default function OrderSmart() {
         : tabHisTabActive === "CATEGORY" || tabHisTabActive === "ASSET"
           ? "ASSET"
           : "BOARD";
+    const path = MENU_ITEMS.find((item) => item.key === tabId)?.link ?? "/";
 
+    navigate(path);
     dispatch(setTabMenu(tabId));
+
     onClose();
   };
 

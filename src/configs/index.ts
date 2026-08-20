@@ -1,5 +1,5 @@
 export * from "./global";
-export * from "./menuBoard";
+export * from "./menu";
 export * from "./modal";
 export * from "./order";
 export * from "./priceboard";
