@@ -355,8 +355,8 @@
     "transaction-value": "Giá trị giao dịch (VNĐ)",
     "command-number": "Số hiệu lệnh",
     "trading-channel": "Kênh giao dịch",
-    "increase": "Phát sinh tăng (VNĐ)",
-    "decrease": "Phát sinh giảm (VNĐ)"
+    "increase": "Phát sinh tăng (SL)",
+    "decrease": "Phát sinh giảm (SL)"
   },
 
   "menu": {

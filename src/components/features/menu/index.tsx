@@ -130,8 +130,8 @@ export default function Menu() {
       </AnimatePresence>
 
       <div
-        className={`cursor-pointer bg-bg-primary border border-border rounded-full p-1.5 absolute top-[calc(100%-150px)] translate-y-1/2 z-20 transition-[left] duration-300 ease-in-out ${
-          isOpenMenu ? "md:left-52 left-42 rotate-180" : "left-0"
+        className={`cursor-pointer bg-secondary-base border border-border rounded-full p-1.5 absolute top-[calc(100%-20vh)] translate-y-1/2 z-20 transition-[left] duration-300 ease-in-out ${
+          isOpenMenu ? "md:left-52 left-42 rotate-180" : "left-2"
         }`}
         data-tooltip-id="global-tooltip"
         data-tooltip-place="right"

@@ -4,7 +4,7 @@ import type { CommonState } from "./types";
 const innitState: CommonState = {
   tabMenu: "BOARD",
 
-  isOpenMenu: false,
+  isOpenMenu: true,
 };
 
 const commonSlice = createSlice({
