@@ -9,7 +9,7 @@ export default function AssetTotal() {
   const [isShowAsset, setIsShowAsset] = useState(false);
 
   return (
-    <div className="w-full h-full flex flex-col px-2 py-1.5">
+    <div className="w-full h-full flex flex-col overflow-y-auto px-2 ">
       <div className="flex flex-row items-center justify-between gap-0.5 pb-0.5 md:pb-1 mb-1 md:mb-1.5 border-b border-border">
         <div className="flex flex-col gap-0.5">
           <div className="flex flex-row items-center gap-2">

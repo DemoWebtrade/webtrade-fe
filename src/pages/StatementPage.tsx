@@ -1,3 +1,4 @@
+import Statement from "@/features/statement";
 import { usePageTitle } from "@/hooks/usePageTitle";
 import { useTranslation } from "react-i18next";
 
@@ -6,5 +7,9 @@ export default function StatementPage() {
 
   usePageTitle(t("menu.statement"));
 
-  return <div>Statement Page</div>;
+  return (
+    <>
+      <Statement />
+    </>
+  );
 }

@@ -331,7 +331,32 @@
     "price": "Price",
     "matched-qty": "Matched Qty",
     "cancel-qty": "Cancel Qty",
-    "matched-price": "Matched Price"
+    "matched-price": "Matched Price",
+    "transaction-date": "Transaction Date",
+    "transaction-type": "Transaction Type",
+    "increased-generation": "Increased Generation (VND)",
+    "decreased-generation": "Decreased Generation (VND)",
+    "account-balance": "Balance (VND)",
+    "content": "Content",
+    "transaction-method": "Transaction Method",
+    "transfer-account-number": "Transfer Account Number",
+    "beneficiary-account-number": "Beneficiary Account Number",
+    "beneficiary-bank": "Beneficiary Bank",
+    "beneficiary-account-name": "Beneficiary Account Name",
+    "transfer-amount": "Transfer Amount VND",
+    "command": "Command",
+    "order-price": "Order price VND",
+    "order-quantity": "Order quantity",
+    "match-price": "Match price VND",
+    "match-volume": "Match volume",
+    "match-value": "Match value VND",
+    "transaction-fee": "Transaction fee VND",
+    "transaction-value": "Transaction value VND",
+    "personal-tax": "Personal tax VND",
+    "command-number": "Command number",
+    "trading-channel": "Trading channel",
+    "increase": "Increase (SL)",
+    "decrease": "Decrease (SL)"
   },
 
   "menu": {
@@ -341,7 +366,11 @@
     "title": "Menu",
     "board": "Priceboard",
     "order": "Order",
-    "statement": "Statement"
+    "statement": "Statement",
+    "money-statement": "Cash Statement",
+    "money-history-statement": "History Tranfer Money",
+    "order-history-statement": "Matching Results",
+    "stock-history-statement": "Stock Statement"
   },
 
   "select": {

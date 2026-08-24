@@ -94,3 +94,22 @@ export const MENU_ORDER = [
     label: "menu.portfolio",
   },
 ];
+
+export const MENU_STATEMENT = [
+  {
+    key: "MONEY",
+    label: "menu.money-statement",
+  },
+  {
+    key: "MONEY_HIS",
+    label: "menu.money-history-statement",
+  },
+  {
+    key: "ORDER",
+    label: "menu.order-history-statement",
+  },
+  {
+    key: "STOCK",
+    label: "menu.stock-history-statement",
+  },
+];

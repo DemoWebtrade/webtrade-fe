@@ -42,6 +42,7 @@ apiClient.interceptors.response.use(
       isSessionExpired = true;
       toast.error(message || i18n.t("auth.sessionExpired"));
       store.dispatch(logout());
+      window.location.href = "/";
 
       setTimeout(() => {
         isSessionExpired = false;

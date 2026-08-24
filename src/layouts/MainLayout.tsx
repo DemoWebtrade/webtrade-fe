@@ -11,13 +11,14 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   selectIsOpenProfile,
+  selectToken,
   selectTypeUpdateProfile,
 } from "@/store/modules/auth/selector";
 import { setIsOpenProfile } from "@/store/modules/auth/slice";
 import type { MessagePayload } from "firebase/messaging";
 import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { toast } from "sonner";
 
@@ -27,6 +28,7 @@ const MainJoyride = lazy(
 
 export default function MainLayout() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isOpenProfile = useAppSelector(selectIsOpenProfile);
   const typeUpdateProfile = useAppSelector(selectTypeUpdateProfile);
@@ -37,6 +39,8 @@ export default function MainLayout() {
     const hasSeenTour = localStorage.getItem("hasSeenTour") === "true";
     return !hasSeenTour;
   });
+
+  const token = useAppSelector(selectToken);
 
   // Xin quyền thông báo khi app load
   useEffect(() => {
@@ -52,6 +56,13 @@ export default function MainLayout() {
 
     return () => unsubscribe();
   }, []);
+
+  // Check login
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useClickOutside(refProfile, () => {
     if (!typeUpdateProfile || !isOpenProfile) dispatch(setIsOpenProfile(false));

@@ -65,7 +65,7 @@ export default function Order() {
                     <motion.div
                       className="w-full h-0.5 bg-purple-active"
                       layoutId="menu-active-history"
-                      transition={{ duration: 0.25 }}
+                      transition={{ duration: 0.2 }}
                     />
                   ) : (
                     <div className="w-full h-0.5 bg-border" />

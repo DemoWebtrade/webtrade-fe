@@ -331,7 +331,32 @@
     "price": "Giá",
     "matched-qty": "KL Khớp",
     "cancel-qty": "KL hủy",
-    "matched-price": "Giá khớp TB"
+    "matched-price": "Giá khớp TB",
+    "transaction-date": "Ngày giao dịch",
+    "transaction-type": "Loại giao dịch",
+    "increased-generation": "Phát sinh tăng (VNĐ)",
+    "decreased-generation": "Phát sinh giảm (VNĐ)",
+    "account-balance": "Số dư (VNĐ)",
+    "content": "Nội dung",
+    "transaction-method": "Hình thức chuyển tiền",
+    "transfer-account-number": "Số TK chuyển",
+    "beneficiary-account-number": "Số TK thụ hưởng",
+    "beneficiary-bank": "NH thụ hưởng",
+    "beneficiary-account-name": "Tên TK thụ hưởng",
+    "transfer-amount": "Số tiền chuyển VNĐ",
+    "command": "Lệnh",
+    "order-price": "Giá đặt VNĐ",
+    "order-quantity": "KL đặt",
+    "match-price": "Giá khớp VNĐ",
+    "match-volume": "KL khớp",
+    "match-value": "Giá trị khớp VNĐ",
+    "transaction-fee": "Phí GD VNĐ",
+    "personal-tax": "Thuế TNCN VNĐ",
+    "transaction-value": "Giá trị giao dịch VNĐ",
+    "command-number": "Số hiệu lệnh",
+    "trading-channel": "Kênh giao dịch",
+    "increase": "Phát sinh tăng VNĐ",
+    "decrease": "Phát sinh giảm VNĐ"
   },
 
   "menu": {
@@ -341,7 +366,11 @@
     "asset": "Tài sản",
     "board": "Bảng giá",
     "order": "Đặt lệnh",
-    "statement": "Báo cáo"
+    "statement": "Báo cáo",
+    "money-statement": "Sao kê tiền",
+    "money-history-statement": "Lịch sử chuyển tiền",
+    "order-history-statement": "Lịch sử Lệnh",
+    "stock-history-statement": "Sao kê chứng khoán"
   },
 
   "select": {
