@@ -1,6 +1,6 @@
 import { useTheme } from "@/hooks/useTheme";
 import ReactECharts from "echarts-for-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const rawData = [
   { value: 1048, name: "ACB" },
@@ -24,6 +24,7 @@ const colors = [
 
 export default function PortfolioAllocationChart() {
   const chartRef = useRef<ReactECharts>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { theme } = useTheme();
 
@@ -35,6 +36,22 @@ export default function PortfolioAllocationChart() {
 
   const borderColor = theme === "dark" ? "#161a22" : "#ffffff";
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const resizeChart = () => {
+      chartRef.current?.getEchartsInstance()?.resize();
+    };
+
+    const ro = new ResizeObserver(() => {
+      resizeChart();
+    });
+    ro.observe(el);
+
+    return () => ro.disconnect();
+  }, []);
+
   const option = useMemo(
     () => ({
       baseOption: {
@@ -45,8 +62,8 @@ export default function PortfolioAllocationChart() {
           {
             name: "Access From",
             type: "pie",
-            radius: ["90%", "70%"],
-            center: ["35%", "50%"],
+            radius: ["85%", "62%"],
+            center: ["50%", "50%"],
             avoidLabelOverlap: false,
             itemStyle: {
               borderRadius: 4,
@@ -76,7 +93,7 @@ export default function PortfolioAllocationChart() {
             series: [
               {
                 center: ["50%", "45%"],
-                radius: ["70%", "50%"],
+                radius: ["68%", "45%"],
                 emphasis: { label: { fontSize: 14 } },
               },
             ],
@@ -88,8 +105,8 @@ export default function PortfolioAllocationChart() {
             tooltip: { textStyle: { fontSize: 12 } },
             series: [
               {
-                center: ["38%", "48%"],
-                radius: ["90%", "70%"],
+                center: ["48%", "48%"],
+                radius: ["82%", "60%"],
                 emphasis: { label: { fontSize: 14 } },
               },
             ],
@@ -101,8 +118,8 @@ export default function PortfolioAllocationChart() {
             tooltip: { textStyle: { fontSize: 12 } },
             series: [
               {
-                center: ["38%", "48%"],
-                radius: ["90%", "70%"],
+                center: ["48%", "48%"],
+                radius: ["85%", "62%"],
                 emphasis: { label: { fontSize: 14 } },
               },
             ],
@@ -114,8 +131,8 @@ export default function PortfolioAllocationChart() {
             tooltip: { textStyle: { fontSize: 14 } },
             series: [
               {
-                center: ["35%", "50%"],
-                radius: ["90%", "70%"],
+                center: ["46%", "50%"],
+                radius: ["85%", "62%"],
                 emphasis: { label: { fontSize: 16 } },
               },
             ],
@@ -142,8 +159,8 @@ export default function PortfolioAllocationChart() {
   };
 
   return (
-    <div className="flex w-full h-full">
-      <div style={{ flex: 1, minWidth: 0 }}>
+    <div ref={containerRef} className="flex w-full h-full min-w-0 min-h-0">
+      <div className="flex-1 min-w-0 min-h-0">
         <ReactECharts
           ref={chartRef}
           option={option}
@@ -154,7 +171,7 @@ export default function PortfolioAllocationChart() {
         />
       </div>
 
-      <div className="max-h-full overflow-y-auto flex flex-col gap-2 px-2 sm:px-4 py-2 w-30 md:w-30">
+      <div className="max-h-full overflow-y-auto flex flex-col gap-2 px-2 py-2 w-28 md:w-30 shrink-0">
         {rawData.map((item, idx) => (
           <div
             key={item.name}
