@@ -37,12 +37,20 @@ apiClient.interceptors.response.use(
   (error) => {
     const status = error?.response?.status;
     const message = error?.response?.data?.message;
+    const url = error?.config?.url ?? "";
+
+    const isLoginRequest = url.includes("/auth/login");
 
     if (status === 401 && !isSessionExpired) {
       isSessionExpired = true;
       toast.error(message || i18n.t("auth.sessionExpired"));
-      store.dispatch(logout());
-      window.location.href = "/";
+
+      if (!isLoginRequest) {
+        store.dispatch(logout());
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 500);
+      }
 
       setTimeout(() => {
         isSessionExpired = false;
