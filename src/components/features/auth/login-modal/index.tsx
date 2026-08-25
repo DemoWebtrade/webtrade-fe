@@ -120,7 +120,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   name="identifier"
                   autoComplete="current-identifier"
                   registration={register("identifier", {
-                    required: t("validate.identifier-required"),
+                    required: t("validate.username-required"),
                   })}
                   error={errors?.identifier as FieldError}
                   required
