@@ -7,6 +7,7 @@ import {
   selectSymbols,
 } from "@/store/modules/priceboard/selector";
 import { setSymbolStocksDetail } from "@/store/modules/priceboard/slice";
+import { selectMarketStatus } from "@/store/modules/socket/selector";
 import { formatPrice, numberFormat, StringToInt } from "@/utils";
 import { getColorClass } from "@/utils/stock";
 import { Info } from "lucide-react";
@@ -32,6 +33,7 @@ export default function OrderNormal() {
   const listAccount = useAppSelector(selectListAccount);
   const stockDetail = useAppSelector(selectStockDetail);
   const symbols = useAppSelector(selectSymbols);
+  const marketStatus = useAppSelector(selectMarketStatus);
 
   const {
     handleSubmit,
@@ -40,7 +42,7 @@ export default function OrderNormal() {
     formState: { errors },
   } = useForm<OrderFormValues>({
     defaultValues: {
-      stockCode: "ACB",
+      stockCode: "",
       orderPrice: "",
       orderVolume: null,
     },
@@ -74,17 +76,18 @@ export default function OrderNormal() {
 
   useEffect(() => {
     if (!stockCode) return;
-    dispatch(setSymbolStocksDetail(stockCode));
 
-    if (!symbols?.includes(stockCode)) {
+    if (!symbols?.includes(stockCode) && marketStatus === "connected") {
       MarketSocket.subscribeSymbols([stockCode]);
     }
+
+    dispatch(setSymbolStocksDetail(stockCode));
 
     return () => {
       if (stockCode && !symbols?.includes(stockCode))
         MarketSocket.unsubscribeSymbols([stockCode]);
     };
-  }, [stockCode, symbols, dispatch]);
+  }, [stockCode, symbols, marketStatus, dispatch]);
 
   const handleValidateVolume = (volume: string | number | null) => {
     if (!volume) {

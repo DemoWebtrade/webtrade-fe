@@ -8,6 +8,7 @@ import {
   onMessageListener,
   requestPermission,
 } from "@/services/fcm/firebase-messaging";
+import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   selectIsOpenProfile,
@@ -42,9 +43,15 @@ export default function MainLayout() {
 
   const token = useAppSelector(selectToken);
 
-  // Xin quyền thông báo khi app load
   useEffect(() => {
+    // Xin quyền thông báo khi app load
     requestPermission();
+
+    MarketSocket.connect();
+
+    return () => {
+      MarketSocket.close();
+    };
   }, []);
 
   // Lắng nghe thông báo khi app mở

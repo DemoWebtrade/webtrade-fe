@@ -1,7 +1,6 @@
 import { HEADER_TABLE_BASE_CONFIG } from "@/configs";
 import PriceBoard from "@/features/price-board";
 import { usePageTitle } from "@/hooks/usePageTitle";
-import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch } from "@/store/hook";
 import { setHeaderTableBaseConfig } from "@/store/modules/priceboard/slice";
 import { useEffect } from "react";
@@ -24,11 +23,6 @@ export default function PriceBoardPage() {
 
   useEffect(() => {
     handleGetConfigHeader();
-    MarketSocket.connect();
-
-    return () => {
-      MarketSocket.close();
-    };
   }, []);
 
   return (

@@ -1,13 +1,11 @@
-import i18n from "@/lib/i18n";
 import { store } from "@/store";
 import { logout } from "@/store/modules/auth/slice";
 import axios from "axios";
-import { toast } from "sonner";
 
 const url =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_API_BASE_URL
-    : "http://localhost:5001";
+    : "http://localhost:5001/";
 
 export const apiClient = axios.create({
   baseURL: `${url}/`,
@@ -36,13 +34,21 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error?.response?.status;
-    const message = error?.response?.data?.message;
+    // const message = error?.response?.data?.message;
+    const url = error?.config?.url ?? "";
+
+    const isLoginRequest = url.includes("/auth/login");
 
     if (status === 401 && !isSessionExpired) {
       isSessionExpired = true;
-      toast.error(message || i18n.t("auth.sessionExpired"));
-      store.dispatch(logout());
-      window.location.href = "/";
+      // toast.error(message || i18n.t("auth.sessionExpired"));
+
+      if (!isLoginRequest) {
+        store.dispatch(logout());
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 500);
+      }
 
       setTimeout(() => {
         isSessionExpired = false;

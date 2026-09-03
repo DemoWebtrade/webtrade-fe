@@ -23,7 +23,7 @@ export default function Order() {
             <TradingViewChart />
           </div>
 
-          <div className="order-3 w-full lg:w-56 h-[18vh] lg:h-full flex flex-row lg:flex-col md:gap-2 gap-1 shrink-0">
+          <div className="order-3 w-full lg:w-76 h-[18vh] lg:h-full flex flex-row lg:flex-col md:gap-2 gap-1 shrink-0">
             <div className="flex-1 bg-bg-secondary rounded-md overflow-y-auto flex flex-col border border-border">
               <h1 className="md:text-base text-sm font-medium px-2 py-1">
                 {t("order.price-depth")}
