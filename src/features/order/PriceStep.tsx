@@ -38,7 +38,7 @@ export default function PriceStep() {
   return (
     <div className="h-full w-full">
       {/* Header */}
-      <div className="flex flex-row text-xs md:text-sm">
+      <div className="flex flex-row text-xs md:text-sm sticky top-0">
         <div className="flex flex-row items-center justify-between bg-secondary-base px-1 md:px-2 py-2 w-1/2">
           <h2>{t("order.quantity")}</h2>
           <h2>{t("order.bid")}</h2>
@@ -78,7 +78,7 @@ export default function PriceStep() {
                   {formatPrice(price)}
                 </span>
                 <div
-                  className="absolute bg-primary-active/10 right-0 top-0 rounded h-full"
+                  className="absolute bg-primary-active/10 right-0 top-0 rounded h-full transition-all duration-500 ease-out"
                   style={{
                     width: `${vol ? Math.round((vol / totalBuy) * 100) : 0}%`,
                   }}
@@ -115,7 +115,7 @@ export default function PriceStep() {
                 </span>
                 <span className="z-1">{numberFormat(vol)}</span>
                 <div
-                  className="absolute bg-primary-active/10 left-0 top-0 rounded h-full"
+                  className="absolute bg-primary-active/10 left-0 top-0 rounded h-full transition-all duration-500 ease-out"
                   style={{
                     width: `${vol ? Math.round((vol / totalSell) * 100) : 0}%`,
                   }}

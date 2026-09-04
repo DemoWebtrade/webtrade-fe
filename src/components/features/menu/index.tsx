@@ -138,8 +138,12 @@ export default function Menu() {
         data-tooltip-content={t("Menu")}
         onClick={() => dispatch(setIsOpenMenu(!isOpenMenu))}
         data-tour="prop-1"
+        aria-label={t("Menu")}
       >
-        <SquareChevronRight className="size-3.5 text-content-tertiary" />
+        <SquareChevronRight
+          className="size-3.5 text-content-tertiary"
+          aria-hidden="true"
+        />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import axios from "axios";
 const url =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_API_BASE_URL
-    : "http://localhost:5001";
+    : "http://localhost:5001/";
 
 export const apiClient = axios.create({
   baseURL: `${url}/`,
@@ -34,12 +34,14 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error?.response?.status;
+    // const message = error?.response?.data?.message;
     const url = error?.config?.url ?? "";
 
     const isLoginRequest = url.includes("/auth/login");
 
     if (status === 401 && !isSessionExpired) {
       isSessionExpired = true;
+      // toast.error(message || i18n.t("auth.sessionExpired"));
 
       if (!isLoginRequest) {
         store.dispatch(logout());
