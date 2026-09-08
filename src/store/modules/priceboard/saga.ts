@@ -1,5 +1,3 @@
-// client/saga.ts
-
 import { delay, put, takeLatest } from "redux-saga/effects";
 import { setExport, setStartScroll } from "./slice";
 

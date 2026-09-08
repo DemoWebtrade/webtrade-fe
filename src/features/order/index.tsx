@@ -5,7 +5,7 @@ import { MENU_ORDER } from "@/configs";
 import { AnimatePresence, motion } from "framer-motion";
 import { Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
-import OrderHistory from "./OrderHistory";
+import OrderHistory from "./order-history";
 import OrderMatch from "./OrderMatch";
 import PriceStep from "./PriceStep";
 import TradingViewChart from "./TradingViewChart";

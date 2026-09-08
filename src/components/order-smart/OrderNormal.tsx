@@ -1,4 +1,5 @@
 import { LIST_STOCKS, MARKET_TYPE, PRICE_TYPE } from "@/configs";
+import { usePlaceOrder } from "@/hooks/usePlaceOrder";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectListAccount } from "@/store/modules/auth/selector";
@@ -12,7 +13,12 @@ import { formatPrice, numberFormat, StringToInt } from "@/utils";
 import { getColorClass } from "@/utils/stock";
 import { Info } from "lucide-react";
 import { useEffect } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import {
+  Controller,
+  useForm,
+  useWatch,
+  type FieldError,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button";
 import InputPrice from "../ui/inputs/InputPrice";
@@ -24,6 +30,7 @@ type OrderFormValues = {
   stockCode: string;
   orderPrice: string | number;
   orderVolume: number | null;
+  accountCode: string;
 };
 
 export default function OrderNormal() {
@@ -36,9 +43,11 @@ export default function OrderNormal() {
   const marketStatus = useAppSelector(selectMarketStatus);
 
   const {
-    handleSubmit,
     control,
+    handleSubmit,
     reset,
+    register,
+    setValue,
     formState: { errors },
   } = useForm<OrderFormValues>({
     defaultValues: {
@@ -64,6 +73,8 @@ export default function OrderNormal() {
     name: "orderVolume",
   });
 
+  const { place } = usePlaceOrder();
+
   useEffect(() => {
     return () => {
       reset({
@@ -73,6 +84,12 @@ export default function OrderNormal() {
       });
     };
   }, [reset]);
+
+  useEffect(() => {
+    if (listAccount && listAccount.length > 0) {
+      setValue("accountCode", listAccount[0]?.accountNumber + "");
+    }
+  }, [listAccount, setValue]);
 
   useEffect(() => {
     if (!stockCode) return;
@@ -169,11 +186,37 @@ export default function OrderNormal() {
   };
 
   const onBuy = handleSubmit((data) => {
-    console.log(data);
+    const { stockCode, orderPrice, orderVolume, accountCode } = data;
+
+    place({
+      tradingAccountId: accountCode,
+      symbol: stockCode,
+      side: "buy",
+      orderType: PRICE_TYPE?.includes(orderPrice + "") ? orderPrice + "" : "LO",
+      price: orderPrice
+        ? PRICE_TYPE?.includes(orderPrice + "")
+          ? (stockDetail?.ceil ?? 0)
+          : +orderPrice * 1000
+        : 0,
+      quantity: orderVolume ? StringToInt(orderVolume) : 0,
+    });
   });
 
   const onSell = handleSubmit((data) => {
-    console.log(data);
+    const { stockCode, orderPrice, orderVolume, accountCode } = data;
+
+    place({
+      tradingAccountId: accountCode,
+      symbol: stockCode,
+      side: "sell",
+      orderType: PRICE_TYPE?.includes(orderPrice + "") ? orderPrice + "" : "LO",
+      price: orderPrice
+        ? PRICE_TYPE?.includes(orderPrice + "")
+          ? (stockDetail?.ceil ?? 0)
+          : +orderPrice * 1000
+        : 0,
+      quantity: orderVolume ? StringToInt(orderVolume) : 0,
+    });
   });
 
   return (
@@ -194,6 +237,7 @@ export default function OrderNormal() {
                     stockCode: stock.code,
                     orderPrice: "",
                     orderVolume: null,
+                    accountCode: listAccount?.[0]?.accountNumber ?? "",
                   });
                 }}
               />
@@ -267,11 +311,15 @@ export default function OrderNormal() {
 
         <div className="flex-1">
           <SelectField
-            name="gender"
+            name="accountCode"
             options={listAccount?.map((item) => ({
               label: item.accountNumber,
               value: item.accountNumber,
             }))}
+            registration={register("accountCode", {
+              required: t("Vui lòng chọn tài khoản đặt lệnh"),
+            })}
+            error={errors.accountCode as FieldError}
             className="px-1! py-0.5!"
           />{" "}
         </div>
