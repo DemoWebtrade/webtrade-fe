@@ -56,7 +56,7 @@ export default function EditOrderModal({
 
   useEffect(() => {
     if (order) {
-      reset({ price: order.price, quantity: order.quantity });
+      reset({ price: order.price / 1000, quantity: order.quantity });
     }
   }, [order, reset]);
 
@@ -139,6 +139,15 @@ export default function EditOrderModal({
     }
   };
 
+  const handleOnSubmit = handleSubmit((data) => {
+    const { price, quantity } = data;
+
+    onSubmit({
+      price: price * 1000,
+      quantity: quantity,
+    });
+  });
+
   return (
     <AnimatePresence>
       {open && order && (
@@ -176,10 +185,7 @@ export default function EditOrderModal({
 
               <div className="w-full h-px bg-border"></div>
 
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col gap-4 md:gap-6 px-6"
-              >
+              <form className="flex flex-col gap-4 md:gap-6 px-6">
                 <div className="flex flex-row items-start">
                   <span className="font-medium w-2/5 md:w-1/3 text-xs sm:text-sm text-content-tertiary">
                     {t("input.order-volume")}
@@ -231,6 +237,7 @@ export default function EditOrderModal({
                     className="w-1/2"
                     isLoading={loading}
                     disabled={loading}
+                    onClick={handleOnSubmit}
                   >
                     {t("button.save-change")}
                   </Button>

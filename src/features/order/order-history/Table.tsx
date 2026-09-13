@@ -1,12 +1,16 @@
+import ConfirmCancelOrderModal from "@/components/order-smart/orders/ConfirmCancelOrderModal";
+import EditOrderModal from "@/components/order-smart/orders/EditOrderModal";
 import { useOrderHistory } from "@/hooks/useOrderHistory";
 import { useOrderTableActions } from "@/hooks/useOrderTableActions";
-import { useAppSelector } from "@/store/hook";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { selectProfile } from "@/store/modules/auth/selector";
 
 import {
   selectLoadingCancelOrder,
   selectLoadingUpdateOrder,
+  selectRefreshOrders,
 } from "@/store/modules/order/selector";
+import { consumeRefreshOrders } from "@/store/modules/order/slice";
 import type {
   OrderSide,
   OrderStatus,
@@ -27,10 +31,8 @@ import {
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { Pencil, Trash2 } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ConfirmCancelOrderModal from "./ConfirmCancelOrderModal";
-import EditOrderModal from "./EditOrderModal";
 
 ModuleRegistry.registerModules([
   CellStyleModule,
@@ -61,11 +63,11 @@ const SIDE_LABEL: Record<OrderSide, { text: string; className: string }> = {
 };
 
 const STATUS_LABEL: Record<OrderStatus, { text: string; className: string }> = {
-  pending: { text: "Chờ khớp", className: "bg-bg-yellow text-yellow-base" },
-  partial: { text: "Khớp một phần", className: "bg-bg-blue text-blue-base" },
-  matched: { text: "Đã khớp", className: "bg-bg-green text-green-base" },
-  cancelled: { text: "Đã hủy", className: "bg-bg-gray text-red-base" },
-  rejected: { text: "Từ chối", className: "bg-bg-red text-red-base" },
+  pending: { text: "Chờ khớp", className: "text-yellow-base" },
+  partial: { text: "Khớp một phần", className: "text-blue-base" },
+  matched: { text: "Đã khớp", className: "text-green-base" },
+  cancelled: { text: "Đã hủy", className: "text-red-base" },
+  rejected: { text: "Từ chối", className: "text-red-base" },
 };
 
 const EDITABLE_STATUSES: OrderStatus[] = ["pending"];
@@ -135,6 +137,9 @@ function ActionCellRenderer({
 
 export default function Table() {
   const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
+
   const profile = useAppSelector(selectProfile);
   const { datasource, isLoading } = useOrderHistory({
     userId: profile?.id,
@@ -143,11 +148,19 @@ export default function Table() {
   const { cancelOrder, updateOrder } = useOrderTableActions();
   const cancelLoading = useAppSelector(selectLoadingCancelOrder);
   const updateLoading = useAppSelector(selectLoadingUpdateOrder);
+  const refreshOrders = useAppSelector(selectRefreshOrders);
 
   const gridApiRef = useRef<GridApi | null>(null);
 
   const [pendingCancel, setPendingCancel] = useState<OrderRow | null>(null);
   const [editingOrder, setEditingOrder] = useState<OrderRow | null>(null);
+
+  useEffect(() => {
+    if (refreshOrders > 0) {
+      gridApiRef.current?.refreshInfiniteCache();
+      dispatch(consumeRefreshOrders());
+    }
+  }, [refreshOrders, dispatch]);
 
   const handleConfirmCancel = async () => {
     if (!pendingCancel) return;

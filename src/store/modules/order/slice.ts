@@ -6,6 +6,8 @@ const initialState: OrderState = {
   openOrder: false,
   openFilter: false,
 
+  refreshOrders: 0,
+
   loading: {
     placeOrder: false,
     updateOrder: false,
@@ -30,6 +32,10 @@ const orderSlice = createSlice({
     setOpenFilter: (state, action: PayloadAction<boolean>) => {
       state.openFilter = action.payload;
     },
+
+    consumeRefreshOrders: (state) => {
+      state.refreshOrders = 0;
+    },
   },
 
   extraReducers: (builder) => {
@@ -40,6 +46,7 @@ const orderSlice = createSlice({
       })
       .addCase(orderPlaceThunk.fulfilled, (state) => {
         state.loading.placeOrder = false;
+        state.refreshOrders += 1;
       })
       .addCase(orderPlaceThunk.rejected, (state, action) => {
         state.loading.placeOrder = false;
@@ -74,6 +81,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const { setOpenOrder, setOpenFilter } = orderSlice.actions;
+export const { setOpenOrder, setOpenFilter, consumeRefreshOrders } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;

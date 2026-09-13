@@ -2,6 +2,8 @@ export interface OrderState {
   openOrder: boolean;
   openFilter: boolean;
 
+  refreshOrders: number;
+
   loading: {
     placeOrder: boolean;
     updateOrder: boolean;

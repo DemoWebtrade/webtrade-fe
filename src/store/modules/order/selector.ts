@@ -6,3 +6,7 @@ export const selectLoadingCancelOrder = (state: RootState) =>
   state.order.loading.cancelOrder;
 export const selectLoadingUpdateOrder = (state: RootState) =>
   state.order.loading.updateOrder;
+export const selectLoadingPlaceOrder = (state: RootState) =>
+  state.order.loading.placeOrder;
+export const selectRefreshOrders = (state: RootState) =>
+  state.order.refreshOrders;

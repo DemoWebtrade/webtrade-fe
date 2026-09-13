@@ -14,8 +14,6 @@ export function useOrderHistory(filters: {
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("test");
-
   const datasource = useMemo<IDatasource>(
     () => ({
       getRows: async (params: IGetRowsParams) => {
