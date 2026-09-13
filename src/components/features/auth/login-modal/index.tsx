@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { loginThunk } from "@/store/modules/auth/api";
 import { selectRegisterData } from "@/store/modules/auth/selector";
 import { setRegisterData } from "@/store/modules/auth/slice";
+import Bowser from "bowser";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
@@ -66,8 +67,24 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   }) => {
     if (loading) return;
     try {
+      const browser = Bowser.getParser(window.navigator.userAgent);
+      const result = browser.getResult();
+
+      const device =
+        result.browser.name +
+        " " +
+        result.browser.version +
+        " - " +
+        result.os.name +
+        " " +
+        result.os.version;
+
       await dispatch(
-        loginThunk({ identifier: data.identifier, password: data.password }),
+        loginThunk({
+          identifier: data.identifier,
+          password: data.password,
+          device,
+        }),
       ).unwrap();
       handleClose();
       dispatch(setRegisterData(null));

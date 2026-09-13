@@ -40,6 +40,7 @@ export type AuthState = {
 export type LoginPayload = {
   identifier: string;
   password: string;
+  device: string;
 };
 
 export type RegisterPayload = {
