@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/Button";
+import { useAppSelector } from "@/store/hook";
+import { selectAssetSummary } from "@/store/modules/asset/selector";
+import { numberFormat } from "@/utils";
 import { ArrowLeftRight, Eye, EyeOff, Wallet } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,7 +9,9 @@ import { useTranslation } from "react-i18next";
 export default function AssetTotal() {
   const { t } = useTranslation();
 
-  const [isShowAsset, setIsShowAsset] = useState(false);
+  const assetSummary = useAppSelector(selectAssetSummary);
+
+  const [isShowAsset, setIsShowAsset] = useState(true);
 
   return (
     <div className="w-full h-full flex flex-col overflow-y-auto px-2 ">
@@ -34,7 +39,9 @@ export default function AssetTotal() {
             </button>
           </div>
           <span className="text-lg md:text-xl font-semibold text-content-primary">
-            {isShowAsset ? "1,000 VND" : "*********"}
+            {isShowAsset
+              ? numberFormat(assetSummary?.totalAssets, 0, "0") + " VND"
+              : "*********"}
           </span>
         </div>
 
@@ -59,7 +66,18 @@ export default function AssetTotal() {
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-sm text-content-tertiary">{t("asset.nav")}</h1>
           <span className="text-sm font-medium text-content-primary">
-            {isShowAsset ? "1,000 VND" : "******"}
+            {isShowAsset
+              ? assetSummary
+                ? numberFormat(
+                    assetSummary?.totalAssets -
+                      assetSummary?.portfolioSummary?.totalUnrealizedPnL,
+                    0,
+                    "0",
+                  ) +
+                  " " +
+                  t("vnd")
+                : "0" + t("vnd")
+              : "******"}
           </span>
         </div>
         <div className="flex flex-row items-center justify-between">
@@ -68,31 +86,56 @@ export default function AssetTotal() {
             {t("asset.portfolio-value")}
           </h1>
           <span className="text-sm font-medium text-content-primary">
-            {isShowAsset ? "1,000 VND" : "******"}
+            {isShowAsset
+              ? numberFormat(assetSummary?.portfolioValue, 0, "0") +
+                " " +
+                t("vnd")
+              : "******"}
           </span>
         </div>
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-sm text-content-tertiary"> {t("asset.money")}</h1>
           <span className="text-sm font-medium text-content-primary">
-            {isShowAsset ? "1,000 VND" : "******"}
+            {isShowAsset
+              ? numberFormat(assetSummary?.availableBalance, 0, "0") +
+                " " +
+                t("vnd")
+              : "******"}
           </span>
         </div>
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-sm text-content-tertiary">
             {t("asset.profit-loss")}
           </h1>
-          <span className="text-sm font-medium text-content-primary">
-            {isShowAsset ? "1,000 VND" : "******"}
+          <span
+            className={`text-sm font-medium text-content-primary ${assetSummary && assetSummary?.portfolioSummary?.totalUnrealizedPnLPercent < 0 ? "text-red-500" : "text-green-500"}`}
+          >
+            {isShowAsset
+              ? numberFormat(
+                  assetSummary?.portfolioSummary?.totalUnrealizedPnL,
+                  0,
+                  "0",
+                ) +
+                " " +
+                t("vnd") +
+                " (" +
+                numberFormat(
+                  assetSummary?.portfolioSummary?.totalUnrealizedPnLPercent,
+                  2,
+                  "0",
+                ) +
+                "%)"
+              : "******"}
           </span>
         </div>
-        <div className="flex flex-row items-center justify-between">
+        {/* <div className="flex flex-row items-center justify-between">
           <h1 className="text-sm text-content-tertiary">
             {t("asset.provisional-debt")}
           </h1>
           <span className="text-sm font-medium text-red-500">
             {isShowAsset ? "-1,000 VND" : "******"}
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

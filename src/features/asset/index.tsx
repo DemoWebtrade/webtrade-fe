@@ -1,6 +1,8 @@
 import SprinnerLoader from "@/components/features/skeletons/SprinnerLoader";
 import Portfolio from "@/components/portfolio/Portfolio";
-import { Suspense } from "react";
+import { useAppDispatch } from "@/store/hook";
+import { assetSummaryThunk } from "@/store/modules/asset/api";
+import { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import AssetTotal from "./AssetTotal";
 import PortfolioAllocationChart from "./PortfolioAllocationChart";
@@ -8,10 +10,16 @@ import PortfolioAllocationChart from "./PortfolioAllocationChart";
 export default function Asset() {
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(assetSummaryThunk()).unwrap();
+  }, [dispatch]);
+
   return (
     <div className="w-full h-full flex flex-col gap-1 md:gap-2 p-1 lg:p-2 md:p-4">
       <div className="order flex flex-col md:flex-row gap-1 md:gap-2 w-full h-auto md:h-1/3">
-        <div className="order-1 bg-bg-secondary rounded-md flex flex-col border border-border flex-1 min-h-[20vh] md:h-full md:min-h-0 py-1.5">
+        <div className="order-1 bg-bg-secondary rounded-md flex flex-col border border-border flex-1 min-h-[18vh] md:h-full md:min-h-0 py-1.5">
           <AssetTotal />
         </div>
         <div className="order-3 md:order-2 bg-bg-secondary rounded-md overflow-y-auto flex flex-col border border-border flex-1 min-h-[25vh] md:h-full md:min-h-0">
