@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/Button";
 import { useAppSelector } from "@/store/hook";
 import { selectAssetSummary } from "@/store/modules/asset/selector";
 import { numberFormat } from "@/utils";
-import { ArrowLeftRight, Eye, EyeOff, Wallet } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +15,7 @@ export default function AssetTotal() {
   return (
     <div className="w-full h-full flex flex-col overflow-y-auto px-2 ">
       <div className="flex flex-row items-center justify-between gap-0.5 pb-0.5 md:pb-1 mb-1 md:mb-1.5 border-b border-border">
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-row items-center justify-between gap-0.5 w-full">
           <div className="flex flex-row items-center gap-2">
             <h1 className="text-base font-medium py-0.5 md:py-1">
               {t("asset.title")}
@@ -43,23 +42,6 @@ export default function AssetTotal() {
               ? numberFormat(assetSummary?.totalAssets, 0, "0") + " VND"
               : "*********"}
           </span>
-        </div>
-
-        <div className="flex flex-col gap-1 md:gap-2">
-          <Button
-            variant="success"
-            className="px-1! py-1! flex! flex-row! items-center! justify-center! gap-1!"
-          >
-            <Wallet className="size-3" />
-            {t("button.deposit-money")}
-          </Button>
-          <Button
-            variant="secondary"
-            className="px-1! py-1! flex! flex-row! items-center! justify-center! gap-1!"
-          >
-            <ArrowLeftRight className="size-3" />
-            {t("button.trans-money")}
-          </Button>
         </div>
       </div>
       <div className="flex flex-col gap-1 md:gap-1.5">
