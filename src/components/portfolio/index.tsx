@@ -1,10 +1,16 @@
+import { usePortfolio } from "@/hooks/usePortfolio";
+import { useAppSelector } from "@/store/hook";
+import { selectProfile } from "@/store/modules/auth/selector";
+import { priceFormatter, volFormatter } from "@/utils";
 import {
   CellStyleModule,
   ClientSideRowModelModule,
+  InfiniteRowModelModule,
   ModuleRegistry,
   ValidationModule,
   type ColDef,
   type ColGroupDef,
+  type ICellRendererParams,
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useMemo } from "react";
@@ -12,12 +18,17 @@ import { useTranslation } from "react-i18next";
 
 ModuleRegistry.registerModules([
   CellStyleModule,
+  InfiniteRowModelModule,
   ClientSideRowModelModule,
   ...(import.meta.env.MODE !== "production" ? [ValidationModule] : []),
 ]);
 
 export default function Portfolio() {
   const { t } = useTranslation();
+
+  const profile = useAppSelector(selectProfile);
+
+  const { datasource, isLoading } = usePortfolio({ userId: profile?.id });
 
   const ActionComponent = () => {
     return (
@@ -44,67 +55,75 @@ export default function Portfolio() {
       },
       {
         headerName: t("table.total-vol"),
-        field: "symbol",
-        flex: 0.8,
+        field: "quantity",
+        flex: 1.2,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
-        minWidth: 50,
-      },
-      {
-        headerName: t("table.tradeable-qty"),
-        field: "symbol",
-        flex: 0.8,
-        cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header",
-        minWidth: 50,
+        minWidth: 90,
+        valueFormatter: volFormatter,
       },
       {
         headerName: t("table.avg-price"),
-        field: "symbol",
-        flex: 0.8,
+        field: "avgCost",
+        flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
-        minWidth: 50,
+        minWidth: 80,
+        valueFormatter: priceFormatter,
       },
       {
         headerName: t("table.mkt-price"),
-        field: "symbol",
-        flex: 0.8,
+        field: "marketPrice",
+        flex: 1,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
-        minWidth: 50,
+        minWidth: 80,
+        valueFormatter: priceFormatter,
       },
       {
         headerName: t("table.market-value"),
-        field: "symbol",
-        flex: 0.8,
+        field: "marketValue",
+        flex: 1.5,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
-        minWidth: 70,
+        minWidth: 120,
+        valueFormatter: volFormatter,
       },
       {
         headerName: t("table.profit-loss"),
-        field: "symbol",
+        field: "unrealizedPnL",
+        flex: 1,
+        cellClass: "ag-right-aligned-cell",
+        headerClass: "ag-right-aligned-header",
+        minWidth: 70,
+        cellRenderer: (p: ICellRendererParams) =>
+          p.data ? (
+            <span
+              className={
+                p.data.unrealizedPnL >= 0 ? "text-green-base" : "text-red-base"
+              }
+            >
+              {p.data.unrealizedPnL}
+            </span>
+          ) : null,
+      },
+      {
+        headerName: t("table.profit-loss") + " (%)",
+        field: "unrealizedPnLPercent",
         flex: 0.8,
         cellClass: "ag-right-aligned-cell",
         headerClass: "ag-right-aligned-header",
         minWidth: 70,
-      },
-      {
-        headerName: t("table.profit-loss") + " (%)",
-        field: "symbol",
-        flex: 0.8,
-        cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header",
-        minWidth: 50,
-      },
-      {
-        headerName: t("table.dm"),
-        field: "symbol",
-        flex: 0.8,
-        cellClass: "ag-right-aligned-cell",
-        headerClass: "ag-right-aligned-header",
-        minWidth: 50,
+        cellRenderer: (p: ICellRendererParams) =>
+          p.data ? (
+            <span
+              className={
+                p.data.unrealizedPnL >= 0 ? "text-green-base" : "text-red-base"
+              }
+            >
+              {p.data.unrealizedPnLPercent + "%"}
+            </span>
+          ) : null,
       },
       {
         headerName: t("table.sell"),
@@ -122,7 +141,10 @@ export default function Portfolio() {
   return (
     <div className="ag-theme-custom table-history h-full w-full">
       <AgGridReact
-        rowData={[]}
+        rowModelType="infinite"
+        datasource={datasource}
+        cacheBlockSize={10}
+        maxBlocksInCache={10}
         columnDefs={columnDefs}
         defaultColDef={{
           sortable: false,
@@ -139,6 +161,7 @@ export default function Portfolio() {
         suppressCellFocus={true}
         rowHeight={28}
         headerHeight={28}
+        loading={isLoading}
       />
     </div>
   );

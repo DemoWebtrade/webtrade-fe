@@ -383,5 +383,17 @@
     "cancelled-order": "Đã hủy",
     "pendingprocess-order": "Đang xử lý",
     "reject-order": "Từ chối"
+  },
+
+  "wallet": {
+    "deposit": "Nạp tiền",
+    "transfer": "Chuyển tiền",
+    "amount": "Số tiền",
+    "recipient-account": "Tài khoản nhận",
+    "recipient-placeholder": "Nhập số tài khoản",
+    "note": "Ghi chú",
+    "note-placeholder": "Nhập ghi chú (không bắt buộc)",
+    "confirm-deposit": "Xác nhận nạp tiền",
+    "confirm-transfer": "Xác nhận chuyển tiền"
   }
 }

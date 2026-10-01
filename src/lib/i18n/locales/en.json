@@ -383,5 +383,17 @@
     "cancelled-order": "Cancelled",
     "pendingprocess-order": "Processing",
     "reject-order": "Rejected"
+  },
+
+  "wallet": {
+    "deposit": "Deposit",
+    "transfer": "Transfer",
+    "amount": "Amount",
+    "recipient-account": "Recipient account",
+    "recipient-placeholder": "Enter account number",
+    "note": "Note",
+    "note-placeholder": "Enter a note (optional)",
+    "confirm-deposit": "Confirm deposit",
+    "confirm-transfer": "Confirm transfer"
   }
 }

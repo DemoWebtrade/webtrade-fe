@@ -12,10 +12,10 @@ import { lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import SprinnerLoader from "../features/skeletons/SprinnerLoader";
+import Portfolio from "../portfolio";
 import Asset from "./Asset";
 import OrderCondition from "./OrderCondition";
 import OrderNormal from "./OrderNormal";
-import PortfolioListSmart from "./PortfolioListSmart";
 
 const Orders = lazy(() => import("./orders"));
 
@@ -193,7 +193,7 @@ export default function OrderSmart() {
                     )}
                     {tabHisTabActive === "PORTFOLIO" && (
                       <Suspense fallback={<SprinnerLoader />}>
-                        <PortfolioListSmart />
+                        <Portfolio />
                       </Suspense>
                     )}
                     {tabHisTabActive === "ASSET" && (

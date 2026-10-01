@@ -1,5 +1,5 @@
 import SprinnerLoader from "@/components/features/skeletons/SprinnerLoader";
-import Portfolio from "@/components/portfolio/Portfolio";
+import Portfolio from "@/components/portfolio";
 import { useAppDispatch } from "@/store/hook";
 import { assetSummaryThunk } from "@/store/modules/asset/api";
 import { Suspense, useEffect } from "react";

@@ -1,13 +1,9 @@
+import { Button } from "@/components/ui/Button";
+import { numberFormat } from "@/utils";
 import { useState } from "react";
 import { useTranslation } from "react-i18next"; // đổi lại theo hook i18n thực tế của bạn nếu khác
 
 const QUICK_AMOUNTS = [100000, 500000, 1000000, 2000000, 5000000];
-
-function formatVND(value: string) {
-  const digits = value.replace(/\D/g, "");
-  if (!digits) return "";
-  return Number(digits).toLocaleString("vi-VN");
-}
 
 export default function DepositTransfer() {
   const { t } = useTranslation();
@@ -19,7 +15,7 @@ export default function DepositTransfer() {
   return (
     <>
       {/* Header + tab switcher */}
-      <div className="px-2 py-1 flex flex-wrap items-center justify-between gap-2 border-b border-border">
+      <div className="px-2 py-1 flex flex-wrap items-center justify-between gap-2">
         <h1 className="md:text-base text-sm font-medium">
           {tab === "deposit" ? t("wallet.deposit") : t("wallet.transfer")}
         </h1>
@@ -76,12 +72,12 @@ export default function DepositTransfer() {
               type="text"
               inputMode="numeric"
               value={amount}
-              onChange={(e) => setAmount(formatVND(e.target.value))}
+              onChange={(e) => setAmount(numberFormat(e.target.value, 0, ""))}
               placeholder="0"
-              className="w-full border border-border rounded-md pl-3 pr-12 py-2 text-sm bg-bg-primary text-fg-primary text-right focus:outline-none focus:ring-2 focus:ring-brand"
+              className="w-full border border-border rounded-md pl-3 pr-12 py-2 text-sm bg-bg-primary text-fg-primary text-right focus:outline-none focus:ring-1 focus:ring-brand"
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-fg-secondary">
-              đ
+              {t("vnd")}
             </span>
           </div>
 
@@ -91,10 +87,10 @@ export default function DepositTransfer() {
                 <button
                   key={v}
                   type="button"
-                  onClick={() => setAmount(v.toLocaleString("vi-VN"))}
+                  onClick={() => setAmount(numberFormat(v, 0, ""))}
                   className="text-xs px-2 py-1 rounded-md border border-border text-fg-secondary hover:border-brand hover:text-brand transition-colors"
                 >
-                  {v.toLocaleString("vi-VN")}
+                  {numberFormat(v, 0, "")}
                 </button>
               ))}
             </div>
@@ -119,15 +115,14 @@ export default function DepositTransfer() {
 
       {/* Footer action */}
       <div className="p-3 border-t border-border">
-        <button
-          type="button"
+        <Button
           disabled={!amount || (tab === "transfer" && !recipient)}
-          className="w-full py-2 rounded-md bg-brand text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
+          className="w-full py-2"
         >
           {tab === "deposit"
             ? t("wallet.confirm-deposit")
             : t("wallet.confirm-transfer")}
-        </button>
+        </Button>
       </div>
     </>
   );
