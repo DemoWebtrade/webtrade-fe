@@ -8,7 +8,7 @@ import Typewriter, { TypewriterClass } from "typewriter-effect";
 const steps = [
   {
     target: '[data-tour="prop-1"]',
-    title: "Lịch giao dịch",
+    title: "Menu",
     content: "Đăng nhập mở menu để sử dụng các tính năng của web.",
   },
   {

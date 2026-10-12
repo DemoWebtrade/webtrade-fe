@@ -263,7 +263,8 @@
     "sell": "Bán",
     "export-data": "Xuất dữ liệu",
     "deposit-money": "Nộp tiền",
-    "trans-money": "Chuyển tiền"
+    "trans-money": "Chuyển tiền",
+    "confirm": "Xác nhận"
   },
 
   "toast": {
