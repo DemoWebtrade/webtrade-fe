@@ -9,7 +9,7 @@ import Bowser from "bowser";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useCallback, useEffect } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -36,7 +36,18 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<LoginForm>();
+
+  const identifier = useWatch({
+    control,
+    name: "identifier",
+  });
+
+  const password = useWatch({
+    control,
+    name: "password",
+  });
 
   const handleClose = useCallback(() => {
     reset();
@@ -61,10 +72,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [handleClose]);
 
-  const handleLogin = async (data: {
-    identifier: string;
-    password: string;
-  }) => {
+  const handleLogin = async () => {
     if (loading) return;
     try {
       const browser = Bowser.getParser(window.navigator.userAgent);
@@ -81,8 +89,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
       await dispatch(
         loginThunk({
-          identifier: data.identifier,
-          password: data.password,
+          identifier: identifier,
+          password: password,
           device,
         }),
       ).unwrap();
