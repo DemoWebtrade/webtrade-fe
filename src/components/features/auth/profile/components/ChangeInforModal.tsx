@@ -1,3 +1,4 @@
+import OTP from "@/components/features/otp";
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs";
@@ -9,8 +10,8 @@ import {
 } from "@/store/modules/auth/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -26,15 +27,22 @@ export default function ChangeInforModal({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const loading = useAppSelector(selectLoadingUpdateProfile);
+  const profile = useAppSelector(selectProfile);
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     reset,
+    control,
   } = useForm();
 
-  const loading = useAppSelector(selectLoadingUpdateProfile);
-  const profile = useAppSelector(selectProfile);
+  const email = useWatch({ control, name: "email" });
+  const phone = useWatch({ control, name: "phone" });
+  const address = useWatch({ control, name: "address" });
+
+  const [openOTP, setOpenOTP] = useState(false);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -59,12 +67,8 @@ export default function ChangeInforModal({
     }
   }, [profile, reset, type, isOpen]);
 
-  const onSubmit = async (data: {
-    email?: string;
-    phone?: string;
-    address?: string;
-  }) => {
-    const { email, phone, address } = data;
+  const handleChangeInfor = async (otp: string) => {
+    console.log(otp);
 
     try {
       const fieldMap: Record<string, object> = {
@@ -76,10 +80,15 @@ export default function ChangeInforModal({
       await dispatch(updateProfileThunk(fieldMap[type])).unwrap();
       toast.success(t("toast.change-info-success"));
 
+      setOpenOTP(false);
       onClose();
     } catch (error) {
       toast.error(error as string);
     }
+  };
+
+  const onSubmit = () => {
+    setOpenOTP(true);
   };
 
   return (
@@ -234,6 +243,12 @@ export default function ChangeInforModal({
               </form>
             </motion.div>
           </div>
+
+          <OTP
+            open={openOTP}
+            onClose={() => setOpenOTP(false)}
+            onVerify={handleChangeInfor}
+          />
         </>
       )}
     </AnimatePresence>

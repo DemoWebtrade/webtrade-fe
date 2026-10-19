@@ -1,3 +1,4 @@
+import OTP from "@/components/features/otp";
 import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { InputSearchBankField } from "@/components/ui/inputs/InputSearchBankField";
@@ -8,11 +9,10 @@ import {
   getBeneficiariesThunk,
 } from "@/store/modules/auth/api";
 import { selectProfile } from "@/store/modules/auth/selector";
-import { rateLimiter } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -40,7 +40,14 @@ export default function AddBenAccountModal({
     formState: { errors },
     reset,
     setValue,
+    control,
   } = useForm<AddBenAccountForm>();
+
+  const bank = useWatch({ control, name: "bank" });
+  const accountCode = useWatch({ control, name: "accountCode" });
+  const fullName = useWatch({ control, name: "fullName" });
+
+  const [openOTP, setOpenOTP] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
@@ -58,24 +65,8 @@ export default function AddBenAccountModal({
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  const onSubmit = async (data: AddBenAccountForm) => {
-    const { bank, accountCode, fullName } = data;
-
-    const RATE_LIMITER = {
-      maxRequests: 1,
-      windowMs: 1000,
-      blockDurationMs: 2000, // Block for 1 seconds if exceeded
-    };
-
-    if (!rateLimiter.checkRateLimit("add-accountBen-form", RATE_LIMITER)) {
-      const timeUntilReset = rateLimiter.getTimeUntilReset(
-        "add-accountBen-form",
-        RATE_LIMITER,
-      );
-      const minutes = Math.ceil(timeUntilReset / 60000);
-      toast.error(t("toast.colimited_other", { count: minutes }));
-      return;
-    }
+  const handleAddBen = async (otp: string) => {
+    console.log("otp", otp);
 
     try {
       await dispatch(
@@ -93,10 +84,15 @@ export default function AddBenAccountModal({
       ).unwrap();
       await dispatch(getBeneficiariesThunk()).unwrap();
       toast.success(t("Thêm mới tài khoản thụ hưởng thành công"));
+      setOpenOTP(false);
       onClose();
     } catch (error) {
       toast.error(error as string);
     }
+  };
+
+  const onSubmit = () => {
+    setOpenOTP(true);
   };
 
   return (
@@ -192,18 +188,19 @@ export default function AddBenAccountModal({
                   >
                     {t("button.cancel")}
                   </Button>{" "}
-                  <Button
-                    type="submit"
-                    className="w-1/2"
-                    // isLoading={loading}
-                    // disabled={loading}
-                  >
-                    {t("button.save-change")}
+                  <Button type="submit" className="w-1/2">
+                    {t("button.confirm")}
                   </Button>
                 </div>
               </form>
             </motion.div>
           </div>
+
+          <OTP
+            open={openOTP}
+            onClose={() => setOpenOTP(false)}
+            onVerify={handleAddBen}
+          />
         </>
       )}
     </AnimatePresence>

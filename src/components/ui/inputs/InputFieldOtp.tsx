@@ -53,7 +53,7 @@ export default function InputFieldOtp({
         onChange={handleChange}
         className={`${
           className ?? ""
-        } w-full sm:tracking-[1em] tracking-[.8em] px-3 py-2.5 rounded bg-bg-secondary text-xl text-content-base outline-none transition border border-border focus:border-outline-selected`}
+        } w-full sm:tracking-[1.9em] tracking-[.8em] px-3 py-2.5 rounded bg-bg-secondary text-base text-content-base outline-none transition border border-border focus:border-outline-selected`}
         autoFocus
         placeholder={placeholder}
       />

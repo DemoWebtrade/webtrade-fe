@@ -1,5 +1,5 @@
 import SprinnerLoader from "@/components/features/skeletons/SprinnerLoader";
-import OrderNormal from "@/components/order-smart/OrderNormal";
+import OrderNormal from "@/components/order-smart/orders/OrderNormal";
 import Portfolio from "@/components/portfolio";
 import { MENU_ORDER } from "@/configs";
 import { AnimatePresence, motion } from "framer-motion";

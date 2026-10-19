@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import InputFieldOtp from "@/components/ui/inputs/InputFieldOtp";
 import { backdropVariants, modalVariants } from "@/configs";
+import { useAppSelector } from "@/store/hook";
+import { selectProfile } from "@/store/modules/auth/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldCheck, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,7 +14,6 @@ type OtpFormValues = { otp: string };
 type OTPProps = {
   open: boolean;
   onClose: () => void;
-  target?: string;
   length?: number;
   resendSeconds?: number;
   onVerify?: (otp: string) => Promise<void> | void;
@@ -25,13 +26,13 @@ export default function OTP({ open, ...props }: OTPProps) {
 
 function OTPContent({
   onClose,
-  target,
   length = 6,
   resendSeconds = 60,
   onVerify,
-  onResend,
 }: Omit<OTPProps, "open">) {
   const { t } = useTranslation();
+
+  const profile = useAppSelector(selectProfile);
 
   const {
     register,
@@ -44,7 +45,6 @@ function OTPContent({
   const otpValue = useWatch({ control, name: "otp" });
   const isComplete = otpValue.length >= length;
 
-  // Đếm ngược: setState nằm trong callback của interval nên hợp lệ
   useEffect(() => {
     const id = setInterval(() => {
       setCountdown((c) => (c > 0 ? c - 1 : 0));
@@ -66,8 +66,12 @@ function OTPContent({
 
   const handleResend = async () => {
     if (countdown > 0) return;
-    await onResend?.();
+    await handleGetOTP();
     setCountdown(resendSeconds);
+  };
+
+  const handleGetOTP = () => {
+    console.log("GET OTP");
   };
 
   return (
@@ -77,7 +81,7 @@ function OTPContent({
         initial="hidden"
         animate="visible"
         exit="hidden"
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+        className="fixed inset-0 bg-black/10 backdrop-blur-sm z-9999999"
         onClick={onClose}
       />
 
@@ -90,7 +94,7 @@ function OTPContent({
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="flex flex-col items-center relative gap-6 py-6 max-w-[90%] w-full md:w-100 rounded-lg shadow-2xl overflow-hidden border border-border bg-bg-primary"
+          className="flex flex-col items-center relative gap-6 py-6 max-w-[80%] w-full md:w-100 rounded-lg shadow-2xl overflow-hidden border border-border bg-bg-primary"
         >
           {/* Nút đóng */}
           <div
@@ -101,8 +105,8 @@ function OTPContent({
           </div>
 
           {/* Icon */}
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-500/10 text-purple-500">
-            <ShieldCheck size={32} />
+          <div className="flex md:size-16 size-12 items-center justify-center rounded-full bg-purple-500/10 text-purple-500">
+            <ShieldCheck className="md:size-10 size-7" />
           </div>
 
           {/* Tiêu đề + mô tả */}
@@ -111,36 +115,50 @@ function OTPContent({
               Xác thực OTP
             </h2>
             <p className="text-sm opacity-70 leading-relaxed">
-              Chúng tôi đã gửi mã gồm {length} chữ số
-              {target ? (
+              Vui lòng kiểm tra email
+              {profile ? (
                 <>
                   {" "}
-                  đến <span className="font-medium opacity-100">{target}</span>
+                  <span className="font-medium opacity-100">
+                    {t(profile.email)}
+                  </span>
                 </>
-              ) : null}
-              .<br />
-              Vui lòng nhập mã để tiếp tục.
+              ) : null}{" "}
+              <br />
+              và nhập mã OTP để tiếp tục.
             </p>
           </div>
 
           {/* Form */}
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="p-6 w-full flex flex-col items-center justify-center gap-6"
+            className="flex flex-col gap-4 md:gap-6 px-6 w-full items-center justify-center"
           >
             <InputFieldOtp
               registration={register("otp")}
               className="md:w-80 w-2/3! min-w-40"
             />
 
-            <Button
-              type="submit"
-              disabled={!isComplete || isSubmitting}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-              isLoading={isSubmitting}
-            >
-              {t("button.confirm")}
-            </Button>
+            <div className="w-full h-px bg-border"></div>
+
+            <div className="flex flex-row gap-2 col-span-1 px-6 w-full">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={onClose}
+                className="w-1/2"
+              >
+                {t("button.cancel")}
+              </Button>{" "}
+              <Button
+                type="submit"
+                className="w-1/2"
+                disabled={!isComplete || isSubmitting}
+                isLoading={isSubmitting}
+              >
+                {t("button.confirm")}
+              </Button>
+            </div>
           </form>
 
           {/* Gửi lại mã */}

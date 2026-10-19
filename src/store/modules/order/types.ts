@@ -27,7 +27,19 @@ export type PlaceOrderInput = {
 };
 
 export type OrderSide = "buy" | "sell";
-export type OrderType = "LO" | "ATO" | "ATC" | "MP" | "MTL";
+
+export type OrderMarket = "HOSE" | "HNX" | "UPCOM";
+
+export type OrderType =
+  | "LO"
+  | "MP"
+  | "ATO"
+  | "ATC"
+  | "MTL"
+  | "MOK"
+  | "MAK"
+  | "PLO";
+
 export type OrderStatus =
   | "pending"
   | "partial"

@@ -39,9 +39,9 @@ export default function Profile() {
               <div
                 className="flex flex-col gap-2 items-center justify-center flex-1 cursor-pointer py-1"
                 onClick={() => setFeature(item.value)}
+                key={item.value}
               >
                 <div
-                  key={item.value}
                   className={`w-full whitespace-nowrap text-center text-base ${feature === item.value ? "font-medium text-content-primary" : "text-content-tertiary"}`}
                 >
                   {t(item.label)}

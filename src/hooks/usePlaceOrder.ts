@@ -23,12 +23,16 @@ export function usePlaceOrder() {
       ) as unknown as AbortablePromise<PlaceOrderResponse>;
       pendingRef.current = promise;
 
-      promise
+      return promise
         .unwrap()
-        .then(() => toast.success("Đặt lệnh thành công"))
-        .catch((err) =>
-          toast.error(typeof err === "string" ? err : "Đặt lệnh thất bại"),
-        );
+        .then((res) => {
+          toast.success("Đặt lệnh thành công");
+          return res;
+        })
+        .catch((err) => {
+          toast.error(typeof err === "string" ? err : "Đặt lệnh thất bại");
+          throw err;
+        });
     },
     [dispatch],
   );

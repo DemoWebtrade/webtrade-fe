@@ -13,9 +13,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import SprinnerLoader from "../features/skeletons/SprinnerLoader";
 import Portfolio from "../portfolio";
-import Asset from "./Asset";
-import OrderCondition from "./OrderCondition";
-import OrderNormal from "./OrderNormal";
+import Asset from "./asset/Asset";
+import OrderCondition from "./orders/OrderCondition";
+import OrderNormal from "./orders/OrderNormal";
 
 const Orders = lazy(() => import("./orders"));
 
