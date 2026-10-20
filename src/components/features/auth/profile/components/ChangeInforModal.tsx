@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/Button";
 import InputField from "@/components/ui/inputs/InputField";
 import { backdropVariants, modalVariants } from "@/configs";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { updateProfileThunk } from "@/store/modules/auth/api";
+import { updateProfileThunk } from "@/store/modules/client/api";
 import {
   selectLoadingUpdateProfile,
   selectProfile,
-} from "@/store/modules/auth/selector";
+} from "@/store/modules/client/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -68,8 +68,6 @@ export default function ChangeInforModal({
   }, [profile, reset, type, isOpen]);
 
   const handleChangeInfor = async (otp: string) => {
-    console.log(otp);
-
     try {
       const fieldMap: Record<string, object> = {
         EMAIL: { email },
@@ -77,7 +75,7 @@ export default function ChangeInforModal({
         ADDRESS: { address },
       };
 
-      await dispatch(updateProfileThunk(fieldMap[type])).unwrap();
+      await dispatch(updateProfileThunk({ otp, ...fieldMap[type] })).unwrap();
       toast.success(t("toast.change-info-success"));
 
       setOpenOTP(false);
@@ -248,6 +246,7 @@ export default function ChangeInforModal({
             open={openOTP}
             onClose={() => setOpenOTP(false)}
             onVerify={handleChangeInfor}
+            purpose={"UPDATE_PROFILE"}
           />
         </>
       )}

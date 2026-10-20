@@ -41,9 +41,9 @@ export default function Step1({ nextStep }: { nextStep: () => void }) {
     }
   }, [registerData, reset]);
 
-  const handleSubmitStep = (data: Step1Form) => {
+  const handleSubmitStep = async (data: Step1Form) => {
+    await dispatch(setRegisterData({ ...registerData, ...data }));
     nextStep();
-    dispatch(setRegisterData({ ...registerData, ...data }));
   };
 
   return (

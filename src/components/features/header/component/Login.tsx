@@ -1,17 +1,13 @@
 import { Button } from "@/components/ui/Button";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { getProfileThunk } from "@/store/modules/auth/api";
+import { selectIsLogin, selectToken } from "@/store/modules/auth/selector";
+import { logout, setIsLogin } from "@/store/modules/auth/slice";
+import { getProfileThunk } from "@/store/modules/client/api";
 import {
-  selectIsLogin,
   selectIsOpenProfile,
   selectProfile,
-  selectToken,
-} from "@/store/modules/auth/selector";
-import {
-  logout,
-  setIsLogin,
-  setIsOpenProfile,
-} from "@/store/modules/auth/slice";
+} from "@/store/modules/client/selector";
+import { setIsOpenProfile } from "@/store/modules/client/slice";
 import { AnimatePresence, motion } from "framer-motion";
 import { UserRound } from "lucide-react";
 import { useEffect, useRef, useState } from "react";

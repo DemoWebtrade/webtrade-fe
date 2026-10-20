@@ -2,8 +2,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   selectProfile,
   selectTypeUpdateProfile,
-} from "@/store/modules/auth/selector";
-import { setTypeUpdateProfile } from "@/store/modules/auth/slice";
+} from "@/store/modules/client/selector";
+import { setTypeUpdateProfile } from "@/store/modules/client/slice";
 import { PenLine } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ChangeInforModal from "./ChangeInforModal";

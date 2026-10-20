@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hook";
 import {
   createBeneficiariesThunk,
   getBeneficiariesThunk,
-} from "@/store/modules/auth/api";
-import { selectProfile } from "@/store/modules/auth/selector";
+} from "@/store/modules/client/api";
+import { selectProfile } from "@/store/modules/client/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";

@@ -1,8 +1,7 @@
 import { useOrderHistory } from "@/hooks/useOrderHistory";
 import { useOrderTableActions } from "@/hooks/useOrderTableActions";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { selectProfile } from "@/store/modules/auth/selector";
-
+import { selectProfile } from "@/store/modules/client/selector";
 import {
   selectLoadingCancelOrder,
   selectLoadingUpdateOrder,

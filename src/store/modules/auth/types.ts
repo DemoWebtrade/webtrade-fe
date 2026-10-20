@@ -1,39 +1,17 @@
 export type AuthState = {
   isLogin: boolean;
-
   user: User | null;
   token: string | null;
   registerData: Partial<RegisterPayload> | null;
-  profile: Profile | null;
-
-  typeUpdateProfile: string | null;
-
-  beneficiaries: Beneficiari[] | null;
-
-  isOpenAddAccountBen: boolean;
-
-  isOpenProfile: boolean;
 
   loading: {
     login: boolean;
     register: boolean;
-    profile: boolean;
-    updateProfile: boolean;
-    beneficiaries: boolean;
-    addAccountBen: boolean;
-    defaultBen: boolean;
-    deleteBen: boolean;
   };
 
   error: {
     login: string | null;
     register: string | null;
-    profile: string | null;
-    updateProfile: string | null;
-    beneficiaries: string | null;
-    addAccountBen: string | null;
-    defaultBen: string | null;
-    deleteBen: string | null;
   };
 };
 
@@ -51,6 +29,7 @@ export type RegisterPayload = {
   gender: string;
   address: string;
   phone: string;
+  otp: string;
 };
 
 export type User = {
@@ -116,4 +95,16 @@ export type AddBenAccountPayload = {
   fullName: string;
   accountNumber: string;
   accountHolder: string | null;
+};
+
+export const OTP_PURPOSES = ["REGISTER", "UPDATE_PROFILE"] as const;
+export type OtpPurpose = (typeof OTP_PURPOSES)[number];
+
+export type OtpSendPayload = {
+  email: string;
+  purpose: OtpPurpose;
+};
+
+export type OtpSendMePayload = {
+  purpose: OtpPurpose;
 };

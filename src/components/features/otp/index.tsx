@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/Button";
 import InputFieldOtp from "@/components/ui/inputs/InputFieldOtp";
 import { backdropVariants, modalVariants } from "@/configs";
-import { useAppSelector } from "@/store/hook";
-import { selectProfile } from "@/store/modules/auth/selector";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { otpSendMeThunk, otpSendThunk } from "@/store/modules/auth/api";
+import type { OtpPurpose } from "@/store/modules/auth/types";
+import { selectProfile } from "@/store/modules/client/selector";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldCheck, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 type OtpFormValues = { otp: string };
 
@@ -18,6 +21,8 @@ type OTPProps = {
   resendSeconds?: number;
   onVerify?: (otp: string) => Promise<void> | void;
   onResend?: () => Promise<void> | void;
+  purpose: OtpPurpose;
+  email?: string;
 };
 
 export default function OTP({ open, ...props }: OTPProps) {
@@ -29,8 +34,11 @@ function OTPContent({
   length = 6,
   resendSeconds = 60,
   onVerify,
+  purpose,
+  email,
 }: Omit<OTPProps, "open">) {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const profile = useAppSelector(selectProfile);
 
@@ -45,7 +53,21 @@ function OTPContent({
   const otpValue = useWatch({ control, name: "otp" });
   const isComplete = otpValue.length >= length;
 
+  const handleGetOTP = async () => {
+    try {
+      if (purpose === "REGISTER" && email) {
+        await dispatch(otpSendThunk({ email, purpose })).unwrap();
+      } else if (purpose === "UPDATE_PROFILE") {
+        await dispatch(otpSendMeThunk({ purpose })).unwrap();
+      }
+    } catch (error) {
+      toast.error(error as string);
+    }
+  };
+
   useEffect(() => {
+    handleGetOTP();
+
     const id = setInterval(() => {
       setCountdown((c) => (c > 0 ? c - 1 : 0));
     }, 1000);
@@ -60,7 +82,6 @@ function OTPContent({
   }, [onClose]);
 
   const onSubmit = async (data: OtpFormValues) => {
-    console.log("action otp", data.otp);
     await onVerify?.(data.otp);
   };
 
@@ -68,10 +89,6 @@ function OTPContent({
     if (countdown > 0) return;
     await handleGetOTP();
     setCountdown(resendSeconds);
-  };
-
-  const handleGetOTP = () => {
-    console.log("GET OTP");
   };
 
   return (

@@ -2,7 +2,7 @@ import { LIST_STOCKS, MARKET_TYPE, PRICE_TYPE } from "@/configs";
 import { usePlaceOrder } from "@/hooks/usePlaceOrder";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { selectListAccount } from "@/store/modules/auth/selector";
+import { selectListAccount } from "@/store/modules/client/selector";
 import type { OrderSide, OrderType } from "@/store/modules/order/types";
 import {
   selectStockDetail,

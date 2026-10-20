@@ -4,13 +4,13 @@ import {
   deleteBeneficiariesThunk,
   getBeneficiariesThunk,
   setDefaultBeneficiariesThunk,
-} from "@/store/modules/auth/api";
+} from "@/store/modules/client/api";
 import {
   selectBeneficiaries,
   selectIsOpenAddAccountBen,
   selectLoadingBeneficiaries,
-} from "@/store/modules/auth/selector";
-import { setIsOpenAddAccountBen } from "@/store/modules/auth/slice";
+} from "@/store/modules/client/selector";
+import { setIsOpenAddAccountBen } from "@/store/modules/client/slice";
 import { getBankLogo, getBankName } from "@/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { EllipsisVertical } from "lucide-react";

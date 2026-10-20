@@ -1,6 +1,6 @@
 import { usePortfolio } from "@/hooks/usePortfolio";
 import { useAppSelector } from "@/store/hook";
-import { selectProfile } from "@/store/modules/auth/selector";
+import { selectProfile } from "@/store/modules/client/selector";
 import { priceFormatter, volFormatter } from "@/utils";
 import {
   CellStyleModule,

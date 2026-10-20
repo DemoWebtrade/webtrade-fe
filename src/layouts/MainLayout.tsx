@@ -10,12 +10,12 @@ import {
 } from "@/services/fcm/firebase-messaging";
 import { MarketSocket } from "@/services/socket/market";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { selectToken } from "@/store/modules/auth/selector";
 import {
   selectIsOpenProfile,
-  selectToken,
   selectTypeUpdateProfile,
-} from "@/store/modules/auth/selector";
-import { setIsOpenProfile } from "@/store/modules/auth/slice";
+} from "@/store/modules/client/selector";
+import { setIsOpenProfile } from "@/store/modules/client/slice";
 import type { MessagePayload } from "firebase/messaging";
 import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";

@@ -1,3 +1,4 @@
+import OTP from "@/components/features/otp";
 import { Button } from "@/components/ui/Button";
 import InputDate from "@/components/ui/inputs/InputDate";
 import InputField from "@/components/ui/inputs/InputField";
@@ -10,8 +11,8 @@ import {
 } from "@/store/modules/auth/selector";
 import { setRegisterData } from "@/store/modules/auth/slice";
 import { formatDate, parseDate } from "@/utils";
-import { useEffect } from "react";
-import { useForm, type FieldError } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, useWatch, type FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -44,6 +45,13 @@ export default function Step2({
     getValues,
   } = useForm<Step2Form>();
 
+  const fullName = useWatch({ control, name: "fullName" });
+  const birthday = useWatch({ control, name: "birthday" });
+  const gender = useWatch({ control, name: "gender" });
+  const address = useWatch({ control, name: "address" });
+
+  const [openOTP, setOpenOTP] = useState(false);
+
   useEffect(() => {
     if (registerData) {
       reset({
@@ -74,9 +82,9 @@ export default function Step2({
     prevStep();
   };
 
-  const handleSubmitStep = async (data: Step2Form) => {
+  const handleRegister = async (otp: string) => {
     if (loadingRegister) return;
-    const { fullName, birthday, gender, address } = data;
+
     try {
       await dispatch(
         registerThunk({
@@ -87,6 +95,7 @@ export default function Step2({
           gender,
           address,
           phone: registerData?.phone ?? "",
+          otp,
         }),
       ).unwrap();
       dispatch(
@@ -102,6 +111,10 @@ export default function Step2({
     } catch (error) {
       toast.error(error as string);
     }
+  };
+
+  const handleSubmitStep = () => {
+    setOpenOTP(true);
   };
 
   return (
@@ -193,6 +206,14 @@ export default function Step2({
           </Button>{" "}
         </div>
       </form>
+
+      <OTP
+        open={openOTP}
+        onClose={() => setOpenOTP(false)}
+        onVerify={handleRegister}
+        purpose={"REGISTER"}
+        email={registerData?.email}
+      />
     </div>
   );
 }

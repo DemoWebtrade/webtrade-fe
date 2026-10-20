@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import assetReducer from "./modules/asset/slice";
 import authReducer from "./modules/auth/slice";
+import clientReducer from "./modules/client/slice";
 import commonReducer from "./modules/common/slice";
 import orderReducer from "./modules/order/slice";
 import priceboardReducer from "./modules/priceboard/slice";
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
   common: commonReducer,
   asset: assetReducer,
+  client: clientReducer,
 });
 
 export default rootReducer;

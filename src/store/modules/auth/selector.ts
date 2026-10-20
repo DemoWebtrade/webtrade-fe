@@ -12,31 +12,3 @@ export const selectToken = (state: RootState) => state.auth.token;
 export const selectRegisterData = (state: RootState) => state.auth.registerData;
 export const selectLoadingRegister = (state: RootState) =>
   state.auth.loading.register;
-
-export const selectProfile = (state: RootState) => state.auth.profile;
-export const selectLoadingProfile = (state: RootState) =>
-  state.auth.loading.profile;
-
-export const selectLoadingUpdateProfile = (state: RootState) =>
-  state.auth.loading.updateProfile;
-
-export const selectTypeUpdateProfile = (state: RootState) =>
-  state.auth.typeUpdateProfile;
-
-export const selectListAccount = (state: RootState) => {
-  return state.auth.profile?.tradingAccounts || [];
-};
-
-export const selectBeneficiaries = (state: RootState) =>
-  state.auth.beneficiaries;
-export const selectLoadingBeneficiaries = (state: RootState) =>
-  state.auth.loading.beneficiaries;
-
-export const selectIsOpenAddAccountBen = (state: RootState) =>
-  state.auth.isOpenAddAccountBen;
-
-export const selectLoadingAddAccountBen = (state: RootState) =>
-  state.auth.loading.addAccountBen;
-
-export const selectIsOpenProfile = (state: RootState) =>
-  state.auth.isOpenProfile;
