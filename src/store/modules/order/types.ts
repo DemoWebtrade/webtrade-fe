@@ -24,6 +24,7 @@ export type PlaceOrderInput = {
   orderType: string;
   price: number;
   quantity: number;
+  otp: string;
 };
 
 export type OrderSide = "buy" | "sell";
@@ -70,4 +71,10 @@ export interface UpdateOrderPayload {
   id: string;
   price?: number;
   quantity?: number;
+  otp: string;
+}
+
+export interface CancleOrderPayload {
+  orderId: string;
+  otp: string;
 }

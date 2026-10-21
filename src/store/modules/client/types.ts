@@ -82,4 +82,5 @@ export type AddBenAccountPayload = {
   fullName: string;
   accountNumber: string;
   accountHolder: string | null;
+  otp: string;
 };

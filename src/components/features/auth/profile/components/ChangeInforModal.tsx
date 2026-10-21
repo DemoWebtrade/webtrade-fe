@@ -246,7 +246,7 @@ export default function ChangeInforModal({
             open={openOTP}
             onClose={() => setOpenOTP(false)}
             onVerify={handleChangeInfor}
-            purpose={"UPDATE_PROFILE"}
+            purpose="UPDATE_PROFILE"
           />
         </>
       )}

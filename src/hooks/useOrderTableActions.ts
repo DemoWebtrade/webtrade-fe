@@ -7,9 +7,9 @@ export function useOrderTableActions() {
   const dispatch = useAppDispatch();
 
   const cancelOrder = useCallback(
-    async (orderId: string): Promise<boolean> => {
+    async (orderId: string, otp: string): Promise<boolean> => {
       try {
-        await dispatch(orderCancelThunk(orderId)).unwrap();
+        await dispatch(orderCancelThunk({ orderId, otp })).unwrap();
         toast.success("Đã hủy lệnh");
         return true;
       } catch (err) {
@@ -21,9 +21,14 @@ export function useOrderTableActions() {
   );
 
   const updateOrder = useCallback(
-    async (id: string, price: number, quantity: number): Promise<boolean> => {
+    async (
+      id: string,
+      price: number,
+      quantity: number,
+      otp: string,
+    ): Promise<boolean> => {
       try {
-        await dispatch(orderUpdateThunk({ id, price, quantity })).unwrap();
+        await dispatch(orderUpdateThunk({ id, price, quantity, otp })).unwrap();
         toast.success("Cập nhật lệnh thành công");
         return true;
       } catch (err) {

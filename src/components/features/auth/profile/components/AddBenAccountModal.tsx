@@ -66,8 +66,6 @@ export default function AddBenAccountModal({
   }, [onClose]);
 
   const handleAddBen = async (otp: string) => {
-    console.log("otp", otp);
-
     try {
       await dispatch(
         createBeneficiariesThunk({
@@ -80,6 +78,7 @@ export default function AddBenAccountModal({
             (profile?.tradingAccounts[0] &&
               profile?.tradingAccounts[0].accountNumber) ||
             "",
+          otp,
         }),
       ).unwrap();
       await dispatch(getBeneficiariesThunk()).unwrap();
@@ -200,6 +199,7 @@ export default function AddBenAccountModal({
             open={openOTP}
             onClose={() => setOpenOTP(false)}
             onVerify={handleAddBen}
+            purpose="CREATE_BENEFICIARY"
           />
         </>
       )}

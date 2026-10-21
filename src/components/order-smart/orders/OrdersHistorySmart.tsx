@@ -162,9 +162,9 @@ export default function OrdersHistorySmart() {
     }
   }, [refreshOrders, dispatch]);
 
-  const handleConfirmCancel = async () => {
+  const handleConfirmCancel = async (otp: string) => {
     if (!pendingCancel) return;
-    const success = await cancelOrder(pendingCancel._id);
+    const success = await cancelOrder(pendingCancel._id, otp);
 
     if (success) {
       const node = gridApiRef.current?.getRowNode(pendingCancel._id);
@@ -178,12 +178,14 @@ export default function OrdersHistorySmart() {
   const handleSubmitEdit = async (formData: {
     price: number;
     quantity: number;
+    otp: string;
   }) => {
     if (!editingOrder) return;
     const success = await updateOrder(
       editingOrder._id,
       formData.price,
       formData.quantity,
+      formData.otp,
     );
 
     if (success) {
@@ -298,7 +300,7 @@ export default function OrdersHistorySmart() {
         open={!!pendingCancel}
         order={pendingCancel}
         loading={cancelLoading}
-        onConfirm={handleConfirmCancel}
+        onConfirm={(otp: string) => handleConfirmCancel(otp)}
         onCancel={() => setPendingCancel(null)}
       />
 

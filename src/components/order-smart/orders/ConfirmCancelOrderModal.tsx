@@ -16,11 +16,14 @@ interface CancelOrderProps {
     price: number;
   } | null;
   loading?: boolean;
-  onConfirm: () => void;
+  onConfirm: (otp: string) => void;
   onCancel: () => void;
 }
 
-export default function EditOrderModal({ open, ...props }: CancelOrderProps) {
+export default function ConfirmCancelOrderModal({
+  open,
+  ...props
+}: CancelOrderProps) {
   return (
     <AnimatePresence>
       {open && <ConfirmCancelOrderModalContent {...props} />}
@@ -102,6 +105,7 @@ function ConfirmCancelOrderModalContent({
         open={openOTP}
         onClose={() => setOpenOTP(false)}
         onVerify={onConfirm}
+        purpose="CANCEL_ORDER"
       />
     </>
   );

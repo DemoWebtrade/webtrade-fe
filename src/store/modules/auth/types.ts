@@ -97,7 +97,16 @@ export type AddBenAccountPayload = {
   accountHolder: string | null;
 };
 
-export const OTP_PURPOSES = ["REGISTER", "UPDATE_PROFILE"] as const;
+export const OTP_PURPOSES = [
+  "REGISTER",
+  "UPDATE_PROFILE",
+  "CREATE_BENEFICIARY",
+  "SET_DEFAULT_BENEFICIARY",
+  "DELETE_BENEFICIARY",
+  "PLACE_ORDER",
+  "UPDATE_ORDER",
+  "CANCEL_ORDER",
+] as const;
 export type OtpPurpose = (typeof OTP_PURPOSES)[number];
 
 export type OtpSendPayload = {

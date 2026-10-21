@@ -43,10 +43,14 @@ export const getOrdersThunk = createAsyncThunk(
 
 export const orderCancelThunk = createAsyncThunk(
   "orders/cancel",
-  async (orderId: string, { rejectWithValue }) => {
+  async (
+    { orderId, otp }: { orderId: string; otp: string },
+    { rejectWithValue },
+  ) => {
     try {
       const res = await apiClient.patch(`/orders/${orderId}/cancel`, {
         orderId: orderId,
+        otp: otp,
       });
       if (res?.data?.code !== 1) {
         return rejectWithValue(res?.data?.message || i18n.t("api.error"));

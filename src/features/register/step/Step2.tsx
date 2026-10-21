@@ -211,7 +211,7 @@ export default function Step2({
         open={openOTP}
         onClose={() => setOpenOTP(false)}
         onVerify={handleRegister}
-        purpose={"REGISTER"}
+        purpose="REGISTER"
         email={registerData?.email}
       />
     </div>

@@ -20,6 +20,7 @@ import { toast } from "sonner";
 interface EditOrderForm {
   price: number;
   quantity: number;
+  otp: string;
 }
 
 interface EditOrderProps {
@@ -155,10 +156,11 @@ function EditOrderContent({
     }
   };
 
-  const handleEditOrder = () => {
+  const handleEditOrder = (otp: string) => {
     onSubmit({
       price: price * 1000,
       quantity: quantity,
+      otp: otp,
     });
   };
 
@@ -267,6 +269,7 @@ function EditOrderContent({
         open={openOTP}
         onClose={() => setOpenOTP(false)}
         onVerify={handleEditOrder}
+        purpose="UPDATE_ORDER"
       />
     </>
   );

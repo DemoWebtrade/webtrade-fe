@@ -202,8 +202,6 @@ export default function OrderNormal() {
   };
 
   const handleOrder = async (otp: string) => {
-    console.log("otp", otp);
-
     try {
       await place({
         tradingAccountId: accountCode,
@@ -218,6 +216,7 @@ export default function OrderNormal() {
             : +orderPrice * 1000
           : 0,
         quantity: orderVolume ? StringToInt(orderVolume) : 0,
+        otp,
       });
 
       // setStep(0);
@@ -463,6 +462,7 @@ export default function OrderNormal() {
         open={step === 2}
         onClose={() => setStep(1)}
         onVerify={handleOrder}
+        purpose="PLACE_ORDER"
       />
     </>
   );
